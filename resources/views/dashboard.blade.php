@@ -11,7 +11,7 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                                <h2 class="text-white mb-0">Sales value Hanani</h2>
+                                <h2 class="text-white mb-0">Sales value Nurul Hanani</h2>
                             </div>
                             <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
