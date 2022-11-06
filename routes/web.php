@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,21 @@ All Teacher Routes List
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
   
     Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
+		//Module 1: meritDemerit
+		Route::get('meritdemerit', function () {return view('meritMain');})->name('merits.main');
+
+		Route::post('meritdemerit', ['as' => 'merits.redirect', 'uses' => 'App\Http\Controllers\CurrMeritController@redirect']);
+		Route::get('meritdemerit/curriculum/{student}', ['as' => 'merits.index', 'uses' => 'App\Http\Controllers\CurrMeritController@index']);
+		Route::resource('merits', App\Http\Controllers\CurrMeritController::class, ['except' => ['index']]);
+		Route::get('meritdemerit/curriculum-bulk', ['as' => 'merits.bulk', 'uses' => 'App\Http\Controllers\CurrMeritController@viewStudentList']);
+	
+		Route::get('meritdemerit/behaviouralmerit/{student}', ['as' => 'behaMerits.index', 'uses' => 'App\Http\Controllers\BehaMeritController@index']);
+		Route::resource('behaMerits', App\Http\Controllers\BehaMeritController::class, ['except' => ['index']]);
+	
+		//Module 2: studentEvaluation
+		Route::get('studentlist-evaluation', ['as' => 'evaluationList', 'uses' => 'App\Http\Controllers\PersonalityEvaluationController@viewStudentList']);
+		Route::get('studentlist-evaluation/question', ['as' => 'evaluationQuestion', 'uses' => 'App\Http\Controllers\PersonalityEvaluationController@viewQuestion']);
+
 });
 
 //STUDENT

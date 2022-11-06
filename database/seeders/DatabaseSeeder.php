@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             StudentTableSeeder::class,  
             TeacherTableSeeder::class, 
             SubjectTableSeeder::class,
-            SubjectDetailsTableSeeder::class]);
+            SubjectDetailsTableSeeder::class,
+            MeritsTableSeeder::class,
+            Personality_Question_TableSeeder::class]);
     }
 }
