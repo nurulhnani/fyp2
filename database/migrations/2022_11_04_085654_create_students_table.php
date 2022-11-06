@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('status');
             $table->string('name');
             $table->string('mykid');
-            $table->string('class');
+            $table->unsignedBigInteger('classlist_id');
             $table->string('gender');
             $table->string('citizenship');
             $table->string('address');
@@ -30,6 +31,8 @@ return new class extends Migration
             $table->string('G2_relation');
             $table->string('G2_phonenum');
             $table->integer('G2_income',false,false);
+            $table->string('image_path');
+            $table->foreign('classlist_id')->references('id')->on('classlists');
         });
     }
 
