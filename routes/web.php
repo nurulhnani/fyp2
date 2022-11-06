@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//ADMIN
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
@@ -35,3 +36,60 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+/*------------------------------------------
+--------------------------------------------
+All Admin Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:admin'])->group(function () {
+  
+    Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
+});
+
+/*------------------------------------------
+--------------------------------------------
+All Student Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:student'])->group(function () {
+  
+    Route::get('/student/home', [App\Http\Controllers\HomeController::class, 'studentHome'])->name('student.home');
+});
+
+/*------------------------------------------
+--------------------------------------------
+All Teacher Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:teacher'])->group(function () {
+  
+    Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
+});
+
+//STUDENT
+// Route::get('/student', [App\Http\Controllers\StudentController::class, 'studentdashboard'])->name('student');
+Route::resource('students', App\Http\Controllers\StudentController::class);
+Route::put('/archiveStudent/{id}',[App\Http\Controllers\AdminController::class, 'archiveStudent'])->name('archiveStudent');
+Route::put('/unarchiveStudent/{id}',[App\Http\Controllers\AdminController::class, 'unarchiveStudent'])->name('unarchiveStudent');
+Route::get('/archivedStudentList', [App\Http\Controllers\AdminController::class, 'archivedStudentList'])->name('archivedStudentList');
+Route::get('/addStudentInBulk', [App\Http\Controllers\AdminController::class, 'addStudentInBulk'])->name('addStudentInBulk');
+
+
+//TEACHER
+Route::get('/teacher', 'TeacherLoginController@index');
+Route::resource('teachers', App\Http\Controllers\TeacherController::class);
+Route::put('/archiveTeacher/{id}',[App\Http\Controllers\AdminController::class, 'archiveTeacher'])->name('archiveTeacher');
+Route::put('/unarchiveTeacher/{id}',[App\Http\Controllers\AdminController::class, 'unarchiveTeacher'])->name('unarchiveTeacher');
+Route::get('/archivedTeacherList', [App\Http\Controllers\AdminController::class, 'archivedTeacherList'])->name('archivedTeacherList');
+Route::get('/addTeacherInBulk', [App\Http\Controllers\AdminController::class, 'addTeacherInBulk'])->name('addTeacherInBulk');
+
+//CLASS
+Route::resource('classes', App\Http\Controllers\ClassController::class);
+
+//SUBJECT
+Route::resource('subjects', App\Http\Controllers\SubjectController::class);
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

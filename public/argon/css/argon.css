@@ -2239,6 +2239,20 @@ pre code
     background-color: rgba(255, 255, 255, .075);
 }
 
+@media(max-width: 400.98px)
+{
+    .search-responsive
+    {
+        display: block;
+        overflow-x: auto;
+
+        width: 100%;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+}
+
 @media (max-width: 575.98px)
 {
     .table-responsive-sm
@@ -8006,6 +8020,10 @@ button.bg-danger:focus
 .bg-light
 {
     background-color: #adb5bd !important;
+}
+.bg-admin
+{
+    background-color: #341948 !important;
 }
 
 a.bg-light:hover,
