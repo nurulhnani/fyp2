@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')

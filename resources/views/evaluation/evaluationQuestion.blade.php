@@ -1,7 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')
+
+<!-- Header -->
+<div class="header pb-5">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-black d-inline-block mb-0">Evaluation Page</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('evaluationList') }}">Student List</i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Student</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Page content -->
 <div class="container-fluid mt--6">
     <div class="row">
@@ -90,7 +110,7 @@
         /* font-weight: bold; */
         /* padding: 30px 0 0 4.25%; */
         /* margin-bottom: 10px; */
-    } 
+    }
 
     form .likert {
         list-style: none;

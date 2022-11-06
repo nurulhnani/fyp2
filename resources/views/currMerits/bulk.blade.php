@@ -1,9 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')
 
-<div class="container-fluid mt--7">
+<!-- Header -->
+<div class="header pb-5">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-black d-inline-block mb-0">Merit Page</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('merits.main') }}">Merit and Demerit</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Merit in Bulk</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -48,7 +68,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="budget">
-                                                    {{ $student->class }}
+                                                    {{ $student->class->class_name }}
                                                 </td>
 
                                                 <td class="text-right">
@@ -86,8 +106,8 @@
                             </div>
                         </div>
                         <div class="text-right py-4">
-                                    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
-                                </div>
+                            <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
