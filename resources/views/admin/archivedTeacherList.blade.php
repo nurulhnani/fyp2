@@ -52,14 +52,20 @@
                           @foreach ($teachers as $teacher)
                             @if($teacher->status == 'inactive')
                               <tr>
-                                <th scope="row">{{ $teacher->mykid }}</th>
+                                <th scope="row">{{ $teacher->nric }}</th>
                                 <td id="name">{{ $teacher->name }}</td>
-                                <td id="class">{{ $teacher->class }}</td>
-                                <td>
+                                <td id="class">{{ $teacher->email }}</td>
+                                <td style="width: 10%">
+                                  <div class="col-lg-6 col-5 text-right mb-0">
+                                    <a href="{{route('teachers.edit',$teacher->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
+                                    <a href="#unarchiveModal{{$teacher->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                  </div>
+                                </td>
+                                {{-- <td> --}}
                                     {{-- <a href="#" class="btn btn-sm btn-primary">View Profile</a>
                                     <a href="#" class="btn btn-sm btn-primary">Archive Profile</a> --}}
                                     {{-- <div class="col"> --}}
-                                        <ul class="nav nav-pills justify-content-end">
+                                        {{-- <ul class="nav nav-pills justify-content-end">
                                             <li class="nav-item mr-2 mr-md-0">
                                                 <a href="{{route('teachers.edit',$teacher->id)}}" class="nav-link py-1 px-2 active">
                                                     <span class="d-none d-md-block">View</span>
@@ -71,16 +77,16 @@
                                                     <span class="d-none d-md-block">Archive</span>
                                                     <span class="d-md-none"><i class="fa fa-eye-slash"></i></span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                             {{-- <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='' data-prefix="$" data-suffix="k">
                                                 <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                                     <span class="d-none d-md-block">Week</span>
                                                     <span class="d-md-none">W</span>
                                                 </a>
                                             </li> --}}
-                                        </ul>
+                                        {{-- </ul>
                                     </div>
-                                </td>
+                                </td> --}}
                               </tr>
         
                               <script>
@@ -146,7 +152,7 @@
 <div class="modal fade" id="unarchiveModal{{$teacher->id}}" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form action="/unarchiveStudent/{{$teacher['id']}}" method="POST">
+        <form action="/unarchiveTeacher/{{$teacher['id']}}" method="POST">
             @csrf
             @method('PUT')
         <div class="modal-header">

@@ -71,6 +71,7 @@
                           <tr>
                             <th scope="col">Mykid</th>
                             <th scope="col">Student Name</th>
+                            <th scope="col">Class Name</th>
                             <th scope="col" style="width: 10%"></th>
                           </tr>
                         </thead>
@@ -80,6 +81,11 @@
                               <tr>
                                 <th scope="row">{{ $student->mykid }}</th>
                                 <td id="name">{{ $student->name }}</td>
+                                @if(isset($student->class->class_name))
+                                  <td id="class_name">{{ $student->class->class_name }}</td>
+                                @else 
+                                  <td id="class_name">Not Yet Assigned</td>
+                                @endif
                                 <td style="width: 10%">
                                   <div class="col-lg-6 col-5 text-right mb-0">
                                     <a href="{{route('students.edit',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('name');
             $table->string('mykid');
-            $table->unsignedBigInteger('classlist_id');
+            $table->unsignedBigInteger('classlist_id')->nullable();
             $table->string('gender');
             $table->string('citizenship');
             $table->string('address');

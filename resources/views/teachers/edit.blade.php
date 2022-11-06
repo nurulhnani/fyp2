@@ -52,7 +52,7 @@
                                         <h5><span class="font-weight-light">Change profile picture</span></h5>
                                     </div>
                                     <div class="text-center">
-                                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageT" name="imageT" required>                 
+                                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageT" name="imageT" value="{{$teacher->image_path}}">                 
                                         <script type='text/javascript'>
                                             function preview_image(event) 
                                             {

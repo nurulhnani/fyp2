@@ -31,7 +31,7 @@
       </div>
 
     <div class="container-fluid mt--7">   
-        <form action="" method="POST" enctype='multipart/form-data'>
+        <form action="{{ route('students.update',$student->id) }}" method="POST" enctype='multipart/form-data'>
             @csrf
             @method('PUT')        
             {{-- @forelse ($student as $student) --}}
@@ -53,7 +53,7 @@
                                         <h5><span class="font-weight-light">Change profile picture</span></h5>
                                     </div>
                                     <div class="text-center">
-                                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageS" name="imageS" required >                 
+                                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageS" name="imageS" value="{{$student->image_path}}">                 
                                         <script type='text/javascript'>
                                             function preview_image(event) 
                                             {
@@ -72,9 +72,15 @@
                                
                                 <div class="card-body pt-0 pt-md-1 text-center">
                                     <h4 class="text-black d-inline-block mb-0">{{$student->name}}</h4>
+                                    @if(isset($student->class->class_name))
                                     <div class="text-center mt-2">
                                         <h5>{{$student->class->class_name}}<span class="font-weight-light"></span></h5>
                                     </div>
+                                    @else 
+                                    <div class="text-center mt-2">
+                                        <h5>Class Not Yet Assigned<span class="font-weight-light"></span></h5>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>          
                         </div>
@@ -104,10 +110,17 @@
                                             </div>
             
                                             <div class="row">
-                                                <div class="col-sm-6"><span></span>
-                                                    <label class="form-control-label" for="class">{{ __('Class') }}</label>
-                                                    <input type="text" name="class" id="class" class="form-control form-control-alternative" placeholder="{{ __('Class') }}" value="{{$student->class->class_name}}" disabled>
-                                                </div>
+                                                @if(isset($student->class->class_name))
+                                                    <div class="col-sm-6"><span></span>
+                                                        <label class="form-control-label" for="class">{{ __('Class') }}</label>
+                                                        <input type="text" name="class" id="class" class="form-control form-control-alternative" placeholder="{{ __('Class') }}" value="{{$student->class->class_name}}" disabled>
+                                                    </div>
+                                                @else 
+                                                    <div class="col-sm-6"><span></span>
+                                                        <label class="form-control-label" for="class">{{ __('Class') }}</label>
+                                                        <input type="text" name="class" id="class" class="form-control form-control-alternative" placeholder="{{ __('Class') }}" value="Not Yet Assigned" disabled>
+                                                    </div>
+                                                @endif
                                                 <div class="col-sm-6">
                                                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                                         <label class="form-control-label" for="mykid">{{ __('Mykid') }}</label>

@@ -18,7 +18,7 @@ class Student extends Model
     protected $keyType = 'string';
 
     public function class(){
-      return $this->hasOne(Classlist::class,'id');
+      return $this->hasOne(Classlist::class,'id','classlist_id');
     }
   //   public function classlists(){
   //     return $this->belongsTo(Classlist::class);

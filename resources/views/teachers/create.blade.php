@@ -43,7 +43,7 @@
                 <div class="col-lg-3 order-lg-2">
                     <div class="card-profile-image py-7">
                         <a href="#">
-                            <img src="{{asset('assets/img/userImage/default.png')}}" class="rounded-circle">
+                            <img id="output_image" src="{{asset('assets/img/userImage/default.png')}}" class="rounded-circle">
                         </a>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <h5><span class="font-weight-light">Choose profile picture</span></h5>
                 </div>
                 <div class="text-center">
-                    <input accept="/*" type="file" style="background-color:#FFF2FF" onchange="preview_image(event)" class="form-control" id="image" name="image" required>                 
+                    <input accept="/*" type="file" onchange="preview_image(event)" class="form-control form-control-alternative" id="image" name="image" required>                 
                     <script type='text/javascript'>
                         function preview_image(event) 
                         {

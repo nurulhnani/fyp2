@@ -7,6 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use SebastianBergmann\Type\NullType;
 
 class StudentController extends Controller
 {
@@ -45,7 +46,7 @@ class StudentController extends Controller
             'name'=>'required',
             'mykid' =>'required',
             'gender' =>'required',
-            'class' =>'required',
+            // 'class_id' =>'required',
             'citizenship' =>'required',
             'address' =>'required',
             'G1_name' =>'required',
@@ -56,6 +57,7 @@ class StudentController extends Controller
             'G2_relation' =>'required',
             'G2_phonenum' =>'required',
             'G2_income' =>'required',
+            'image' => 'required',
         ]);
         $data = $request->input();
         
@@ -67,7 +69,7 @@ class StudentController extends Controller
         $student->name = $data['name'];
         $student->mykid = $data['mykid'];
         $student->gender = $data['gender'];
-        $student->class = $data['class'];
+        $student->classlist_id = null;
         $student->citizenship = $data['citizenship'];
         $student->address = $data['address'];
         $student->G1_name = $data['G1_name'];
@@ -135,7 +137,7 @@ class StudentController extends Controller
             'name'=>'required',
             'mykid' =>'required',
             'gender' =>'required',
-            'class' =>'required',
+            // 'class' =>'required',
             'citizenship' =>'required',
             'address' =>'required',
             'G1_name' =>'required',
@@ -167,7 +169,7 @@ class StudentController extends Controller
         $student->name = $request->input('name');
         $student->mykid = $request->input('mykid');
         $student->gender = $request->input('gender');
-        $student->class = $request->input('class');
+        $student->classlist_id = null;
         $student->citizenship = $request->input('citizenship');
         $student->address = $request->input('address');
         $student->G1_name = $request->input('G1_name');

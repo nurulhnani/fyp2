@@ -44,7 +44,6 @@
                           <tr>
                             <th scope="col">Mykid</th>
                             <th scope="col">Student Name</th>
-                            <th scope="col">Class</th>
                             <th scope="col"></th>
                           </tr>
                         </thead>
@@ -54,12 +53,17 @@
                               <tr>
                                 <th scope="row">{{ $student->mykid }}</th>
                                 <td id="name">{{ $student->name }}</td>
-                                <td id="class">{{ $student->class }}</td>
-                                <td>
+                                <td style="width: 10%">
+                                  <div class="col-lg-6 col-5 text-right mb-0">
+                                    <a href="{{route('students.edit',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
+                                    <a href="#unarchiveModal{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                  </div>
+                                </td>
+                                {{-- <td> --}}
                                     {{-- <a href="#" class="btn btn-sm btn-primary">View Profile</a>
                                     <a href="#" class="btn btn-sm btn-primary">Archive Profile</a> --}}
                                     {{-- <div class="col"> --}}
-                                        <ul class="nav nav-pills justify-content-end">
+                                        {{-- <ul class="nav nav-pills justify-content-end">
                                             <li class="nav-item mr-2 mr-md-0">
                                                 <a href="{{route('students.edit',$student->id)}}" class="nav-link py-1 px-2 active">
                                                     <span class="d-none d-md-block">View</span>
@@ -71,16 +75,16 @@
                                                     <span class="d-none d-md-block">Archive</span>
                                                     <span class="d-md-none"><i class="fa fa-eye-slash"></i></span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                             {{-- <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='' data-prefix="$" data-suffix="k">
                                                 <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
                                                     <span class="d-none d-md-block">Week</span>
                                                     <span class="d-md-none">W</span>
                                                 </a>
                                             </li> --}}
-                                        </ul>
+                                        {{-- </ul>
                                     </div>
-                                </td>
+                                </td> --}}
                               </tr>
         
                               <script>

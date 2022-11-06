@@ -37,7 +37,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image py-7">
                                 <a href="#">
-                                    <img src="{{asset('assets/img/userImage/default.png')}}" class="rounded-circle">
+                                    <img id="output_image" src="{{asset('assets/img/userImage/default.png')}}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -177,11 +177,7 @@
 
 
             </div>
-            
-            
-
           </div>
-
         </form>
         </div>
 
