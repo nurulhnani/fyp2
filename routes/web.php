@@ -77,7 +77,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
   
     	Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
 		//Module 1: meritDemerit
-		Route::get('meritdemerit', function () {return view('meritMain');})->name('merits.main');
+		Route::get('meritdemerit', function () {return view('merits.main');})->name('merits.main');
 		Route::post('meritdemerit', [App\Http\Controllers\CurrMeritController::class, 'redirect'])->name('merits.redirect');
 
 		Route::get('meritdemerit/curriculum/{student}', ['as' => 'merits.index', 'uses' => 'App\Http\Controllers\CurrMeritController@index']);

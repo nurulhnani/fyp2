@@ -14,7 +14,7 @@ class BehaMeritController extends Controller
     public function index(Student $student)
     {
         $merits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->get();
-        return view('behaMerits.index', ['merits' => $merits, 'student' => $student]);
+        return view('merits/behaMerits.index', ['merits' => $merits, 'student' => $student]);
     }
 
     public function store(Request $request)
@@ -91,7 +91,7 @@ class BehaMeritController extends Controller
        public function viewStudentList()
        {
            $students = Student::all();
-           return view('behaMerits.bulk', ['students' => $students]);
+           return view('merits/behaMerits.bulk', ['students' => $students]);
        }
    
        public function checklistImport(Request $request){
@@ -99,14 +99,14 @@ class BehaMeritController extends Controller
            foreach ($studentLists as $studentList) { 
            $students[] = Student::where('mykid', "=", $studentList)->first();
            }
-           return view('behaMerits.bulkList', ['studentLists' => $students]);
+           return view('merits/behaMerits.bulkList', ['studentLists' => $students]);
        }
    
    
        public function fileImport(Request $request)
        {
            $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
-           return view('behaMerits.bulkList', ['studentListArr' => $studentListArr]);
+           return view('merits/behaMerits.bulkList', ['studentListArr' => $studentListArr]);
        }
    
        public function storeBulk(Request $request)
@@ -129,6 +129,6 @@ class BehaMeritController extends Controller
                Merit::create($newMerit);
            }
            $students = Student::all();
-           return view('behaMerits.bulk', ['students' => $students]);
+           return view('merits/behaMerits.bulk', ['students' => $students]);
        }
 }

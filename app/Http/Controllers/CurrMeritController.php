@@ -29,7 +29,7 @@ class CurrMeritController extends Controller
     public function index(Student $student)
     {
         $merits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->get();
-        return view('currMerits.index', ['merits' => $merits, 'student' => $student]);
+        return view('merits/currMerits.index', ['merits' => $merits, 'student' => $student]);
     }
 
     public function store(Request $request)
@@ -90,7 +90,7 @@ class CurrMeritController extends Controller
     public function viewStudentList()
     {
         $students = Student::all();
-        return view('currMerits.bulk', ['students' => $students]);
+        return view('merits/currMerits.bulk', ['students' => $students]);
     }
 
     public function checklistImport(Request $request){
@@ -100,7 +100,7 @@ class CurrMeritController extends Controller
         }
         // dd($students);
         // print json_encode($students);
-        return view('currMerits.bulkList', ['studentLists' => $students]);
+        return view('merits/currMerits.bulkList', ['studentLists' => $students]);
     }
 
 
@@ -111,7 +111,7 @@ class CurrMeritController extends Controller
         // dd($array);
         // print json_encode($array);
         // echo $students;
-        return view('currMerits.bulkList', ['studentListArr' => $studentListArr]);
+        return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr]);
 
         // $path1 = $request->file('file')->store('temp');
         // $path = storage_path('app') . '/' . $path1;
@@ -139,6 +139,6 @@ class CurrMeritController extends Controller
             Merit::create($newMerit);
         }
         $students = Student::all();
-        return view('currMerits.bulk', ['students' => $students]);
+        return view('merits/currMerits.bulk', ['students' => $students]);
     }
 }

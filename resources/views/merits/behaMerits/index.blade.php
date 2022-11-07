@@ -80,7 +80,7 @@
                 </td>
               </tr>
               @endif
-              @include('behaMerits.modal')
+              @include('merits/behaMerits.modal')
               @endforeach
             </tbody>
           </table>

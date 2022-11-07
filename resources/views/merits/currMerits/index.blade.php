@@ -92,7 +92,7 @@
                   </div>
                 </td>
               </tr>
-              @include('currMerits.modal')
+              @include('merits/currMerits.modal')
               @endforeach
             </tbody>
           </table>
