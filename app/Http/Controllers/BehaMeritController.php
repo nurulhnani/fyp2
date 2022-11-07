@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Merit;
 use App\Models\Student;
+use App\Imports\MeritsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BehaMeritController extends Controller
 {
@@ -84,4 +86,49 @@ class BehaMeritController extends Controller
         $student = Student::where('mykid', "=", $behaMerit['student_mykid'])->first();
         return redirect()->route('behaMerits.index', [$student]);
     }
+
+       //Bulk 
+       public function viewStudentList()
+       {
+           $students = Student::all();
+           return view('behaMerits.bulk', ['students' => $students]);
+       }
+   
+       public function checklistImport(Request $request){
+           $studentLists = $request->input('checklist');
+           foreach ($studentLists as $studentList) { 
+           $students[] = Student::where('mykid', "=", $studentList)->first();
+           }
+           return view('behaMerits.bulkList', ['studentLists' => $students]);
+       }
+   
+   
+       public function fileImport(Request $request)
+       {
+           $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
+           return view('behaMerits.bulkList', ['studentListArr' => $studentListArr]);
+       }
+   
+       public function storeBulk(Request $request)
+       {
+           $checklists = $request->input('checklist');
+           foreach ($checklists as $checklist) {            
+               $newMerit = $request->all();
+               $newMerit['student_mykid'] = $checklist;
+   
+               if ($newMerit['level'] == "International") {
+                   $newMerit['merit_point'] = 50;
+               } else if ($newMerit['level'] == "National") {
+                   $newMerit['merit_point'] = 30;
+               } else if ($newMerit['level'] == "District") {
+                   $newMerit['merit_point'] = 20;
+               } else {
+                   $newMerit['merit_point'] = 10;
+               }
+       
+               Merit::create($newMerit);
+           }
+           $students = Student::all();
+           return view('behaMerits.bulk', ['students' => $students]);
+       }
 }

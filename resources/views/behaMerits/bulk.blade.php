@@ -14,7 +14,7 @@
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('merits.main') }}">Merit and Demerit</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Curriculum Merit in Bulk</li>
+                            <li class="breadcrumb-item active" aria-current="page">Behavioural Merit in Bulk</li>
                         </ol>
                     </nav>
                 </div>
@@ -30,11 +30,11 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="mb-0">{{ __('Curriculum Merit in Bulk') }}</h3>
+                            <h3 class="mb-0">{{ __('Behavioural Merit in Bulk') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('checklist-import') }}" autocomplete="off">
+                        <form method="post" action="{{ route('beha-checklist-import') }}" autocomplete="off">
                             @csrf
 
                             <div class="h5 text-muted text-uppercase mb-4">
@@ -98,11 +98,9 @@
 
                         <div class="dropzone dropzone-single" data-toggle="dropzone" data-dropzone-url="http://">
                             <div class="fallback">
-                                <form method="post" action="{{ route('file-import') }}" enctype="multipart/form-data" autocomplete="off">
+                                <form method="post" action="{{ route('beha-file-import') }}" enctype="multipart/form-data" autocomplete="off">
                                     @csrf
                                     <div class="custom-file">
-                                            <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="en">
-                                            <label class="custom-file-label" for="customFileLang">Select file</label> -->
                                         <div class="mb-3">
                                             <input class="form-control" type="file" name="file" id="file">
                                         </div>
