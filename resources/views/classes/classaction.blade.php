@@ -79,7 +79,10 @@
             <div class="form-group">
               <label for="classroom_teacher" class="form-control-label" >Classroom Teacher</label>
                   <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher">
-                      <option value="{{$class->classroom_teacher}}" selected>{{$class->classroom_teacher}}</option>
+                    <?php
+                      $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first()->name;
+                    ?>
+                      <option value="{{$classteacher}}" selected>{{$classteacher}}</option>
                       @foreach($teacher as $teacher)
                         <option value="{{$teacher->name}}">{{$teacher->name}}</option>
                       @endforeach
@@ -87,6 +90,29 @@
             </div> 
             </div>
           </div>
+          
+          {{-- <hr class="my-2" />
+
+          <h5 class="text-muted heading-small mb-4">{{ __('Assign Student to Class') }}</h5>
+          <div class="row">        
+            <div class="col">
+                <label for="example-search-input" class="form-control-label">Search student name</label>
+                <input class="form-control" type="search" placeholder="Search student name" id="example-search-input">
+            </div>
+          </div>
+          <h6 class="text-muted text-center my-2">OR</h6>
+          <div class="row">        
+            <div class="col">
+              <form>
+                <div class="custom-file">
+                    <label class="custom-file-label" for="customFileLang">Select file</label>
+                    <input type="file" class="custom-file-input" id="customFileLang" lang="en">
+                </div>
+            </form>
+            </div>
+          </div> --}}
+          
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

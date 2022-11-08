@@ -66,6 +66,8 @@ All Student Routes List
 Route::middleware(['auth', 'user-access:student'])->group(function () {
   
     Route::get('/student/home', [App\Http\Controllers\HomeController::class, 'studentHome'])->name('student.home');
+	Route::get('/overview',[App\Http\Controllers\StudentController::class, 'overview'])->name('overview');
+	Route::get('/history',[App\Http\Controllers\StudentController::class, 'history'])->name('history');
 });
 
 /*------------------------------------------

@@ -17,11 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('class_name');
-            // $table->unsignedBigInteger('student_id')->nullable();;
             $table->integer('femaleStudent');
             $table->integer('maleStudent');
-            $table->string('classroom_teacher');
-            // $table->foreign('student_id')->references('id')->on('students');
         });
     }
 

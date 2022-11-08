@@ -17,10 +17,8 @@ class ClassSeeder extends Seeder
     {
         DB::table('classlists')->insert([
             'class_name'=>'1 Amanah',
-            // 'student_id'=>'1',
             'femaleStudent' => 8,
             'maleStudent' => 12,
-            'classroom_teacher' => 'Sabarina binti Kamal'
         ]);
     }
 }

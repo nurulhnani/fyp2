@@ -17,7 +17,10 @@ class ClassController extends Controller
     public function index()
     {
         $classes = Classlist::latest()->paginate(5);
+        
+        // echo $classes;
         $teacher = Teacher::all();
+        // echo $teacher;
         $student = Student::all();
 
         return view('classes.index',compact('classes','teacher','student'))
@@ -46,15 +49,23 @@ class ClassController extends Controller
             'class_name'=>'required',
             'femaleStudent' =>'required',
             'maleStudent' =>'required',
-            'classroom_teacher' =>'required',
+            'classroom_teacher' => 'required',
         ]);
 
         $class = new Classlist;
         $class->class_name = $request->input('class_name');
         $class->femaleStudent = $request->input('femaleStudent');
         $class->maleStudent = $request->input('maleStudent');
-        $class->classroom_teacher = $request->input('classroom_teacher');
+        // $class->classroom_teacher = $request->input('classroom_teacher');
         $class->save();
+
+        // $classid = $class->id;
+        // dd($classid);
+        $teachername = $request->input('classroom_teacher');
+        $teacherid = Teacher::where('name', $teachername)->first()->id;
+        $teacher = Teacher::find($teacherid);
+        $teacher->classlist_id = $class->id;
+        $teacher->update();
         return redirect()->route('classes.index')->with('success',"Successfully added!");
     }
 
@@ -93,8 +104,20 @@ class ClassController extends Controller
         $class->class_name = $request->input('class_name');
         $class->femaleStudent = $request->input('femaleStudent');
         $class->maleStudent = $request->input('maleStudent');
-        $class->classroom_teacher = $request->input('classroom_teacher');
-        $class->update();
+
+        $teacherid = Teacher::where('classlist_id', $id)->first()->id;
+        $teacher = Teacher::find($teacherid);
+        $teacher->classlist_id = null;
+        $teacher->update();
+
+        // dd($teacher);
+        // $class->classroom_teacher = $request->input('classroom_teacher');
+        // $class->update();
+        $teachername = $request->input('classroom_teacher');
+        $teacherid = Teacher::where('name', $teachername)->first()->id;
+        $teacher = Teacher::find($teacherid);
+        $teacher->classlist_id = $id;
+        $teacher->update();
         // $input = $request->all();
         // $class->fill($input)->save();
         return redirect()->route('classes.index')->with('success',"Successfully updated!");

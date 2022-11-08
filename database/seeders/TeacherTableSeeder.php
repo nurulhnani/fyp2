@@ -22,6 +22,7 @@ class TeacherTableSeeder extends Seeder
             'gender' =>'Female',
             'email' =>'sabarina@gmail.com',
             'position' =>'Classroom teacher',
+            'classlist_id' => '1',
             'address' =>'34, Jalan Bahagia, Selangor',
             'subject_taught' =>'Mathematics Grade 1',
             'phone_number' =>'0198872436',

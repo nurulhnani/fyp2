@@ -67,7 +67,14 @@
                                   $totalStudent = (int)$class->maleStudent + (int)$class->femaleStudent;
                                 ?>
                                 <td id="name" class="text-center"><?php echo $totalStudent ?></td>
-                                <td id="class">{{ $class->classroom_teacher }}</td>
+                                <?php
+                                  $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first()->name;
+                                ?>
+                                @if(isset($classteacher))
+                                  <td id="class">{{ $classteacher }}</td>
+                                @else 
+                                  <td id="class">Not Assigned Yet</td>
+                                @endif                        
                                 <td style="width: 10%">
                                   <div class="col-lg-6 col-5 text-right mb-0">
                                     <a href="#viewClass{{$class->id}}" data-toggle="modal">

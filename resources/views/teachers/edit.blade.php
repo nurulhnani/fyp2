@@ -71,9 +71,9 @@
                                
                                 <div class="card-body pt-0 pt-md-1 text-center">
                                     <h4 class="text-black d-inline-block mb-0">{{$teacher->name}}</h4>
-                                    <div class="text-center mt-2">
-                                        <h5>{{ $teacher->class }}<span class="font-weight-light"></span></h5>
-                                    </div>
+                                    {{-- <div class="text-center mt-2">
+                                        <h5>{{ $teacher->class->class_name }}<span class="font-weight-light"></span></h5>
+                                    </div> --}}
                                 </div>
                             </div>          
                         </div>
@@ -148,10 +148,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>
+                                                    @if(isset($teacher->class->class_name))
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="class_name">{{ __('Class Name') }}</label>
-                                                        <input type="text" name="class_name" id="class_name" class="form-control form-control-alternative" placeholder="" value="{{$teacher->class_name}}" required>
+                                                        <input type="text" name="class_name" id="class_name" class="form-control form-control-alternative" placeholder="" value="{{$teacher->class->class_name}}" disabled>
                                                     </div>
+                                                    @else 
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="class_name">{{ __('Class Name') }}</label>
+                                                        <input type="text" name="class_name" id="class_name" class="form-control form-control-alternative" placeholder="" value="Not Yet Assigned" disabled>
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="row">

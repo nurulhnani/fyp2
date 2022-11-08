@@ -79,58 +79,46 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.home') }}">
+                    <a class="nav-link" href="#">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Tables</span>
-                    </a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                    </a>
-                </li> --}}
-                {{-- <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
-                    <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
-                        <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                    </a>
-                </li> --}}
+                <ul class="nav nav-sm flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('overview')}}">
+                            {{ __('Student Overview') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('history')}}">
+                            {{ __('History') }}
+                        </a>
+                    </li>
+                </ul>
             </ul>
             <!-- Divider -->
             <hr class="my-3">
-            <!-- Heading -->
-            {{-- <h6 class="navbar-heading text-muted">Documentation</h6> --}}
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-circle-08 text-blue"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('My Profile') }}</span>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Student Profile') }}</span>
                     </a>
 
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('students.index')}}">
-                                    {{ __('Update Profile') }}
-                                </a>
-                            </li>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" href="{{ route('teachers.index') }}">
-                                    {{ __('Manage Teacher') }}
+                                    {{ __('View Profile') }}
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('students.index') }}">
+                                    {{ __('Request Update Profile') }}
+                                </a>
+                            </li>
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('classes.index') }}">
                                     {{ __('Manage Class') }}
                                 </a>

@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('subject_id');
-            $table->unsignedBigInteger('subject_teacher');
-            $table->string('class_name');
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->foreign('subject_teacher')->references('id')->on('teachers');
+            $table->string('class_name');
+            // $table->unsignedBigInteger('subject_teacher');
+            // $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->string('subject_teacher');
         });
     }
 

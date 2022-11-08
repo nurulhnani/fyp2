@@ -24,6 +24,15 @@ class StudentController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function overview()
+    {
+        return view('students.overview');
+    }
+    public function history()
+    {
+        return view('students.history');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

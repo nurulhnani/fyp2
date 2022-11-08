@@ -22,10 +22,12 @@ return new class extends Migration
             $table->string('gender');
             $table->string('email');
             $table->string('position');
+            $table->unsignedBigInteger('classlist_id')->nullable();
             $table->string('address');
             $table->string('subject_taught');
             $table->string('phone_number');
             $table->string('image_path');
+            $table->foreign('classlist_id')->references('id')->on('classlists')->onDelete('cascade');
         });
     }
 

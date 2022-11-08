@@ -13,10 +13,17 @@ class Classlist extends Model
 
     protected $primaryKey = 'id';
     protected $fillable = [
-        'class_name','femaleStudent','maleStudent','classroom_teacher'
-      ];
+      'class_name','femaleStudent','maleStudent'
+    ];
 
-      public function students(){
-        return $this->belongsTo(Student::class,'id');
-      }
+    public function students(){
+      return $this->belongsTo(Student::class,'id');
+    }
+    public function teachers(){
+      return $this->belongsTo(Teacher::class, 'id');
+    }
+    // public function teacher(){
+    //   return $this->hasOne(Teacher::class);
+    // }
+    
 }
