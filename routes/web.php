@@ -56,6 +56,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::get('/addTeacherInBulk', [App\Http\Controllers\AdminController::class, 'addTeacherInBulk'])->name('addTeacherInBulk');
 	Route::resource('classes', App\Http\Controllers\ClassController::class);
 	Route::resource('subjects', App\Http\Controllers\SubjectController::class);
+	Route::post('student-file-import', [App\Http\Controllers\StudentController::class, 'fileImport'])->name('student-file-import');
+	Route::post('teacher-file-import', [App\Http\Controllers\TeacherController::class, 'fileImport'])->name('teacher-file-import');
+
 });
 
 /*------------------------------------------

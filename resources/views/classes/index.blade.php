@@ -82,7 +82,7 @@
                                       {{-- <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
                                       <span class="d-md-none"><i class="fa fa-address-book"></i></span> --}}
                                     </a>
-                                    <a href="#editClass{{$class->id}}" data-toggle="modal">
+                                    <a href="{{route('classes.edit',$class->id)}}">
                                       <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
                                       {{-- <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
                                       <span class="d-md-none"><i class="fa fa-address-book"></i></span> --}}
@@ -224,7 +224,9 @@
                     <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher">
                         <option value="" selected>Search by Teacher Name</option>
                         @foreach($teacher as $teacher)
+                        @if($teacher->classlist_id == null)
                           <option value="{{$teacher->name}}">{{$teacher->name}}</option>
+                        @endif
                         @endforeach
                     </select>
               </div> 

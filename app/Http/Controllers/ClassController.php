@@ -6,6 +6,7 @@ use App\Models\Classlist;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClassController extends Controller
 {
@@ -22,9 +23,13 @@ class ClassController extends Controller
         $teacher = Teacher::all();
         // echo $teacher;
         $student = Student::all();
+        // echo $student;
 
-        return view('classes.index',compact('classes','teacher','student'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('classes.index')->with(['classes'=>$classes,'teacher'=>$teacher,'student'=>$student]);
+            // ->with('i', (request()->input('page', 1) - 1) * 5);
+
+            // return view('classes.index')->with(['classes'=>$classes,'student'=>$student]);
+
     }
 
     /**
@@ -86,9 +91,11 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Classlist $class)
     {
-        //
+        $teacher = Teacher::all();
+        $students = Student::all();
+        return view('classes.edit',compact('class','teacher','students'));
     }
 
     /**
@@ -101,10 +108,19 @@ class ClassController extends Controller
     public function update(Request $request, $id)
     {
         $class = Classlist::find($id);
+        
         $class->class_name = $request->input('class_name');
         $class->femaleStudent = $request->input('femaleStudent');
         $class->maleStudent = $request->input('maleStudent');
-
+        $class->update();
+        $studentLists = $request->input('checklist');
+        foreach ($studentLists as $studentList) { 
+            $studentsid = Student::where('id', "=", $studentList)->first()->id;
+            $students = Student::find($studentsid);
+            $students->classlist_id = $id;
+            $students->update();
+        }
+        
         $teacherid = Teacher::where('classlist_id', $id)->first()->id;
         $teacher = Teacher::find($teacherid);
         $teacher->classlist_id = null;
@@ -112,7 +128,7 @@ class ClassController extends Controller
 
         // dd($teacher);
         // $class->classroom_teacher = $request->input('classroom_teacher');
-        // $class->update();
+        
         $teachername = $request->input('classroom_teacher');
         $teacherid = Teacher::where('name', $teachername)->first()->id;
         $teacher = Teacher::find($teacherid);
@@ -135,5 +151,19 @@ class ClassController extends Controller
        
         return redirect()->route('classes.index')
                         ->with('success','Class deleted successfully');
+    }
+
+    public function fileImport(Request $request)
+    {
+        // $array = Excel::import(new MeritsImport, $request->file('file')->store('temp'));
+        // $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
+        // dd($array);
+        // print json_encode($array);
+        // echo $students;
+        // return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr]);
+
+        // $path1 = $request->file('file')->store('temp');
+        // $path = storage_path('app') . '/' . $path1;
+        // $data = Excel::import(new UsersImport, $path);
     }
 }

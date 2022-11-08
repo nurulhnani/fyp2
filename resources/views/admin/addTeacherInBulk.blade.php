@@ -23,13 +23,25 @@
             {{-- <img class="card-img-top" style="width: 100%; height:10%" src="{{asset('assets/img/theme/students.png')}}" alt="Card image cap"> --}}
             <div class="card-body">
             <h3 class="card-title">Upload Teacher List</h3>
-            <form>
-                <div class="form-group">
+            <form method="post" action="{{ route('teacher-file-import') }}" enctype="multipart/form-data" autocomplete="off">
+                {{-- <div class="form-group"> --}}
                     {{-- <label for="exampleFormControlFile1" class="col-sm-2 col-form-label" style="text-align: left">Upload</label> --}}
                     {{-- <div class="col"> --}}
-                        <input type="file" class="form-control-file form-control-alternative" id="exampleFormControlFile1">
+                        {{-- <input type="file" class="form-control-file form-control-alternative" id="exampleFormControlFile1"> --}}
                     {{-- </div> --}}
-                </div>
+                {{-- </div> --}}
+                <div class="form-group dropzone dropzone-single" data-toggle="dropzone" data-dropzone-url="http://">
+                  <div class="fallback">
+                          @csrf
+                          <div class="custom-file">
+                                  <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="en">
+                                  <label class="custom-file-label" for="customFileLang">Select file</label> -->
+                              <div class="mb-3">
+                                  <input class="form-control" type="file" name="file" id="file">
+                              </div>
+                          </div>
+                  </div>
+              </div>
                 <p class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="#" class="text-right badge badge-primary"> Click here for example</a></p>
                 <div class="text-center">
                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

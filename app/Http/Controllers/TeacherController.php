@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Imports\TeachersImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
 {
@@ -161,5 +163,14 @@ class TeacherController extends Controller
        
         return redirect()->route('teachers.index')
                         ->with('success','Teacher deleted successfully');
+    }
+
+     /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function fileImport(Request $request) 
+    {
+        Excel::import(new TeachersImport, $request->file('file')->store('temp'));
+        return redirect()->route('teachers.index');
     }
 }

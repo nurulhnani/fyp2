@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classlist;
 use App\Models\Student;
+use App\Models\Classlist;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use SebastianBergmann\Type\NullType;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -208,5 +209,14 @@ class StudentController extends Controller
        
         return redirect()->route('students.index')
                         ->with('success','Student deleted successfully');
+    }
+
+     /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function fileImport(Request $request) 
+    {
+        Excel::import(new StudentsImport, $request->file('file')->store('temp'));
+        return redirect()->route('students.index');
     }
 }
