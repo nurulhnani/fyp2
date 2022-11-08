@@ -77,22 +77,30 @@ All Teacher Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
   
-    Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
+    	Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
 		//Module 1: meritDemerit
-		Route::get('meritdemerit', function () {return view('meritMain');})->name('merits.main');
+		Route::get('meritdemerit', function () {return view('merits.main');})->name('merits.main');
+		Route::post('meritdemerit', [App\Http\Controllers\CurrMeritController::class, 'redirect'])->name('merits.redirect');
 
-		Route::post('meritdemerit', ['as' => 'merits.redirect', 'uses' => 'App\Http\Controllers\CurrMeritController@redirect']);
 		Route::get('meritdemerit/curriculum/{student}', ['as' => 'merits.index', 'uses' => 'App\Http\Controllers\CurrMeritController@index']);
 		Route::resource('merits', App\Http\Controllers\CurrMeritController::class, ['except' => ['index']]);
-		Route::get('meritdemerit/curriculum-bulk', ['as' => 'merits.bulk', 'uses' => 'App\Http\Controllers\CurrMeritController@viewStudentList']);
-	
-		Route::get('meritdemerit/behaviouralmerit/{student}', ['as' => 'behaMerits.index', 'uses' => 'App\Http\Controllers\BehaMeritController@index']);
+		Route::get('meritdemerit/curriculum-bulk', [App\Http\Controllers\CurrMeritController::class, 'viewStudentList'])->name('merits.bulk');
+		// Route::get('file-import-export', [CurrMeritController::class, 'fileImportExport']);
+		// Route::get('file-export', [CurrMeritController::class, 'fileExport'])->name('file-export');
+		Route::post('checklist-import', [App\Http\Controllers\CurrMeritController::class, 'checklistImport'])->name('checklist-import');
+		Route::post('file-import', [App\Http\Controllers\CurrMeritController::class, 'fileImport'])->name('file-import');
+		Route::post('bulkmerits/add', [App\Http\Controllers\CurrMeritController::class, 'storeBulk'])->name('bulkmerits.store');
+
+		Route::post('meritdemerit/behavioural/{student}', [App\Http\Controllers\BehaMeritController::class, 'index'])->name('behaMerits.index');
 		Route::resource('behaMerits', App\Http\Controllers\BehaMeritController::class, ['except' => ['index']]);
+		Route::get('meritdemerit/behavioural-bulk', [App\Http\Controllers\BehaMeritController::class, 'viewStudentList'])->name('behaMerits.bulk');
+		Route::post('beha-checklist-import', [App\Http\Controllers\BehaMeritController::class, 'checklistImport'])->name('beha-checklist-import');
+		Route::post('beha-file-import', [App\Http\Controllers\BehaMeritController::class, 'fileImport'])->name('beha-file-import');
+		Route::post('behaBulkmerits/add', [App\Http\Controllers\BehaMeritController::class, 'storeBulk'])->name('behaBulkmerits.store');
 	
 		//Module 2: studentEvaluation
-		Route::get('studentlist-evaluation', ['as' => 'evaluationList', 'uses' => 'App\Http\Controllers\PersonalityEvaluationController@viewStudentList']);
-		Route::get('studentlist-evaluation/question', ['as' => 'evaluationQuestion', 'uses' => 'App\Http\Controllers\PersonalityEvaluationController@viewQuestion']);
-
+		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewStudentList'])->name('evaluationList');
+		Route::get('studentlist-evaluation/question', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewQuestion'])->name('evaluationQuestion');
 });
 
 Auth::routes();

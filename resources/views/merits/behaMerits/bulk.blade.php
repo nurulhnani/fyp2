@@ -1,22 +1,41 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')
 
-<div class="container-fluid mt--7">
+<!-- Header -->
+<div class="header pb-5">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-black d-inline-block mb-0">Merit Page</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('merits.main') }}">Merit and Demerit</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Behavioural Merit in Bulk</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
     <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="mb-0">{{ __('Merit in Bulk') }}</h3>
+                            <h3 class="mb-0">{{ __('Behavioural Merit in Bulk') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="" autocomplete="off">
+                        <form method="post" action="{{ route('beha-checklist-import') }}" autocomplete="off">
                             @csrf
-                            @method('put')
 
                             <div class="h5 text-muted text-uppercase mb-4">
                                 <i class="ni business_briefcase-24"></i>{{ __('Tick following students to receive merit') }}
@@ -48,12 +67,12 @@
                                                     </div>
                                                 </td>
                                                 <td class="budget">
-                                                    {{ $student->class }}
+                                                    {{ $student->class->class_name }}
                                                 </td>
 
                                                 <td class="text-right">
                                                     <div class="custom-control custom-checkbox nopadding">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck<?php echo $index ?>">
+                                                        <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->mykid }}" id="customCheck<?php echo $index ?>">
                                                         <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
                                                     </div>
                                                 </td>
@@ -79,15 +98,19 @@
 
                         <div class="dropzone dropzone-single" data-toggle="dropzone" data-dropzone-url="http://">
                             <div class="fallback">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="dropzoneBasicUpload">
-                                    <label class="custom-file-label" for="dropzoneBasicUpload">Choose file</label>
-                                </div>
+                                <form method="post" action="{{ route('beha-file-import') }}" enctype="multipart/form-data" autocomplete="off">
+                                    @csrf
+                                    <div class="custom-file">
+                                        <div class="mb-3">
+                                            <input class="form-control" type="file" name="file" id="file">
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                         <div class="text-right py-4">
-                                    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
-                                </div>
+                            <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

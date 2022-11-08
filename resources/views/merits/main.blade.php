@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 @section('content')
 @include('layouts.headers.cards')
 
@@ -11,7 +11,7 @@
                     <h6 class="h2 text-black d-inline-block mb-0">Merit Page</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{route('teacher.home')}}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item active" aria-current="page">Merit and Demerit</li>
                         </ol>
                     </nav>
@@ -46,7 +46,9 @@
                         <div class="text-center">
                             <button type="submit" data-toggle="modal" data-target="#behaModal" class="btn btn-primary mt-4"><span class="btn-inner--icon"><i class="ni ni-single-02"></i></span> {{ __('Single Student') }}</button>
 
-                            <button type="submit" class="btn btn-default mt-4">{{ __('Multiple Students') }}</button>
+                            <!-- <a href="{{ route('behaMerits.bulk') }}"><button class="btn btn-default mt-4">{{ __('Multiple Students') }}</button></a> -->
+                            <button class="btn btn-default mt-4">{{ __('Multiple Students') }}</button>
+
                         </div>
                 </div>
             </div>

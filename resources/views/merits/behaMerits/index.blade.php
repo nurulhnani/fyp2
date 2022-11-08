@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')
@@ -80,7 +80,7 @@
                 </td>
               </tr>
               @endif
-              @include('behaMerits.modal')
+              @include('merits/behaMerits.modal')
               @endforeach
             </tbody>
           </table>
