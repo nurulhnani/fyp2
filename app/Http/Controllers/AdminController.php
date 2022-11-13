@@ -155,5 +155,8 @@ class AdminController extends Controller
     {
         return view('admin.addTeacherInBulk');
     }
+    public function customfield(){
+        return view('customfield.index');
+    }
 
 }

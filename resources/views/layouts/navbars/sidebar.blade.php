@@ -146,7 +146,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('customfield') }}">
                                     {{ __('Custom Field Config') }}
                                 </a>
                             </li>

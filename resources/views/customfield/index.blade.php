@@ -1,0 +1,121 @@
+@extends('layouts.adminapp')
+
+@section('content')
+    @include('layouts.headers.cards')
+    
+    <div class="container-fluid mt--2">
+    
+        <h2 class="mt-4">Custom Field Configuration</h2>
+
+        <div class="py-3">
+            <div class="justify-content-md-center">
+                <div class="card">
+                    <div class="card-body">
+                    {{-- <h3 class="card-title">Upload Student List</h3> --}}
+                    <p class="card-text">This section is for admin to manage additional input field for the user profile. You can choose whether for student profile or teacher profile</p>
+                    <form method="POST" action="{{route('addmore')}}" name="add_type" id="add_type">
+                        @csrf
+                        <div class="h5 text-muted text-uppercase mb-1 py-4">
+                            <i class="ni business_briefcase-24"></i>{{ __('Choose type of user') }}
+                        </div>
+                        <div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline1" name="user" class="custom-control-input" value="student"> 
+                                <label class="custom-control-label" for="customRadioInline1">Student</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadioInline2" name="user" class="custom-control-input" value="teacher">
+                                <label class="custom-control-label" for="customRadioInline2">Teacher</label>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive text-center py-4">
+                            <table class="table align-items-center table-flush" id="dynamic_field">
+                                <tr>
+                                    <td><input type="text" name="name[]" placeholder="Enter Field Name" class="form-control form-control-alternative" required></td>
+                                    <td>
+                                        {{-- <div class="form-group"> --}}
+                                            <select class="form-control form-control-alternative" name="type[]" id="type" onchange="onChange()" required> 
+                                                <option selected disabled>Select Answer Field Type</option>
+                                                    <option value="text">Text</option>
+                                                    <option value="date">Date</option>
+                                                    <option value="file">File</option>
+                                                    <option value="number">Number</option>
+                                                    <option value="dropdown">Dropdown</option>
+                                            </select>
+                                        {{-- </div> --}}
+                                    </td>   
+                                    <td><button type="button" name="add" id="add" id="add" class="btn btn-info" onclick="addOnclick()">Add More</button></td>
+                                </tr>
+                                <tr class="autoUpdate" style="display: none">
+                                    <td><p>Please add option of answers.</p></td>
+                                    <td>
+                                        <input type="text" name="note[]" id="autoUpdate" placeholder="Ex: blue,orange,yellow" class="form-control form-control-alternative"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <div class="py-3">
+                                <input type="submit" name="submit" id="submit" class="btn btn-success" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var i=1;
+            function addOnclick(){
+                i++;
+                //add action to button Add to append more input field
+                $('#dynamic_field').append(''+
+                '<tr id="row'+i+'" class="dynamic-added">' +
+                '<td><input type="text" name="name[]" placeholder="Enter Field Name" class="form-control form-control-alternative" /></td>' +
+                '<td><select class="typenew form-control form-control-alternative" name="type[]" id="type'+i+'" onchange="onChange()"><option selected disabled>Select Answer Field Type</option><option value="text">Text</option><option value="date">Date</option><option value="file">File</option><option value="dropdown">Dropdown</option></select></td>' +
+                '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td>'+
+                '</tr>'+
+                '<tr id="row'+i+'" class="autoUpdatenew" style="display: none">'+
+                '<td><p>Please add option of answer.</p></td>' +
+                '<td><input type="text" name="note[]" placeholder="Ex: blue,orange,yellow" class="form-control form-control-alternative"/></td>'+
+                '<td></td>'+
+                '</tr>');
+
+                ///Action on button remove fields
+                $(document).on('click','.btn_remove',function(){
+                    var button_id = $(this).attr("id");
+                    $('#row'+button_id+'').remove();
+                });
+
+                $(document).on('change','.typenew',function(){
+                    // var button_id = $(this).attr("id");
+                    $typenew = $('#type'+i).val();
+                    if($typenew == 'dropdown'){
+                        $(".autoUpdatenew").fadeIn('slow');
+                    }else{
+                        $(".autoUpdatenew").fadeOut('slow');
+                    }                 
+                }); 
+            };
+
+            function onChange(){
+                $type = $("#type").val();
+                if($type == 'dropdown'){
+                    // var button_id = $(this).attr("id");
+                    $(".autoUpdate").fadeIn('slow');
+                }else{
+                        $(".autoUpdate").fadeOut('slow');
+                }   
+            }   
+            
+        </script>
+
+        @include('layouts.footers.auth')
+    </div>
+@endsection
+
+@push('js')
+    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
+@endpush

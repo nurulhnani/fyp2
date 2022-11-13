@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\TeachersImport;
 use Illuminate\Support\Facades\DB;
@@ -73,7 +74,8 @@ class TeacherController extends Controller
         // $teacher->class_name = $data['class_name'];
         $teacher->phone_number = $data['phone_number'];   
         $teacher->image_path = $newImage; 
-        //dd($teacher);
+        $additional=implode(",",$request->input('customfield'));
+        $teacher->additional_Info = $additional;
         $teacher -> save();
 
         return redirect()->route('teachers.index')->with('success','Teacher created successfully.');
@@ -98,7 +100,8 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        return view('teachers.edit',compact('teacher'));
+        $customfield = AutoFields::all();
+        return view('teachers.edit',compact('teacher','customfield'));
     }
 
     /**
@@ -145,7 +148,9 @@ class TeacherController extends Controller
         // $teacher->class_name = $request->input('class_name');
         $teacher->phone_number = $request->input('phone_number');
 
-        // dd($request);
+        $additional=implode(",",$request->input('customfield'));
+        $teacher->additional_Info = $additional;
+
         $teacher -> update();
 
         return redirect()->route('teachers.index')->with('success',"Successfully updated!");

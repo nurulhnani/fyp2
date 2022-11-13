@@ -58,6 +58,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::resource('subjects', App\Http\Controllers\SubjectController::class);
 	Route::post('student-file-import', [App\Http\Controllers\StudentController::class, 'fileImport'])->name('student-file-import');
 	Route::post('teacher-file-import', [App\Http\Controllers\TeacherController::class, 'fileImport'])->name('teacher-file-import');
+	Route::get('/customfield',[App\Http\Controllers\AdminController::class, 'customfield'])->name('customfield');
+	Route::get('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMore']);
+	Route::post('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMorePost'])->name('addmore');
 
 });
 

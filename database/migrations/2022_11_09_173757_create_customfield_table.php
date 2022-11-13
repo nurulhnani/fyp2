@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classlists', function (Blueprint $table) {
+        Schema::create('customfield', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('class_name');
+            $table->string('user');
+            $table->string('name');
+            $table->string('type');
+            $table->string('dropdownNote')->nullable();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classlists');
+        Schema::dropIfExists('customfield');
     }
 };

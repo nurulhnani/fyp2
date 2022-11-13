@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('subject_taught');
             $table->string('phone_number');
             $table->string('image_path');
+            $table->string('additional_Info')->nullable();
             $table->foreign('classlist_id')->references('id')->on('classlists')->onDelete('cascade');
         });
     }

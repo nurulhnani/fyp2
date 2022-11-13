@@ -64,8 +64,8 @@
                               <tr>
                                 <th scope="row" style="width: 10%">{{ $class->class_name }}</th>
                                 <?php
-                                  $totalStudent = (int)$class->maleStudent + (int)$class->femaleStudent;
-                                ?>
+                                  $totalStudent =  App\Models\Student::where('classlist_id',$class->id)
+                                                  ->count(); ?>
                                 <td id="name" class="text-center"><?php echo $totalStudent ?></td>
                                 <?php
                                   $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first()->name;
@@ -95,31 +95,6 @@
                                     @include('classes.classaction')
                                   </div>
                                 </td>
-                                {{-- <td>
-                                        <ul class="nav nav-pills justify-content-end">
-                                            <li class="nav-item mr-2 mr-md-0">
-                                                <a href="#viewClass{{$class->id}}" class="nav-link py-1 px-2 active" data-toggle="modal">
-                                                    <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
-                                                    <span class="d-md-none"><i class="fa fa-address-book"></i></span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item mr-2 mr-md-0">
-                                                <a href="#editClass{{$class->id}}" class="nav-link py-1 px-2 active" data-toggle="modal">
-                                                    <span class="d-none d-md-block"><i class="fa fa-edit" aria-hidden="true"></i></span>
-                                                    <span class="d-md-none"><i class="fa fa-edit" aria-hidden="true"></i></span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item mr-2 mr-md-0">
-                                                <a href="#delete{{$class->id}}" class="nav-link py-1 px-2 active" data-toggle="modal">
-                                                    <span class="d-none d-md-block"><i class="fa fa-trash"></i></span>
-                                                    <span class="d-md-none"><i class="fa fa-trash"></i></span>
-                                                </a>
-                                            </li>
-                                            @include('classes.classaction')
-
-                                        </ul>
-                                    </div>
-                                </td> --}}
                               </tr>
         
                               <script>
@@ -187,7 +162,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title font-weight-bold" id="exampleModalLabel">Edit Class</h3>
+            <h3 class="modal-title font-weight-bold" id="exampleModalLabel">Add New Class</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -202,7 +177,7 @@
                   <input type="text" class="form-control form-control-alternative" name="class_name" id="class_name" placeholder="Enter Class Name" value="">
                 </div>
               </div>
-              <div class="w-100"></div>
+              {{-- <div class="w-100"></div>
               <div class="col">
                 <div class="form-group">
                   <label for="maleStudent" class="form-control-label">Male students</label>
@@ -214,7 +189,7 @@
                   <label for="femaleStudent" class="form-control-label">Female students</label>
                   <input type="text" class="form-control form-control-alternative" name="femaleStudent" id="femaleStudent" placeholder="No. of female student" value="">
                 </div>
-              </div>
+              </div> --}}
             </div>
             <div class="w-100"></div>
             <div class="row">

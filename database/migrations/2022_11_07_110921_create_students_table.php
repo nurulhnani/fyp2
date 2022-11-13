@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('G2_phonenum');
             $table->integer('G2_income',false,false);
             $table->string('image_path');
+            $table->string('additional_Info')->nullable();
             $table->foreign('classlist_id')->references('id')->on('classlists');
         });
     }

@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\Classlist;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
+use App\Models\AutoFields;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
@@ -91,6 +92,10 @@ class StudentController extends Controller
         $student->G2_phonenum = $data['G2_phonenum'];
         $student->G2_income = $data['G2_income'];
         $student->image_path = $newImage;
+
+        $additional=implode(",",$request->input('customfield'));
+        $student->additional_Info = $additional;
+        // dd($string);
         $student -> save();
 
         // Student::create($request->all());
@@ -119,12 +124,13 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
+        $customfield = AutoFields::all();
         $student = Student::find($id);
         // $classlist = $student->classlists;
         // dd($classlist);
         // dd($student);
         // echo $student->class->class_name;
-        return view('students.edit')->with('student',$student);
+        return view('students.edit')->with('student',$student,'customfield',$customfield);
 
         // $result = Student::with('classlists')->get();
         // return view('students.edit')->with('student',$result);
@@ -191,6 +197,9 @@ class StudentController extends Controller
         $student->G2_phonenum = $request->input('G2_phonenum');
         $student->G2_income = $request->input('G2_income');
 
+        $additional=implode(",",$request->input('customfield'));
+        $student->additional_Info = $additional;
+        
         $student->update();
         // $student->update();
         // dd($request);

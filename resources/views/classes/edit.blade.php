@@ -46,14 +46,22 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
+                              <?php $numOfmale =  App\Models\Student::where([
+                                                  ['classlist_id','=',$class->id],
+                                                  ['gender','=','Male'],
+                                                  ])->count(); ?>
                                 <label for="maleStudent" class="form-control-label">Male students</label>
-                                <input type="text" class="form-control form-control-alternative" name="maleStudent" id="maleStudent" placeholder="No. of male student" value="{{$class->maleStudent}}">
+                                <input type="text" class="form-control form-control-alternative" name="maleStudent" id="maleStudent" placeholder="No. of male student" value="{{$numOfmale}}" disabled>
                                 </div>
                             </div>
                         <div class="col">
                             <div class="form-group">
+                              <?php $numOffemale =  App\Models\Student::where([
+                                                  ['classlist_id','=',$class->id],
+                                                  ['gender','=','Female'],
+                                                  ])->count(); ?>
                                 <label for="femaleStudent" class="form-control-label">Female students</label>
-                                <input type="text" class="form-control form-control-alternative" name="femaleStudent" id="femaleStudent" placeholder="No. of female student" value="{{$class->femaleStudent}}">
+                                <input type="text" class="form-control form-control-alternative" name="femaleStudent" id="femaleStudent" placeholder="No. of female student" value="{{$numOffemale}}" disabled>
                             </div>
                         </div>
                       </div>
@@ -79,14 +87,14 @@
 
                     <div class="form-group">
                         <label for="example-email-input" class="form-control-label">Select student by name</label>
-                        <input class="form-control" placeholder="Search" type="search" id="searchStd" onkeyup="myFunction()">
+                        <input class="form-control form-control-alternative" placeholder="Search" type="search" id="searchStd" onkeyup="myFunction()">
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush" id="myTable">
                                 <thead class="thead-light">
                                     <tr>
-                                    <th scope="col">Student name</th>
-                                    <th scope="col">Mykid</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="width: 30%">Mykid</th>
+                                    <th scope="col" style="width: 50%">Student name</th>
+                                    <th scope="col" style="width: 20%"></th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
@@ -97,9 +105,9 @@
                                     @foreach ($student as $student)
                                     @if($student->status == 'active')
                                       <tr>
-                                        <td scope="row">{{ $student->name }}</td>                
-                                        <td scope="row">{{ $student->mykid }}</td>   
-                                        <td class="text-right">
+                                        <td scope="row" style="width: 30%">{{ $student->mykid }}</td>  
+                                        <td scope="row" style="width: 50%">{{ $student->name }}</td>                 
+                                        <td class="text-right" style="width: 20%">
                                             <div class="custom-control custom-checkbox nopadding">
                                                 <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->id }}" id="customCheck<?php echo $index ?>">
                                                 <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
@@ -210,7 +218,7 @@
                                         <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="en">
                                         <label class="custom-file-label" for="customFileLang">Select file</label> -->
                                     <div class="mb-3">
-                                        <input class="form-control" type="file" name="file" id="file">
+                                        <input class="form-control form-control-alternative" type="file" name="file" id="file">
                                     </div>
                                 </div>
                         </div>

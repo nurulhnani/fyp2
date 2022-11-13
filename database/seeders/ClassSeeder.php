@@ -17,8 +17,6 @@ class ClassSeeder extends Seeder
     {
         DB::table('classlists')->insert([
             'class_name'=>'1 Amanah',
-            'femaleStudent' => 8,
-            'maleStudent' => 12,
         ]);
     }
 }

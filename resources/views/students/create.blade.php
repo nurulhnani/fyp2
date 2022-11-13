@@ -167,6 +167,53 @@
                                   </div>
                               </div>
 
+                                <?php
+                                    // $explode_info = json_decode($student->additional_Info, true);;
+                                    $student = "student"; 
+                                    $customfields = App\Models\AutoFields::where('user',$student)->get();
+                                ?>
+                                @if((App\Models\AutoFields::where('user',$student))->count()>0)
+                                    <hr class="my-4" />
+
+                                    <h6 class="heading-small text-muted mb-4">{{ __('Additional details') }}</h6> 
+                                    <?php $i = 0;?>             
+                                    @foreach($customfields as $customfield)                       
+                                        @if($customfield->type == "dropdown")
+                                            <div class="row">
+                                                <div class="col-sm"><span></span>
+                                                    <div class="form-group">
+
+                                                        <?php 
+                                                            $dropdownNote = $customfield->dropdownNote;
+                                                            $explode_notes = explode(',',$dropdownNote);
+                                                        ?>
+
+                                                        <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
+                                                        <select class="form-control form-control-alternative" name="customfield[]" required>
+                                                            <option selected disabled>{{ $customfield->name }}</option>
+                                                            @foreach($explode_notes as $explode_note)
+                                                                <option value="{{$explode_note}}">{{$explode_note}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="row">
+                                                <div class="col-sm"><span></span>
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
+                                                        <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
+                                                        class="form-control form-control-alternative" placeholder="" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <?php $i++ ?>
+                                    @endforeach
+                                    
+                                @endif
+
                               <div class="text-center">
                                   <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                               </div>

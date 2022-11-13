@@ -179,18 +179,89 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm"><span></span>
+                                                    <div class="form-group">
                                                     <label class="form-control-label" for="G2_relation">{{ __('Relation') }}</label>
                                                     <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_relation}}" required>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm"><span></span>
+                                                    <div class="form-group">
                                                     <label class="form-control-label" for="G2_phonenum">{{ __('Phone number') }}</label>
                                                     <input type="text" name="G2_phonenum" id="G2_phonenum" class="form-control form-control-alternative" placeholder="{{ __('G2_phonenum') }}" value="{{$student->G2_phonenum}}" required>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm"><span></span>
+                                                    <div class="form-group">
                                                     <label class="form-control-label" for="G2_income">{{ __('Income') }}</label>
                                                     <input type="text" name="G2_income" id="G2_income" class="form-control form-control-alternative" placeholder="{{$student->G2_income}}" value="{{$student->G2_income}}" required>
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <?php
+                                                // $additional=implode(",",$request->input('customfield'));
+                                                $additionalInfo = $student->additional_Info;
+                                                $explode_info = explode(',',$student->additional_Info);
+                                                $student = "student"; 
+                                                $customfields = App\Models\AutoFields::where('user',$student)->get();
+                                            ?>
+                                            @if((App\Models\AutoFields::where('user',$student))->count()>0)
+                                                <hr class="my-4" />
+                
+                                                <h6 class="heading-small text-muted mb-4">{{ __('Additional details') }}</h6> 
+                                                <?php $i = 0;?>             
+                                                @foreach($customfields as $customfield)                       
+                                                    @if($customfield->type == "dropdown")
+                                                        <div class="row">
+                                                            <div class="col-sm"><span></span>
+                                                                <div class="form-group">
+
+                                                                    @if($additionalInfo != null)
+                                                                       <?php $addinfo = $explode_info[$i];?>
+                                                                    @else
+                                                                       <?php $addinfo = "No input"; ?>
+                                                                    @endif
+
+                                                                    <?php 
+                                                                        $dropdownNote = $customfield->dropdownNote;
+                                                                        $explode_notes = explode(',',$dropdownNote);
+                                                                    ?>
+
+                                                                    <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
+                                                                    <select class="form-control form-control-alternative" name="customfield[]" required>
+                                                                        <option selected disabled>{{$addinfo}}</option>
+                                                                            @foreach($explode_notes as $explode_note)
+                                                                                <option value="{{$explode_note}}">{{$explode_note}}</option>
+                                                                            @endforeach
+                                                                            {{-- <option value="date">Date</option>
+                                                                            <option value="file">File</option> --}}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm"><span></span>
+                                                                <div class="form-group">
+                                                                    
+                                                                    @if($additionalInfo != null)
+                                                                       <?php $addinfo = $explode_info[$i];?>
+                                                                    @else
+                                                                       <?php $addinfo = "No input"; ?>
+                                                                    @endif
+                                                                    
+                                                                    <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
+                                                                    <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
+                                                                    class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                    <?php $i++ ?>
+                                                @endforeach
+                                               
+                                            @endif
+                                            
                                         </div>
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
