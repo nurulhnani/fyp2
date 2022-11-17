@@ -24,7 +24,6 @@ class TeacherTableSeeder extends Seeder
             'position' =>'Classroom teacher',
             'classlist_id' => '1',
             'address' =>'34, Jalan Bahagia, Selangor',
-            'subject_taught' =>'Mathematics Grade 1',
             'phone_number' =>'0198872436',
             'image_path' => 'Sabarina binti Kamal.png',
         ]);

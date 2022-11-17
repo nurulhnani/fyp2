@@ -13,7 +13,7 @@ class Teacher extends Model
     protected $primaryKey = 'id';
     // protected $fillable = ['subject_name'];
 
-    protected $fillable = ['status','name', 'nric','gender', 'email','position','address','subject_taught','phone_number','image_path'];
+    protected $fillable = ['status','name', 'nric','gender', 'email','position','address','phone_number','image_path'];
 
     // public function subjects_details(){
     //   return $this->hasMany(Subject_details::class);

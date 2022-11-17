@@ -6,6 +6,8 @@ use App\Models\Teacher;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\TeachersImport;
+use App\Models\Subject;
+use App\Models\Subject_details;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
@@ -50,7 +52,7 @@ class TeacherController extends Controller
             'email' =>'required',
             'position' =>'required',
             'address' =>'required',
-            'subject_taught' =>'required',
+            // 'subject_taught' =>'required',
             // 'class_name' =>'required',
             'phone_number' =>'required',
             'phone_number' =>'required',
@@ -70,12 +72,14 @@ class TeacherController extends Controller
         $teacher->position = $data['position'];
         $teacher->address = $data['address'];
         $teacher->email = $data['email'];
-        $teacher->subject_taught = $data['subject_taught'];
+        // $teacher->subject_taught = $data['subject_taught'];
         // $teacher->class_name = $data['class_name'];
         $teacher->phone_number = $data['phone_number'];   
-        $teacher->image_path = $newImage; 
-        $additional=implode(",",$request->input('customfield'));
-        $teacher->additional_Info = $additional;
+        $teacher->image_path = $newImage;
+        if($request->input('customfield') != null) {
+            $additional=implode(",",$request->input('customfield'));
+            $teacher->additional_Info = $additional;
+        }
         $teacher -> save();
 
         return redirect()->route('teachers.index')->with('success','Teacher created successfully.');
@@ -101,7 +105,20 @@ class TeacherController extends Controller
     public function edit(Teacher $teacher)
     {
         $customfield = AutoFields::all();
-        return view('teachers.edit',compact('teacher','customfield'));
+        $subject_taughts = Subject_details::where('teacher_id',$teacher->id)->get();
+        $data = [];
+        if($subject_taughts != null){
+            foreach ( $subject_taughts as $subject_taught ) {
+                $subjectname = Subject::where('id',$subject_taught->subject_id)->first()->subject_name;
+                $subjectgrade = Subject::where('id',$subject_taught->subject_id)->first()->grade;
+                $data[] = 
+                    $subjectname.' '.$subjectgrade
+                ;
+            }
+            $subject = implode(",",$data);
+        }
+        
+        return view('teachers.edit',compact('teacher','customfield','subject'));
     }
 
     /**
@@ -120,7 +137,7 @@ class TeacherController extends Controller
             'email' =>'required',
             'position' =>'required',
             'address' =>'required',
-            'subject_taught' =>'required',
+            // 'subject_taught' =>'required',
             // 'class_name' =>'required',
             'phone_number' =>'required',
         ]);
@@ -144,13 +161,14 @@ class TeacherController extends Controller
         $teacher->position = $request->input('position');
         $teacher->address = $request->input('address');
         $teacher->email = $request->input('email');
-        $teacher->subject_taught = $request->input('subject_taught');
+        // $teacher->subject_taught = $request->input('subject_taught');
         // $teacher->class_name = $request->input('class_name');
         $teacher->phone_number = $request->input('phone_number');
 
-        $additional=implode(",",$request->input('customfield'));
-        $teacher->additional_Info = $additional;
-
+        if($request->input('customfield') != null){
+            $additional=implode(",",$request->input('customfield'));
+            $teacher->additional_Info = $additional;
+        }
         $teacher -> update();
 
         return redirect()->route('teachers.index')->with('success',"Successfully updated!");

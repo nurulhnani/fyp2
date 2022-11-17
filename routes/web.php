@@ -61,6 +61,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::get('/customfield',[App\Http\Controllers\AdminController::class, 'customfield'])->name('customfield');
 	Route::get('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMore']);
 	Route::post('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMorePost'])->name('addmore');
+	Route::post('/storeclass',[App\Http\Controllers\SubjectController::class, 'storeclass'])->name('subjects.storeclass');
 
 });
 

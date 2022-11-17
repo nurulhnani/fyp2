@@ -28,19 +28,6 @@ class SubjectController extends Controller
         $teacher = Teacher::all();
         $class = Classlist::all();
 
-        // $subjects = DB::table('subjects')
-        //             ->distinct()
-        //             ->leftJoin('subject_details','subject_details.subject_id','=','subjects.id')
-        //             ->leftJoin('teachers','teachers.id','=','subject_details.subject_teacher')
-        //             ->get()
-        //             ->groupBy('subject_name');
-
-        // $subjects = Subject_details::join('teachers','teachers.id','=','subject_details.subject_teacher')
-                    // ->join('teachers','teachers.id','=','subject_details.subject_teacher')
-                    // ->get();
-                    // ->groupBy('subject_name');
-        // dd($subjects);
-
         return view('subjects.index',compact('subjects','teacher','class'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -65,11 +52,27 @@ class SubjectController extends Controller
     {
         $request->validate([
             'subject_name'=>'required',
+            'grade'=>'required',
         ]);
 
         $subject = new Subject();
         $subject->subject_name = $request->input('subject_name');
+        $subject->grade = $request->input('grade');
         $subject->save();
+        return redirect()->route('subjects.index')->with('success',"Successfully added!");
+    }
+
+    public function storeclass(Request $request){
+        $request->validate([
+            'class_name'=>'required',
+            'teacher_name'=>'required',
+        ]);
+
+        $subjectdetail = new Subject_details();
+        $subjectdetail->subject_id =$request->input('subjectid');
+        $subjectdetail->classlist_id = $request->input('class_name');
+        $subjectdetail->teacher_id = $request->input('teacher_name');
+        $subjectdetail->save();
         return redirect()->route('subjects.index')->with('success',"Successfully added!");
     }
 
@@ -109,20 +112,21 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $subject = Subject_details::find($id);
-        // $subject->subject_teacher = $request->input('subject_teacher');
-        // $subject->numOfStudent = $request->input('numOfStudent');
-        // $subject->classroom_teacher = $request->input('classroom_teacher');
-        // $subject->update();
-        // $input = $request->all();
-        // $class->fill($input)->save();
+        $subjectmain = Subject::find($id);
+        $subjectmain->subject_name = $request->input('subject_name');
+        $subjectmain->grade = $request->input('grade');
+        $subjectmain->update();
 
-        $subject = Subject_details::where('id', $id)
-            ->update([
-                // 'subject_name' => $request->input('subject_name'),
-                'class_name' => $request->input('class_name'),
-                'subject_teacher' => $request->input('subject_teacher')
-        ]);
+        $idlists = $request->input('idlist');      
+        $teacherlists = $request->input('subjectteacher');
+        if($request->input('idlist') != null){
+            for($i=0;$i<count($request->input('idlist'));$i++){
+                $subject = Subject_details::find($idlists[$i]);
+                $teacherid = Teacher::where('name',$teacherlists[$i])->first()->id;
+                $subject->teacher_id = $teacherid;
+                $subject->update();
+            }    
+        }
 
         return redirect()->route('subjects.index')->with('success',"Successfully updated!");
     }

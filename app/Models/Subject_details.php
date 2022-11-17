@@ -14,9 +14,9 @@ class Subject_details extends Model
 
     protected $primaryKey = 'id';
 
-    // protected $fillable = [
-    //     'subject_id', 'class_name','subject_teacher'
-    //   ];
+    protected $fillable = [
+        'subject_id', 'classlist_id','teacher_id'
+      ];
 
     public function subjects(){
         return $this->belongsTo(Subject::class);

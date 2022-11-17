@@ -23,9 +23,8 @@ class TeachersImport implements ToModel
             'position' =>$row[5],
             'classlist_id' => $row[6],
             'address' =>$row[7],
-            'subject_taught' =>$row[8],
-            'phone_number' =>$row[9],
-            'image_path' => $row[10],
+            'phone_number' =>$row[8],
+            'image_path' => $row[9],
         ]);
     }
 }

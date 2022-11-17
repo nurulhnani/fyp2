@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('subject_name');
+            $table->string('grade');
         });
     }
 

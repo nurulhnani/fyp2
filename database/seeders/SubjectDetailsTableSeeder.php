@@ -17,8 +17,8 @@ class SubjectDetailsTableSeeder extends Seeder
     {
         DB::table('subject_details')->insert([
             'subject_id'=> '1',
-            'class_name'=> '1 Amanah',
-            'subject_teacher'=> 'Nor Sabarina'
+            'classlist_id'=> '1',
+            'teacher_id'=> '1'
         ]);
     }
 }

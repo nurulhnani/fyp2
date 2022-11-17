@@ -11,7 +11,7 @@ class Subject extends Model
     // use HasFactory;
     protected $table = 'subjects';
     protected $primaryKey = 'id';
-    protected $fillable = ['subject_name'];
+    protected $fillable = ['subject_name','grade'];
   
     public function subject_details(){
       return $this->hasMany(Subject_details::class);

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('position');
             $table->unsignedBigInteger('classlist_id')->nullable();
             $table->string('address');
-            $table->string('subject_taught');
             $table->string('phone_number');
             $table->string('image_path');
             $table->string('additional_Info')->nullable();

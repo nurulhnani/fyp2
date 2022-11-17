@@ -164,8 +164,13 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="form-control-label" for="subject_taught">{{ __('Subject Taught') }}</label>
-                                                        <input type="text" name="subject_taught" id="subject_taught" class="form-control form-control-alternative" placeholder="" value="{{$teacher->subject_taught}}" required >
+                                                        @if($subject != null)
+                                                            <label class="form-control-label" for="subject_taught">{{ __('Subject Taught') }}</label>
+                                                            <input type="text" name="subject_taught" id="subject_taught" class="form-control form-control-alternative" placeholder="" value="{{$subject}}" disabled >
+                                                        @else
+                                                            <label class="form-control-label" for="subject_taught">{{ __('Subject Taught') }}</label>
+                                                            <input type="text" name="subject_taught" id="subject_taught" class="form-control form-control-alternative" placeholder="" value="Not Assigned Yet" disabled >
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div> 

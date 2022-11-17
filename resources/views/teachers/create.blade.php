@@ -139,12 +139,12 @@
                                 <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="" required>
                             </div>
                         </div>
-                        <div class="col-sm-6"><span></span>
+                        {{-- <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="subject_taught">{{ __('Subject Taught') }}</label>
                                 <input type="text" name="subject_taught" id="subject_taught" class="form-control form-control-alternative" placeholder="" value="" required >
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     {{-- <div class="row">
                         <div class="col-sm-12">

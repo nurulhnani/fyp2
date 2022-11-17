@@ -18,10 +18,10 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('subject_id');
             $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->string('class_name');
+            $table->string('classlist_id');
             // $table->unsignedBigInteger('subject_teacher');
             // $table->foreign('subject_id')->references('id')->on('subjects');
-            $table->string('subject_teacher');
+            $table->string('teacher_id');
         });
     }
 
