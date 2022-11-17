@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Student;
 use App\Models\Classlist;
+use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
-use App\Models\AutoFields;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
@@ -33,6 +35,14 @@ class StudentController extends Controller
     public function history()
     {
         return view('students.history');
+    }
+    public function viewprofile()
+    {
+        $studentname = auth()->user()->name;
+        $studentid = Student::where('name',$studentname)->first()->id;
+        $student = Student::find($studentid);
+        // dd($studentid);
+        return view('students.viewprofile')->with('student',$student);
     }
 
     /**
@@ -93,10 +103,23 @@ class StudentController extends Controller
         $student->G2_income = $data['G2_income'];
         $student->image_path = $newImage;
 
-        $additional=implode(",",$request->input('customfield'));
-        $student->additional_Info = $additional;
+        if($request->input('customfield') != null){
+            $additional=implode(",",$request->input('customfield'));
+            $student->additional_Info = $additional;
+        }
         // dd($string);
         $student -> save();
+
+        $user = new User;
+        $user->name = $data['name'];
+        $user->image_path = $newImage;
+        $user->email = $data['mykid'];
+        $user->type = 2;
+        $user->email_verified_at = now();
+        $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->save();
 
         // Student::create($request->all());
         return redirect()->route('students.index')->with('success','Student created successfully.');

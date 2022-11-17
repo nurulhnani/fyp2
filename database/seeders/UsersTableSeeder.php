@@ -46,6 +46,16 @@ class UsersTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'name'=>'Mohd Hafiz bin Kamal',
+                'image_path' => 'Mohd Hafiz bin Kamal.png',
+                'email'=>'MH12123',
+                'type'=>2,
+                'email_verified_at' => now(),
+                 'password' => Hash::make('secret'),
+                 'created_at' => now(),
+                 'updated_at' => now()
+             ],
         ];
 
         foreach ($users as $key => $user) {
