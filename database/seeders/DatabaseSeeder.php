@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             SubjectTableSeeder::class,
             SubjectDetailsTableSeeder::class,
             MeritsTableSeeder::class,
-            Personality_Question_TableSeeder::class]);
+            Personality_Question_TableSeeder::class,
+            InterestInventorySeeder::class]);
     }
 }

@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Student;
+use Illuminate\Http\Request;
+use App\Models\Interest_Inventory;
+use App\Models\Interest_Inventory_Results;
+
+class InterestInventoryController extends Controller
+{
+    public function viewInterestQuestion($id){
+        $student = Student::find($id);
+        $realisticquestions = Interest_Inventory::where('category','Realistic')->get();
+        $investigativequestions = Interest_Inventory::where('category','Investigative')->get();
+        $artisticquestions = Interest_Inventory::where('category','Artistic')->get();
+        $socialquestions = Interest_Inventory::where('category','Social')->get();
+        $enterprisingquestions = Interest_Inventory::where('category','Enterprising')->get();
+        $conventionalquestions = Interest_Inventory::where('category','Conventional')->get();
+        return view('evaluation.interestInventory', compact('student','realisticquestions','investigativequestions','artisticquestions','socialquestions','enterprisingquestions','conventionalquestions'));
+    }
+    public function store(Request $request)
+    {
+        $studentname = $request->input('studentname');
+        $studentid = Student::where('name',$studentname)->first()->id;
+
+        $realisticcheckboxes = $request->input('realistic');
+        if($realisticcheckboxes!=null){
+            $realisticchecked = count($realisticcheckboxes);
+        }else{
+            $realisticchecked = 0;
+        }
+        
+        $investigativecheckboxes = $request->input('investigative');
+        if($investigativecheckboxes !=null){
+            $investigativechecked = count($investigativecheckboxes);
+        }else{
+            $investigativechecked = 0;
+        }
+
+
+        $artisticcheckboxes = $request->input('artistic');
+        if($artisticcheckboxes !=null){
+            $artisticchecked = count($artisticcheckboxes);
+        }else{
+            $artisticchecked = 0;
+        }
+
+        $socialcheckboxes = $request->input('social');
+        if($socialcheckboxes !=null){
+            $socialchecked = count($socialcheckboxes);
+        }else{
+            $socialchecked = 0;
+        }
+
+        $enterprisingcheckboxes = $request->input('enterprising');
+        if($enterprisingcheckboxes !=null){
+            $enterprisingchecked = count($enterprisingcheckboxes);
+        }else{
+            $enterprisingchecked = 0;
+        }
+
+        $conventionalcheckboxes = $request->input('conventional');
+        if($conventionalcheckboxes !=null){
+            $conventionalchecked = count($conventionalcheckboxes);
+        }else{
+            $conventionalchecked = 0;
+        }
+
+        $result = new Interest_Inventory_Results;
+        $result->student_id = $studentid;
+        $student = Student::find($studentid);
+        $result->realistic = $realisticchecked;
+        $result->investigative = $investigativechecked;
+        $result->artistic =  $artisticchecked;
+        $result->social = $socialchecked;
+        $result->enterprising =  $enterprisingchecked;
+        $result->conventional =  $conventionalchecked;
+        $result->save();
+
+        return view('evaluation.interestResult')->with('student',$student,'result',$result);
+        // return redirect()->route('studentlist-evaluation/interestresult/',$studentid);
+    }
+    public function showResult($id){
+        $student = Student::find($id);
+        $resultid = Interest_Inventory_Results::where('student_id',$id)->first()->id;
+        $result = Interest_Inventory_Results::find($resultid);
+        return view('evaluation.interestResult',compact('student','result'));
+    }
+}

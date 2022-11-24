@@ -111,7 +111,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                       <a class="dropdown-item" href="{{route('evaluationQuestion')}}">Personality Assessment</a>
-                      <a class="dropdown-item" href="#">Interest Inventory Assessment</a>
+                      <a class="dropdown-item" href="{{route('interestInventory',$student->id)}}">Interest Inventory Assessment</a>
+                      {{-- /interestInventory/{{$student['id']}} --}}
                     </div>
                   </div>
                 </td>

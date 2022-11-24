@@ -22,10 +22,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::latest()->paginate(5);
+        $students = Student::paginate(5);
         $class = Classlist::all();
-        return view('students.index',compact('students','class'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('students.index',compact('students','class'));
     }
 
     public function overview()
@@ -38,11 +37,12 @@ class StudentController extends Controller
     }
     public function viewprofile()
     {
+        $customfield = AutoFields::all();
         $studentname = auth()->user()->name;
         $studentid = Student::where('name',$studentname)->first()->id;
         $student = Student::find($studentid);
         // dd($studentid);
-        return view('students.viewprofile')->with('student',$student);
+        return view('students.viewprofile')->with('student',$student,'customfield',$customfield);
     }
 
     /**

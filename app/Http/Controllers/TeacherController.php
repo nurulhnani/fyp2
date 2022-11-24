@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\TeachersImport;
-use App\Models\Subject;
 use App\Models\Subject_details;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TeacherController extends Controller
@@ -25,6 +27,29 @@ class TeacherController extends Controller
       
         return view('teachers.index',compact('teachers'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function viewprofile()
+    {
+        $teachername = auth()->user()->name;
+        $teacherid = Teacher::where('name',$teachername)->first()->id;
+        $teacher = Teacher::find($teacherid);
+
+        $customfield = AutoFields::all();
+        $subject_taughts = Subject_details::where('teacher_id',$teacher->id)->get();
+        $data = [];
+        if($subject_taughts != null){
+            foreach ( $subject_taughts as $subject_taught ) {
+                $subjectname = Subject::where('id',$subject_taught->subject_id)->first()->subject_name;
+                $subjectgrade = Subject::where('id',$subject_taught->subject_id)->first()->grade;
+                $data[] = 
+                    $subjectname.' '.$subjectgrade
+                ;
+            }
+            $subject = implode(",",$data);
+        }
+
+        return view('teachers.viewprofile',compact('teacher','customfield','subject'));
     }
 
     /**
@@ -81,6 +106,17 @@ class TeacherController extends Controller
             $teacher->additional_Info = $additional;
         }
         $teacher -> save();
+
+        $user = new User;
+        $user->name = $data['name'];
+        $user->image_path = $newImage;
+        $user->email = $data['email'];
+        $user->type = 1;
+        $user->email_verified_at = now();
+        $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->save();
 
         return redirect()->route('teachers.index')->with('success','Teacher created successfully.');
     }

@@ -10,11 +10,10 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="text-white mb-0">WELCOME ADMIN</h2>
                                 <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                                <h2 class="text-white mb-0">Sales value Nurul Hanani</h2>
+                                <h2 class="text-white mb-0">Total number of user registered</h2>
                             </div>
-                            <div class="col">
+                            {{-- <div class="col">
                                 <ul class="nav nav-pills justify-content-end">
                                     <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
                                         <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
@@ -29,15 +28,62 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- Chart -->
+
                         <div class="chart">
-                            <!-- Chart wrapper -->
-                            <canvas id="chart-sales" class="chart-canvas"></canvas>
-                        </div>
+                            {{-- // Chart wrapper --}}
+                           <canvas id="pie-chart" class="chart-canvas"></canvas>
+                       </div>
+
+                        {{-- <div class="chart-container">
+                            <div class="pie-chart-container">
+                              <canvas id="pie-chart"></canvas>
+                            </div>
+                          </div> --}}
+                         
+                          <!-- javascript -->
+                         
+                           <script>
+                          $(function(){
+                              //get the pie chart canvas
+                              var cData = JSON.parse(`<?php echo $chart_data; ?>`);
+                              var ctx = $("#pie-chart");
+                         
+                              //pie chart data
+                              var data = {
+                                labels: cData.label,
+                                datasets: [
+                                  {
+                                    label: "Users Count",
+                                    data: cData.data,
+                                  }
+                                ]
+                              };
+                         
+                              //options
+                              var options = {
+                                responsive: true,
+                                // title: {
+                                //   display: true,
+                                //   position: "top",
+                                //   text: "Last Week Registered Users -  Day Wise Count",
+                                //   fontSize: 18,
+                                //   fontColor: "#111"
+                                // },
+                              };
+                         
+                              //create Pie Chart class object
+                              var chart1 = new Chart(ctx, {
+                                type: "bar",
+                                data: data,
+                                options: options
+                              });
+                         
+                          });
+                        </script>
                     </div>
                 </div>
             </div>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Classlist;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -158,5 +160,21 @@ class AdminController extends Controller
     public function customfield(){
         return view('customfield.index');
     }
-
+    public function chartjs(){
+        $record = Student::select(DB::raw("COUNT(*) as count"),DB::raw("SUM(G1_income) as G1_income"),DB::raw("classlist_id as classlist_id"))
+        // ->where('created_at', '>', Carbon::today()->subDay(6))
+        ->groupBy('classlist_id')
+        // ->orderBy('day')
+        ->get();
+    
+        $data = [];
+    
+        foreach($record as $row) {
+            $data['label'][] = $row->classlist_id;
+            $data['data'][] = (int) $row->G1_income;
+        }
+    
+        $data['chart_data'] = json_encode($data);
+        return view('admin.home', $data);
+    }
 }

@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{route('viewprofile')}}">
                         <i class="ni ni-circle-08 text-primary"></i> {{ __('My Profile') }}
                     </a>
                 </li>

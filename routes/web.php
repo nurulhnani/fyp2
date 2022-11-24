@@ -43,7 +43,7 @@ All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
-    Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/admin/home', [App\Http\Controllers\AdminController::class, 'chartjs'])->name('admin.home');
 	Route::resource('students', App\Http\Controllers\StudentController::class);
 	Route::put('/archiveStudent/{id}',[App\Http\Controllers\AdminController::class, 'archiveStudent'])->name('archiveStudent');
 	Route::put('/unarchiveStudent/{id}',[App\Http\Controllers\AdminController::class, 'unarchiveStudent'])->name('unarchiveStudent');
@@ -108,6 +108,13 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		//Module 2: studentEvaluation
 		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewStudentList'])->name('evaluationList');
 		Route::get('studentlist-evaluation/question', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewQuestion'])->name('evaluationQuestion');
+		Route::get('studentlist-evaluation/interest/{id}', [App\Http\Controllers\InterestInventoryController::class, 'viewInterestQuestion'])->name('interestInventory');
+		Route::put('studentlist-evaluation/interestresult', [App\Http\Controllers\InterestInventoryController::class, 'store'])->name('interest.store');
+		Route::get('studentlist-evaluation/interestresult/{id}', [App\Http\Controllers\InterestInventoryController::class, 'showResult'])->name('interestResult');
+
+		//Teacher profile
+		Route::get('/teacherprofile',[App\Http\Controllers\TeacherController::class, 'viewprofile'])->name('viewprofile');
+
 });
 
 Auth::routes();

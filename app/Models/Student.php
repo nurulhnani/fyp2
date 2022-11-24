@@ -11,7 +11,7 @@ class Student extends Model
 
     protected $table = 'students';  
     protected $fillable = [
-		'status','name', 'mykid','class_id','gender','citizenship','address','G1_name','G1_income','G1_relation','G1_phonenum','G2_income',
+		'status','name', 'mykid','classlist_id','gender','citizenship','address','G1_name','G1_income','G1_relation','G1_phonenum','G2_income',
     'G2_name','G2_relation','G2_phonenum','G2_income','image_path'
 	  ];
     protected $primaryKey = 'id';
@@ -21,6 +21,9 @@ class Student extends Model
     public function class(){
       return $this->hasOne(Classlist::class,'id','classlist_id');
     }
+    public function interest_inventory_results(){
+      return $this->belongsTo(Interest_Inventory_Results::class);
+  }
   //   public function classlists(){
   //     return $this->belongsTo(Classlist::class);
   // }
