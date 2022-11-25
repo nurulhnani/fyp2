@@ -25,8 +25,8 @@
 <!-- Page content -->
 <div class="container-fluid mt--6">
     <div class="row">
-        <div class="col">
-            <div class="card" style="width: 70%">
+        <div class="col-sm-10">
+            <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
                     <div class="row align-items-center">
@@ -40,26 +40,24 @@
                 </div>
 
                 <div class="card-body">
+                    <p class="card-text mb-4">This section is for you to evaluate your student's interest in several categories. Please evaluate and tick the checkboxes according to the student's interest. You are allowed to leave it untick.</p>
                     
-                    <form id="myForm" method="post" action="{{route('interest.store')}}" autocomplete = "off">
-                        @method('PUT')
+                    <form id="myForm" method="post" action="{{route('interest.store')}}">
                         @csrf
+                        @method('PUT')
+                        
 
                         <div class="row">
-                            {{-- <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="student" class="form-control-label">Student Name</label>
-                                </div>
-                            </div> --}}
                             <div class="col-9">
                                 <div class="form-group">
-                                    {{-- <input data-id="{{$user->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Yes" data-off="No" {{ $user->status ? 'checked' : '' }}> --}}
-                                    <input type="text" class="form-control form-control-alternative" name="studentname" value="{{$student->name}}" disabled>
+                                    <input type="text" class="form-control form-control-alternative" name="studentname"  value="{{$student->name}}" disabled>
+                                    <input type="hidden" class="form-control form-control-alternative" name="studentname"  value="{{$student->name}}">
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-alternative" name="studentname" value="{{$student->class->class_name}}" disabled>
+                                    <input type="text" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}" disabled>
+                                    <input type="hidden" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}">
                                 </div>
                             </div>
                         </div>
@@ -69,42 +67,9 @@
                           <span class="step" id = "step-2">2</span>
                           <span class="step" id = "step-3">3</span>
                           <span class="step" id = "step-4">4</span> --}}
-                          <nav aria-label="...">
-                            <ul class="pagination justify-content-center mt-4 mb-5">
-                              {{-- <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">
-                                  <i class="fas fa-angle-left"></i>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                              </li> --}}
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-1">1</span>
-                              </li>
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-2">2</span>
-                              </li>
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-3">3</span>
-                              </li>
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-4">4</span>
-                              </li>
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-5">5</span>
-                              </li>
-                              <li class="page-item">
-                                    <span class="page-link step" id = "step-6">6</span>
-                              </li>
-                              {{-- <li class="page-item">
-                                <a class="page-link" href="#">
-                                  <i class="fas fa-angle-right"></i>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                              </li> --}}
-                            </ul>
-                          </nav>
+                          
+
                         </div>
-                  
                         <div class="tab" id = "tab-1">
                             <?php $index = 1; ?>
                             @foreach ($realisticquestions as $realisticquestion)
@@ -116,8 +81,7 @@
                                 </div>
                                 <div class="col-sm-2 text-right">
                                     <div class="form-group">
-                                        {{-- <input data-id="{{$user->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Yes" data-off="No" {{ $user->status ? 'checked' : '' }}> --}}
-                                        <input type="checkbox" class="form-control-alternative" name="realistic[]" style="width: 40%;">
+                                        <input type="checkbox" class="form-control-alternative" name="realistic[]">
                                     </div>
                                 </div>
                             </div>
@@ -274,16 +238,26 @@
                         </div>
                   
                         <div class="tab" id = "tab-7">
-                          <div class="index-btn-wrapper">
-                            <div class="index-btn" onclick="run(5, 4);">Previous</div>
-                            <button class = "index-btn" type="submit" name="submit" style = "background: blue;">Submit</button>
-                          </div>
+                            <p class="card-text text-center mb-5 mt-5">All answers will be saved into the system. Confirm to submit?</p>
+                            <div class="float-left">
+                                <div class="btn btn-primary" onclick="run(7, 6);">Previous</div>
+                            </div>
+                            <div class="float-right">
+                                <button class = "btn btn-success" type="submit" name="submit">Submit</button>
+                            </div>
+
+
+                          {{-- <div class="index-btn-wrapper">
+                            <div class="btn btn-primary" onclick="run(5, 4);">Previous</div>
+                            <button class = "btn btn-success" type="submit" name="submit">Submit</button>
+                          </div> --}}
                         </div>
                       </form>
                   
                       <script>
                         // Default tab
                         $(".tab").css("display", "none");
+                        $(".tab").css("margin-top", "20pt");
                         $("#tab-1").css("display", "block");
                   
                         function run(hideTab, showTab){
@@ -302,7 +276,8 @@
                   
                           // Progress bar
                           for (i = 1; i < showTab; i++){
-                            $("#step-"+i).css("background", "green");
+                            $("#step-"+i).css("background", "blue");
+                            $("#step-"+i).css("color", "white");
                           }
                   
                           // Switch tab
@@ -310,63 +285,137 @@
                           $("#tab-"+showTab).css("display", "block");
                         //   $("input").css("background", "#fff");
                         }
-                      </script>
+                    </script>
 
-<script>
-    $(function() {
-      $('.toggle-class').change(function() {
-          var status = $(this).prop('checked') == true ? 1 : 0; 
-          var user_id = $(this).data('id'); 
-           
-          $.ajax({
-              type: "GET",
-              dataType: "json",
-              url: '/submitInterest',
-              data: {'status': status, 'user_id': user_id},
-              success: function(data){
-                console.log(data.success)
-              }
-          });
-      })
-    })
-</script>
+                    <script>
+                        $(function() {
+                        $('.toggle-class').change(function() {
+                            var status = $(this).prop('checked') == true ? 1 : 0; 
+                            var user_id = $(this).data('id'); 
+                            
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: '/submitInterest',
+                                data: {'status': status, 'user_id': user_id},
+                                success: function(data){
+                                    console.log(data.success)
+                                }
+                            });
+                        })
+                        })
+                    </script>
 
-                
-                    {{-- Pagination
-                <div class="d-flex justify-content-center mb-4">
-                    {!! $interestquestions->links() !!}
-                </div>
-
-                    <form id="interestInventory" method="post" action="{{route('interest.store')}}">
-                        @csrf
-                        <?php $index = 1; ?>
-                        @foreach ($interestquestions as $interestquestion)
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="{{ $interestquestion->questions }}"><?php echo $index ?>. {{ $interestquestion->questions }}</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 text-right">
-                                <div class="form-group">
-                                    <button type="button" name="{{ $interestquestion->questions }}" class="btn btn-outline-success btn-group-toggle" data-toggle="buttons"><i class="fa fa-check" style="font-size:15px"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <?php $index++; ?>
-                        @endforeach
-
-                        <div class="float-right">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-
-                    </form> --}}
                     
                 </div>
 
                 
             </div>
         </div>
+        <div class="col-sm-2">
+            {{-- Progress Card --}}
+            <div class="card">
+                <!-- Card header -->
+                {{-- <div class="card-header border-0">
+                    
+                </div> --}}
+
+                <div class="card-body">
+                    <p class="card-text text-center">Completion of evaluation: </p>
+                    <nav aria-label="...">
+                        <ul class="justify-content-center mt-4" style="list-style-type: none; padding-left:30%;padding-right:30%;">
+                            {{-- <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">
+                                <i class="fas fa-angle-left"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            </li> --}}
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-1">1</span>
+                            </li>
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-2">2</span>
+                            </li>
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-3">3</span>
+                            </li>
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-4">4</span>
+                            </li>
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-5">5</span>
+                            </li>
+                            <li class="page-item mb-2">
+                                <span class="page-link step" id = "step-6">6</span>
+                            </li>
+                            {{-- <li class="page-item">
+                            <a class="page-link" href="#">
+                                <i class="fas fa-angle-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </li> --}}
+                        </ul>
+                    </nav>  
+
+                    <script>
+                        // Default tab
+                        $(".tab").css("display", "none");
+                        $("#tab-1").css("display", "block");
+                
+                        function run(hideTab, showTab){
+                        if(hideTab < showTab){ // If not press previous button
+                            // Validation if press next button
+                            var currentTab = 0;
+                            x = $('#tab-'+hideTab);
+                            y = $(x).find("input")
+                            for (i = 0; i < y.length; i++){
+                            if (y[i].value == ""){
+                                $(y[i]).css("background", "#ffdddd");
+                                return false;
+                            }
+                            }
+                        }
+                
+                        // Progress bar
+                        for (i = 1; i < showTab; i++){
+                            $("#step-"+i).css("background", "blue");
+                            $("#step-"+i).css("color", "white");
+                        }
+                
+                        // Switch tab
+                        $("#tab-"+hideTab).css("display", "none");
+                        $("#tab-"+showTab).css("display", "block");
+                        //   $("input").css("background", "#fff");
+                        }
+                    </script>
+
+                    <script>
+                        $(function() {
+                        $('.toggle-class').change(function() {
+                            var status = $(this).prop('checked') == true ? 1 : 0; 
+                            var user_id = $(this).data('id'); 
+                            
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                url: '/submitInterest',
+                                data: {'status': status, 'user_id': user_id},
+                                success: function(data){
+                                    console.log(data.success)
+                                }
+                            });
+                        })
+                        })
+                    </script>
+
+                    
+                </div>
+
+                
+            </div>
+        </div>
+
+        
     </div>
     @include('layouts.footers.auth')
 </div>

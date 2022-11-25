@@ -162,6 +162,16 @@ class StudentController extends Controller
         // $student = Student::find($id);
         // return view('students.edit')->with('student',$student,'classes',$classes);
     }
+    public function editstudent($id)
+    {
+        $customfield = AutoFields::all();
+        $student = Student::find($id);
+        // $classlist = $student->classlists;
+        // dd($classlist);
+        // dd($student);
+        // echo $student->class->class_name;
+        return view('teachers.editstudent')->with('student',$student,'customfield',$customfield);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -208,7 +218,6 @@ class StudentController extends Controller
         $student->name = $request->input('name');
         $student->mykid = $request->input('mykid');
         $student->gender = $request->input('gender');
-        $student->classlist_id = null;
         $student->citizenship = $request->input('citizenship');
         $student->address = $request->input('address');
         $student->G1_name = $request->input('G1_name');
@@ -220,13 +229,75 @@ class StudentController extends Controller
         $student->G2_phonenum = $request->input('G2_phonenum');
         $student->G2_income = $request->input('G2_income');
 
-        $additional=implode(",",$request->input('customfield'));
-        $student->additional_Info = $additional;
-        
+        if($request->input('customfield') != null) {
+            $additional=implode(",",$request->input('customfield'));
+            $student->additional_Info = $additional;
+        }
         $student->update();
         // $student->update();
         // dd($request);
         return redirect()->route('students.index')->with('success','Student updated successfully');
+    }
+
+    public function updatestudent(Request $request, $id)
+    {
+        // dd($request);
+        $request->validate([
+            'name'=>'required',
+            'mykid' =>'required',
+            'gender' =>'required',
+            // 'class' =>'required',
+            'citizenship' =>'required',
+            'address' =>'required',
+            'G1_name' =>'required',
+            'G1_relation' =>'required',
+            'G1_phonenum' =>'required',
+            'G1_income' =>'required',
+            'G2_name' =>'required',
+            'G2_relation' =>'required',
+            'G2_phonenum' =>'required',
+            'G2_income' =>'required',
+        ]);
+
+        $student = Student::find($id);
+        if($request->hasFile('imageS')){
+            $destination = "assets\img\userImage".$student->image_path;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('imageS');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request->input('name').'.'.$extension;
+            $file->move(public_path('assets\img\userImage'),$filename);
+            $student->image_path = $filename;
+        }
+        
+        // dd($request);
+        
+        $student->status = 'active';
+        $student->name = $request->input('name');
+        $student->mykid = $request->input('mykid');
+        $student->gender = $request->input('gender');
+        $student->citizenship = $request->input('citizenship');
+        $student->address = $request->input('address');
+        $student->G1_name = $request->input('G1_name');
+        $student->G1_relation = $request->input('G1_relation');
+        $student->G1_phonenum = $request->input('G1_phonenum');
+        $student->G1_income = $request->input('G1_income');
+        $student->G2_name = $request->input('G2_name');
+        $student->G2_relation = $request->input('G2_relation');
+        $student->G2_phonenum = $request->input('G2_phonenum');
+        $student->G2_income = $request->input('G2_income');
+
+        if($request->input('customfield') != null) {
+            $additional=implode(",",$request->input('customfield'));
+            $student->additional_Info = $additional;
+        }
+        
+        $student->update();
+        // $student->update();
+        // dd($request);
+        return redirect()->route('studentlist')->with('success','Student updated successfully');
     }
 
     /**

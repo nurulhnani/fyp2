@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\TeachersImport;
+use App\Models\Student;
 use App\Models\Subject_details;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -50,6 +51,12 @@ class TeacherController extends Controller
         }
 
         return view('teachers.viewprofile',compact('teacher','customfield','subject'));
+    }
+
+    public function studentlist()
+    {
+        $students = Student::all();
+        return view('teachers.studentlist',compact('students'));
     }
 
     /**

@@ -12,7 +12,7 @@
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
               <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
-              <li class="breadcrumb-item" aria-current="page">Interest Inventory</li>
+              <li class="breadcrumb-item"><a href="{{route('interestInventory',$student->id)}}">Interest Inventory</a></li>
               <li class="breadcrumb-item active" aria-current="page">Result</li>
             </ol>
           </nav>
@@ -27,10 +27,12 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <!-- Card header -->
-        {{-- <div class="card-header border-0">
-          <h3 class="mb-0">{{$student->name}}</h3>
-        </div> --}}
+        @if($result == 'No result found')
+        <div class="card-body">
+          <p class="card-text">No result found for this student. Please complete the evaluation to view the result.</p>
+        </div>
+        @else
+
         <div class="card-body">
           <p class="card-text">Thank you for completing the interest inventory evaluation. Below are the result:</p>
 
@@ -214,6 +216,7 @@
       </style>
 
       </div>
+      @endif
         
        
       </div>
