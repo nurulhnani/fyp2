@@ -19,7 +19,7 @@ class InterestInventoryController extends Controller
         $conventionalquestions = Interest_Inventory::where('category','Conventional')->get();
         return view('evaluation.interestInventory', compact('student','realisticquestions','investigativequestions','artisticquestions','socialquestions','enterprisingquestions','conventionalquestions'));
     }
-    
+
     public function store(Request $request)
     {
         $studentname = $request->input('studentname');
@@ -109,4 +109,36 @@ class InterestInventoryController extends Controller
         // dd($result);
         return view('evaluation.interestResult',compact('student','result'));
     }
+
+    //For admin to manage assessment
+    public function index(){
+        $questions = Interest_Inventory::paginate(10);
+        return view('assessment.index',compact('questions'));
+    }
+
+    public function addquestion(Request $request){
+        $question = new Interest_Inventory;
+
+        $question->questions = $request->input('question');
+        $question->category = $request->input('category');
+        $question->save();
+        return redirect()->back();
+    }
+
+    public function editassessment(Request $request,$id){
+        $question = Interest_Inventory::find($id);
+        $question->questions = $request->input('question');
+        $question->category = $request->input('category');
+        $question->update();
+
+        return redirect()->back();
+    }
+    public function deletequestion($id)
+    {
+        $question = Interest_Inventory::find($id);
+        $question->delete();
+       
+        return redirect()->back();
+    }
+
 }

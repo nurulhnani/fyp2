@@ -62,6 +62,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::get('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMore']);
 	Route::post('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMorePost'])->name('addmore');
 	Route::post('/storeclass',[App\Http\Controllers\SubjectController::class, 'storeclass'])->name('subjects.storeclass');
+	Route::get('/manageAssessment',[App\Http\Controllers\InterestInventoryController::class, 'index'])->name('manageAssessment');
+	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');
+	Route::put('/editassessment/{id}',[App\Http\Controllers\InterestInventoryController::class, 'editassessment'])->name('editassessment');
+	Route::delete('/deletequestion/{id}',[App\Http\Controllers\InterestInventoryController::class, 'deletequestion'])->name('deletequestion');
 
 });
 
