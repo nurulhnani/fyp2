@@ -5,9 +5,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="{{ route('teacher.home') }}">
+        {{-- <a class="navbar-brand pt-0" href="{{ route('teacher.home') }}">
             <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-        </a>
+        </a> --}}
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
@@ -78,6 +78,44 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
+                <li class="nav-item bg-gradient-primary">
+                    <a href="#" class="nav-link">
+                        <div class="profile-image">
+                            <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name text-wrap" style="font-size: 10pt">{{auth()->user()->name}}</p>
+                            <p class="designation" style="font-size: 10pt"><u>Teacher</u></p>
+                        </div>
+                    </a>
+                </li>
+                <style>
+                    .profile-image {
+                        width: 30%;
+                        height: 30%;
+                        margin-right: 15px;
+                        position: relative;
+                    }
+                    .dot-indicator {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 100%;
+                    }
+                    .designation {
+                        margin-bottom: 0;
+                        font-weight: 400;
+                        color: #fff;
+                    }
+                    .profile-name {
+                        margin-bottom: 5px;
+                        font-weight: 500;
+                        font-size: 15px;
+                        color: #fff;
+                    }
+                    .text-wrap {
+                        white-space: normal !important;
+                    }
+                </style>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('teacher.home') }}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}

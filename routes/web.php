@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -66,7 +70,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');
 	Route::put('/editassessment/{id}',[App\Http\Controllers\InterestInventoryController::class, 'editassessment'])->name('editassessment');
 	Route::delete('/deletequestion/{id}',[App\Http\Controllers\InterestInventoryController::class, 'deletequestion'])->name('deletequestion');
-
+	// Route::get('/admin/home',[App\Http\Controllers\AdminController::class, 'chartjs'])->name('filterdata');
 });
 
 /*------------------------------------------

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Merit;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Classlist;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Interest_Inventory_Results;
 
 class AdminController extends Controller
 {
@@ -160,21 +162,207 @@ class AdminController extends Controller
     public function customfield(){
         return view('customfield.index');
     }
-    public function chartjs(){
-        $record = Student::select(DB::raw("COUNT(*) as count"),DB::raw("SUM(G1_income) as G1_income"),DB::raw("classlist_id as classlist_id"))
-        // ->where('created_at', '>', Carbon::today()->subDay(6))
-        ->groupBy('classlist_id')
+    public function chartjs(Request $request){
+
+        $record1 = Student::leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw('YEAR(students.updated_at) as year'))
+        ->where('status', '=', 'active')
+        ->groupBy('year')
+        ->when($request->grade != null, function ($q) use ($request){
+            $intgrade = [];
+            foreach($request->grade as $intg){
+                $intgrade[]= (int)$intg;
+            }
+            return $q->whereIn('class_name',$intgrade);
+            })
+        ->get();
+
+        $data1 = [];
+    
+        foreach($record1 as $row) {
+            $data1['label'][] = $row->year;
+            $data1['data'][] = (int) $row->count;
+        }
+        // dd($record1);
+
+        $record10 = Student::leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw('YEAR(students.updated_at) as year'))
+        ->where('status', '=', 'inactive')
+        ->groupBy('year')
+        ->when($request->grade != null, function ($q) use ($request){
+            $intgrade = [];
+            foreach($request->grade as $intg){
+                $intgrade[]= (int)$intg;
+            }
+            return $q->whereIn('class_name',$intgrade);
+            })
+        ->get();
+
+        $year = [];
+        foreach($record10 as $record){
+            if(!in_array($record->year,$year)){
+                $year[] = $record->year;
+            }
+        }
+
+        $data10 = [];
+    
+        $count_inactive = [];
+        foreach($record1 as $test) {
+            if(in_array($test->year,$year)){
+                $count_inactive[] = $test->count; 
+            }else{
+                $count_inactive[] = 0;
+            }
+        }
+
+        foreach($count_inactive as $row) {
+            // $data10['label'][] = ["2020","2021","2022"];
+            $data10['data'][] = (int)$row;
+        }
+        // dd($data10['data']);
+
+        $record2 = Teacher::select(DB::raw("COUNT(*) as count"),DB::raw("YEAR(updated_at) as year"))
+        ->where('status', '=', 'active')
+        ->groupBy('year')
+        ->when($request->gender != null, function ($q) use ($request){
+            return $q->where('gender','=',$request->gender);
+            })
+        ->get();
+    
+        $data2 = [];
+    
+        foreach($record2 as $row) {
+            $data2['label'][] = $row->year;
+            // $data2['label'][] = $row->status;
+            $data2['data'][] = (int) $row->count;
+        }
+
+        $record3 = Teacher::select(DB::raw("COUNT(*) as count"),DB::raw("YEAR(updated_at) as year"))
+        ->where('status', '=', 'inactive')
+        ->groupBy('year')
+        ->when($request->gender != null, function ($q) use ($request){
+            return $q->where('gender','=',$request->gender);
+            })
+        ->get();
+
+        // dd($record3);
+    
+        // dd($record);
+        $data3 = [];
+    
+        foreach($record3 as $row) {
+            $data3['label'][] = $row->year;
+            $data3['data'][] = (int) $row->count;
+        }
+
+        $record4 = Student::leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw("gender as gender"))
+        ->where('status', '=', 'active')
+        ->when($request->grade != null, function ($q) use ($request){
+            $intgrade = [];
+            foreach($request->grade as $intg){
+                $intgrade[]= (int)$intg;
+            }
+            return $q->whereIn('class_name',$intgrade);
+            })
+        ->groupBy('gender')
         // ->orderBy('day')
         ->get();
     
-        $data = [];
+        // dd($record);
+        $data4 = [];
     
-        foreach($record as $row) {
-            $data['label'][] = $row->classlist_id;
-            $data['data'][] = (int) $row->G1_income;
+        foreach($record4 as $row) {
+            $data4['label'][] = $row->gender;
+            $data4['data'][] = (int) $row->count;
+        }
+
+        $record5 = Teacher::select(DB::raw("COUNT(*) as count"),DB::raw("gender as gender"))
+        ->where('status', '=', 'active')
+        ->groupBy('gender')
+        // ->orderBy('day')
+        ->get();
+    
+        // dd($record);
+        $data5 = [];
+    
+        foreach($record5 as $row) {
+            $data5['label'][] = $row->gender;
+            $data5['data'][] = (int) $row->count;
+        }
+
+        $record6 = Interest_Inventory_Results::select(DB::raw("COUNT(*) as count"),DB::raw("student_id as student_id"))
+        // ->where('status', '=', 'active')
+        ->groupBy('student_id')
+        // ->orderBy('day')
+        ->get();
+    
+        // dd($record6);
+        $data6 = [];
+    
+        foreach($record6 as $row) {
+            $data6['label'][] = ["completed","incomplete"];
+            $data6['data'][] = (int) $row->count;
+        }
+
+        // $data6['data'] = count($record6);
+
+        $record7 = Merit::where('type', '=', 'c')
+        ->leftJoin('students','students.mykid','=','merits.student_mykid')
+        ->leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw("SUM(merit_point) as merit_point"))
+        ->groupBy('class_name')
+        ->get();
+
+        $data7 = [];
+    
+        foreach($record7 as $row) {
+            // $data7['label'][] = $row->student_mykid;
+            $data7['data'][] = (int) $row->merit_point;
+        }
+
+        $record8 = Merit::where('type', '=', 'b')
+        ->where('merit_point', '>', '0')
+        ->leftJoin('students','students.mykid','=','merits.student_mykid')
+        ->leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw("SUM(merit_point) as merit_point"))
+        ->groupBy('class_name')
+        ->get();
+
+        $data8 = [];
+    
+        foreach($record8 as $row) {
+            // $data7['label'][] = $row->student_mykid;
+            $data8['data'][] = (int) $row->merit_point;
+        }
+
+        $record9 = Merit::where('type', '=', 'b')
+        ->where('merit_point', '<', '0')
+        ->leftJoin('students','students.mykid','=','merits.student_mykid')
+        ->leftJoin('classlists','classlists.id','=','students.classlist_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw("SUM(merit_point) as merit_point"))
+        ->groupBy('class_name')
+        ->get();
+
+        $data9 = [];
+    
+        foreach($record9 as $row) {
+            // $data7['label'][] = $row->student_mykid;
+            $data9['data'][] = (int) abs($row->merit_point);
         }
     
-        $data['chart_data'] = json_encode($data);
+        $data['chart_student'] = json_encode($data1);
+        $data['chart_studentinactive'] = json_encode($data10);
+        $data['chart_teacher'] = json_encode($data2);
+        $data['chart_teacherinactive'] = json_encode($data3);
+        $data['student_gender'] = json_encode($data4);
+        $data['teacher_gender'] = json_encode($data5);
+        $data['interest_eval'] = json_encode($data6);
+        $data['student_cocumerit'] = json_encode($data7);
+        $data['student_behaviourmerit'] = json_encode($data8);
+        $data['student_behaviourdemerit'] = json_encode($data9);
+
         return view('admin.home', $data);
     }
 }
