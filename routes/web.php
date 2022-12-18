@@ -22,15 +22,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
-Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
-Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
-Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+// Route::get('/logintest',[App\Http\Controllers\Auth\LoginController::class, 'login'])->name('logintest')->middleware('auth');
+Route::get('/changePassword', [App\Http\Controllers\HomeController::class, 'changePwFirstLogin'])->name('changePwFirstLogin');
+
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
+	// Route::get('/login',function () {return view('login');})->name('login');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
@@ -70,7 +69,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');
 	Route::put('/editassessment/{id}',[App\Http\Controllers\InterestInventoryController::class, 'editassessment'])->name('editassessment');
 	Route::delete('/deletequestion/{id}',[App\Http\Controllers\InterestInventoryController::class, 'deletequestion'])->name('deletequestion');
-	// Route::get('/admin/home',[App\Http\Controllers\AdminController::class, 'chartjs'])->name('filterdata');
+	Route::get('download-file', [App\Http\Controllers\AdminController::class, 'downloadstudentfile'])->name('downloadstudentfile');
 });
 
 /*------------------------------------------
@@ -81,8 +80,9 @@ All Student Routes List
 Route::middleware(['auth', 'user-access:student'])->group(function () {
     Route::get('/student/home', [App\Http\Controllers\HomeController::class, 'studentHome'])->name('student.home');
 	Route::get('/overview',[App\Http\Controllers\StudentController::class, 'overview'])->name('overview');
+	// Route::get('/InterestInventoryResult',[App\Http\Controllers\StudentController::class, 'getStudentInterestResult'])->name('getStudentInterestResult');
 	Route::get('/history',[App\Http\Controllers\StudentController::class, 'history'])->name('history');
-	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewprofile');
+	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewstudentprofile');
 });
 
 /*------------------------------------------
@@ -132,5 +132,3 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

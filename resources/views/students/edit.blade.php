@@ -19,8 +19,16 @@
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
+              <div class="col-lg-7 col-7">
                 <h6 class="h2 text-white d-inline-block mb-4">Edit Student Profile</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                        <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                        {{-- <li class="breadcrumb-item"><a href="{{ route('evaluationList') }}">Student List</i></a></li> --}}
+                        <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+                    </ol>
+                </nav>
               </div>
               {{-- <div class="col-lg-6 col-5 text-right mb-4">
                 <a href="{{route('students.create')}}" class="btn btn-sm btn-neutral">Add New Student</a>

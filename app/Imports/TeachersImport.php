@@ -30,22 +30,22 @@ class TeachersImport implements ToModel
         // ]);
 
         $teacher = new Teacher;
-        $teacher->status = $row[0];
-        $teacher->name = $row[1];
-        $teacher->nric = $row[2];
-        $teacher->gender = $row[3];
-        $teacher->email = $row[4];
-        $teacher->position = $row[5];
-        $teacher->classlist_id = $row[6];
-        $teacher->address = $row[7];
-        $teacher->phone_number = $row[8];
-        $teacher->image_path = $row[9];
+        $teacher->status = "active";
+        $teacher->name = $row[0];
+        $teacher->nric = $row[1];
+        // $teacher->gender = $row[3];
+        $teacher->email = $row[2];
+        // $teacher->position = $row[5];
+        // $teacher->classlist_id = null;
+        // $teacher->address = $row[6];
+        // $teacher->phone_number = $row[7];
+        // $teacher->image_path = $row[8];
         $teacher->save();
         
         $user = new User;
-        $user->name = $row[1];
-        $user->image_path = $row[9];
-        $user->email = $row[4];
+        $user->name = $row[0];
+        // $user->image_path = $row[8];
+        $user->email = $row[2];
         $user->type = 1;
         $user->email_verified_at = now();
         $user->password = Hash::make('secret');

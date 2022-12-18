@@ -8,12 +8,18 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
+          <div class="col-lg-7 col-7">
             <h6 class="h2 text-white d-inline-block mb-4">Add New Student</h6> 
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add New Student</li>
+                </ol>
+            </nav>
           </div>
-          <div class="col-lg-6 col-5 text-right">
+          <div class="col-lg-5 col-5 text-right">
             <a href="{{route('addStudentInBulk')}}" class="btn btn-sm btn-neutral">Add Students in Bulk</a>
-            {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
           </div>
         </div>
       </div>
@@ -48,7 +54,7 @@
                             <h5><span class="font-weight-light">Choose profile picture</span></h5>
                         </div>
                         <div class="text-center">
-                            <input accept="/*" type="file" style="background-color:#FFF2FF" onchange="preview_image(event)" class="form-control  form-control-alternative bg-secondary" id="image" name="image" required>                 
+                            <input accept="/*" type="file" style="background-color:#FFF2FF" onchange="preview_image(event)" class="form-control  form-control-alternative bg-secondary" id="image" name="image">                 
                             <script type='text/javascript'>
                                 function preview_image(event) 
                                 {
@@ -93,7 +99,7 @@
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                          <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="" required autofocus>
+                                          <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="">
                                       </div>
                                   </div>
                               </div>
@@ -102,16 +108,16 @@
                                 <div class="col-sm">
                                     <div class="form-group">
                                         <label class="form-control-label" for="mykid">{{ __('Mykid') }}</label>
-                                        <input type="text" name="mykid" id="mykid" class="form-control form-control-alternative" placeholder="{{ __('Email') }}" value="" required>
+                                        <input type="text" name="mykid" id="mykid" class="form-control form-control-alternative" placeholder="{{ __('Mykid') }}" value="" required>
                                     </div>
                                 </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="citizenship">{{ __('Citizenship') }}</label>
-                                      <input type="text" name="citizenship" id="citizenship" class="form-control form-control-alternative" placeholder="{{ __('Citizenship') }}" value="" required>
+                                      <input type="text" name="citizenship" id="citizenship" class="form-control form-control-alternative" placeholder="{{ __('Citizenship') }}" value="" >
                                   </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="gender">{{ __('Gender') }}</label>
-                                      <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="{{ __('Gender') }}" value="" required>
+                                      <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="{{ __('Gender') }}" value="" >
                                   </div>
                               </div>
 
@@ -122,22 +128,22 @@
                                   <div class="col-sm-12">
                                       <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                           <label class="form-control-label" for="G1_name">{{ __('Guardian 1 Name') }}</label>
-                                          <input type="text" name="G1_name" id="G1_name" class="form-control form-control-alternative" placeholder="" required autofocus>
+                                          <input type="text" name="G1_name" id="G1_name" class="form-control form-control-alternative" placeholder="" >
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G1_relation">{{ __('Relation') }}</label>
-                                      <input type="text" name="G1_relation" id="G1_relation" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G1_relation" id="G1_relation" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G1_phonenum">{{ __('Phone number') }}</label>
-                                      <input type="text" name="G1_phonenum" id="G1_phonenum" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G1_phonenum" id="G1_phonenum" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G1_income">{{ __('Income') }}</label>
-                                      <input type="text" name="G1_income" id="G1_income" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G1_income" id="G1_income" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                               </div>
 
@@ -148,22 +154,22 @@
                                   <div class="col-sm-12">
                                       <div class="form-group">
                                           <label class="form-control-label" for="G2_name">{{ __('Guardian 2 Name') }}</label>
-                                          <input type="text" name="G2_name" id="G2_name" class="form-control form-control-alternative" placeholder="" required autofocus>
+                                          <input type="text" name="G2_name" id="G2_name" class="form-control form-control-alternative" placeholder="" >
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G2_relation">{{ __('Relation') }}</label>
-                                      <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G2_phonenum">{{ __('Phone number') }}</label>
-                                      <input type="text" name="G2_phonenum" id="G2_phonenum" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G2_phonenum" id="G2_phonenum" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                                   <div class="col-sm"><span></span>
                                       <label class="form-control-label" for="G2_income">{{ __('Income') }}</label>
-                                      <input type="text" name="G2_income" id="G2_income" class="form-control form-control-alternative" placeholder="" value="" required>
+                                      <input type="text" name="G2_income" id="G2_income" class="form-control form-control-alternative" placeholder="" value="" >
                                   </div>
                               </div>
 
@@ -189,7 +195,7 @@
                                                         ?>
 
                                                         <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                                        <select class="form-control form-control-alternative" name="customfield[]" required>
+                                                        <select class="form-control form-control-alternative" name="customfield[]" >
                                                             <option selected disabled>{{ $customfield->name }}</option>
                                                             @foreach($explode_notes as $explode_note)
                                                                 <option value="{{$explode_note}}">{{$explode_note}}</option>
@@ -204,7 +210,7 @@
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                                         <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
-                                                        class="form-control form-control-alternative" placeholder="" value="" required>
+                                                        class="form-control form-control-alternative" placeholder="" value="" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,12 +232,12 @@
             </div>
           </div>
         </form>
+
+        @include('layouts.footers.auth')
         </div>
 
     {{-- </div> --}}
-    
-    @include('layouts.footers.auth')
-  </div>
+  {{-- </div> --}}
 @endsection
 
 @push('js')

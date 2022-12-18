@@ -1,9 +1,12 @@
 @extends('layouts.adminapp')
 
 @section('content')
-    @include('layouts.headers.cards')
+    {{-- @include('layouts.headers.cards') --}}
     {{-- Header --}}
-    <div class="header bg-gradient-primary pb-6">
+    <div class="header pb-6 pt-5 pt-lg-8 d-flex align-items-center" style="background-image: url('{{asset('assets/img/theme/al-amin.jpg')}}'); background-size: cover; background-position: center top;">
+      <!-- Mask -->
+      <span class="mask bg-gradient-primary opacity-8"></span>
+    {{-- <div class="header bg-gradient-primary pb-6"> --}}
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
@@ -31,8 +34,8 @@
             </div>
           </div>
         </div>
-      </div>
-
+      {{-- </div> --}}
+    </div>
     <div class="container-fluid mt--6">
         <div class="row">
             <div class="col">
@@ -121,6 +124,13 @@
                           @endforeach
                         </tbody>
                       </table>
+                    </div>
+                    <div class="card-footer py-4">
+                      <nav aria-label="...">
+                        <ul class="pagination justify-content-end mb-0">
+                          {{$teachers->links()}}
+                        </ul>
+                      </nav>
                     </div>
                 </div>
             </div> 

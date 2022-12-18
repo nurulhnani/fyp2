@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.adminapp')
 
 @section('content')
     {{-- @include('layouts.headers.cards') --}}
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
     <div class="header bg-gradient-primary pb-5 pt-md-7">
         <div class="container-fluid mt--2">
 
@@ -129,9 +130,9 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="pieadmin">
+                        <div id="pieadmin">
                             {{-- // Chart wrapper --}}
-                            <canvas id="student-gender" class="chart-canvas"></canvas>
+                            <canvas id="student-gender" width="100" height="100"></canvas>
                         </div>
                             <!-- javascript -->
                             
@@ -188,7 +189,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="pieadmin">
+                        <div id="pieadmin">
                             {{-- // Chart wrapper --}}
                             <canvas id="teacher-gender" class="chart-canvas"></canvas>
                         </div>
@@ -337,7 +338,7 @@
                          
                               //pie chart data
                               var data = {
-                                labels: ["2020","2021","2022"],
+                                labels: cData.label,
                                 datasets: [
                                   {
                                     label: "Active",
@@ -1133,7 +1134,7 @@
             height: 327px;
         }
 
-        .pieadmin
+        #pieadmin
         {
             position: relative;
 

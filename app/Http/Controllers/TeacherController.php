@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\TeachersImport;
-use App\Models\Student;
 use App\Models\Subject_details;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
 {
@@ -24,7 +25,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::latest()->paginate(5);
+        $teachers = Teacher::latest()->paginate(10);
       
         return view('teachers.index',compact('teachers'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -207,7 +208,8 @@ class TeacherController extends Controller
         // $teacher->subject_taught = $request->input('subject_taught');
         // $teacher->class_name = $request->input('class_name');
         $teacher->phone_number = $request->input('phone_number');
-
+        $teacher->updated_at = now();
+        
         if($request->input('customfield') != null){
             $additional=implode(",",$request->input('customfield'));
             $teacher->additional_Info = $additional;
@@ -236,6 +238,16 @@ class TeacherController extends Controller
     */
     public function fileImport(Request $request) 
     {
+        $validator = Validator::make(
+            [
+                'file'      => $request->file,
+                'extension' => strtolower($request->file->getClientOriginalExtension()),
+            ],
+            [
+                'file'          => 'required',
+                'extension'      => 'required|in:csv,xlsx,xls',
+            ]
+        );
         Excel::import(new TeachersImport, $request->file('file')->store('temp'));
         return redirect()->route('teachers.index');
     }

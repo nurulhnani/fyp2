@@ -102,12 +102,14 @@ class ClassController extends Controller
         $teacherid = Teacher::where('classlist_id', $id)->first()->id;
         $teacher = Teacher::find($teacherid);
         $teacher->classlist_id = null;
+        $teacher->updated_at = now();
         $teacher->update();
 
         $teachername = $request->input('classroom_teacher');
         $teacherid = Teacher::where('name', $teachername)->first()->id;
         $teacher = Teacher::find($teacherid);
         $teacher->classlist_id = $id;
+        $teacher->updated_at = now();
         $teacher->update();
 
         $studentLists = $request->input('checklist');
@@ -116,6 +118,7 @@ class ClassController extends Controller
                 $studentsid = Student::where('id', "=", $studentList)->first()->id;
                 $students = Student::find($studentsid);
                 $students->classlist_id = $id;
+                $students->updated_at = now();
                 $students->update();
             }
         }
@@ -138,6 +141,7 @@ class ClassController extends Controller
                 $studentsid = Student::where('mykid', "=", $data)->first()->id;
                 $students = Student::find($studentsid);
                 $students->classlist_id = $id;
+                $students->updated_at = now();
                 $students->update();
             }
         }

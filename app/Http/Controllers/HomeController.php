@@ -22,7 +22,13 @@ class HomeController extends Controller
     public function index()
     {
         return view('dashboard');
-    } 
+    }
+    
+    public function changePwFirstLogin()
+    {
+        return view('auth.changePwFirstLogin');
+    }
+
     public function adminHome()
     {
         return view('admin.home');

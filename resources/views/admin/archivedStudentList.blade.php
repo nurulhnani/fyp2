@@ -7,10 +7,25 @@
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
+              <div class="col-lg-12 col-12">
+                <h6 class="h2 text-white d-inline-block mb-4">Archived Student List</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                  <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                      <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                      <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
+                      <li class="breadcrumb-item active">Archived Student List</li>
+                  </ol>
+                </nav> 
+              
+              </div>
+            </div>
+
+
+            <div class="row align-items-center py-4">
+              <div class="col-lg-12 col-12">
                 {{-- Search form --}}
-              <form class="navbar-search navbar-search-dark form-inline mr-sm-3" id="navbar-search-main">
-                <div class="form-group mb-0">
+              <form class="navbar-search navbar-search-dark form-inline" id="navbar-search-main">
+                <div class="form-group">
                   <div class="input-group input-group-alternative input-group-merge">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -22,11 +37,10 @@
                   <span aria-hidden="true">×</span>
                 </button> --}}
               </form>
+              
               </div>
-              {{-- <div class="col-lg-6 col-5 text-right mb-4">
-                <a href="{{route('addNewStudent')}}" class="btn btn-sm btn-neutral">Add New Student</a>
-              </div> --}}
             </div>
+
           </div>
         </div>
       </div>
@@ -56,7 +70,8 @@
                                 <td style="width: 10%">
                                   <div class="col-lg-6 col-5 text-right mb-0">
                                     <a href="{{route('students.edit',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
-                                    <a href="#unarchiveModal{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                    <a href="#unarchiveStudent{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                    @include('admin.actionArchiveStudent')
                                   </div>
                                 </td>
                                 {{-- <td> --}}
@@ -145,31 +160,6 @@
             </div> 
 
         </div>
-       
-  <!--Archive Modal -->
-<div class="modal fade" id="unarchiveModal{{$student->id}}" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form action="/unarchiveStudent/{{$student['id']}}" method="POST">
-            @csrf
-            @method('PUT')
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Archive student</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h4 class="text-center">Are you sure to unarchive {{$student->name}}?</h4>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Confirm</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
         @include('layouts.footers.auth')
     </div>

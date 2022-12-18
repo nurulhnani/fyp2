@@ -1,4 +1,4 @@
-<div class="header bg-gradient-primary pb-6 pt-5 pt-md-3">
+<div class="header bg-gradient-primary pb-6 pt-5 pt-md-3" style="background-image: url('{{asset('/img/theme/al-amin.jpg')}}'); background-size: cover; background-position: center top;">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->

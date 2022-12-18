@@ -23,7 +23,11 @@
                           <img alt="Image placeholder" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
                       </span>
                       <div class="media-body ml-2 d-none d-lg-block">
-                          <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
+                        <?php 
+                            $fname = explode(" ", auth()->user()->name); 
+                            $lname = $fname[0];
+                        ?>
+                          <span class="mb-0 text-sm  font-weight-bold">{{ $lname }}</span>
                       </div>
                   </div>
               </a>

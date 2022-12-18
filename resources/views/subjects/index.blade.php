@@ -27,7 +27,19 @@
                     <div class="row py-2">
                       <div class="col">
                         <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                            <i class="fas fa-chart-bar"></i>
+                            {{-- <i class="fas fa-chart-bar"></i> --}}
+                            <?php 
+                              $name = $subj->subject_name;
+                              $words=explode(" ",$name);
+                              $inits='';
+                              //loop through array extracting initial letters
+                              foreach($words as $word){
+                                $inits.=strtoupper(substr($word,0,1));
+                              }
+                              // return $inits;	
+                              // dd($inits);
+                            ?>
+                            {{$inits}}
                         </div>
                       </div>
                     </div>

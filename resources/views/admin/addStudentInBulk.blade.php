@@ -8,8 +8,16 @@
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-4">Add Student In Bulk</h6> 
+          <div class="col-lg-12 col-12">
+            <h6 class="h2 text-white d-inline-block mb-4">Add Student In Bulk</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
+                  <li class="breadcrumb-item"><a href="{{route('students.create')}}">Add New Student</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Add Student In Bulk</li>
+              </ol>
+            </nav> 
           </div>
         </div>
       </div>
@@ -43,7 +51,7 @@
                           </div>
                   </div>
               </div>
-                <p class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="#" class="text-right badge badge-primary"> Click here for example</a></p>
+                <p class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="{{route('downloadstudentfile')}}" class="text-right badge badge-primary"> Click here for example</a></p>
                 <div class="text-center">
                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                 </div>
@@ -52,12 +60,12 @@
             </div>
         </div>
     </div>
+
+    @include('layouts.footers.auth')
 </div>
 
 {{-- </div> --}}
-    
-    @include('layouts.footers.auth')
-  </div>
+  {{-- </div> --}}
 @endsection
 
 @push('js')

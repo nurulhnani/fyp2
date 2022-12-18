@@ -227,12 +227,12 @@
   </div>
 
 </form>
+
+@include('layouts.footers.auth')
 </div>
 
     {{-- </div> --}}
-    
-    @include('layouts.footers.auth')
-  </div>
+  {{-- </div> --}}
 @endsection
 
 @push('js')

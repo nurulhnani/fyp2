@@ -58,7 +58,8 @@
                                 <td style="width: 10%">
                                   <div class="col-lg-6 col-5 text-right mb-0">
                                     <a href="{{route('teachers.edit',$teacher->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
-                                    <a href="#unarchiveModal{{$teacher->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                    <a href="#unarchiveTeacher{{$teacher->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
+                                    @include('admin.actionArchiveTeacher')
                                   </div>
                                 </td>
                                 {{-- <td> --}}
@@ -147,31 +148,6 @@
             </div> 
 
         </div>
-       
-  <!--Archive Modal -->
-<div class="modal fade" id="unarchiveModal{{$teacher->id}}" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form action="/unarchiveTeacher/{{$teacher['id']}}" method="POST">
-            @csrf
-            @method('PUT')
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Archive teacher</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h4 class="text-center">Are you sure to unarchive {{$teacher->name}}?</h4>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Confirm</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
         @include('layouts.footers.auth')
     </div>

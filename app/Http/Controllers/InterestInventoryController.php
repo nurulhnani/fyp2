@@ -71,10 +71,10 @@ class InterestInventoryController extends Controller
             $conventionalchecked = 0;
         }
 
-        if($findInResultid == null){
+        // if($findInResultid == null){
             $result = new Interest_Inventory_Results;
             $result->student_id = $studentid;
-            $student = Student::find($studentid);
+            // $student = Student::find($studentid);
             $result->realistic = $realisticchecked;
             $result->investigative = $investigativechecked;
             $result->artistic =  $artisticchecked;
@@ -82,17 +82,17 @@ class InterestInventoryController extends Controller
             $result->enterprising =  $enterprisingchecked;
             $result->conventional =  $conventionalchecked;
             $result->save(); 
-        }else{
-            $resultid = Interest_Inventory_Results::where('student_id',$studentid)->first()->id;
-            $result = Interest_Inventory_Results::find($resultid);
-            $result->realistic = $realisticchecked;
-            $result->investigative = $investigativechecked;
-            $result->artistic =  $artisticchecked;
-            $result->social = $socialchecked;
-            $result->enterprising =  $enterprisingchecked;
-            $result->conventional =  $conventionalchecked;
-            $result->update();
-        }
+        // }else{
+        //     $resultid = Interest_Inventory_Results::where('student_id',$studentid)->first()->id;
+        //     $result = Interest_Inventory_Results::find($resultid);
+        //     $result->realistic = $realisticchecked;
+        //     $result->investigative = $investigativechecked;
+        //     $result->artistic =  $artisticchecked;
+        //     $result->social = $socialchecked;
+        //     $result->enterprising =  $enterprisingchecked;
+        //     $result->conventional =  $conventionalchecked;
+        //     $result->update();
+        // }
         
 
         return redirect()->route('interestResult',$studentid);

@@ -19,14 +19,14 @@ return new class extends Migration
             $table->string('status');
             $table->string('name');
             $table->string('nric');
-            $table->string('gender');
+            $table->string('gender')->nullable();
             $table->string('email');
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->unsignedBigInteger('classlist_id')->nullable();
-            $table->string('address');
-            $table->string('phone_number');
-            $table->string('image_path');
-            $table->string('additional_Info')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('image_path')->nullable();
+            $table->string('additional_Info')->nullable()->nullable();
             $table->foreign('classlist_id')->references('id')->on('classlists')->onDelete('cascade');
         });
     }

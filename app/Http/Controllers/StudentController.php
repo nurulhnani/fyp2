@@ -8,10 +8,12 @@ use App\Models\Classlist;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
+use App\Models\Interest_Inventory_Results;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -22,7 +24,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate(5);
+        $students = Student::paginate(10);
         $class = Classlist::all();
         return view('students.index',compact('students','class'));
     }
@@ -31,6 +33,13 @@ class StudentController extends Controller
     {
         return view('students.overview');
     }
+    // public function getStudentInterestResult(){
+    //     $studentname = auth()->user()->name;
+    //     $studentid = Student::where('name',$studentname)->first()->id;
+    //     $interestresult = Interest_Inventory_Results::find($studentid);
+    //     dd($interestresult);
+    //     return vi
+    // }
     public function history()
     {
         return view('students.history');
@@ -66,25 +75,23 @@ class StudentController extends Controller
         $request->validate([
             'name'=>'required',
             'mykid' =>'required',
-            'gender' =>'required',
+            // 'gender' =>'required',
             // 'class_id' =>'required',
-            'citizenship' =>'required',
-            'address' =>'required',
-            'G1_name' =>'required',
-            'G1_relation' =>'required',
-            'G1_phonenum' =>'required',
-            'G1_income' =>'required',
-            'G2_name' =>'required',
-            'G2_relation' =>'required',
-            'G2_phonenum' =>'required',
-            'G2_income' =>'required',
-            'image' => 'required',
+            // 'citizenship' =>'required',
+            // 'address' =>'required',
+            // 'G1_name' =>'required',
+            // 'G1_relation' =>'required',
+            // 'G1_phonenum' =>'required',
+            // 'G1_income' =>'required',
+            // 'G2_name' =>'required',
+            // 'G2_relation' =>'required',
+            // 'G2_phonenum' =>'required',
+            // 'G2_income' =>'required',
+            // 'image' => 'required',
         ]);
         $data = $request->input();
         
         $student = new Student;
-        $newImage = $data['name'].'.'.$request->image->extension();
-        $request->image->move(public_path('assets\img\userImage'),$newImage);
 
         $student->status = "active";
         $student->name = $data['name'];
@@ -101,7 +108,13 @@ class StudentController extends Controller
         $student->G2_relation = $data['G2_relation'];
         $student->G2_phonenum = $data['G2_phonenum'];
         $student->G2_income = $data['G2_income'];
-        $student->image_path = $newImage;
+
+        $newImage = "";
+        if($request->hasFile('image')){
+            $newImage = $data['name'].'.'.$request->image->extension();
+            $request->image->move(public_path('assets\img\userImage'),$newImage);
+            $student->image_path = $newImage;
+        }      
 
         if($request->input('customfield') != null){
             $additional=implode(",",$request->input('customfield'));
@@ -112,6 +125,9 @@ class StudentController extends Controller
 
         $user = new User;
         $user->name = $data['name'];
+        if($request->hasFile('image')){
+            $user->image_path = $newImage;
+        }
         $user->image_path = $newImage;
         $user->email = $data['mykid'];
         $user->type = 2;
@@ -228,6 +244,7 @@ class StudentController extends Controller
         $student->G2_relation = $request->input('G2_relation');
         $student->G2_phonenum = $request->input('G2_phonenum');
         $student->G2_income = $request->input('G2_income');
+        $student->updated_at = now();
 
         if($request->input('customfield') != null) {
             $additional=implode(",",$request->input('customfield'));
@@ -288,6 +305,7 @@ class StudentController extends Controller
         $student->G2_relation = $request->input('G2_relation');
         $student->G2_phonenum = $request->input('G2_phonenum');
         $student->G2_income = $request->input('G2_income');
+        $student->updated_at = now();
 
         if($request->input('customfield') != null) {
             $additional=implode(",",$request->input('customfield'));
@@ -319,6 +337,17 @@ class StudentController extends Controller
     */
     public function fileImport(Request $request) 
     {
+        $validator = Validator::make(
+            [
+                'file'      => $request->file,
+                'extension' => strtolower($request->file->getClientOriginalExtension()),
+            ],
+            [
+                'file'          => 'required',
+                'extension'      => 'required|in:csv,xlsx,xls',
+            ]
+        );
+          
         Excel::import(new StudentsImport, $request->file('file')->store('temp'));
         return redirect()->route('students.index');
     }
