@@ -15,8 +15,14 @@ class ClassSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('classlists')->insert([
-            'class_name'=>'1 Amanah',
-        ]);
+        $classes = [
+            [
+                'class_name'=>'1 Amanah',
+            ],[
+                'class_name'=>'2 Amanah',
+            ]
+        ];
+
+        DB::table('classlists')->insert($classes);
     }
 }

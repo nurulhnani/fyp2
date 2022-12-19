@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Models\Interest_Inventory;
 use App\Models\Interest_Inventory_Results;
@@ -24,9 +25,8 @@ class InterestInventoryController extends Controller
     {
         $studentname = $request->input('studentname');
         $studentid = Student::where('name',$studentname)->first()->id;
-
-        $findInResultid = Interest_Inventory_Results::where('student_id',$studentid)->get();
-        // dd($findInResultid);
+        $teachername = auth()->user()->name;
+        $teacherid = Teacher::where('name',$teachername)->first()->id;
 
         $realisticcheckboxes = $request->input('realistic');
         if($realisticcheckboxes!=null){
@@ -71,43 +71,69 @@ class InterestInventoryController extends Controller
             $conventionalchecked = 0;
         }
 
-        // if($findInResultid == null){
-            $result = new Interest_Inventory_Results;
-            $result->student_id = $studentid;
-            // $student = Student::find($studentid);
-            $result->realistic = $realisticchecked;
-            $result->investigative = $investigativechecked;
-            $result->artistic =  $artisticchecked;
-            $result->social = $socialchecked;
-            $result->enterprising =  $enterprisingchecked;
-            $result->conventional =  $conventionalchecked;
-            $result->save(); 
-        // }else{
-        //     $resultid = Interest_Inventory_Results::where('student_id',$studentid)->first()->id;
-        //     $result = Interest_Inventory_Results::find($resultid);
-        //     $result->realistic = $realisticchecked;
-        //     $result->investigative = $investigativechecked;
-        //     $result->artistic =  $artisticchecked;
-        //     $result->social = $socialchecked;
-        //     $result->enterprising =  $enterprisingchecked;
-        //     $result->conventional =  $conventionalchecked;
-        //     $result->update();
-        // }
+        $result = new Interest_Inventory_Results;
+        $result->student_id = $studentid;
+        $result->teacher_id = $teacherid;
+        $result->realistic = $realisticchecked;
+        $result->investigative = $investigativechecked;
+        $result->artistic =  $artisticchecked;
+        $result->social = $socialchecked;
+        $result->enterprising =  $enterprisingchecked;
+        $result->conventional =  $conventionalchecked;
+        $result->save(); 
         
-
         return redirect()->route('interestResult',$studentid);
     }
     public function showResult($id){
         $student = Student::find($id);
-        $resultid = Interest_Inventory_Results::where('student_id',$id)->first();
-        if($resultid === null){
-            $result = "No result found";
+        if(!Interest_Inventory_Results::where('student_id',$id)->exists()){
+            $findresult = "No result found";
         }else{
-            $resultid = Interest_Inventory_Results::where('student_id',$id)->first()->id;
-            $result = Interest_Inventory_Results::find($resultid);
+            $findresult = Interest_Inventory_Results::where('student_id',$id)->get();
         }
-        // dd($result);
-        return view('evaluation.interestResult',compact('student','result'));
+
+        $realistic = 0;
+        $investigative = 0;
+        $artistic = 0;
+        $social = 0;
+        $enterprising = 0;
+        $conventional = 0;
+        $total = 0;
+        $teacherids = [];
+        foreach($findresult as $res){
+            $teacherids[] = $res->teacher_id;
+            $realistic += $res->realistic;
+            $total += $res->realistic;
+            $investigative += $res->investigative;
+            $total += $res->investigative;
+            $artistic += $res->artistic;
+            $total += $res->artistic;
+            $social += $res->social;
+            $total += $res->social;
+            $enterprising += $res->enterprising;
+            $total += $res->enterprising;
+            $conventional += $res->conventional;
+            $total += $res->conventional;
+        }
+
+        // dd($teacherids);
+        $result = new Interest_Inventory_Results;
+        $result->realistic = $realistic;
+        $result->investigative = $investigative;
+        $result->artistic =  $artistic;
+        $result->social = $social;
+        $result->enterprising =  $enterprising;
+        $result->conventional =  $conventional;
+
+        $realistic = ($realistic/$total)*100;
+        $investigative = ($investigative/$total)*100;
+        $artistic = ($artistic/$total)*100;
+        $social = ($social/$total)*100;
+        $enterprising = ($enterprising/$total)*100;
+        $conventional = ($conventional/$total)*100;
+        $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
+
+        return view('evaluation.interestResult',compact('student','result','teacherids','data'));
     }
 
     //For admin to manage assessment

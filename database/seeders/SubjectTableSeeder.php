@@ -15,9 +15,14 @@ class SubjectTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('subjects')->insert([
-        'subject_name'=> 'Bahasa Melayu',
-        'grade' => 'Grade 1'
-        ]);
+        DB::table('subjects')->insert(
+            [
+                'subject_name'=> 'Bahasa Melayu',
+                'grade' => 'Grade 1'
+            ],[
+                'subject_name'=> 'Mathematics',
+                'grade' => 'Grade 1'
+            ]
+        );
     }
 }

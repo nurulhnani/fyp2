@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Student;
+use App\Models\Interest_Inventory_Results;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -58,7 +60,10 @@ class LoginController extends Controller
             }else if (auth()->user()->type == 'teacher') {
                 return redirect()->route('teacher.home');
             }else{
-                return redirect()->route('overview');
+                $studentname = auth()->user()->name;
+                $studentid = Student::where('name',$studentname)->first()->id;
+               
+                return redirect()->route('overview',$studentid);
             }
         }else{
             return redirect()->route('login')

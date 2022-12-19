@@ -24,6 +24,9 @@ class Teacher extends Model
     public function class(){
       return $this->hasOne(Classlist::class,'id','classlist_id');
     }
+    // public function interest_inventory_results(){
+    //   return $this->belongsTo(Interest_Inventory_Results::class);
+    // }
     // public function classes(){
     //   return $this->belongsTo(Classlist::class,'id');
     // }

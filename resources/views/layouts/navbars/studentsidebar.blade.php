@@ -123,12 +123,17 @@
                 </li>
                 <ul class="nav nav-sm flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('overview')}}">
+                        <?php 
+                            $studentname =  auth()->user()->name; 
+                            $studentid = App\Models\Student::where('name',$studentname)->first()->id;
+                        ?>
+                        <a class="nav-link" href="/overview/{{$studentid}}">
+                            {{-- {{route('overview')}} --}}
                             {{ __('Student Overview') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('history')}}">
+                        <a class="nav-link" href="/history/{{$studentid}}">
                             {{ __('History') }}
                         </a>
                     </li>

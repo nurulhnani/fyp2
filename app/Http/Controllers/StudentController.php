@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Merit;
 use App\Models\Student;
 use App\Models\Classlist;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
-use App\Models\Interest_Inventory_Results;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Interest_Inventory_Results;
 
 class StudentController extends Controller
 {
@@ -29,20 +30,119 @@ class StudentController extends Controller
         return view('students.index',compact('students','class'));
     }
 
-    public function overview()
+    public function overview($id)
     {
-        return view('students.overview');
+        $student = Student::find($id);
+        if(!Interest_Inventory_Results::where('student_id',$id)->exists()){
+            $result = "No result found";
+            $data = null;
+        }else{
+            $result = Interest_Inventory_Results::where('student_id',$id)->get();
+
+            $realistic = 0;
+            $investigative = 0;
+            $artistic = 0;
+            $social = 0;
+            $enterprising = 0;
+            $conventional = 0;
+            $teacherids = [];
+            $total = 0;
+            foreach($result as $res){
+                $teacherids[] = $res->teacher_id;
+                
+                $realistic += $res->realistic;
+                $total += $res->realistic;
+                $investigative += $res->investigative;
+                $total += $res->investigative;
+                $artistic += $res->artistic;
+                $total += $res->artistic;
+                $social += $res->social;
+                $total += $res->social;
+                $enterprising += $res->enterprising;
+                $total += $res->enterprising;
+                $conventional += $res->conventional;
+                $total += $res->conventional;
+            }
+
+            // dd($teacherids);
+            $result = new Interest_Inventory_Results;
+            $result->realistic = $realistic;
+            $result->investigative = $investigative;
+            $result->artistic =  $artistic;
+            $result->social = $social;
+            $result->enterprising =  $enterprising;
+            $result->conventional =  $conventional;
+
+            $realistic = ($realistic/$total)*100;
+            $investigative = ($investigative/$total)*100;
+            $artistic = ($artistic/$total)*100;
+            $social = ($social/$total)*100;
+            $enterprising = ($enterprising/$total)*100;
+            $conventional = ($conventional/$total)*100;
+            $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
+            // dd($data);
+        }
+
+        return view('students.overview',compact('student','result','teacherids','data'));
+        // return view('students.overview',$student,$result,$teacherids,$data);
     }
-    // public function getStudentInterestResult(){
-    //     $studentname = auth()->user()->name;
-    //     $studentid = Student::where('name',$studentname)->first()->id;
-    //     $interestresult = Interest_Inventory_Results::find($studentid);
-    //     dd($interestresult);
-    //     return vi
-    // }
-    public function history()
+    public function history($id)
     {
-        return view('students.history');
+        ////////////////////////// COCU MERIT //////////////////////////
+
+        $student = Student::find($id);
+        $student_mykid = $student->mykid;
+        $record1 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'c')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year')
+            ->get();
+
+        $data1 = [];
+
+        foreach ($record1 as $row) {
+            $data1['label'][] = $row->year;
+            $data1['data'][] = (int) $row->merit_point;
+        }
+        
+        ///////////////////// BEHAVIOUR MERIT /////////////////////////
+
+        $record2 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'b')
+            ->where('merit_point', '>', '0')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year')
+            ->get();
+
+        $data2 = [];
+
+        foreach ($record2 as $row) {
+            $data2['label'][] = $row->year;
+            $data2['data'][] = (int) $row->merit_point;
+        }
+
+        /////////////////// BEHAVIOUR DEMERIT ///////////////////////
+
+        $record3 = Merit::where('type', '=', 'b')
+            ->where('merit_point', '<', '0')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year')
+            ->get();
+
+        $data3 = [];
+
+        foreach ($record3 as $row) {
+            $data3['label'][] = $row->year;
+            $data3['data'][] = (int) abs($row->merit_point);
+        }
+
+
+        $data['student_behaviourdemerit'] = json_encode($data3);
+        $data['student_behaviourmerit'] = json_encode($data2);
+        $data['student_cocumerit'] = json_encode($data1);
+        $data['student'] = $student;
+
+        return view('students.history',$data);
     }
     public function viewprofile()
     {

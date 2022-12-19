@@ -20,4 +20,7 @@ class Interest_Inventory_Results extends Model
     public function students(){
       return $this->hasMany(Student::class);
     }
+    // public function teachers(){
+    //   return $this->hasMany(Teacher::class);
+    // }
 }

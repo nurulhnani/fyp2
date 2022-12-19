@@ -79,9 +79,9 @@ All Student Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:student'])->group(function () {
     Route::get('/student/home', [App\Http\Controllers\HomeController::class, 'studentHome'])->name('student.home');
-	Route::get('/overview',[App\Http\Controllers\StudentController::class, 'overview'])->name('overview');
-	// Route::get('/InterestInventoryResult',[App\Http\Controllers\StudentController::class, 'getStudentInterestResult'])->name('getStudentInterestResult');
-	Route::get('/history',[App\Http\Controllers\StudentController::class, 'history'])->name('history');
+	Route::get('/overview/{id}',[App\Http\Controllers\StudentController::class, 'overview'])->name('overview');
+	// Route::get('/InterestInventoryResult/{id}',[App\Http\Controllers\StudentController::class, 'showResultforStudent'])->name('showResultforStudent');
+	Route::get('/history/{id}',[App\Http\Controllers\StudentController::class, 'history'])->name('history');
 	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewstudentprofile');
 });
 

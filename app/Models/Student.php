@@ -23,7 +23,7 @@ class Student extends Model
     }
     public function interest_inventory_results(){
       return $this->belongsTo(Interest_Inventory_Results::class);
-  }
+    }
   //   public function classlists(){
   //     return $this->belongsTo(Classlist::class);
   // }

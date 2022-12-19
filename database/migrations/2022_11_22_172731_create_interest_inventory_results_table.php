@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('interest_inventory_results', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
+            $table->string('teacher_id');
             $table->integer('realistic');
             $table->integer('investigative');
             $table->integer('artistic');

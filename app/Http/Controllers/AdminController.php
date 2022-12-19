@@ -262,6 +262,8 @@ class AdminController extends Controller
             $data4['data'][] = (int) $row->count;
         }
 
+        ////////////////// TEACHER ACTIVE BY GENDER ////////////////////
+
         $record5 = Teacher::select(DB::raw("COUNT(*) as count"), DB::raw("gender as gender"))
             ->where('status', '=', 'active')
             ->groupBy('gender')
@@ -276,6 +278,7 @@ class AdminController extends Controller
             $data5['data'][] = (int) $row->count;
         }
 
+        /////////////// INTEREST INVENTORY COMPLETION ///////////////////
         $record6 = Interest_Inventory_Results::select(DB::raw("COUNT(*) as count"), DB::raw("student_id as student_id"))
             // ->where('status', '=', 'active')
             ->groupBy('student_id')
@@ -292,6 +295,8 @@ class AdminController extends Controller
 
         // $data6['data'] = count($record6);
 
+        ////////////////////////// COCU MERIT //////////////////////////
+
         $record7 = Merit::where('type', '=', 'c')
             ->leftJoin('students', 'students.mykid', '=', 'merits.student_mykid')
             ->leftJoin('classlists', 'classlists.id', '=', 'students.classlist_id')
@@ -305,6 +310,8 @@ class AdminController extends Controller
             // $data7['label'][] = $row->student_mykid;
             $data7['data'][] = (int) $row->merit_point;
         }
+
+        ///////////////////// BEHAVIOUR MERIT /////////////////////////
 
         $record8 = Merit::where('type', '=', 'b')
             ->where('merit_point', '>', '0')
@@ -321,6 +328,8 @@ class AdminController extends Controller
             $data8['data'][] = (int) $row->merit_point;
         }
 
+        ///////////////////// BEHAVIOUR DEMERIT ////////////////////
+        
         $record9 = Merit::where('type', '=', 'b')
             ->where('merit_point', '<', '0')
             ->leftJoin('students', 'students.mykid', '=', 'merits.student_mykid')
