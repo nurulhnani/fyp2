@@ -92,7 +92,7 @@ All Teacher Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
   
-    	Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
+    	Route::get('/teacher/dashboard', [App\Http\Controllers\TeacherDashboardController::class, 'index'])->name('teacher.home');
 		
 		//Merit and Demerit
 		Route::get('meritdemerit', function () {return view('merits.main');})->name('merits.main');
