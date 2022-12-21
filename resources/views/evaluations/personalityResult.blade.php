@@ -26,7 +26,7 @@
 <div class="container-fluid mt--6">
     <div class="row">
 
-        <div class="col-xl-3 order-xl-2 mb-5 mb-xl-0">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
             <div class="card card-profile shadow">
                 <div class="card-body pt-0 pt-md-4">
                     <div class="row">
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-9 order-xl-1">
+        <div class="col-xl-8 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
@@ -81,7 +81,7 @@
                 </div>
                 <div class="card-body">
                     <p>This Big Five assessment measures your scores on five major dimensions of personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (sometimes abbreviated OCEAN). In this free report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
-                    <div class="pl-5">
+                    <div class="pl-4">
                         <table class="table table-hover table-responsive">
                             <thead>
                                 <tr>
