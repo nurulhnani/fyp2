@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Personality_Evaluation;
 use App\Models\Personality_Question;
 use App\Models\Student;
+use App\Models\Teacher;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PersonalityKeywordsImport;
+use DonatelloZa\RakePlus\RakePlus;
+
 
 use Illuminate\Http\Request;
 
@@ -27,6 +32,11 @@ class PersonalityEvaluationController extends Controller
     public function store(Request $request)
     {
         $sheetNameArr = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
+        $id = $request->input('student_mykid');
+        $name = auth()->user()->name;
+        $student = Student::where('mykid', "=", $id)->first();
+        $teacher = Teacher::where('name',$name)->first()->id;
+        
         if ($request->has('scale')) {
             $questions = Personality_Question::where('type', '=', 's')->get();
 
@@ -91,33 +101,24 @@ class PersonalityEvaluationController extends Controller
                 }
             }
 
-            foreach ($totalMarks as $catg => $mark) {
+            foreach ($totalMarks as $category => $mark) {
                 if ($mark <= 0) {
-                    $finalMark[$catg] = 0;
+                    $finalMark[$category] = 0;
                 } else {
-                    $finalMark[$catg] = $mark * 20;
+                    $finalMark[$category] = $mark * 20;
                 }
             }
 
-            $id = $request->input('student_mykid');
-            $student = Student::where('mykid', "=", $id)->first();
             $input = [
                 'Extraversion' => $finalMark['Extraversion'],
                 'Agreeableness' => $finalMark['Agreeableness'],
                 'Neuroticism' => $finalMark['Neuroticism'],
                 'Conscientiousness' => $finalMark['Conscientiousness'],
                 'Openness' => $finalMark['Openness'],
+                'teacher_id' => $teacher,
                 'student_mykid' => $id,
             ];
 
-            Personality_Evaluation::create($input);
-
-            foreach ($sheetNameArr as $sheetName) {
-                $averageScore = Personality_Evaluation::where('student_mykid', '=', $id)->avg($sheetName);
-                $averageArr[$sheetName] = $averageScore;
-            }
-            toastr()->success('Your personality evaluation has been saved successfully!', 'Congrats');
-            return view('evaluations.personalityResult', ['averageArr' => $averageArr, 'student' => $student]);
         } else {
             $index = 0;
             foreach ($sheetNameArr as $sheetName) {
@@ -175,26 +176,22 @@ class PersonalityEvaluationController extends Controller
 
             //if more than 100 and less than 0 
 
-            $id = $request->input('student_mykid');
-            $student = Student::where('mykid', "=", $id)->first();
-
             $input = [
                 'Extraversion' => $resultArr[0],
                 'Agreeableness' => $resultArr[1],
                 'Neuroticism' => $resultArr[2],
                 'Conscientiousness' => $resultArr[3],
                 'Openness' => $resultArr[4],
+                'teacher_id' => $teacher,
                 'student_mykid' => $id,
             ];
 
-            //calculate average
-            foreach ($sheetNameArr as $sheetName) {
-                $averageScore = Personality_Evaluation::where('student_mykid', '=', $id)->avg($sheetName);
-                $averageArr[$sheetName] = intval(round($averageScore));
-            }
-            toastr()->success('Your personality evaluation has been saved successfully!', 'Congrats');
-            return view('evaluations.personalityResult', ['averageArr' => $averageArr, 'student' => $student]);
         }
+        
+        Personality_Evaluation::create($input);
+
+        toastr()->success('Your personality evaluation has been saved successfully!', 'Congrats');
+        return redirect()->route('evaluations.index');  
     }
 
     public function showResult(Student $student){
