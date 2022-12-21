@@ -128,6 +128,12 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::get('/editstudent/{id}', [App\Http\Controllers\StudentController::class,'editstudent'])->name('editstudent');
 		Route::put('/updatestudent/{id}', [App\Http\Controllers\StudentController::class,'updatestudent'])->name('updatestudent');
 
+		//Module 3: classroomManagement
+		Route::get('classroom', [App\Http\Controllers\ClassroomManagementController::class, 'index'])->name('classrooms.index');
+		Route::post('classroom/view', [App\Http\Controllers\ClassroomManagementController::class, 'view'])->name('classrooms.view');
+		Route::get('classroom/plan', [App\Http\Controllers\ClassroomManagementController::class, 'plan'])->name('classrooms.plan');
+
+
 
 });
 

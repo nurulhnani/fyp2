@@ -78,7 +78,8 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item bg-gradient-primary">
+                <!-- <li class="nav-item bg-gradient-primary"> -->
+                <li class="nav-item bg-gradient-transparent">
                     <a href="#" class="nav-link">
                         <div class="profile-image">
                             <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
@@ -104,13 +105,15 @@
                     .designation {
                         margin-bottom: 0;
                         font-weight: 400;
-                        color: #fff;
+                        /* color: #fff; */
+                        color: #000;
                     }
                     .profile-name {
                         margin-bottom: 5px;
                         font-weight: 500;
                         font-size: 15px;
-                        color: #fff;
+                        /* color: #fff; */
+                        color: #000;
                     }
                     .text-wrap {
                         white-space: normal !important;
@@ -154,6 +157,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('merits.main') }}">
                         <i class="ni ni-collection text-blue"></i> {{ __('Merit and Demerit') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('classrooms.index') }}">
+                        <i class="fa fa-table text-blue"></i> {{ __('Classroom Management') }}
                     </a>
                 </li>
             </ul>
