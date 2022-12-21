@@ -81,7 +81,7 @@
                     </td>
 
                     <td class="text-center">
-                      <a href="{{ route('personalityResult', $student) }}" class="btn btn-primary btn-sm">View</a>
+                      <a href="{{ route('personalityResult', $student) }}" class="btn btn-primary btn-sm">Current Result</a>
                     </td>
 
                     <td class="text-right">
