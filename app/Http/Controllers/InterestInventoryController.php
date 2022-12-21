@@ -18,7 +18,7 @@ class InterestInventoryController extends Controller
         $socialquestions = Interest_Inventory::where('category','Social')->get();
         $enterprisingquestions = Interest_Inventory::where('category','Enterprising')->get();
         $conventionalquestions = Interest_Inventory::where('category','Conventional')->get();
-        return view('evaluation.interestInventory', compact('student','realisticquestions','investigativequestions','artisticquestions','socialquestions','enterprisingquestions','conventionalquestions'));
+        return view('evaluations.interestInventory', compact('student','realisticquestions','investigativequestions','artisticquestions','socialquestions','enterprisingquestions','conventionalquestions'));
     }
 
     public function store(Request $request)
@@ -133,7 +133,7 @@ class InterestInventoryController extends Controller
         $conventional = ($conventional/$total)*100;
         $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
 
-        return view('evaluation.interestResult',compact('student','result','teacherids','data'));
+        return view('evaluations.interestResult',compact('student','result','teacherids','data'));
     }
 
     //For admin to manage assessment

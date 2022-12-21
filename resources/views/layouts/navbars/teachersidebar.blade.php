@@ -146,7 +146,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('evaluationList') }}">
+                                <a class="nav-link" href="{{ route('evaluations.index') }}">
                                     {{ __('Student Evaluation') }}
                                 </a>
                             </li>

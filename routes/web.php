@@ -93,15 +93,14 @@ All Teacher Routes List
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
   
     	Route::get('/teacher/home', [App\Http\Controllers\HomeController::class, 'teacherHome'])->name('teacher.home');
-		//Module 1: meritDemerit
+		
+		//Merit and Demerit
 		Route::get('meritdemerit', function () {return view('merits.main');})->name('merits.main');
 		Route::post('meritdemerit', [App\Http\Controllers\CurrMeritController::class, 'redirect'])->name('merits.redirect');
 
 		Route::get('meritdemerit/curriculum/{student}', ['as' => 'merits.index', 'uses' => 'App\Http\Controllers\CurrMeritController@index']);
 		Route::resource('merits', App\Http\Controllers\CurrMeritController::class, ['except' => ['index']]);
 		Route::get('meritdemerit/curriculum-bulk', [App\Http\Controllers\CurrMeritController::class, 'viewStudentList'])->name('merits.bulk');
-		// Route::get('file-import-export', [CurrMeritController::class, 'fileImportExport']);
-		// Route::get('file-export', [CurrMeritController::class, 'fileExport'])->name('file-export');
 		Route::post('checklist-import', [App\Http\Controllers\CurrMeritController::class, 'checklistImport'])->name('checklist-import');
 		Route::post('file-import', [App\Http\Controllers\CurrMeritController::class, 'fileImport'])->name('file-import');
 		Route::post('bulkmerits/add', [App\Http\Controllers\CurrMeritController::class, 'storeBulk'])->name('bulkmerits.store');
@@ -113,9 +112,12 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::post('beha-file-import', [App\Http\Controllers\BehaMeritController::class, 'fileImport'])->name('beha-file-import');
 		Route::post('behaBulkmerits/add', [App\Http\Controllers\BehaMeritController::class, 'storeBulk'])->name('behaBulkmerits.store');
 	
-		//Module 2: studentEvaluation
-		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewStudentList'])->name('evaluationList');
-		Route::get('studentlist-evaluation/question', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewQuestion'])->name('evaluationQuestion');
+		//Student Evaluation
+		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'index'])->name('evaluations.index');
+		Route::get('studentlist-evaluation/personality/{question}/{student?}', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewPersonalityQuestion'])->name('personalityEval');
+		Route::post('result', [App\Http\Controllers\PersonalityEvaluationController::class, 'store'])->name('personality.store');
+		Route::get('studentlist-evaluation/personality-result/{student}', [App\Http\Controllers\PersonalityEvaluationController::class, 'showResult'])->name('personalityResult');
+
 		Route::get('studentlist-evaluation/interest/{id}', [App\Http\Controllers\InterestInventoryController::class, 'viewInterestQuestion'])->name('interestInventory');
 		Route::put('studentlist-evaluation/interestresult', [App\Http\Controllers\InterestInventoryController::class, 'store'])->name('interest.store');
 		Route::get('studentlist-evaluation/interestresult/{id}', [App\Http\Controllers\InterestInventoryController::class, 'showResult'])->name('interestResult');
@@ -128,7 +130,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::get('/editstudent/{id}', [App\Http\Controllers\StudentController::class,'editstudent'])->name('editstudent');
 		Route::put('/updatestudent/{id}', [App\Http\Controllers\StudentController::class,'updatestudent'])->name('updatestudent');
 
-		//Module 3: classroomManagement
+		//Classroom Management
 		Route::get('classroom', [App\Http\Controllers\ClassroomManagementController::class, 'index'])->name('classrooms.index');
 		Route::post('classroom/view', [App\Http\Controllers\ClassroomManagementController::class, 'view'])->name('classrooms.view');
 		Route::get('classroom/plan', [App\Http\Controllers\ClassroomManagementController::class, 'plan'])->name('classrooms.plan');

@@ -24,7 +24,7 @@
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                         <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
-                        {{-- <li class="breadcrumb-item"><a href="{{ route('evaluationList') }}">Student List</i></a></li> --}}
+                        {{-- <li class="breadcrumb-item"><a href="{{ route('evaluations.index') }}">Student List</i></a></li> --}}
                         <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
                     </ol>
