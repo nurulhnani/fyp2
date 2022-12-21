@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('personality_questions', function (Blueprint $table) {
             $table->id();
+            $table->string('category');
             $table->string('question');
             $table->string('type');
-            $table->timestamps();
+            $table->json('ans_choices')->nullable();
         });
     }
 
