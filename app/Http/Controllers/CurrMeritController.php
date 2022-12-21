@@ -50,9 +50,6 @@ class CurrMeritController extends Controller
 
         $student = Student::where('mykid', "=", $newMerit['student_mykid'])->first();
         return redirect()->route('merits.index', [$student]);
-
-        // return redirect()->route('merits.index')
-        //     ->with('success', 'Merit created successfully.');
     }
 
     public function update(Request $request, Merit $merit)
@@ -73,9 +70,6 @@ class CurrMeritController extends Controller
 
         $student = Student::where('mykid', "=", $merit['student_mykid'])->first();
         return redirect()->route('merits.index', [$student]);
-
-        // return redirect()->route('merits.index')
-        //     ->with('success', 'Product updated successfully');
     }
 
     public function destroy(Merit $merit)
@@ -98,24 +92,14 @@ class CurrMeritController extends Controller
         foreach ($studentLists as $studentList) { 
         $students[] = Student::where('mykid', "=", $studentList)->first();
         }
-        // dd($students);
-        // print json_encode($students);
         return view('merits/currMerits.bulkList', ['studentLists' => $students]);
     }
 
 
     public function fileImport(Request $request)
     {
-        // $array = Excel::import(new MeritsImport, $request->file('file')->store('temp'));
         $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
-        // dd($array);
-        // print json_encode($array);
-        // echo $students;
         return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr]);
-
-        // $path1 = $request->file('file')->store('temp');
-        // $path = storage_path('app') . '/' . $path1;
-        // $data = Excel::import(new UsersImport, $path);
     }
 
     public function storeBulk(Request $request)
@@ -141,4 +125,11 @@ class CurrMeritController extends Controller
         $students = Student::all();
         return view('merits/currMerits.bulk', ['students' => $students]);
     }
+
+    public function autocompleteSearch(Request $request)
+    {
+          $query = $request->get('query');
+          $filterResult = Student::where('name', 'LIKE', '%'. $query. '%')->get();
+          return response()->json($filterResult);
+    } 
 }

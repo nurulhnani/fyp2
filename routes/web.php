@@ -104,14 +104,16 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::post('checklist-import', [App\Http\Controllers\CurrMeritController::class, 'checklistImport'])->name('checklist-import');
 		Route::post('file-import', [App\Http\Controllers\CurrMeritController::class, 'fileImport'])->name('file-import');
 		Route::post('bulkmerits/add', [App\Http\Controllers\CurrMeritController::class, 'storeBulk'])->name('bulkmerits.store');
+		Route::get('/autocomplete-search', [App\Http\Controllers\CurrMeritController::class, 'autocompleteSearch'])->name('autocompleteSearch');
 
-		Route::post('meritdemerit/behavioural/{student}', [App\Http\Controllers\BehaMeritController::class, 'index'])->name('behaMerits.index');
+		Route::get('meritdemerit/behavioural/{student}', [App\Http\Controllers\BehaMeritController::class, 'index'])->name('behaMerits.index');
 		Route::resource('behaMerits', App\Http\Controllers\BehaMeritController::class, ['except' => ['index']]);
 		Route::get('meritdemerit/behavioural-bulk', [App\Http\Controllers\BehaMeritController::class, 'viewStudentList'])->name('behaMerits.bulk');
 		Route::post('beha-checklist-import', [App\Http\Controllers\BehaMeritController::class, 'checklistImport'])->name('beha-checklist-import');
 		Route::post('beha-file-import', [App\Http\Controllers\BehaMeritController::class, 'fileImport'])->name('beha-file-import');
 		Route::post('behaBulkmerits/add', [App\Http\Controllers\BehaMeritController::class, 'storeBulk'])->name('behaBulkmerits.store');
-	
+		Route::get('/beha-autocomplete-search', [App\Http\Controllers\BehaMeritController::class, 'autocompleteSearch'])->name('beha-autocompleteSearch');
+
 		//Student Evaluation
 		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'index'])->name('evaluations.index');
 		Route::get('studentlist-evaluation/personality/{question}/{student?}', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewPersonalityQuestion'])->name('personalityEval');

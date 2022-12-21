@@ -126,7 +126,7 @@
                         <h6 class="text-center heading-small">{{ __('OR') }}</h6>
                         </p>
                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                            <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Full Name') }}">
+                            <input type="text" name="name" id="beha-input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Full Name') }}">
 
                         </div>
                     </div>
@@ -146,6 +146,33 @@
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
 @endpush
+
+<!-- autocomplete -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+    var route = "{{ url('autocomplete-search') }}";
+    $('#input-name').typeahead({
+        source: function(query, process) {
+            return $.get(route, {
+                query: query
+            }, function(data) {
+                return process(data);
+            });
+        }
+    });
+
+    var route1 = "{{ url('beha-autocomplete-search') }}";
+    $('#beha-input-name').typeahead({
+        source: function(query, process) {
+            return $.get(route1, {
+                query: query
+            }, function(data) {
+                return process(data);
+            });
+        }
+    });
+</script>
 
 <style>
     .card-img-top {
