@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PersonalityKeywordsImport;
+use App\Models\Interest_Inventory_Results;
 use DonatelloZa\RakePlus\RakePlus;
 
 
@@ -17,7 +18,12 @@ class PersonalityEvaluationController extends Controller
 {
     public function index(){
         $students = Student::all();
-        return view('evaluations.index', ['students' => $students]);
+        $interestresults = Interest_Inventory_Results::all();
+        $student_ids = [];
+        foreach($interestresults as $interestresult){
+            $student_ids[] = $interestresult->student_id;
+        }
+        return view('evaluations.index', ['students' => $students,'student_ids' => $student_ids]);
     }
 
     public function viewPersonalityQuestion(Request $request){

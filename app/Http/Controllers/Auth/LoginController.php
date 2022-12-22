@@ -63,7 +63,7 @@ class LoginController extends Controller
                 $studentname = auth()->user()->name;
                 $studentid = Student::where('name',$studentname)->first()->id;
                
-                return redirect()->route('overview',$studentid);
+                return redirect()->route('studenthome',$studentid);
             }
         }else{
             return redirect()->route('login')

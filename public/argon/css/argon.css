@@ -7404,7 +7404,7 @@ button.close
 
     display: block;
 
-    max-width: 276px;
+    max-width: 100%;
 
     text-align: left;
     text-align: start;

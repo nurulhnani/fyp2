@@ -5,11 +5,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        {{-- <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-        </a> --}}
+        <?php 
+            $studentname =  auth()->user()->name; 
+            $studentid = App\Models\Student::where('name',$studentname)->first()->id;
+        ?>
+        <a class="navbar-brand pt-0 pb-0" href="{{ route('studenthome',$studentid) }}">
+            <img src="{{ asset('assets/img/userImage/mescore.png')}}" class="navbar-brand-img" alt="...">
+        </a>
         <!-- User -->
-        <ul class="nav align-items-center d-md-none">
+        <ul class="nav align-items-center d-md-none ">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
@@ -78,7 +82,7 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item bg-gradient-primary">
+                <li class="nav-item bg-gradient-transparent">
                     <a href="#" class="nav-link">
                         <div class="profile-image">
                             <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
@@ -89,6 +93,17 @@
                         </div>
                     </a>
                 </li>
+                {{-- <li class="nav-item bg-gradient-primary">
+                    <a href="#" class="nav-link">
+                        <div class="profile-image">
+                            <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name text-wrap" style="font-size: 10pt">{{auth()->user()->name}}</p>
+                            <p class="designation" style="font-size: 10pt"><u>Student</u></p>
+                        </div>
+                    </a>
+                </li> --}}
                 <style>
                     .profile-image {
                         width: 30%;
@@ -104,40 +119,27 @@
                     .designation {
                         margin-bottom: 0;
                         font-weight: 400;
-                        color: #fff;
+                        color: #000;
                     }
                     .profile-name {
                         margin-bottom: 5px;
                         font-weight: 500;
                         font-size: 15px;
-                        color: #fff;
+                        color: #000;
                     }
                     .text-wrap {
                         white-space: normal !important;
                     }
                 </style>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                <?php 
+                    $studentname =  auth()->user()->name; 
+                    $studentid = App\Models\Student::where('name',$studentname)->first()->id;
+                ?>
+                <li class="nav-item mt-3">
+                    <a class="nav-link" href="{{route('studenthome',$studentid)}}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                        <?php 
-                            $studentname =  auth()->user()->name; 
-                            $studentid = App\Models\Student::where('name',$studentname)->first()->id;
-                        ?>
-                        <a class="nav-link" href="/overview/{{$studentid}}">
-                            {{-- {{route('overview')}} --}}
-                            {{ __('Student Overview') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/history/{{$studentid}}">
-                            {{ __('History') }}
-                        </a>
-                    </li>
-                </ul>
             </ul>
             <!-- Divider -->
             <hr class="my-3">
@@ -153,7 +155,16 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('viewstudentprofile')}}">
-                                    {{ __('View Profile') }}
+                                    {{ __('Student Details') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <?php 
+                                    $studentname =  auth()->user()->name; 
+                                    $studentid = App\Models\Student::where('name',$studentname)->first()->id;
+                                ?>
+                                <a class="nav-link" href="{{route('overview',$studentid)}}">
+                                    {{ __('Student Overview') }}
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -161,26 +172,6 @@
                                     {{ __('Request Update Profile') }}
                                 </a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a class="nav-link" href="{{ route('classes.index') }}">
-                                    {{ __('Manage Class') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('subjects.index') }}">
-                                    {{ __('Manage Subject') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Manage Assessment') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Custom Field Config') }}
-                                </a>
-                            </li> --}}
                         </ul>
                     </div>
                 {{-- <li class="nav-item">

@@ -62,9 +62,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::post('student-file-import', [App\Http\Controllers\StudentController::class, 'fileImport'])->name('student-file-import');
 	Route::post('teacher-file-import', [App\Http\Controllers\TeacherController::class, 'fileImport'])->name('teacher-file-import');
 	Route::get('/customfield',[App\Http\Controllers\AdminController::class, 'customfield'])->name('customfield');
-	Route::get('/addedCustomFields',[App\Http\Controllers\AutoFieldsController::class, 'showfields'])->name('showfields');
-	Route::delete('/deleteField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'deleteField'])->name('deleteField');
-	Route::put('/editField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'editField'])->name('editField');
 	Route::get('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMore']);
 	Route::post('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMorePost'])->name('addmore');
 	Route::post('/storeclass',[App\Http\Controllers\SubjectController::class, 'storeclass'])->name('subjects.storeclass');
@@ -84,7 +81,7 @@ Route::middleware(['auth', 'user-access:student'])->group(function () {
     Route::get('/student/home', [App\Http\Controllers\HomeController::class, 'studentHome'])->name('student.home');
 	Route::get('/overview/{id}',[App\Http\Controllers\StudentController::class, 'overview'])->name('overview');
 	// Route::get('/InterestInventoryResult/{id}',[App\Http\Controllers\StudentController::class, 'showResultforStudent'])->name('showResultforStudent');
-	Route::get('/history/{id}',[App\Http\Controllers\StudentController::class, 'history'])->name('history');
+	Route::get('/dashboard/{id}',[App\Http\Controllers\StudentController::class, 'dashboard'])->name('studenthome');
 	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewstudentprofile');
 });
 

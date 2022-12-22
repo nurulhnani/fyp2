@@ -126,7 +126,7 @@
                     <th scope="col" class="sort" data-sort="budget">CLASS</th>
                     <th scope="col" class="sort" data-sort="status">STATUS</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    {{-- <th scope="col"></th> --}}
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -144,13 +144,21 @@
                       {{ $student->class->class_name }}
                     </td>
                     <td>
+                      @if(!in_array($student->id,$student_ids))
                       <span class="badge badge-dot mr-4">
                         <i class="bg-warning"></i>
                         <span class="status">pending</span>
                       </span>
+                          
+                      @else
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-success"></i>
+                        <span class="status">completed/ongoing</span>
+                      </span>
+                      @endif
                     </td>
 
-                    <td>
+                    {{-- <td>
                       <div class="d-flex align-items-center">
                         <span class="completion mr-2">60%</span>
                         <div>
@@ -159,17 +167,19 @@
                           </div>
                         </div>
                       </div>
-                    </td>
+                    </td> --}}
+                    
 
                     <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{-- <div class="dropdown"> --}}
+                        {{-- <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="{{route('interestInventory',$student->id)}}">Interest Inventory Assessment</a>
-                        </div>
-                      </div>
+                        </a> --}}
+                        {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
+                          <a class="btn btn-sm btn-primary" href="/studentlist-evaluation/interestresult/{{$student->id}}">Current Result</a>
+                          <a class="btn btn-sm btn-success" href="{{route('interestInventory',$student->id)}}">GO</a>
+                        {{-- </div> --}}
+                      {{-- </div> --}}
                     </td>
                   </tr>
                   <tr>

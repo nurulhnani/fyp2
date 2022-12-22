@@ -13,7 +13,7 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('evaluations.index') }}">Student List</i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('evaluations.index') }}">Evaluation</i></a></li>
                             <li class="breadcrumb-item active" aria-current="page">Interest Inventory</li>
                         </ol>
                     </nav>
@@ -30,12 +30,12 @@
                 <!-- Card header -->
                 <div class="card-header border-0">
                     <div class="row align-items-center">
-                        <div class="col-8">
+                        <div class="col-12">
                             <h3 class="mb-0">Interest Inventory Evaluation</h3>
                         </div>
-                        <div class="col-4 text-right">
+                        {{-- <div class="col-4 text-right">
                             <a href="/studentlist-evaluation/interestresult/{{$student->id}}" class="btn btn-sm btn-neutral">View Current Result</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

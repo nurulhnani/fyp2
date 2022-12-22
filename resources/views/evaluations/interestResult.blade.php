@@ -7,12 +7,13 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-8 col-8">
+        <div class="col-lg-12 col-12">
           <h6 class="h2 text-black d-inline-block mb-0">Interest Inventory Evaluation Result</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
               <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
-              <li class="breadcrumb-item"><a href="{{route('interestInventory',$student->id)}}">Interest Inventory</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('evaluations.index') }}">Evaluation</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Interest Inventory</li>
               <li class="breadcrumb-item active" aria-current="page">Result</li>
             </ol>
           </nav>
@@ -24,6 +25,18 @@
 
 <!-- Page content -->
 <div class="container-fluid mt--6">
+
+@if($result == 'No result found')
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p>No result found for this student. Please perform the evaluation to view the result</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@else
   <div class="alert alert-success" role="alert">
     <strong>Thank you for completing the interest inventory evaluation! Below are the result:</strong>
   </div>
@@ -352,9 +365,11 @@
 
       </div>
     </div>
-  </div>
-  @include('layouts.footers.auth')
+@endif  
+
+@include('layouts.footers.auth')
 </div>
+{{-- </div> --}}
 
 <style>
 

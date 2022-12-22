@@ -87,7 +87,7 @@ class StudentController extends Controller
         return view('students.overview',compact('student','result','teacherids','data'));
         // return view('students.overview',$student,$result,$teacherids,$data);
     }
-    public function history($id)
+    public function dashboard($id)
     {
         ////////////////////////// COCU MERIT BY YEAR //////////////////////////
 
@@ -118,23 +118,10 @@ class StudentController extends Controller
             ->where('type', '=', 'c')
             ->select(DB::raw("COUNT(*) as count"),DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
             ->groupBy('year','merit_name','merit_point')
-            ->get()
-            ->paginate(4);
+            ->get();
+            // ->paginate(4);
         
-        // $paginated = CollectionHelper::paginate($results, $pageSize);
-
-        // $cocu = [];
-        // $year = [];
-
-        // foreach ($record4 as $row) {
-            // $data4['label'][] = $row->year;
-            // $year[] = $row->year;
-            // $data4['data'][] = (int) $row->merit_point;
-            // $cocu[] = (int) $row->merit_point;
-        // }
-        
-        // dd($record4);
-        ///////////////////// BEHAVIOUR MERIT /////////////////////////
+        ///////////////////// BEHAVIOUR MERIT BY YEAR /////////////////////////
 
         $record2 = Merit::where('student_mykid','=',$student_mykid)
             ->where('type', '=', 'b')
@@ -150,7 +137,16 @@ class StudentController extends Controller
             $data2['data'][] = (int) $row->merit_point;
         }
 
-        /////////////////// BEHAVIOUR DEMERIT ///////////////////////
+        ////////////////////// BEHAVIOUR MERIT //////////////////////////
+
+        $record5 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'b')
+            ->where('merit_point', '>', '0')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
+            ->get();
+
+        /////////////////// BEHAVIOUR DEMERIT BY YEAR ///////////////////////
 
         $record3 = Merit::where('type', '=', 'b')
             ->where('merit_point', '<', '0')
@@ -165,16 +161,27 @@ class StudentController extends Controller
             $data3['data'][] = (int) abs($row->merit_point);
         }
 
+        /////////////////////// BEHAVIOUR MERIT /////////////////////////////
+
+        $record6 = Merit::where('type', '=', 'b')
+            ->where('merit_point', '<', '0')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
+            ->get();
+
+        // send data
         $data['student_cocumerit'] = json_encode($data1);
         $data['student_behaviourmerit'] = json_encode($data2);
         $data['student_behaviourdemerit'] = json_encode($data3);
         $data['cocu_records']= $record4;
+        $data['behavmerit_records']= $record5;
+        $data['behavdemerit_records']= $record6;
         $data['student'] = $student;
         // dd($data['cocu_records']);
         // $data['cocu'] = $cocu;
         // $data['year'] = $year;
  
-        return view('students.history',$data);
+        return view('students.home',$data);
     }
     public function viewprofile()
     {
