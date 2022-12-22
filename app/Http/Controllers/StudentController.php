@@ -33,10 +33,7 @@ class StudentController extends Controller
     public function overview($id)
     {
         $student = Student::find($id);
-        if(!Interest_Inventory_Results::where('student_id',$id)->exists()){
-            $result = "No result found";
-            $data = null;
-        }else{
+        if(Interest_Inventory_Results::where('student_id',$id)->exists()){
             $result = Interest_Inventory_Results::where('student_id',$id)->get();
 
             $realistic = 0;
@@ -73,7 +70,7 @@ class StudentController extends Controller
             $result->enterprising =  $enterprising;
             $result->conventional =  $conventional;
 
-            $realistic = ($realistic/$total)*100;
+            // $realistic = ($realistic/$total)*100;
             $investigative = ($investigative/$total)*100;
             $artistic = ($artistic/$total)*100;
             $social = ($social/$total)*100;
@@ -81,6 +78,10 @@ class StudentController extends Controller
             $conventional = ($conventional/$total)*100;
             $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
             // dd($data);
+        }else{
+            $result = "No result found";
+            $data = null;
+            $teacherids = null;
         }
 
         return view('students.overview',compact('student','result','teacherids','data'));
@@ -88,7 +89,7 @@ class StudentController extends Controller
     }
     public function history($id)
     {
-        ////////////////////////// COCU MERIT //////////////////////////
+        ////////////////////////// COCU MERIT BY YEAR //////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
@@ -99,12 +100,40 @@ class StudentController extends Controller
             ->get();
 
         $data1 = [];
+        // $cocu = [];
+        // $year = [];
 
         foreach ($record1 as $row) {
             $data1['label'][] = $row->year;
+            // $year[] = $row->year;
             $data1['data'][] = (int) $row->merit_point;
+            // $cocu[] = (int) $row->merit_point;
         }
+
+        ///////////////////// COCU MERIT ///////////////////////////////
+
+        $student = Student::find($id);
+        $student_mykid = $student->mykid;
+        $record4 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'c')
+            ->select(DB::raw("COUNT(*) as count"),DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
+            ->get()
+            ->paginate(4);
         
+        // $paginated = CollectionHelper::paginate($results, $pageSize);
+
+        // $cocu = [];
+        // $year = [];
+
+        // foreach ($record4 as $row) {
+            // $data4['label'][] = $row->year;
+            // $year[] = $row->year;
+            // $data4['data'][] = (int) $row->merit_point;
+            // $cocu[] = (int) $row->merit_point;
+        // }
+        
+        // dd($record4);
         ///////////////////// BEHAVIOUR MERIT /////////////////////////
 
         $record2 = Merit::where('student_mykid','=',$student_mykid)
@@ -136,12 +165,15 @@ class StudentController extends Controller
             $data3['data'][] = (int) abs($row->merit_point);
         }
 
-
-        $data['student_behaviourdemerit'] = json_encode($data3);
-        $data['student_behaviourmerit'] = json_encode($data2);
         $data['student_cocumerit'] = json_encode($data1);
+        $data['student_behaviourmerit'] = json_encode($data2);
+        $data['student_behaviourdemerit'] = json_encode($data3);
+        $data['cocu_records']= $record4;
         $data['student'] = $student;
-
+        // dd($data['cocu_records']);
+        // $data['cocu'] = $cocu;
+        // $data['year'] = $year;
+ 
         return view('students.history',$data);
     }
     public function viewprofile()

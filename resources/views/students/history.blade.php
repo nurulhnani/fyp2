@@ -7,7 +7,7 @@
     
         <h2 class="mt-4">History</h2>
 
-        <div class="card shadow">
+        <div class="card">
             <div class="card-body">
                 <p>Below are the records of Co-curriculum merits, Behaviour merits, and Behaviour demerits for this student:</p>
                 <form>
@@ -31,12 +31,12 @@
                 </form>
 
                 <div class="row mt-3">
-                    <div class="col-xl-4 mb-3 mb-xl-0">
-                        <div class="card bg-default shadow">
+                    <div class="col-xl-6 mb-3 mb-xl-0">
+                        <div class="card bg-secondary">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="text-white mb-0">Co-curriculum merit</h3>
+                                        <h3 class="text-default mb-0">Co-curriculum merits</h3>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                           datasets: [
                                             {
                                               data: cData.data,
-                                              borderColor : 'white',
+                                              borderColor : 'grey',
                                             //   backgroundColor: ['white'],
                                             },
                                           ],
@@ -82,12 +82,68 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-4 mb-3 mb-xl-0">
-                        <div class="card bg-default shadow">
+                    <div class="col-sm-6">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="mb-0">Co-curriculum merits records</h3>
+                                    </div>
+                                    {{-- <div class="col text-right">
+                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Year</th>
+                                            <th scope="col">Merit Name</th>
+                                            <th scope="col" style="width: 5%">Merit Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <?php $index = 0?> --}}
+                                        @foreach ($cocu_records as $cocu_record)
+                                        <tr>
+                                            {{-- <th scope="row">
+                                                {{$index}}
+                                            </th> --}}
+                                            <td>
+                                                {{$cocu_record->year}}
+                                            </td>
+                                            <td>
+                                                {{$cocu_record->merit_name}}
+                                            </td>
+                                            <td class="text-center" style="width: 5%">
+                                                {{$cocu_record->merit_point}}
+                                            </td>
+                                        </tr>
+                                        {{-- <?php $index++ ?> --}}
+                                        @endforeach 
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <nav aria-label="...">
+                                  <ul class="pagination justify-content-end mb-0 mt-0">
+                                    {{$cocu_records->links()}}
+                                  </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-xl-6 mb-3 mb-xl-0">
+                        <div class="card bg-secondary">
                             <div class="card-header bg-transparent">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="text-white mb-0">Behaviour merit</h3>
+                                        <h3 class="text-default mb-0">Behaviour merits and demerits</h3>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +167,7 @@
                                             {
                                               label: "Merit",
                                               data: cData.data,
-                                              borderColor : 'white',
+                                              borderColor : 'grey',
                                             //   backgroundColor: ['white'],
                                             },
                                             {
@@ -126,6 +182,13 @@
                                         //options
                                         var options = {
                                           responsive: true,
+                                          legend: {
+                                            display: true,
+                                            position: 'bottom',
+                                            // labels: {
+                                            //     fontColor: "#000080",
+                                            // }
+                                            }
                                         };
                                    
                                         //create Pie Chart class object
@@ -137,6 +200,60 @@
                                    
                                     });
                                   </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="mb-0">Co-curriculum merits records</h3>
+                                    </div>
+                                    {{-- <div class="col text-right">
+                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                    </div> --}}
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Year</th>
+                                            <th scope="col">Merit Name</th>
+                                            <th scope="col" style="width: 5%">Merit Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <?php $index = 0?> --}}
+                                        @foreach ($cocu_records as $cocu_record)
+                                        <tr>
+                                            {{-- <th scope="row">
+                                                {{$index}}
+                                            </th> --}}
+                                            <td>
+                                                {{$cocu_record->year}}
+                                            </td>
+                                            <td>
+                                                {{$cocu_record->merit_name}}
+                                            </td>
+                                            <td class="text-center" style="width: 5%">
+                                                {{$cocu_record->merit_point}}
+                                            </td>
+                                        </tr>
+                                        {{-- <?php $index++ ?> --}}
+                                        @endforeach 
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <nav aria-label="...">
+                                  <ul class="pagination justify-content-end mb-0 mt-0">
+                                    {{$cocu_records->links()}}
+                                  </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -154,7 +271,7 @@
         {
             position: relative;
 
-            height: 255px;
+            height: 280px;
         }
     
     </style>

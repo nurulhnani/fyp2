@@ -536,7 +536,7 @@
 
                         <div class="pieadmin">
                             <p class="h3 font-weight-bold"
-                                style="width: 100%; height: 100%; position: absolute; top: 60%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                                style="width: 100%; height: 100%; position: absolute; top: 65%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
                                 {{round($completion,0)}}%<Br />
                             </p>
                             <canvas id="interest_eval" width="100" height="100"></canvas>
@@ -781,7 +781,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="text-white mb-0">Co-curriculum merit</h3>
+                                <h3 class="text-white mb-0">Students Co-curriculum Merits</h3>
                             </div>
                         </div>
                     </div>
@@ -951,7 +951,7 @@
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="text-white mb-0">Behaviour merit & demerit</h3>
+                                <h3 class="text-white mb-0">Students Behaviour Merits and Demerits</h3>
                             </div>
                         </div>
                     </div>

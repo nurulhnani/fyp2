@@ -35,6 +35,7 @@
 
                                 <div class="col-sm-12">
                                     {{-- <div class="description"> --}}
+                                    @if($result != 'No result found')
                                         <?php
                                             if(max($result->realistic,$result->investigative,$result->artistic,$result->social,$result->enterprising,$result->conventional) == $result->realistic){
                                                 $category[] = "Realistic";
@@ -94,17 +95,20 @@
                                                 </div>
                                             </div>
                                         </form>
+                                    @endif
                                     {{-- </div> --}}
                                 </div>
                             </div>
 
                             <hr class="my-4" />
                             <div class="row">
-                                <div class="col-sm-7">
+                                
                                     @if($result == 'No result found')
+                                <div class="col-sm-12">
                                     <p class="card-text">No result found for this student. Please complete the evaluation to view the result.</p>
+                                </div> 
                                     @else
-
+                                <div class="col-sm-7">
                                     <p class="card-text">Below are the interest inventory result which have been evaluated by your teachers:</p>
 
                                     <?php
@@ -276,6 +280,7 @@
                                     @endif
                                 </div>
 
+                                @if($data != null)
                                 <div class="col-sm-5">
                                     <div id="pieadmin">
                                         {{-- // Chart wrapper --}}
@@ -345,6 +350,7 @@
                                         });
                                     </script>
                                 </div>
+                                @endif
                             </div>
 
                             

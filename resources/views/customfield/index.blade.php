@@ -13,19 +13,28 @@
                     <div class="card-body">
                     {{-- <h3 class="card-title">Upload Student List</h3> --}}
                     <p class="card-text">This section is for admin to manage additional input field for the user profile. You can choose whether for student profile or teacher profile</p>
+                    <hr class="my-3" />
                     <form method="POST" action="{{route('addmore')}}" name="add_type" id="add_type">
                         @csrf
-                        <div class="h5 text-muted text-uppercase mb-1 py-4">
+                        <div class="h5 text-muted text-uppercase py-4">
                             <i class="ni business_briefcase-24"></i>{{ __('Choose type of user') }}
                         </div>
-                        <div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline1" name="user" class="custom-control-input" value="student"> 
-                                <label class="custom-control-label" for="customRadioInline1">Student</label>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline1" name="user" class="custom-control-input" value="student"> 
+                                        <label class="custom-control-label" for="customRadioInline1">Student</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="customRadioInline2" name="user" class="custom-control-input" value="teacher">
+                                        <label class="custom-control-label" for="customRadioInline2">Teacher</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" name="user" class="custom-control-input" value="teacher">
-                                <label class="custom-control-label" for="customRadioInline2">Teacher</label>
+                            <div class="col-sm-6 text-right">
+                                <a href="{{route('showfields')}}" class="btn btn-sm btn-neutral">View Added Custom Fields</a>
                             </div>
                         </div>
 
@@ -37,11 +46,11 @@
                                         {{-- <div class="form-group"> --}}
                                             <select class="form-control form-control-alternative" name="type[]" id="type" onchange="onChange()" required> 
                                                 <option selected disabled>Select Answer Field Type</option>
-                                                    <option value="text">Text</option>
-                                                    <option value="date">Date</option>
-                                                    <option value="file">File</option>
-                                                    <option value="number">Number</option>
-                                                    <option value="dropdown">Dropdown</option>
+                                                    <option value="Text">Text</option>
+                                                    <option value="Date">Date</option>
+                                                    <option value="File">File</option>
+                                                    <option value="Number">Number</option>
+                                                    <option value="Dropdown">Dropdown</option>
                                             </select>
                                         {{-- </div> --}}
                                     </td>   
@@ -73,7 +82,7 @@
                 $('#dynamic_field').append(''+
                 '<tr id="row'+i+'" class="dynamic-added">' +
                 '<td><input type="text" name="name[]" placeholder="Enter Field Name" class="form-control form-control-alternative" /></td>' +
-                '<td><select class="typenew form-control form-control-alternative" name="type[]" id="type'+i+'" onchange="onChange()"><option selected disabled>Select Answer Field Type</option><option value="text">Text</option><option value="date">Date</option><option value="file">File</option><option value="dropdown">Dropdown</option></select></td>' +
+                '<td><select class="typenew form-control form-control-alternative" name="type[]" id="type'+i+'" onchange="onChange()"><option selected disabled>Select Answer Field Type</option><option value="Text">Text</option><option value="Date">Date</option><option value="File">File</option><option value="Dropdown">Dropdown</option></select></td>' +
                 '<td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></td>'+
                 '</tr>'+
                 '<tr id="row'+i+'" class="autoUpdatenew" style="display: none">'+
@@ -91,7 +100,7 @@
                 $(document).on('change','.typenew',function(){
                     // var button_id = $(this).attr("id");
                     $typenew = $('#type'+i).val();
-                    if($typenew == 'dropdown'){
+                    if($typenew == 'Dropdown'){
                         $(".autoUpdatenew").fadeIn('slow');
                     }else{
                         $(".autoUpdatenew").fadeOut('slow');
@@ -101,7 +110,7 @@
 
             function onChange(){
                 $type = $("#type").val();
-                if($type == 'dropdown'){
+                if($type == 'Dropdown'){
                     // var button_id = $(this).attr("id");
                     $(".autoUpdate").fadeIn('slow');
                 }else{

@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Classlist;
+use App\Models\AutoFields;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +95,7 @@ class AdminController extends Controller
     {
         return view('customfield.index');
     }
+
     public function downloadstudentfile()
     {
     	$myFile = public_path("assets\download\studentlist.xlsx");
