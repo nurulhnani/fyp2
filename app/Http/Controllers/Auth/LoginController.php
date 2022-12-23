@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Models\Student;
-use App\Models\Interest_Inventory_Results;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Models\Interest_Inventory_Results;
+use App\Models\LoginCount;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -56,13 +58,41 @@ class LoginController extends Controller
             if(auth()->user()->first_login == null){
                 return redirect()->route('password.request');
             }else if (auth()->user()->type == 'admin') {
+
+                //store login count
+                $userid = auth()->user()->id;
+                $login = new LoginCount;
+                $login->user_id = $userid;
+                $login->created_at = now();
+                $login->updated_at = now();
+                $login->save();
+
                 return redirect()->route('admin.home');
+
             }else if (auth()->user()->type == 'teacher') {
+                
+                //store login count
+                $userid = auth()->user()->id;
+                $login = new LoginCount;
+                $login->user_id = $userid;
+                $login->created_at = now();
+                $login->updated_at = now();
+                $login->save();
+
                 return redirect()->route('teacher.home');
+
             }else{
+
+                //store login count
+                $userid = auth()->user()->id;
+                $login = new LoginCount;
+                $login->user_id = $userid;
+                $login->created_at = now();
+                $login->updated_at = now();
+                $login->save();
+                
                 $studentname = auth()->user()->name;
                 $studentid = Student::where('name',$studentname)->first()->id;
-               
                 return redirect()->route('studenthome',$studentid);
             }
         }else{

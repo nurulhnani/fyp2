@@ -79,7 +79,7 @@
             </form> --}}
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item bg-gradient-primary">
+                <li class="nav-item bg-gradient-transparent">
                     <a href="#" class="nav-link">
                         <div class="profile-image">
                             <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
@@ -90,6 +90,17 @@
                         </div>
                     </a>
                 </li>
+                {{-- <li class="nav-item bg-gradient-primary">
+                    <a href="#" class="nav-link">
+                        <div class="profile-image">
+                            <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name text-wrap" style="font-size: 10pt">{{auth()->user()->name}}</p>
+                            <p class="designation" style="font-size: 10pt"><u>Administrator</u></p>
+                        </div>
+                    </a>
+                </li> --}}
                 <style>
                     .profile-image {
                         width: 30%;
@@ -105,25 +116,25 @@
                     .designation {
                         margin-bottom: 0;
                         font-weight: 400;
-                        color: #fff;
+                        color: #000;
                     }
                     .profile-name {
                         margin-bottom: 5px;
                         font-weight: 500;
                         font-size: 15px;
-                        color: #fff;
+                        color: #000;
                     }
                     .text-wrap {
                         white-space: normal !important;
                     }
                 </style>
-                <li class="nav-item">
+                <li class="nav-item mt-3">
                     <a class="nav-link" href="{{ route('admin.home') }}">
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('icons') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
@@ -133,7 +144,7 @@
                       <i class="ni ni-bullet-list-67 text-default"></i>
                       <span class="nav-link-text">Tables</span>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}

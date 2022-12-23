@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Interest_Inventory_Results;
+use App\Models\LoginCount;
+use App\Models\Personality_Evaluation;
 
 class AdminController extends Controller
 {
@@ -106,7 +108,6 @@ class AdminController extends Controller
 
     public function chartjs(Request $request)
     {
-
         //////////////// STUDENT ACTIVE //////////////////
         $record1 = Student::leftJoin('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->select(DB::raw("COUNT(*) as count"), DB::raw('YEAR(students.updated_at) as year'))
@@ -295,6 +296,21 @@ class AdminController extends Controller
             $data6['data'][] = (int) $row->count;
         }
 
+        /////////////// PERSONALITY EVAL COMPLETION ///////////////////
+        $record11 = Personality_Evaluation::select(DB::raw("COUNT(*) as count"), DB::raw("student_mykid as student_mykid"))
+            // ->where('status', '=', 'active')
+            ->groupBy('student_mykid')
+            // ->orderBy('day')
+            ->get();
+
+        // dd($record6);
+        $data11 = [];
+
+        foreach ($record11 as $row) {
+            $data11['label'][] = ["completed", "incomplete"];
+            $data11['data'][] = (int) $row->count;
+        }
+
         // $data6['data'] = count($record6);
 
         ////////////////////////// COCU MERIT //////////////////////////
@@ -347,6 +363,97 @@ class AdminController extends Controller
             $data9['data'][] = (int) abs($row->merit_point);
         }
 
+        /////////////////////// MALE ACTIVE STUDENT ////////////////////////
+        $malestudent = Student::where('status','=','active')
+                        ->where('gender','=','Male')
+                        ->count();
+
+        ////////////////////// FEMALE ACTIVE STUDENT //////////////////////
+        $femalestudent = Student::where('status','=','active')
+                        ->where('gender','=','Female')
+                        ->count();
+
+        //////////////////// MALE ACTIVE TEACHER ////////////////////////
+        $maleteacher = Teacher::where('status', '=', 'active')
+                    ->where('gender', '=', 'Male')
+                    ->count();
+
+        ///////////////////// FEMALE ACTIVE TEACHER////////////////////// 
+        $femaleteacher = Teacher::where('status', '=', 'active')
+                    ->where('gender', '=', 'Female')
+                    ->count();
+
+        //////////////////// TEACHER LOGIN COUNT BY MONTH ///////////////////////
+        $record12 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
+            ->where('type','=','1')
+            ->groupBy('month')
+            ->get();
+
+
+        $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+        $count_teacherlogin = [];
+        foreach ($allmonts as $test) {
+
+            foreach ($record12 as $v) {
+                if ($test == $v->month) {
+                    $count_teacherlogin[$test] = $v->count;
+                    break;
+                } else {
+                    $count_teacherlogin[$test] = 0;
+                }
+            }
+        }
+
+        foreach ($count_teacherlogin as $row) {
+            $data12['data'][] = (int)$row;
+        }
+        $data12['label'] = $allmonts;
+
+        //////////////////// STUDENT LOGIN COUNT BY MONTH ///////////////////////
+        $record13 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
+            ->where('type','=','2')
+            ->groupBy('month')
+            ->get();
+
+        $count_studentlogin = [];
+        foreach ($allmonts as $test) {
+
+            foreach ($record13 as $v) {
+                if ($test == $v->month) {
+                    $count_studentlogin[$test] = $v->count;
+                    break;
+                } else {
+                    $count_studentlogin[$test] = 0;
+                }
+            }
+        }
+
+        foreach ($count_studentlogin as $row) {
+            $data13['data'][] = (int)$row;
+        }
+        $data13['label'] = $allmonts;
+
+        //////////////////// TOP 5 TEACHER LOGIN //////////////////////
+        $teacherlogin = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+        ->select(DB::raw("COUNT(*) as count"),DB::raw("users.name as name")) 
+        ->where('type','=','1')
+        ->groupBy('name')
+        ->orderBy('count','DESC')
+        ->paginate(5);
+
+        // dd($teacherlogin);
+
+         //////////////////// TOP 5 STUDENT LOGIN //////////////////////
+         $studentlogin = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+         ->select(DB::raw("COUNT(*) as count"),DB::raw("users.name as name")) 
+         ->where('type','=','2')
+         ->groupBy('name')
+         ->orderBy('count','DESC')
+         ->paginate(5);
+
+        ////// send data /////
         $data['chart_student'] = json_encode($data1);
         $data['chart_studentinactive'] = json_encode($data10);
         $data['chart_teacher'] = json_encode($data2);
@@ -354,9 +461,18 @@ class AdminController extends Controller
         $data['student_gender'] = json_encode($data4);
         $data['teacher_gender'] = json_encode($data5);
         $data['interest_eval'] = json_encode($data6);
+        $data['personality_eval'] = json_encode($data11);
         $data['student_cocumerit'] = json_encode($data7);
         $data['student_behaviourmerit'] = json_encode($data8);
         $data['student_behaviourdemerit'] = json_encode($data9);
+        $data['teacher_login_counts'] = json_encode($data12);
+        $data['student_login_counts'] = json_encode($data13);
+        $data['malestudent'] = $malestudent;
+        $data['femalestudent'] = $femalestudent;
+        $data['maleteacher'] = $maleteacher;
+        $data['femaleteacher'] = $femaleteacher;
+        $data['teacherlogin'] = $teacherlogin;
+        $data['studentlogin'] = $studentlogin;
 
         return view('admin.home', $data);
     }

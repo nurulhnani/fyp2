@@ -64,6 +64,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::get('/customfield',[App\Http\Controllers\AdminController::class, 'customfield'])->name('customfield');
 	Route::get('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMore']);
 	Route::post('/addmore',[App\Http\Controllers\AutoFieldsController::class, 'addMorePost'])->name('addmore');
+	Route::get('/customfields-list',[App\Http\Controllers\AutoFieldsController::class, 'showfields'])->name('showfields');
+	Route::delete('/deleteField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'deleteField'])->name('deleteField');
+	Route::put('/editField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'editField'])->name('editField');
 	Route::post('/storeclass',[App\Http\Controllers\SubjectController::class, 'storeclass'])->name('subjects.storeclass');
 	Route::get('/manageAssessment',[App\Http\Controllers\InterestInventoryController::class, 'index'])->name('manageAssessment');
 	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');

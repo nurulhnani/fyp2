@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('first_login')->nullable();
             $table->string('password');
             $table->tinyInteger('type')->default(0);
+            $table->integer('logincount')->nullable();
             /* Users: 0=>User, 1=>Admin, 2=>Manager */
             $table->rememberToken();
             $table->timestamps();
