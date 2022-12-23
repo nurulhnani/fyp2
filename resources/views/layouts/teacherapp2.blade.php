@@ -22,10 +22,15 @@
     <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
 
     <!-- JS -->
+    <!-- Classroom -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
+
     <script>
         $(document).ready(function() {
             $(".mozgat").draggable({
@@ -68,7 +73,7 @@
                         item.addClass('remove');
                         var ex = $('<a href="Javascript:void(0)" class="delete" title="Remove">X</a>').css({
                             'position': 'absolute',
-                            'bottom': 110,
+                            'bottom': 140,
                             'right': 15,
                             'height': 10,
                             'width': 10,
@@ -117,6 +122,39 @@
                     });
                 }
             });
+        }
+
+        jQuery(document).ready(function() {
+            jQuery("#save").click(function() {
+                screenshot();
+            });
+        });
+
+        function screenshot() {
+            // html2canvas(document.getElementById("ch_dndBoard1")).then(function(canvas) {
+            //     downloadImage(canvas.toDataURL(), "classplan.png");
+            // });
+            html2canvas(document.getElementById("ch_dndBoard1"), {
+                ignoreElements: function(element) {
+                    if (element.classList.contains('delete')) {
+                        return true;
+                    }
+                    if (element.classList.contains('rotator')) {
+                        return true;
+                    }
+                }
+            }).then(function(canvas) {
+                downloadImage(canvas.toDataURL(), "classplan.png");
+            });
+        }
+
+        function downloadImage(uri, filename) {
+            var a = document.createElement('a');
+            a.href = uri;
+            a.download = filename;
+            // a.click();
+            var hidden = $("input[name=imgVal]:hidden").val(a);
+            document.getElementById("sendPlan").submit();
         }
     </script>
 

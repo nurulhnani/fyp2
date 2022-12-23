@@ -35,6 +35,13 @@
                         <div class="col-8">
                             <h3 class="mb-0">Create Classroom Plan</h3>
                         </div>
+                        <div class="col-4">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="This is a very beautiful popover, show some love.">
+                                    Tutorial
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -44,7 +51,7 @@
                                 <div class="cloneBoard">
                                     <span class="mozgat f-szurke f75x30">
                                         <!-- student name -->
-                                        <p>Student</p>
+                                        <p><input type="text" style="border: none; border-color: transparent; background: transparent; width: 50%; height: 30%; font-size:10px; color:white; text-align: center; "></p>
                                     </span>
                                 </div>
                             </div>
@@ -55,9 +62,14 @@
                             </div>
                         </div>
                     </div>
+                    <form method="post" id="sendPlan" action="{{ route('classrooms.getAjax') }}" autocomplete="off">
+                        @csrf
+                        <input type="hidden" value="" name="imgVal" />
+                        <input type="hidden" value="{{ $class->id }}" name="id" />
+                    </form>
                     <div class="float-right pt-3">
                         <a class="btn btn-secondary" href="{{ route('classrooms.index') }}">Discard</a>
-                        <a class="btn btn-primary" href=""><i class="fa fa-save"></i></a>
+                        <button id="save" class="btn btn-primary"><i class="fa fa-save"></i></button>
                     </div>
                 </div>
             </div>
@@ -109,6 +121,9 @@
         background-size: 100px 100px;
         width: 100px;
         height: 100px;
+        /* background-size: 100% 100%;
+        width: 70%;
+        height: 50%; */
         line-height: 90px;
     }
 
@@ -143,16 +158,16 @@
     }
 
     #ch_dndBoard1 {
-        background-image: url("/assets/img/class/floor2.jpg");
+        width: 100%;
+        height: 130%;
+        background-image: url("/assets/img/class/floor.png");
+        background-size: cover;
+        background-repeat: no-repeat;
         position: relative;
         border: 1px solid #4A5157;
         border-collapse: collapse;
     }
 
-    #ch_dndBoard1 {
-        width: 900px;
-        height: 500px;
-    }
 
     .snaptarget-hover {
         background-color: #616A72;

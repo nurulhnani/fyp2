@@ -72,7 +72,9 @@
                             @elseif($question->type=='s')
                             <input type="hidden" name="scale" value="scale">
                             <input type="hidden" name="category<?php echo $index ?>" value="{{ $question->category }}">
-                            <label class="form-control-label" for="exampleFormControlTextarea1">{{ $question->question }}</label>
+                            <ul>
+                                <li><label class="form-control-label" for="exampleFormControlTextarea1">{{ $question->question }}</label></li>
+                            </ul>
                             <ul class='likert'>
                                 <li>
                                     <input type="radio" name="likert<?php echo $index ?>" value="1">

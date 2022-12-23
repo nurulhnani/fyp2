@@ -13,7 +13,8 @@ class Classlist extends Model
 
     protected $primaryKey = 'id';
     protected $fillable = [
-      'class_name'
+      'class_name',
+      'class_plan'
     ];
 
     public function students(){

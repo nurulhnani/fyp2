@@ -138,7 +138,8 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		//Classroom Management
 		Route::get('classroom', [App\Http\Controllers\ClassroomManagementController::class, 'index'])->name('classrooms.index');
 		Route::post('classroom/view', [App\Http\Controllers\ClassroomManagementController::class, 'view'])->name('classrooms.view');
-		Route::get('classroom/plan', [App\Http\Controllers\ClassroomManagementController::class, 'plan'])->name('classrooms.plan');
+		Route::get('classroom/plan/{class}', [App\Http\Controllers\ClassroomManagementController::class, 'plan'])->name('classrooms.plan');
+		Route::post('classroom/getAjax', [App\Http\Controllers\ClassroomManagementController::class, 'getAjax'])->name('classrooms.getAjax');
 
 
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('class_name');
+            $table->string('class_plan')->nullable();
         });
     }
 
