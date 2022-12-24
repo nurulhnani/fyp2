@@ -297,21 +297,21 @@
             <div class="col-sm-6">
 
                 @if(in_array('Realistic',$category))
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12">
                     <h2 class="card-category mt-4">Realistic</h2>
                     <p class="card-text">Realistic careers are those that involve working with your hands and often involve physical labor. Examples of a realistic work environment may include working as an electrician, carpenter, military service, or mechanic.</p>
                 </div>
                 @endif
   
                 @if(in_array('Investigative',$category))
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12">
                     <h2 class="card-category mt-4">Investigative</h2>
                     <p class="card-text">Investigative careers are those that require knowledge and often involve research or science. Examples of an investigative work environment may include working as a journalist, doctor, or scientist.</p>
                 </div>
                 @endif
   
                 @if(in_array('Artistic',$category))
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12">
                     <h2 class="card-category mt-4">Artistic</h2>
                     <p class="card-text">Artistic careers are those that allow you to express your creativity and often involve design or performance. Examples of an artistic work environment may include working as a musician, actor or artist.</p>
                 </div>
@@ -332,7 +332,7 @@
                 @endif
   
                 @if(in_array('Conventional',$category))
-                <div class="col-sm-12 text-center">
+                <div class="col-sm-12">
                     <h2 class="card-category mt-4">Conventional</h2>
                     <p class="card-text">Conventional careers are those that require organization and often involve clerical work or administration. Examples of conventional work environments may include working as an office administrator, bookkeeper or secretary.</p>
                 </div>
@@ -342,13 +342,12 @@
         </div>
 
       </div>
-    </div>
-@endif  
-
+    </div> 
 </div>
+@endif 
 @include('layouts.footers.auth')
 
-{{-- </div> --}}
+</div>
 
 <style>
 
