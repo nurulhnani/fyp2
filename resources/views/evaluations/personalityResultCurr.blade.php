@@ -98,26 +98,6 @@
                 </div>
                 <div class="card-body">
                     <p>This Big Five assessment measures your scores on five major dimensions of personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (sometimes abbreviated OCEAN). In this free report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
-                    <!-- <div class="pl-4">
-                        <table class="table table-hover table-responsive">
-                            <thead>
-                                <tr>
-                                    @foreach ($averageArr as $k => $v)
-                                    <th scope="col">{{ $k }}</th>
-                                    @endforeach
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr>
-                                    @foreach ($averageArr as $k => $v)
-                                    <td class="text-center">{{ $v }}</td>
-                                    @endforeach
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div> -->
                     <p class="pt-2"><strong>EXTRAVERSION</strong></p>
                     <p>Extraversion describes a person’s inclination to seek stimulation from the outside world, especially in the form of attention from other people. Extraverts engage actively with others to earn friendship, admiration, power, status, excitement, and romance. Introverts, on the other hand, conserve their energy, and do not work as hard to earn these social rewards.</p>
                     <div class="skillbar-wrapper">

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interest_Inventory_Results;
+use App\Models\Personality_Evaluation;
 
 class StudentController extends Controller
 {
@@ -33,6 +34,8 @@ class StudentController extends Controller
     public function overview($id)
     {
         $student = Student::find($id);
+
+        //Interest Inventory
         $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising","Conventional");
         if(Interest_Inventory_Results::where('student_id',$id)->exists()){
             foreach ($categoryArray as $category) {
@@ -41,59 +44,30 @@ class StudentController extends Controller
             }
 
             $result = Interest_Inventory_Results::where('student_id',$id)->get();
-
-            // $realistic = 0;
-            // $investigative = 0;
-            // $artistic = 0;
-            // $social = 0;
-            // $enterprising = 0;
-            // $conventional = 0;
             $teacherids = [];
-            // $total = 0;
             foreach($result as $res){
                 if(!in_array($res->teacher_id,$teacherids)){
                     $teacherids[] = $res->teacher_id;
                 }
-                
-                // $realistic += $res->realistic;
-                // $total += $res->realistic;
-                // $investigative += $res->investigative;
-                // $total += $res->investigative;
-                // $artistic += $res->artistic;
-                // $total += $res->artistic;
-                // $social += $res->social;
-                // $total += $res->social;
-                // $enterprising += $res->enterprising;
-                // $total += $res->enterprising;
-                // $conventional += $res->conventional;
-                // $total += $res->conventional;
             }
 
-            // dd($teacherids);
-            // $result = new Interest_Inventory_Results;
-            // $result->realistic = $realistic;
-            // $result->investigative = $investigative;
-            // $result->artistic =  $artistic;
-            // $result->social = $social;
-            // $result->enterprising =  $enterprising;
-            // $result->conventional =  $conventional;
-
-            // $realistic = ($realistic/$total)*100;
-            // $investigative = ($investigative/$total)*100;
-            // $artistic = ($artistic/$total)*100;
-            // $social = ($social/$total)*100;
-            // $enterprising = ($enterprising/$total)*100;
-            // $conventional = ($conventional/$total)*100;
-            // $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
-            // dd($data);
         }else{
             $averageArr = "No result found";
-            // $data = null;
             $teacherids = null;
         }
 
-        // return view('students.overview',compact('student','result','teacherids','data'));
-        return view('students.overview',compact('student','teacherids','averageArr'));
+        $categoryPersArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
+        if(Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()){
+                foreach ($categoryPersArray as $category) {
+                    $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
+                    $averagePersArr[$category] = intval(round($averagePersScore));
+                }
+        }
+        else{
+            $averagePersArr = null;
+        }
+        
+        return view('students.overview',compact('student','teacherids','averageArr','averagePersArr'));
     }
     public function dashboard($id)
     {
