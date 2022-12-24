@@ -321,7 +321,7 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Extraversion',
-                'question' => 'Student\'s extraversion',
+                'question' => 'Tick following answers if its match with how student behave in class in terms of his/her extraversion',
                 'type' => 'mcq',
                 'ans_choices' =>
                 json_encode(
@@ -331,9 +331,10 @@ class Personality_Question_TableSeeder extends Seeder
                         array(
                             'Talkative',
                             'Outgoing',
-                            'Enjoy socialing',
+                            'Sociable',
                             'Loved to be center of attention',
-                            'Conversation stater'
+                            'Conversation stater',
+                            'Center of attention'
                         ),
 
                         'introversion' =>
@@ -342,7 +343,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Quiet',
                             'Reserved',
                             'Inhibited',
-                            'Passive'
+                            'Passive',
+                            'Bashful'
                         )
                     )
                 ),
@@ -350,7 +352,7 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Agreeableness',
-                'question' => 'Student\'s agreeableness',
+                'question' => 'Tick following answers if its match with how student behave in class in terms of his/her agreeableness',
                 'type' => 'mcq',
                 'ans_choices' =>
                 json_encode(
@@ -362,7 +364,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Tolerant',
                             'Generous',
                             'Care for others',
-                            'Lenient'
+                            'Lenient',
+                            'Helpful'
                         ),
 
                         'competitiveness' =>
@@ -371,7 +374,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Irritable',
                             'Cold',
                             'Harsh',
-                            'Rude'
+                            'Rude',
+                            'Aloof'
                         )
                     )
                 ),
@@ -379,7 +383,7 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Neuroticism',
-                'question' => 'Student\'s neuroticism',
+                'question' => 'Tick following answers if its match with how student behave in class in terms of his/her neuroticism',
                 'type' => 'mcq',
                 'ans_choices' =>
                 json_encode(
@@ -391,7 +395,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Nervous',
                             'Anxious',
                             'Self-conscious',
-                            'Freaquent mood swings'
+                            'Freaquent mood swings',
+                            'Insecure'
                         ),
 
                         'stable' =>
@@ -400,7 +405,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Calm',
                             'Relaxed',
                             'Handle stress well',
-                            'Emotionally-stable'
+                            'Emotionally-stable',
+                            'Comfortable'
                         )
                     )
                 ),
@@ -408,7 +414,7 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Conscientiousness',
-                'question' => 'Student\'s conscientiousness',
+                'question' => 'Tick following answers if its match with how student behave in class in terms of his/her conscientiousness',
                 'type' => 'mcq',
                 'ans_choices' =>
                 json_encode(
@@ -420,7 +426,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Neat',
                             'Systematic',
                             'Dependable',
-                            'Punctual'
+                            'Punctual',
+                            'Disciplined'
                         ),
 
                         'spontaneity' =>
@@ -428,8 +435,9 @@ class Personality_Question_TableSeeder extends Seeder
                             'Inefficient',
                             'Careless',
                             'Impulsive',
-                            'Lazy',
-                            'Impractical'
+                            'Easily distracted',
+                            'Impractical',
+                            'Late attendance/submission'
                         )
                     )
                 ),
@@ -437,7 +445,7 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Openness',
-                'question' => 'Student\'s openness',
+                'question' => 'Tick following answers if its match with how student behave in class in terms of his/her openness',
                 'type' => 'mcq',
                 'ans_choices' =>
                 json_encode(
@@ -449,7 +457,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Creative',
                             'Imaginative',
                             'Always curious',
-                            'Preference for variety'
+                            'Preference for variety',
+                            'Open to new ideas'
                         ),
 
                         'consistency' =>
@@ -458,7 +467,8 @@ class Personality_Question_TableSeeder extends Seeder
                             'Uncreative',
                             'Practical',
                             'Down-to-earth',
-                            'Preference for routine'
+                            'Preference for routine',
+                            'Conventional'
                         )
                     )
                 ),
@@ -467,37 +477,46 @@ class Personality_Question_TableSeeder extends Seeder
             [
 
                 'category' => 'Extraversion',
-                'question' => 'Student\'s extaraversion',
+                'question' => 'Describe how student behave in class in terms of his/her extraversion',
                 'type' => 'o',
-                'ans_choices' => null
+                'ans_choices' => json_encode('Extraversion includes traits such as talkative, energetic, assertive, and outgoing. <br/> 
+                Social interaction is the key here. <br/> 
+                Extraverts often take on positions of leadership; first to offer their opinion and suggestions.')
             ],
             [
 
                 'category' => 'Agreeableness',
-                'question' => 'Student\'s agreeableness',
+                'question' => 'Describe how student behave in class in terms of his/her agreeableness',
                 'type' => 'o',
-                'ans_choices' => null
+                'ans_choices' => json_encode('Agreeableness reflects the student tendency to develop and maintain prosocial relationships. <br/>
+                Students high in this trait are more trustworthy, straightforward, altruistic, compliant, modest, and tender-minded.')
             ],
             [
 
                 'category' => 'Neuroticism',
-                'question' => 'Student\'s emotional stability',
+                'question' => 'Describe how student behave in class in terms of his/her emotional stability',
                 'type' => 'o',
-                'ans_choices' => null
+                'ans_choices' => json_encode('Student with neuroticism may be self-conscious and shy. <br/>
+                They may tend to internalize phobias and other neurotic traits, such as anxiety, panic, aggression, negativity, and depression. <br/>
+                Neuroticism is an ongoing emotional state defined by these negative reactions and feelings.')
             ],
             [
 
                 'category' => 'Conscientiousness',
-                'question' => 'Student\'s conscientiousness',
+                'question' => 'Describe how student behave in class in terms of his/her conscientiousness',
                 'type' => 'o',
-                'ans_choices' => null
+                'ans_choices' => json_encode('Conscientiousness is the personality trait of being careful, or diligent. <br/>
+                Conscientiousness implies a desire to do a task well, and to take obligations to others seriously. <br/>
+                Conscientious people tend to be efficient and organized as opposed to easy-going and disorderly.')
             ],
             [
 
                 'category' => 'Openness',
-                'question' => 'Student\'s openness',
+                'question' => 'Describe how student behave in class in terms of his/her openness',
                 'type' => 'o',
-                'ans_choices' => null
+                'ans_choices' => json_encode('Openness is how open-minded, imaginative, creative and insightful a person is or can be. <br/>
+                 More open minded people tend to prefer variety, seek new experiences and are curious and perceptive to their environment. <br/>
+                 Less open minded people tend to avoid change, dislike disruption and focus on a few specific interests.')
             ]
 
         ];

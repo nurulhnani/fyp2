@@ -13,7 +13,7 @@
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                             <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{{ route('evaluations.index') }}">Student List</i></a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Personality Result</li>
+                            <li class="breadcrumb-item active" aria-current="page">Evaluation History</li>
                         </ol>
                     </nav>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Personality Result</h3>
+                            <h3 class="mb-0">Personality Result History</h3>
                         </div>
                     </div>
                 </div>
@@ -44,27 +44,31 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Evaluator Name</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Mykid No.</label>
                             <div class="col-sm-10">
-                                <input type="text" readonly class="form-control" id="staticEmail" value="{{ $teacher->name }}">
+                                <input type="text" readonly class="form-control" id="staticEmail" value="{{ $student->mykid }}">
                             </div>
                         </div>
                     </form>
-                    <h4 class="py-3">Below are the result for the assessment: </h4>
+                    <h4 class="py-3">Below are the history of personality evaluations made for the student: </h4>
                     <table id="customers">
                         <tr>
-                            @foreach ($input as $k => $v)
-                            <th scope="col" class="text-center">{{ $k }}</th>
-                            @endforeach
+                            <th scope="col">No.</th>
+                            <th scope="col">Evaluator Name</th>
+                            <th scope="col">Date/Time</th>
                         </tr>
+                        <?php $index=1?>
+                        @foreach ($evaluations as $eval)
                         <tr>
-                            @foreach ($input as $k => $v)
-                            <td class="text-center">{{ $v }}</td>
-                            @endforeach
+                            <td><?php echo $index?>.</td>
+                            <td>{{ $eval->teacher->name }}</td>
+                            <td>{{ $eval->created_at }}</td>
                         </tr>
+                        <?php $index++?>
+                        @endforeach
+
                     </table>
                     <div class="float-right pt-5" style="margin-top: 10px">
-                        <a class="btn btn-secondary" href="{{ route('personalityResultCurr', $student) }}">Student Accumulative Result</a>
                         <a class="btn btn-primary" href="{{ route('evaluations.index') }}">Finish Review</a>
                     </div>
                 </div>

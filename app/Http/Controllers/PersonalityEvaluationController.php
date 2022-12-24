@@ -16,17 +16,19 @@ use Illuminate\Http\Request;
 
 class PersonalityEvaluationController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $students = Student::all();
         $interestresults = Interest_Inventory_Results::all();
         $student_ids = [];
-        foreach($interestresults as $interestresult){
+        foreach ($interestresults as $interestresult) {
             $student_ids[] = $interestresult->student_id;
         }
-        return view('evaluations.index', ['students' => $students,'student_ids' => $student_ids]);
+        return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids]);
     }
 
-    public function viewPersonalityQuestion(Request $request){
+    public function viewPersonalityQuestion(Request $request)
+    {
         $id = $request->student;
         $question = $request->question;
         $student = Student::find($id);
@@ -41,7 +43,7 @@ class PersonalityEvaluationController extends Controller
         $id = $request->input('student_mykid');
         $name = auth()->user()->name;
         $student = Student::where('mykid', "=", $id)->first();
-        $teacher = Teacher::where('name',$name)->first()->id;
+        $teacher = Teacher::where('name',$name)->first();
         
         if ($request->has('scale')) {
             $questions = Personality_Question::where('type', '=', 's')->get();
@@ -111,7 +113,7 @@ class PersonalityEvaluationController extends Controller
                 if ($mark <= 0) {
                     $finalMark[$category] = 0;
                 } else {
-                    $finalMark[$category] = $mark * 20;
+                    $finalMark[$category] = intval(round(($mark/6)*100));
                 }
             }
 
@@ -121,10 +123,9 @@ class PersonalityEvaluationController extends Controller
                 'Neuroticism' => $finalMark['Neuroticism'],
                 'Conscientiousness' => $finalMark['Conscientiousness'],
                 'Openness' => $finalMark['Openness'],
-                'teacher_id' => $teacher,
+                'teacher_id' => $teacher->id,
                 'student_mykid' => $id,
             ];
-
         } else {
             $index = 0;
             foreach ($sheetNameArr as $sheetName) {
@@ -169,12 +170,11 @@ class PersonalityEvaluationController extends Controller
                     }
                     $result = count(array_intersect($itr[$cat], $phrases));
 
-                    if(in_array(ucfirst($cat), $sheetNameArr)){
-                        $resultArr[$indexNo]+=($result*10);
-                    }
-                    else{
-                        $resultArr[$indexNo]-=($result*10);
-                        echo ucfirst($indexNo) . " = " .$cat. " ";
+                    if (in_array(ucfirst($cat), $sheetNameArr)) {
+                        $resultArr[$indexNo] += ($result * 10);
+                    } else {
+                        $resultArr[$indexNo] -= ($result * 10);
+                        echo ucfirst($indexNo) . " = " . $cat . " ";
                     }
                 }
                 $indexNo++;
@@ -188,24 +188,32 @@ class PersonalityEvaluationController extends Controller
                 'Neuroticism' => $resultArr[2],
                 'Conscientiousness' => $resultArr[3],
                 'Openness' => $resultArr[4],
-                'teacher_id' => $teacher,
+                'teacher_id' => $teacher->id,
                 'student_mykid' => $id,
             ];
-
         }
-        
-        Personality_Evaluation::create($input);
 
-        toastr()->success('Your personality evaluation has been saved successfully!', 'Congrats');
-        return redirect()->route('evaluations.index');  
+        Personality_Evaluation::create($input);
+        unset($input['teacher_id']);
+        unset($input['student_mykid']);
+
+        toastr()->success('Your personality evaluation has been submit successfully!', 'Congrats');
+        return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher]);
     }
 
-    public function showResult(Student $student){
+    public function showCurrResult(Student $student)
+    {
         $categoryArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
         foreach ($categoryArray as $category) {
             $averageScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
             $averageArr[$category] = intval(round($averageScore));
         }
-        return view('evaluations.personalityResult', ['averageArr' => $averageArr, 'student' => $student]);
+        return view('evaluations.personalityResultCurr', ['averageArr' => $averageArr, 'student' => $student]);
+    }
+
+    public function showHistory(Student $student)
+    {
+        $evaluations = Personality_Evaluation::where('student_mykid', "=", $student->mykid)->get();
+        return view('evaluations.personalityResultHist', ['evaluations' => $evaluations, 'student' => $student]);
     }
 }

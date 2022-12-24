@@ -81,7 +81,8 @@
                     </td>
 
                     <td class="text-center">
-                      <a href="{{ route('personalityResult', $student) }}" class="btn btn-primary btn-sm">Current Result</a>
+                      <a href="{{ route('personalityResultHist', $student) }}" class="btn btn-secondary btn-sm">History</a>
+                      <a href="{{ route('personalityResultCurr', $student) }}" class="btn btn-primary btn-sm">Current Result</a>
                     </td>
 
                     <td class="text-right">
@@ -149,7 +150,7 @@
                         <i class="bg-warning"></i>
                         <span class="status">pending</span>
                       </span>
-                          
+
                       @else
                       <span class="badge badge-dot mr-4">
                         <i class="bg-success"></i>
@@ -168,17 +169,17 @@
                         </div>
                       </div>
                     </td> --}}
-                    
+
 
                     <td class="text-right">
                       {{-- <div class="dropdown"> --}}
-                        {{-- <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {{-- <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
                         </a> --}}
-                        {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
-                          <a class="btn btn-sm btn-primary" href="/studentlist-evaluation/interestresult/{{$student->id}}">Current Result</a>
-                          <a class="btn btn-sm btn-success" href="{{route('interestInventory',$student->id)}}">GO</a>
-                        {{-- </div> --}}
+                      {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
+                      <a class="btn btn-sm btn-primary" href="/studentlist-evaluation/interestresult/{{$student->id}}">Current Result</a>
+                      <a class="btn btn-sm btn-success" href="{{route('interestInventory',$student->id)}}">GO</a>
+                      {{-- </div> --}}
                       {{-- </div> --}}
                     </td>
                   </tr>

@@ -45,6 +45,12 @@
 
                             <!--Open Ended Questions-->
                             @if($question->type=='o')
+                            <?php $hint = json_decode($question->ans_choices, true); ?>
+                            <div class="float-right">
+                                <button type="button" class="btn btn-sm btn-secondary mb-2" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="{{ $hint }}" data-html="true">
+                                    Hint
+                                </button>
+                            </div>
                             <label class="form-control-label" for="exampleFormControlTextarea1"><?php echo $index ?>. {{ $question->question }}</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" name="text[{{ $question->category }}]" rows="3"></textarea>
 
@@ -109,6 +115,7 @@
                         </nav>
 
                         <div class="float-right" style="margin-top: 10px">
+                            <a class="btn btn-secondary" href="{{ route('evaluations.index') }}">Discard</a>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>

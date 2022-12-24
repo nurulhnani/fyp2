@@ -18,4 +18,8 @@ class Personality_Evaluation extends Model
         'student_mykid',
         'teacher_id'
     ];
+
+    public function teacher(){
+        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+    }
 }
