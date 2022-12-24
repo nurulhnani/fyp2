@@ -26,7 +26,7 @@
 <div class="container-fluid mt--6">
     <div class="row">
 
-        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="col-xl-5 order-xl-2 mb-5 mb-xl-0">
             <div class="card card-profile shadow">
                 <div class="card-body pt-0 pt-md-4">
                     <div class="row">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <div class="chart-area"><canvas id="marksChart" width="600" height="400"></canvas></div>
+                        <div class="chart-area"><canvas id="marksChart"></canvas></div>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
                         <script>
                             var marksCanvas = document.getElementById("marksChart");
@@ -55,15 +55,32 @@
                                 datasets: [{
                                         label: "Big 5 Personality",
                                         backgroundColor: "rgba(200,0,0,0.2)",
-                                        data: [65, 75, 70, 80, 60, 80]
+                                        data: [<?php
+                                                foreach ($averageArr as $category => $mark) {
+                                                    echo "'" . $mark . "', ";
+                                                } ?>],
                                     },
 
                                 ]
                             };
 
+                            var options = {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                scale: {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        max: 100
+                                    }
+                                }
+
+
+                            };
+
                             var radarChart = new Chart(marksCanvas, {
                                 type: 'radar',
-                                data: marksData
+                                data: marksData,
+                                options: options,
                             });
                         </script>
 
@@ -72,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-8 order-xl-1">
+        <div class="col-xl-7 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
