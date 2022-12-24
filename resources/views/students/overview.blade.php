@@ -322,6 +322,11 @@
                 {{-- Personality Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                     @if(isset($averagePersArr))
+                    <div class=row>
+                        <div class="col">
+                            <h5 class="h3 card-category">Personality Assessment Result</h5>
+                        </div>
+                    </div>
                     <!-- Chart -->
                     <div class="chart-area" style="width:40%; height:40%; margin:0 auto"><canvas id="marksChart"></canvas></div>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
