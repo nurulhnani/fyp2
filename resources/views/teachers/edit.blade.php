@@ -130,13 +130,26 @@
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="gender">{{ __('Gender') }}</label>
-                                                        <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="" value="{{$teacher->gender}}" required>
+                                                        <select type="text" name="gender" id="gender" class="form-control form-control-alternative"> 
+                                                            <option value="{{$teacher->gender}}" selected>{{$teacher->gender}}</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </select>
+                                                        {{-- <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="" value="{{$teacher->gender}}" required> --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="position">{{ __('Position') }}</label>
-                                                        <input type="text" name="position" id="position" class="form-control form-control-alternative" placeholder="" value="{{$teacher->position}}" required>
+                                                        <select type="text" name="position" id="position" class="form-control form-control-alternative"> 
+                                                            <option value="{{$teacher->position}}" selected>{{$teacher->position}}</option>
+                                                            <option value="Teacher">Teacher</option>
+                                                            <option value="Classroom teacher">Classroom teacher</option>
+                                                            <option value="Guidance counselor">Guidance counselor</option>
+                                                            <option value="Vice principal">Vice principal</option>
+                                                            <option value="Principal">Principal</option>
+                                                        </select>
+                                                        {{-- <input type="text" name="position" id="position" class="form-control form-control-alternative" placeholder="" value="{{$teacher->position}}" required> --}}
                                                     </div>
                                                 </div>
                                             </div>

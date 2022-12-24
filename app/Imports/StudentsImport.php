@@ -38,7 +38,7 @@ class StudentsImport implements ToModel
         $user = new User;
         $user->name = $row[0];
         // $user->image_path = $row[14];
-        $user->email = $row[1];
+        $user->nric_mykid = $row[1];
         $user->type = 2;
         $user->email_verified_at = now();
         $user->password = Hash::make('secret');

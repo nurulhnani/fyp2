@@ -16,12 +16,24 @@
                     <hr class="my-3" />
                     <form method="POST" action="{{route('addmore')}}" name="add_type" id="add_type">
                         @csrf
-                        <div class="h5 text-muted text-uppercase py-4">
-                            <i class="ni business_briefcase-24"></i>{{ __('Choose type of user') }}
+
+                        <div class="row pt-3 py-3">
+                            <div class="col-sm-6">
+                                <div class="h5 text-muted text-uppercase">
+                                    <i class="ni business_briefcase-24"></i>{{ __('Choose type of user') }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a href="{{route('showfields')}}" class="btn btn-sm btn-neutral">View Added Custom Fields</a>
+                            </div>
                         </div>
 
+                        {{-- <div class="h5 text-muted text-uppercase py-4">
+                            <i class="ni business_briefcase-24"></i>{{ __('Choose type of user') }}
+                        </div> --}}
+
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div>
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" id="customRadioInline1" name="user" class="custom-control-input" value="student"> 
@@ -33,12 +45,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 text-right">
+                            {{-- <div class="col-sm-6 text-right">
                                 <a href="{{route('showfields')}}" class="btn btn-sm btn-neutral">View Added Custom Fields</a>
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <div class="table-responsive text-center py-4">
+                        <div class="row pt-5">
+                            <div class="col-sm-12">
+                                <div class="h5 text-muted text-uppercase">
+                                    <i class="ni business_briefcase-24"></i>{{ __('Enter custom field details') }}
+                                </div>
+                            </div>
+                            {{-- <div class="col-sm-6 text-right">
+                                <a href="{{route('showfields')}}" class="btn btn-sm btn-neutral">View Added Custom Fields</a>
+                            </div> --}}
+                        </div>
+                        
+                        <div class="table-responsive text-center">
                             <table class="table align-items-center table-flush" id="dynamic_field">
                                 <tr>
                                     <td><input type="text" name="name[]" placeholder="Enter Field Name" class="form-control form-control-alternative" required></td>
@@ -54,7 +77,7 @@
                                             </select>
                                         {{-- </div> --}}
                                     </td>   
-                                    <td><button type="button" name="add" id="add" id="add" class="btn btn-info" onclick="addOnclick()">Add More</button></td>
+                                    <td><button type="button" name="add" id="add" id="add" class="btn btn-primary" onclick="addOnclick()">Add More</button></td>
                                 </tr>
                                 <tr class="autoUpdate" style="display: none">
                                     <td><p>Please add option of answers.</p></td>

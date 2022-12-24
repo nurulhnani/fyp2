@@ -52,7 +52,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
       
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        if(auth()->attempt(array('nric_mykid' => $input['email'], 'password' => $input['password'])))
         {
             // dd(auth()->user()->first_login);
             if(auth()->user()->first_login == null){
@@ -97,7 +97,7 @@ class LoginController extends Controller
             }
         }else{
             return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+                ->with('error','NRIC/Mykid and Password are wrong.');
         }
            
     }

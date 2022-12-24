@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             [
                'name'=>'Admin Admin',
                'image_path' => 'logosekolah.png',
-               'email'=>'admin@argon.com',
+               'nric_mykid'=>'admin@argon.com',
                'type'=>0,
                'first_login' => 1,
                'logincount' => 0,
@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'=>'Teacher',
                 'image_path' => 'teacher.png',
-                'email'=>'teacher@argon.com',
+                'nric_mykid'=>'teacher@argon.com',
                 'type'=>1,
                 'first_login' => 1,
                 'logincount' => 0,
@@ -43,7 +43,7 @@ class UsersTableSeeder extends Seeder
             [
                'name'=>'Student',
                'image_path' => 'student.png',
-               'email'=>'student@argon.com',
+               'nric_mykid'=>'student@argon.com',
                'type'=>2,
                'first_login' => 1,
                'logincount' => 0,
@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'=>'Sabarina binti Kamal',
                 'image_path' => 'Sabarina binti Kamal.png',
-                'email'=>'sabarina@gmail.com',
+                'nric_mykid'=>'890716-01-2236',
                 'type'=>1,
                 'email_verified_at' => now(),
                 'first_login' => 1,
@@ -67,7 +67,7 @@ class UsersTableSeeder extends Seeder
              [
                 'name'=>'Mohd Ridwan bin Daud',
                 'image_path' => 'Mohd Ridwan bin Daud.png',
-                'email'=>'ridwan@gmail.com',
+                'nric_mykid'=>'890721-14-2231',
                 'type'=>1,
                 'email_verified_at' => now(),
                 'first_login' => 1,
@@ -79,7 +79,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'=>'Mohd Hafiz bin Kamal',
                 'image_path' => 'Mohd Hafiz bin Kamal.png',
-                'email'=>'MH12123',
+                'nric_mykid'=>'MH12123',
                 'type'=>2,
                 'first_login' => 1,
                 'logincount' => 0,
@@ -90,7 +90,7 @@ class UsersTableSeeder extends Seeder
             ],[
                 'name'=>'Nurul Hanani',
                 'image_path' => 'Nurul Hanani.png',
-                'email'=>'000729141107',
+                'nric_mykid'=>'000729141107',
                 'type'=>2,
                 'first_login' => 1,
                 'logincount' => 0,

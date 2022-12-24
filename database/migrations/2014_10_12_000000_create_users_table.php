@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image_path');
-            $table->string('email')->unique();
+            $table->string('nric_mykid')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('first_login')->nullable();
             $table->string('password');

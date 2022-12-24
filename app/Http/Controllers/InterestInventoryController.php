@@ -86,58 +86,66 @@ class InterestInventoryController extends Controller
     }
     public function showResult($id){
         $student = Student::find($id);
+        $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising","Conventional");
         if(Interest_Inventory_Results::where('student_id',$id)->exists()){
+            foreach ($categoryArray as $category) {
+                $averageScore = Interest_Inventory_Results::where('student_id',$id)->avg($category);
+                $averageArr[$category] = intval(round($averageScore));
+            }
+            // dd($averageArr);
             $result = Interest_Inventory_Results::where('student_id',$id)->get();
 
-            $realistic = 0;
-            $investigative = 0;
-            $artistic = 0;
-            $social = 0;
-            $enterprising = 0;
-            $conventional = 0;
+            // $realistic = 0;
+            // $investigative = 0;
+            // $artistic = 0;
+            // $social = 0;
+            // $enterprising = 0;
+            // $conventional = 0;
+            // $teacherids = [];
+            // $total = 0;
             $teacherids = [];
-            $total = 0;
             foreach($result as $res){
-                $teacherids[] = $res->teacher_id;
+                if(!in_array($res->teacher_id,$teacherids)){
+                    $teacherids[] = $res->teacher_id;
+                }
                 
-                $realistic += $res->realistic;
-                $total += $res->realistic;
-                $investigative += $res->investigative;
-                $total += $res->investigative;
-                $artistic += $res->artistic;
-                $total += $res->artistic;
-                $social += $res->social;
-                $total += $res->social;
-                $enterprising += $res->enterprising;
-                $total += $res->enterprising;
-                $conventional += $res->conventional;
-                $total += $res->conventional;
+                // $realistic += $res->realistic;
+                // $total += $res->realistic;
+                // $investigative += $res->investigative;
+                // $total += $res->investigative;
+                // $artistic += $res->artistic;
+                // $total += $res->artistic;
+                // $social += $res->social;
+                // $total += $res->social;
+                // $enterprising += $res->enterprising;
+                // $total += $res->enterprising;
+                // $conventional += $res->conventional;
+                // $total += $res->conventional;
             }
 
-            // dd($teacherids);
-            $result = new Interest_Inventory_Results;
-            $result->realistic = $realistic;
-            $result->investigative = $investigative;
-            $result->artistic =  $artistic;
-            $result->social = $social;
-            $result->enterprising =  $enterprising;
-            $result->conventional =  $conventional;
+            // $result = new Interest_Inventory_Results;
+            // $result->realistic = $realistic;
+            // $result->investigative = $investigative;
+            // $result->artistic =  $artistic;
+            // $result->social = $social;
+            // $result->enterprising =  $enterprising;
+            // $result->conventional =  $conventional;
 
-            // $realistic = ($realistic/$total)*100;
-            $investigative = ($investigative/$total)*100;
-            $artistic = ($artistic/$total)*100;
-            $social = ($social/$total)*100;
-            $enterprising = ($enterprising/$total)*100;
-            $conventional = ($conventional/$total)*100;
-            $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
+            // // $realistic = ($realistic/$total)*100;
+            // $investigative = ($investigative/$total)*100;
+            // $artistic = ($artistic/$total)*100;
+            // $social = ($social/$total)*100;
+            // $enterprising = ($enterprising/$total)*100;
+            // $conventional = ($conventional/$total)*100;
+            // $data = [$realistic,$investigative,$artistic,$social,$enterprising,$conventional];
             // dd($data);
         }else{
-            $result = "No result found";
-            $data = null;
+            $averageArr = "No result found";
+            // $data = null;
             $teacherids = null;
         }
 
-        return view('evaluations.interestResult',compact('student','result','teacherids','data'));
+        return view('evaluations.interestResult',compact('student','teacherids','averageArr'));
     }
 
     //For admin to manage assessment

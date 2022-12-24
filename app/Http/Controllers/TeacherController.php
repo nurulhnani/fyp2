@@ -118,7 +118,7 @@ class TeacherController extends Controller
         $user = new User;
         $user->name = $data['name'];
         $user->image_path = $newImage;
-        $user->email = $data['email'];
+        $user->nric_mykid = $data['nric'];
         $user->type = 1;
         $user->email_verified_at = now();
         $user->password = Hash::make('secret');
