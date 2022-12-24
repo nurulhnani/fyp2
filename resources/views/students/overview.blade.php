@@ -419,14 +419,61 @@
                         </div>
                     </div>
 
-                    @else 
+                    @else
+                    <h4>No result found for {{auth()->user()->name}}.</h4>
                     <h4>Your personality result is still in pending.</h4>
                     @endif
                 </div>
                 {{-- Co-curriculum Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                    <p class="description">Co-curriculum</p>
-                    <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                    @if(isset($merits))
+                    <div class=row>
+                        <div class="col">
+                            <h5 class="h3 card-category">Curriculum Merit Transcript</h5>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="name">ACTIVITY</th>
+                                    <th scope="col" class="sort" data-sort="budget">LEVEL</th>
+                                    <th scope="col" class="sort" data-sort="status">ACHIEVEMENT</th>
+                                    <th scope="col">MERIT</th>
+                                    <th scope="col" class="sort" data-sort="completion">DATE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                @foreach ($merits as $merit)
+                                <tr>
+                                    <th scope="row">
+                                        {{ $merit->merit_name }}
+                                    </th>
+                                    <td class="budget">
+                                        {{ $merit->level }}
+                                    </td>
+                                    <td>
+                                        {{ $merit->achievement }}
+                                    </td>
+                                    <td>
+                                        {{ $merit->merit_point }}
+                                    </td>
+                                    <td>
+                                        {{ $merit->date }}
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <h5 class="float-right"> Total Merits Accumulated: <?php echo $merits->sum('merit_point'); ?></h5>
+
+                            </tbody>
+                        </table>
+                        <p class="btn-secondary h5 card-text text-right pt-3">Latest Record Updated at: {{ $latestDate->created_at->toDateString() }}</p>
+
+                    </div>
+                    @else
+                    <h4>No result found for {{auth()->user()->name}}.</h4>
+                    @endif
+
                 </div>
             </div>
         </div>

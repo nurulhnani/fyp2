@@ -28,7 +28,7 @@ class StudentController extends Controller
     {
         $students = Student::paginate(10);
         $class = Classlist::all();
-        return view('students.index',compact('students','class'));
+        return view('students.index', compact('students', 'class'));
     }
 
     public function overview($id)
@@ -36,38 +36,46 @@ class StudentController extends Controller
         $student = Student::find($id);
 
         //Interest Inventory
-        $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising","Conventional");
-        if(Interest_Inventory_Results::where('student_id',$id)->exists()){
+        $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional");
+        if (Interest_Inventory_Results::where('student_id', $id)->exists()) {
             foreach ($categoryArray as $category) {
-                $averageScore = Interest_Inventory_Results::where('student_id',$id)->avg($category);
+                $averageScore = Interest_Inventory_Results::where('student_id', $id)->avg($category);
                 $averageArr[$category] = intval(round($averageScore));
             }
 
-            $result = Interest_Inventory_Results::where('student_id',$id)->get();
+            $result = Interest_Inventory_Results::where('student_id', $id)->get();
             $teacherids = [];
-            foreach($result as $res){
-                if(!in_array($res->teacher_id,$teacherids)){
+            foreach ($result as $res) {
+                if (!in_array($res->teacher_id, $teacherids)) {
                     $teacherids[] = $res->teacher_id;
                 }
             }
-
-        }else{
+        } else {
             $averageArr = "No result found";
             $teacherids = null;
         }
 
+        //Personality
         $categoryPersArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
-        if(Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()){
-                foreach ($categoryPersArray as $category) {
-                    $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
-                    $averagePersArr[$category] = intval(round($averagePersScore));
-                }
-        }
-        else{
+        if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()) {
+            foreach ($categoryPersArray as $category) {
+                $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
+                $averagePersArr[$category] = intval(round($averagePersScore));
+            }
+        } else {
             $averagePersArr = null;
         }
-        
-        return view('students.overview',compact('student','teacherids','averageArr','averagePersArr'));
+
+        //Curriculum Merit 
+        if (Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->exists()) {
+            $merits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->get();
+
+            $latestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->latest()->first();
+        } else {
+            $merits = null;
+        }
+
+        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr','merits','latestDate'));
     }
     public function dashboard($id)
     {
@@ -75,9 +83,9 @@ class StudentController extends Controller
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $record1 = Merit::where('student_mykid','=',$student_mykid)
+        $record1 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
             ->groupBy('year')
             ->get();
 
@@ -96,19 +104,19 @@ class StudentController extends Controller
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $record4 = Merit::where('student_mykid','=',$student_mykid)
+        $record4 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"),DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
-            // ->paginate(4);
-        
+        // ->paginate(4);
+
         ///////////////////// BEHAVIOUR MERIT BY YEAR /////////////////////////
 
-        $record2 = Merit::where('student_mykid','=',$student_mykid)
+        $record2 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
             ->groupBy('year')
             ->get();
 
@@ -121,18 +129,18 @@ class StudentController extends Controller
 
         ////////////////////// BEHAVIOUR MERIT //////////////////////////
 
-        $record5 = Merit::where('student_mykid','=',$student_mykid)
+        $record5 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
 
         /////////////////// BEHAVIOUR DEMERIT BY YEAR ///////////////////////
 
         $record3 = Merit::where('type', '=', 'b')
             ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
             ->groupBy('year')
             ->get();
 
@@ -147,32 +155,32 @@ class StudentController extends Controller
 
         $record6 = Merit::where('type', '=', 'b')
             ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
 
         // send data
         $data['student_cocumerit'] = json_encode($data1);
         $data['student_behaviourmerit'] = json_encode($data2);
         $data['student_behaviourdemerit'] = json_encode($data3);
-        $data['cocu_records']= $record4;
-        $data['behavmerit_records']= $record5;
-        $data['behavdemerit_records']= $record6;
+        $data['cocu_records'] = $record4;
+        $data['behavmerit_records'] = $record5;
+        $data['behavdemerit_records'] = $record6;
         $data['student'] = $student;
         // dd($data['cocu_records']);
         // $data['cocu'] = $cocu;
         // $data['year'] = $year;
- 
-        return view('students.home',$data);
+
+        return view('students.home', $data);
     }
     public function viewprofile()
     {
         $customfield = AutoFields::all();
         $studentname = auth()->user()->name;
-        $studentid = Student::where('name',$studentname)->first()->id;
+        $studentid = Student::where('name', $studentname)->first()->id;
         $student = Student::find($studentid);
         // dd($studentid);
-        return view('students.viewprofile')->with('student',$student,'customfield',$customfield);
+        return view('students.viewprofile')->with('student', $student, 'customfield', $customfield);
     }
 
     /**
@@ -194,8 +202,8 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'mykid' =>'required',
+            'name' => 'required',
+            'mykid' => 'required',
             // 'gender' =>'required',
             // 'class_id' =>'required',
             // 'citizenship' =>'required',
@@ -211,7 +219,7 @@ class StudentController extends Controller
             // 'image' => 'required',
         ]);
         $data = $request->input();
-        
+
         $student = new Student;
 
         $student->status = "active";
@@ -231,22 +239,22 @@ class StudentController extends Controller
         $student->G2_income = $data['G2_income'];
 
         $newImage = "";
-        if($request->hasFile('image')){
-            $newImage = $data['name'].'.'.$request->image->extension();
-            $request->image->move(public_path('assets\img\userImage'),$newImage);
+        if ($request->hasFile('image')) {
+            $newImage = $data['name'] . '.' . $request->image->extension();
+            $request->image->move(public_path('assets\img\userImage'), $newImage);
             $student->image_path = $newImage;
-        }      
+        }
 
-        if($request->input('customfield') != null){
-            $additional=implode(",",$request->input('customfield'));
+        if ($request->input('customfield') != null) {
+            $additional = implode(",", $request->input('customfield'));
             $student->additional_Info = $additional;
         }
         // dd($string);
-        $student -> save();
+        $student->save();
 
         $user = new User;
         $user->name = $data['name'];
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $user->image_path = $newImage;
         }
         $user->image_path = $newImage;
@@ -259,7 +267,7 @@ class StudentController extends Controller
         $user->save();
 
         // Student::create($request->all());
-        return redirect()->route('students.index')->with('success','Student created successfully.');
+        return redirect()->route('students.index')->with('success', 'Student created successfully.');
     }
 
     /**
@@ -273,7 +281,7 @@ class StudentController extends Controller
         $student = Student::find($id);
         $classlist = $student->classlists;
         dd($classlist);
-        return view('students.show')->with('student',$student);
+        return view('students.show')->with('student', $student);
     }
 
     /**
@@ -290,7 +298,7 @@ class StudentController extends Controller
         // dd($classlist);
         // dd($student);
         // echo $student->class->class_name;
-        return view('students.edit')->with('student',$student,'customfield',$customfield);
+        return view('students.edit')->with('student', $student, 'customfield', $customfield);
 
         // $result = Student::with('classlists')->get();
         // return view('students.edit')->with('student',$result);
@@ -307,7 +315,7 @@ class StudentController extends Controller
         // dd($classlist);
         // dd($student);
         // echo $student->class->class_name;
-        return view('teachers.editstudent')->with('student',$student,'customfield',$customfield);
+        return view('teachers.editstudent')->with('student', $student, 'customfield', $customfield);
     }
 
     /**
@@ -320,37 +328,37 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
-            'mykid' =>'required',
-            'gender' =>'required',
+            'name' => 'required',
+            'mykid' => 'required',
+            'gender' => 'required',
             // 'class' =>'required',
-            'citizenship' =>'required',
-            'address' =>'required',
-            'G1_name' =>'required',
-            'G1_relation' =>'required',
-            'G1_phonenum' =>'required',
-            'G1_income' =>'required',
-            'G2_name' =>'required',
-            'G2_relation' =>'required',
-            'G2_phonenum' =>'required',
-            'G2_income' =>'required',
+            'citizenship' => 'required',
+            'address' => 'required',
+            'G1_name' => 'required',
+            'G1_relation' => 'required',
+            'G1_phonenum' => 'required',
+            'G1_income' => 'required',
+            'G2_name' => 'required',
+            'G2_relation' => 'required',
+            'G2_phonenum' => 'required',
+            'G2_income' => 'required',
         ]);
 
         $student = Student::find($id);
-        if($request->hasFile('imageS')){
-            $destination = "assets\img\userImage".$student->image_path;
-            if(File::exists($destination)){
+        if ($request->hasFile('imageS')) {
+            $destination = "assets\img\userImage" . $student->image_path;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
             $file = $request->file('imageS');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->input('name').'.'.$extension;
-            $file->move(public_path('assets\img\userImage'),$filename);
+            $filename = $request->input('name') . '.' . $extension;
+            $file->move(public_path('assets\img\userImage'), $filename);
             $student->image_path = $filename;
         }
-        
+
         // dd($request);
-        
+
         $student->status = 'active';
         $student->name = $request->input('name');
         $student->mykid = $request->input('mykid');
@@ -367,51 +375,51 @@ class StudentController extends Controller
         $student->G2_income = $request->input('G2_income');
         $student->updated_at = now();
 
-        if($request->input('customfield') != null) {
-            $additional=implode(",",$request->input('customfield'));
+        if ($request->input('customfield') != null) {
+            $additional = implode(",", $request->input('customfield'));
             $student->additional_Info = $additional;
         }
         $student->update();
         // $student->update();
         // dd($request);
-        return redirect()->route('students.index')->with('success','Student updated successfully');
+        return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
 
     public function updatestudent(Request $request, $id)
     {
         // dd($request);
         $request->validate([
-            'name'=>'required',
-            'mykid' =>'required',
-            'gender' =>'required',
+            'name' => 'required',
+            'mykid' => 'required',
+            'gender' => 'required',
             // 'class' =>'required',
-            'citizenship' =>'required',
-            'address' =>'required',
-            'G1_name' =>'required',
-            'G1_relation' =>'required',
-            'G1_phonenum' =>'required',
-            'G1_income' =>'required',
-            'G2_name' =>'required',
-            'G2_relation' =>'required',
-            'G2_phonenum' =>'required',
-            'G2_income' =>'required',
+            'citizenship' => 'required',
+            'address' => 'required',
+            'G1_name' => 'required',
+            'G1_relation' => 'required',
+            'G1_phonenum' => 'required',
+            'G1_income' => 'required',
+            'G2_name' => 'required',
+            'G2_relation' => 'required',
+            'G2_phonenum' => 'required',
+            'G2_income' => 'required',
         ]);
 
         $student = Student::find($id);
-        if($request->hasFile('imageS')){
-            $destination = "assets\img\userImage".$student->image_path;
-            if(File::exists($destination)){
+        if ($request->hasFile('imageS')) {
+            $destination = "assets\img\userImage" . $student->image_path;
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
             $file = $request->file('imageS');
             $extension = $file->getClientOriginalExtension();
-            $filename = $request->input('name').'.'.$extension;
-            $file->move(public_path('assets\img\userImage'),$filename);
+            $filename = $request->input('name') . '.' . $extension;
+            $file->move(public_path('assets\img\userImage'), $filename);
             $student->image_path = $filename;
         }
-        
+
         // dd($request);
-        
+
         $student->status = 'active';
         $student->name = $request->input('name');
         $student->mykid = $request->input('mykid');
@@ -428,15 +436,15 @@ class StudentController extends Controller
         $student->G2_income = $request->input('G2_income');
         $student->updated_at = now();
 
-        if($request->input('customfield') != null) {
-            $additional=implode(",",$request->input('customfield'));
+        if ($request->input('customfield') != null) {
+            $additional = implode(",", $request->input('customfield'));
             $student->additional_Info = $additional;
         }
-        
+
         $student->update();
         // $student->update();
         // dd($request);
-        return redirect()->route('studentlist')->with('success','Student updated successfully');
+        return redirect()->route('studentlist')->with('success', 'Student updated successfully');
     }
 
     /**
@@ -448,15 +456,15 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-       
+
         return redirect()->route('students.index')
-                        ->with('success','Student deleted successfully');
+            ->with('success', 'Student deleted successfully');
     }
 
-     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function fileImport(Request $request) 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function fileImport(Request $request)
     {
         $validator = Validator::make(
             [
@@ -468,7 +476,7 @@ class StudentController extends Controller
                 'extension'      => 'required|in:csv,xlsx,xls',
             ]
         );
-          
+
         Excel::import(new StudentsImport, $request->file('file')->store('temp'));
         return redirect()->route('students.index');
     }
