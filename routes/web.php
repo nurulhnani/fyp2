@@ -121,7 +121,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'index'])->name('evaluations.index');
 		Route::get('studentlist-evaluation/personality/{question}/{student?}', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewPersonalityQuestion'])->name('personalityEval');
 		Route::post('result', [App\Http\Controllers\PersonalityEvaluationController::class, 'store'])->name('personality.store');
-		Route::get('studentlist-evaluation/personality-current-result/{student}', [App\Http\Controllers\PersonalityEvaluationController::class, 'showCurrResult'])->name('personalityResultCurr');
+		Route::get('studentlist-evaluation/personality-result/current/{student}', [App\Http\Controllers\PersonalityEvaluationController::class, 'showCurrResult'])->name('personalityResultCurr');
 		Route::get('studentlist-evaluation/personality-result/history/{student}', [App\Http\Controllers\PersonalityEvaluationController::class, 'showHistory'])->name('personalityResultHist');
 
 		Route::get('studentlist-evaluation/interest/{id}', [App\Http\Controllers\InterestInventoryController::class, 'viewInterestQuestion'])->name('interestInventory');
