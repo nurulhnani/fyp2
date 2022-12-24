@@ -91,7 +91,7 @@
                           <i class="fas fa-ellipsis-v"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 's', 'student' => $student]) }}">Scale</a>
+                          <!-- <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 's', 'student' => $student]) }}">Scale</a> -->
                           <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 'o', 'student' => $student]) }}">Open Ended</a>
                           <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 'mcq', 'student' => $student]) }}">Multiple Choices</a>
                         </div>
