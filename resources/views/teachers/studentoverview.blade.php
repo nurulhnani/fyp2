@@ -1,11 +1,30 @@
-@extends('layouts.studentapp')
+@extends('layouts.teacherapp')
 
 @section('content')
 @include('layouts.headers.cards')
 
+<!-- Header -->
+<div class="header">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-black d-inline-block mb-0">Student Overview</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('studentlist') }}">Student List</i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{$student->name}}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid mt--2">
 
-    <h2 class="mt-4">Student Overview</h2>
     <div class="nav-wrapper">
         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
             <li class="nav-item">
@@ -19,6 +38,10 @@
             <li class="nav-item">
                 <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">
                     <i class="fa fa-trophy mr-2"></i>Co-curriculum</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false">
+                    <i class="ni ni-diamond mr-2"></i>Behavioural</a>
             </li>
         </ul>
     </div>
@@ -425,8 +448,7 @@
                     </div>
 
                     @else
-                    <h4>No result found for {{auth()->user()->name}}.</h4>
-                    <h4>Your personality result is still in pending.</h4>
+                    <h4>No result found for {{$student->name}}.</h4>
                     @endif
                 </div>
                 {{-- Co-curriculum Tab --}}
@@ -476,7 +498,110 @@
 
                     </div>
                     @else
-                    <h4>No result found for {{auth()->user()->name}}.</h4>
+                    <h4>No result found for {{$student->name}}.</h4>
+                    @endif
+
+                </div>
+
+                {{-- Behavioural Tab --}}
+                <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                    @if(isset($behaMerits))
+                    <div class=row>
+                        <div class="col">
+                            <h5 class="h3 card-category">Behavioural Merit and Demerit Transcript</h5>
+                        </div>
+                    </div>
+                    <h5 class="float-right"> Total Merits Accumulated: <?php echo $behaMerits->sum('merit_point'); ?></h5>
+
+                    <!-- Card header -->
+                    <div class="card mt-5">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h4 class="mb-0">Merit Records</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="sort" data-sort="name">ACTIVITY</th>
+                                        <th scope="col" class="sort" data-sort="budget">CATEGORY</th>
+                                        <th scope="col">MERIT</th>
+                                        <th scope="col" class="sort" data-sort="completion">DATE</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    @foreach ($behaMerits as $merit)
+                                    @if($merit->merit_point>0)
+                                    <tr>
+                                        <th scope="row">
+                                            {{ $merit->merit_name }}
+                                        </th>
+                                        <td class="budget">
+                                            {{ $merit->level }}
+                                        </td>
+                                        <td>
+                                            {{ $merit->merit_point }}
+                                        </td>
+                                        <td>
+                                            {{ $merit->date }}
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Card header -->
+                    <div class="card mt-5">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h4 class="mb-0">Demerit Records</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="sort" data-sort="name">ACTIVITY</th>
+                                        <th scope="col" class="sort" data-sort="budget">CATEGORY</th>
+                                        <th scope="col">MERIT</th>
+                                        <th scope="col" class="sort" data-sort="completion">DATE</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list">
+                                    @foreach ($behaMerits as $merit)
+                                    @if($merit->merit_point<=0)
+                                    <tr>
+                                        <th scope="row">
+                                            {{ $merit->merit_name }}
+                                        </th>
+                                        <td class="budget">
+                                            {{ $merit->level }}
+                                        </td>
+                                        <td>
+                                            {{ $merit->merit_point }}
+                                        </td>
+                                        <td>
+                                            {{ $merit->date }}
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <p class="btn-secondary h5 card-text text-right pt-3">Latest Record Updated at: {{ $behaLatestDate->created_at->toDateString() }}</p>
+
+                        </div>
+                    </div>
+                    @else
+                    <h4>No result found for {{$student->name}}.</h4>
                     @endif
 
                 </div>

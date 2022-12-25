@@ -67,18 +67,10 @@
     <div class="row">
         <div class="col">
             <div class="btn-group px-3 pb-3">
-            <div class="dropdown">
-                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    My Class
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Curriculum Merit</a>
-                    <a class="dropdown-item" href="#">Behavioural Merit</a>
-                    <a class="dropdown-item" href="#">Personality and Interest</a>
-                </div>
-            </div>            </div>
+                <a type="button" class="button btn btn-secondary btn-sm" style="border-radius: 5px;" href="{{route('teacher.home')}}">My Class</a>
+            </div>
             <div class="float-right">
-                <a class="button btn btn-light btn-sm" href="{{route('teacher.home2')}}">School Overview</a>
+                <button class="btn btn-light btn-sm" type="button">School Overview</button>
             </div>
         </div>
     </div>
@@ -88,11 +80,36 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">Curriculum Merits</h5>
+                            <h5 class="card-category">Student Merits and Demerits</h5>
                             <h2 class="card-title">Performance</h2>
                         </div>
                         <div class="col-sm-6">
+                            <!-- <div class="btn-group btn-group-toggle float-left" data-toggle="buttons">
+                                <label class="btn btn-sm btn-warning btn-simple active" id="0">
+                                    <input type="radio" name="options" checked>
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Demerits</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-single-02"></i>
+                                    </span>
+                                </label>
+                            </div> -->
                             <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+
+                                <!-- <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                                    <input type="radio" name="options" checked>
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Curriculum</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-single-02"></i>
+                                    </span>
+                                </label>
+                                <label class="btn btn-sm btn-primary btn-simple" id="1">
+                                    <input type="radio" class="d-none d-sm-none" name="options">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Behavioural</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-gift-2"></i>
+                                    </span>
+                                </label> -->
+
                             </div>
                         </div>
                     </div>
@@ -102,30 +119,36 @@
                         <canvas id="meritsChart"></canvas>
                     </div>
                 </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
                 <script>
-                    $(function() {
-                        var ctx = $("#meritsChart");
+                    var ctx = document.getElementById("meritsChart").getContext('2d');
 
-                        var data = {
-                            labels: ['January', 'February', 'March', 'April', 'May', 'Jun', 'July'],
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ["Tokyo", "Mumbai", "Mexico City", "Shanghai", "Sao Paulo", "New York", "Karachi", "Buenos Aires", "Delhi", "Moscow"],
                             datasets: [{
-                                data: [20, 59, 80, 31, 56, 95, 40],
-                                fill: false,
-                                borderColor: 'rgb(75, 192, 192)',
-                                tension: 0.1
-                            }],
-                        };
-
-                        var options = {
-                            responsive: true,
-                        };
-
-                        var chart1 = new Chart(ctx, {
-                            type: "line",
-                            data: data,
-                            options: options,
-                        });
-
+                                    label: 'Series 1', // Name the series
+                                    data: [500, 50, 2424, 14040, 14141, 4111, 4544, 47, 5555, 6811], // Specify the data values array
+                                    fill: false,
+                                    borderColor: '#2196f3', // Add custom color border (Line)
+                                    backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
+                                    borderWidth: 1 // Specify bar border width
+                                },
+                                {
+                                    label: 'Series 2', // Name the series
+                                    data: [1288, 88942, 44545, 7588, 99, 242, 1417, 5504, 75, 457], // Specify the data values array
+                                    fill: false,
+                                    borderColor: '#4CAF50', // Add custom color border (Line)
+                                    backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
+                                    borderWidth: 1 // Specify bar border width
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true, // Instruct chart js to respond nicely.
+                            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+                        }
                     });
                 </script>
             </div>
@@ -175,11 +198,12 @@
         <div class="col-md-8">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Sort by Level</h5>
+                    <h5 class="card-category">Sort by Class</h5>
+                    <!-- <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3> -->
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="levelChart"></canvas>
+                        <canvas id="intchart"></canvas>
                         <script>
                             $(function() {
                                 var ctx = $("#intchart");
@@ -240,41 +264,41 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="levelChart"></canvas> -->
-    <script type="text/javascript">
-        window.onload = function() {
-            var MeSeContext = document.getElementById("levelChart").getContext("2d");
-            var MeSeData = {
-                labels: [
-                    "International",
-                    "School"
-                ],
-                datasets: [{
-                    label: "Test",
-                    data: [100, 75],
-                    backgroundColor: ["#669911", "#119966"],
-                    hoverBackgroundColor: ["#66A2EB", "#FCCE56"]
-                }]
-            };
-            var MeSeChart = new Chart(MeSeContext, {
-                type: 'horizontalBar',
-                data: MeSeData,
-                options: {
-                    scales: {
-                        xAxes: [{
-                            ticks: {
-                                beginAtZero: true
+                        <canvas id="levelChart"></canvas>
+                        <script type="text/javascript">
+                            window.onload = function() {
+                                var MeSeContext = document.getElementById("levelChart").getContext("2d");
+                                var MeSeData = {
+                                    labels: [
+                                        "International",
+                                        "School"
+                                    ],
+                                    datasets: [{
+                                        label: "Test",
+                                        data: [100, 75],
+                                        backgroundColor: ["#669911", "#119966"],
+                                        hoverBackgroundColor: ["#66A2EB", "#FCCE56"]
+                                    }]
+                                };
+                                var MeSeChart = new Chart(MeSeContext, {
+                                    type: 'horizontalBar',
+                                    data: MeSeData,
+                                    options: {
+                                        scales: {
+                                            xAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }],
+                                            yAxes: [{
+                                                stacked: true
+                                            }]
+                                        }
+                                    }
+                                });
                             }
-                        }],
-                        yAxes: [{
-                            stacked: true
-                        }]
-                    }
-                }
-            });
-        }
-    </script>
-    <!-- </div>
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
@@ -481,60 +505,6 @@
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
 @endpush
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-<script>
-    $(function() {
-        $(".ddl-select").each(function() {
-            $(this).hide();
-            var $select = $(this);
-            var _id = $(this).attr("id");
-            var wrapper = document.createElement("div");
-            wrapper.setAttribute("class", "ddl ddl_" + _id);
-
-            var input = document.createElement("input");
-            input.setAttribute("type", "text");
-            input.setAttribute("class", "ddl-input");
-            input.setAttribute("id", "ddl_" + _id);
-            input.setAttribute("readonly", "readonly");
-            input.setAttribute(
-                "placeholder",
-                $(this)[0].options[$(this)[0].selectedIndex].innerText
-            );
-
-            $(this).before(wrapper);
-            var $ddl = $(".ddl_" + _id);
-            $ddl.append(input);
-            $ddl.append("<div class='ddl-options ddl-options-" + _id + "'></div>");
-            var $ddl_input = $("#ddl_" + _id);
-            var $ops_list = $(".ddl-options-" + _id);
-            var $ops = $(this)[0].options;
-            for (var i = 0; i < $ops.length; i++) {
-                $ops_list.append(
-                    "<div data-value='" +
-                    $ops[i].value +
-                    "'>" +
-                    $ops[i].innerText +
-                    "</div>"
-                );
-            }
-
-            $ddl_input.click(function() {
-                $ddl.toggleClass("active");
-            });
-            $ddl_input.blur(function() {
-                $ddl.removeClass("active");
-            });
-            $ops_list.find("div").click(function() {
-                $select.val($(this).data("value")).trigger("change");
-                $ddl_input.val($(this).text());
-                $ddl.removeClass("active");
-            });
-        });
-    });
-</script>
 
 <style>
     .card {
