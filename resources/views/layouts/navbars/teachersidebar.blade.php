@@ -121,12 +121,12 @@
                 </style>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('teacher.home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2 text-primary text-orange"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('viewprofile')}}">
-                        <i class="ni ni-circle-08 text-primary"></i> {{ __('My Profile') }}
+                        <i class="ni ni-circle-08 text-primary text-orange"></i> {{ __('My Profile') }}
                     </a>
                 </li>
             </ul>
@@ -135,8 +135,8 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Student List') }}</span>
+                        <i class="ni ni-bullet-list-67" style="color: #341948;"></i>
+                        <span class="nav-link-text" style="color: #341948;">{{ __('Student List') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
@@ -156,12 +156,12 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('merits.main') }}">
-                        <i class="ni ni-collection text-blue"></i> {{ __('Merit and Demerit') }}
+                        <i class="ni ni-collection text-orange"></i> {{ __('Merit and Demerit') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('classrooms.index') }}">
-                        <i class="fa fa-table text-blue"></i> {{ __('Classroom Management') }}
+                        <i class="fa fa-table text-orange"></i> {{ __('Classroom Management') }}
                     </a>
                 </li>
             </ul>
