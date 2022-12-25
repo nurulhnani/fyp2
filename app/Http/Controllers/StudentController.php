@@ -73,10 +73,71 @@ class StudentController extends Controller
             $latestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->latest()->first();
         } else {
             $merits = null;
+            $latestDate = null;
         }
 
-        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr','merits','latestDate'));
+        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate'));
     }
+
+    //for Teacher page
+    public function overviewForTeacher($id)
+    {
+        $student = Student::find($id);
+
+        //Interest Inventory
+        $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional");
+        if (Interest_Inventory_Results::where('student_id', $id)->exists()) {
+            foreach ($categoryArray as $category) {
+                $averageScore = Interest_Inventory_Results::where('student_id', $id)->avg($category);
+                $averageArr[$category] = intval(round($averageScore));
+            }
+
+            $result = Interest_Inventory_Results::where('student_id', $id)->get();
+            $teacherids = [];
+            foreach ($result as $res) {
+                if (!in_array($res->teacher_id, $teacherids)) {
+                    $teacherids[] = $res->teacher_id;
+                }
+            }
+        } else {
+            $averageArr = "No result found";
+            $teacherids = null;
+        }
+
+        //Personality
+        $categoryPersArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
+        if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()) {
+            foreach ($categoryPersArray as $category) {
+                $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
+                $averagePersArr[$category] = intval(round($averagePersScore));
+            }
+        } else {
+            $averagePersArr = null;
+        }
+
+        //Curriculum Merit 
+        if (Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->exists()) {
+            $merits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->get();
+
+            $latestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->latest()->first();
+        } else {
+            $merits = null;
+            $latestDate = null;
+        }
+
+        //Behavioural Merit 
+        if (Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->exists()) {
+            $behaMerits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->get();
+
+            $behaLatestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->latest()->first();
+        } else {
+            $behaMerits = null;
+            $behaLatestDate = null;
+        }
+
+        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaLatestDate'));
+    }
+
     public function dashboard($id)
     {
         ////////////////////////// COCU MERIT BY YEAR //////////////////////////

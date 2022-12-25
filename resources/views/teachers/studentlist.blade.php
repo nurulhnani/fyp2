@@ -74,7 +74,8 @@
                                 @endif
                                 <td style="width: 10%">
                                   <div class="col-lg-6 col-5 text-right mb-0">
-                                    <a href="{{route('editstudent',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
+                                  <a href="{{route('studentoverview',$student->id)}}"><button class="btn btn-sm btn-secondary">Overview</button></a>
+                                    <a href="{{route('editstudent',$student->id)}}"><button class="btn btn-sm btn-primary mr-1">View</button></a>
                                     {{-- <a href="#archiveModal{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Archive</button></a> --}}
                                     {{-- @include('students.studentaction') --}}
                                   </div>
