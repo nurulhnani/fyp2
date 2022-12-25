@@ -2988,15 +2988,15 @@ fieldset:disabled a.btn
 .btn-primary
 {
     color: #fff;
-    border-color: #5e72e4;
-    background-color: #5e72e4;
+    border-color: #F79630;
+    background-color: #F79630;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 .btn-primary:hover
 {
     color: #fff;
-    border-color: #5e72e4; 
-    background-color: #5e72e4;
+    border-color: #F79630; 
+    background-color: #F79630;
 }
 .btn-primary:focus,
 .btn-primary.focus
@@ -5222,7 +5222,7 @@ input[type='button'].btn-block
 .nav-pills .show > .nav-link
 {
     color: #fff;
-    background-color: #5e72e4;
+    background-color: #341948;
 }
 
 .nav-fill .nav-item
@@ -16437,13 +16437,13 @@ a.text-indigo:focus
 
 .text-purple
 {
-    color: #8965e0 !important;
+    color: #341948 !important;
 }
 
 a.text-purple:hover,
 a.text-purple:focus
 {
-    color: #683bd7 !important;
+    color: #341948 !important;
 }
 
 .text-pink
@@ -18938,7 +18938,7 @@ textarea[resize='horizontal']
 
     transition: all .15s ease; 
 
-    color: #5e72e4;
+    color: #341948;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
@@ -18951,7 +18951,7 @@ textarea[resize='horizontal']
 .nav-pills .show > .nav-link
 {
     color: #fff;
-    background-color: #5e72e4;
+    background-color: #341948;
 }
 
 @media (max-width: 575.98px)
