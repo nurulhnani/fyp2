@@ -1,9 +1,10 @@
-<style>
-    .bg-mescoredark{
+{{-- <style>
+   .bg-mescoredark{
         background-color: #7F7C82;
     }
-</style>
-<div class="header bg-mescoredark py-7 py-lg-8">
+</style>  --}}
+<div class="header py-7 py-lg-8" style="background-image: url('{{asset('assets/img/theme/mesco.jpg')}}'); background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-primary opacity-6"></span>
     <div class="container">
         <div class="header-body text-center mb-7">
             <div class="row justify-content-center">

@@ -140,99 +140,179 @@ class StudentController extends Controller
 
     public function dashboard($id)
     {
-        ////////////////////////// COCU MERIT BY YEAR //////////////////////////
+        ////////////////// PERSONALITY EVAL /////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $record1 = Merit::where('student_mykid', '=', $student_mykid)
+        $categoryArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
+        foreach ($categoryArray as $category) {
+            $averageScore = Personality_Evaluation::where('student_mykid', '=', $student_mykid)
+                            // ->select(DB::raw("YEAR(created_at) as year"),DB::raw("Extraversion as Extraversion"),DB::raw("Agreeableness as Agreeableness"))
+                            // ->where('student_mykid', '=', $student_mykid)
+                            // ->groupBy('year','Extraversion','Agreeableness')
+                            ->avg($category);
+                            // ->get();
+            $averageArr[$category] = intval(round($averageScore));
+        }
+        // dd($averageScore);
+        ////////////////////////// COCU MERIT BY MONTH //////////////////////////
+
+        $student = Student::find($id);
+        $student_mykid = $student->mykid;
+        $record1 = Merit::where('student_mykid','=',$student_mykid)
             ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(updated_at) as month"))
+            ->groupBy('month')
             ->get();
 
-        $data1 = [];
-        // $cocu = [];
-        // $year = [];
+        $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+        $count_cocumerit = [];
+        foreach ($allmonts as $test) {
 
-        foreach ($record1 as $row) {
-            $data1['label'][] = $row->year;
-            // $year[] = $row->year;
-            $data1['data'][] = (int) $row->merit_point;
-            // $cocu[] = (int) $row->merit_point;
+            foreach ($record1 as $v) {
+                if ($test == $v->month) {
+                    $count_cocumerit[$test] = $v->merit_point;
+                    break;
+                } else {
+                    $count_cocumerit[$test] = 0;
+                }
+            }
         }
+
+        foreach ($count_cocumerit as $row) {
+            $data1['data'][] = (int)$row;
+        }
+        $data1['label'] = $allmonts;
 
         ///////////////////// COCU MERIT ///////////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $record4 = Merit::where('student_mykid', '=', $student_mykid)
+        $record4 = Merit::where('student_mykid','=',$student_mykid)
             ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year', 'merit_name', 'merit_point')
+            ->select(DB::raw("COUNT(*) as count"),DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
             ->get();
-        // ->paginate(4);
+        
+        ///////////////////// BEHAVIOUR MERIT BY MONTH /////////////////////////
 
-        ///////////////////// BEHAVIOUR MERIT BY YEAR /////////////////////////
-
-        $record2 = Merit::where('student_mykid', '=', $student_mykid)
+        $record2 = Merit::where('student_mykid','=',$student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(updated_at) as month"))
+            ->groupBy('month')
             ->get();
 
-        $data2 = [];
+        $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+        $count_behavmerit = [];
+        foreach ($allmonts as $test) {
 
-        foreach ($record2 as $row) {
-            $data2['label'][] = $row->year;
-            $data2['data'][] = (int) $row->merit_point;
+            foreach ($record2 as $v) {
+                if ($test == $v->month) {
+                    $count_behavmerit[$test] = $v->merit_point;
+                    break;
+                } else {
+                    $count_behavmerit[$test] = 0;
+                }
+            }
         }
+
+        foreach ($count_behavmerit as $row) {
+            $data2['data'][] = (int)$row;
+        }
+        $data2['label'] = $allmonts;
+        
 
         ////////////////////// BEHAVIOUR MERIT //////////////////////////
 
-        $record5 = Merit::where('student_mykid', '=', $student_mykid)
+        $record5 = Merit::where('student_mykid','=',$student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year', 'merit_name', 'merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
             ->get();
 
         /////////////////// BEHAVIOUR DEMERIT BY YEAR ///////////////////////
 
-        $record3 = Merit::where('type', '=', 'b')
+        $record3 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'b')
             ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(updated_at) as month"))
+            ->groupBy('month')
             ->get();
 
-        $data3 = [];
+        $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+        $count_behavdemerit = [];
+        foreach ($allmonts as $test) {
 
-        foreach ($record3 as $row) {
-            $data3['label'][] = $row->year;
-            $data3['data'][] = (int) abs($row->merit_point);
+            foreach ($record3 as $v) {
+                if ($test == $v->month) {
+                    $count_behavdemerit[$test] = abs($v->merit_point);
+                    break;
+                } else {
+                    $count_behavdemerit[$test] = 0;
+                }
+            }
         }
 
-        /////////////////////// BEHAVIOUR MERIT /////////////////////////////
+        foreach ($count_behavdemerit as $row) {
+            $data3['data'][] = (int)$row;
+        }
+        $data3['label'] = $allmonts;
 
-        $record6 = Merit::where('type', '=', 'b')
+
+        /////////////////////// BEHAVIOUR DEMERIT /////////////////////////////
+
+        $record6 = Merit::where('student_mykid','=',$student_mykid)
+            ->where('type', '=', 'b')
             ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(updated_at) as year"))
-            ->groupBy('year', 'merit_name', 'merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(updated_at) as year"))
+            ->groupBy('year','merit_name','merit_point')
             ->get();
+
+        ////////////////////// INTEREST INVENTORY ///////////////////////////
+        $student = Student::find($id);
+        $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising","Conventional");
+        if(Interest_Inventory_Results::where('student_id',$id)->exists()){
+            foreach ($categoryArray as $category) {
+                $averageScore = Interest_Inventory_Results::where('student_id',$id)->avg($category);
+                $averageInterest[$category] = intval(round($averageScore));
+            }
+
+            $result = Interest_Inventory_Results::where('student_id',$id)->get();
+            $teacherids = [];
+            // $total = 0;
+            foreach($result as $res){
+                if(!in_array($res->teacher_id,$teacherids)){
+                    $teacherids[] = $res->teacher_id;
+                }
+            }
+        }else{
+            $averageInterest = "No result found";
+            $teacherids = null;
+        }
+
+        // dd($averageInterest);
+        //////////////////// get year
+
+        $years = Merit::select(DB::raw("YEAR(created_at) as year"))->distinct()->get();
 
         // send data
         $data['student_cocumerit'] = json_encode($data1);
         $data['student_behaviourmerit'] = json_encode($data2);
         $data['student_behaviourdemerit'] = json_encode($data3);
-        $data['cocu_records'] = $record4;
-        $data['behavmerit_records'] = $record5;
-        $data['behavdemerit_records'] = $record6;
+        $data['cocu_records']= $record4;
+        $data['behavmerit_records']= $record5;
+        $data['behavdemerit_records']= $record6;
         $data['student'] = $student;
+        $data['averageArr']=$averageArr;
+        $data['averageInterest']=$averageInterest;
         // dd($data['cocu_records']);
         // $data['cocu'] = $cocu;
-        // $data['year'] = $year;
+        $data['years'] = $years;
+ 
 
-        return view('students.home', $data);
+        return view('students.home',$data);
     }
     public function viewprofile()
     {

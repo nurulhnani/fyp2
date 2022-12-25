@@ -10,7 +10,7 @@
             $studentid = App\Models\Student::where('name',$studentname)->first()->id;
         ?>
         <a class="navbar-brand pt-0 pb-0" href="{{ route('studenthome',$studentid) }}">
-            <img src="{{ asset('assets/img/userImage/mescore.png')}}" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('assets/img/userImage/mescore-dark.png')}}" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none ">
