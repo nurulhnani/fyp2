@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0 pb-0" href="{{ route('teacher.home') }}">
-            <img src="{{ asset('assets/img/userImage/mescore.png')}}" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('assets/img/userImage/mescore-dark.png')}}" class="navbar-brand-img">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -119,14 +119,14 @@
                         white-space: normal !important;
                     }
                 </style>
-                <li class="nav-item">
+                <li class="nav-item pt-2">
                     <a class="nav-link" href="{{ route('teacher.home') }}">
-                        <i class="ni ni-tv-2 text-primary text-orange"></i> {{ __('Dashboard') }}
+                        <i class="ni ni-tv-2 text-primary text-purple"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('viewprofile')}}">
-                        <i class="ni ni-circle-08 text-primary text-orange"></i> {{ __('My Profile') }}
+                        <i class="ni ni-circle-08 text-primary text-purple"></i> {{ __('My Profile') }}
                     </a>
                 </li>
             </ul>
@@ -156,12 +156,12 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('merits.main') }}">
-                        <i class="ni ni-collection text-orange"></i> {{ __('Merit and Demerit') }}
+                        <i class="ni ni-collection text-purple"></i> {{ __('Merit and Demerit') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('classrooms.index') }}">
-                        <i class="fa fa-table text-orange"></i> {{ __('Classroom Management') }}
+                        <i class="fa fa-table text-purple"></i> {{ __('Classroom Management') }}
                     </a>
                 </li>
             </ul>

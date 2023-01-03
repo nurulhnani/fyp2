@@ -67,7 +67,7 @@
                         <div class="chart-area">
                             <div class="row">
                                 <div class="col-sm-7 pl-6">
-                                    <canvas id="marksChart" height="200pt"></canvas>
+                                    <canvas id="marksChart" height="180pt"></canvas>
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="skillbar-wrapper">
