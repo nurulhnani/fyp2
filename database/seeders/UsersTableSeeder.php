@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             [
                'name'=>'Admin Admin',
                'image_path' => 'logosekolah.png',
-               'nric_mykid'=>'admin@argon.com',
+               'nric_mykid'=>'admin@mescore.com',
                'type'=>0,
                'first_login' => 1,
                'logincount' => 0,
@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'=>'Teacher',
                 'image_path' => 'teacher.png',
-                'nric_mykid'=>'teacher@argon.com',
+                'nric_mykid'=>'teacher@mescore.com',
                 'type'=>1,
                 'first_login' => 1,
                 'logincount' => 0,
@@ -43,7 +43,7 @@ class UsersTableSeeder extends Seeder
             [
                'name'=>'Student',
                'image_path' => 'student.png',
-               'nric_mykid'=>'student@argon.com',
+               'nric_mykid'=>'student@mescore.com',
                'type'=>2,
                'first_login' => 1,
                'logincount' => 0,

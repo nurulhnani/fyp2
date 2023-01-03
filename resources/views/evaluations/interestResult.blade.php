@@ -137,30 +137,24 @@
                     <div class="card-body">
 
                         <div class="pieadmin">
-                            {{-- // Chart wrapper --}}
-                            {{-- <div class="row"> --}}
-                                {{-- <div class="col-sm-12"> --}}
-                                    <canvas id="interest-chart" height="230"></canvas>
-                                    <?php
-                                        $interest = "";
-                                        $i=0; 
-                                        $total = 0;
-                                    foreach($averageArr as $avg){
-                                        $total += $avg;
-                                    }
-                                    foreach($averageArr as $avg){
-                                        if($i==0){
-                                            $interest = round(($avg/$total)*100,0);                              
-                                        }else{
-                                            $interest .= ", ".round(($avg/$total)*100,0);
-                                        }
-                                        $i++;
-                                    }
-                                    ?>
-                                    <input type="hidden" id="0" value="{{$interest}}">
-                                {{-- </div> --}}
-                            {{-- </div> --}}
-                           
+                            <canvas id="interest-chart" height="230"></canvas>
+                            <?php
+                                $interest = "";
+                                $i=0; 
+                                $total = 0;
+                            foreach($averageArr as $avg){
+                                $total += $avg;
+                            }
+                            foreach($averageArr as $avg){
+                                if($i==0){
+                                    $interest = round(($avg/$total)*100,0);                              
+                                }else{
+                                    $interest .= ", ".round(($avg/$total)*100,0);
+                                }
+                                $i++;
+                            }
+                            ?>
+                            <input type="hidden" id="0" value="{{$interest}}">
                         </div>
                           <!-- javascript -->
                          

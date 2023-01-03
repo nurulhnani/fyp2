@@ -307,7 +307,7 @@ class StudentController extends Controller
         $data['student'] = $student;
         $data['averageArr']=$averageArr;
         $data['averageInterest']=$averageInterest;
-        // dd($data['cocu_records']);
+        // dd($data);
         // $data['cocu'] = $cocu;
         $data['years'] = $years;
  
@@ -399,7 +399,7 @@ class StudentController extends Controller
             $user->image_path = $newImage;
         }
         $user->image_path = $newImage;
-        $user->email = $data['mykid'];
+        $user->nric_mykid = $data['mykid'];
         $user->type = 2;
         $user->email_verified_at = now();
         $user->password = Hash::make('secret');

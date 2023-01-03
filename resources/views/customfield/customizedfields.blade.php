@@ -29,7 +29,7 @@
                               <tbody>
                                 
                                 @foreach ($customfields as $customfield)
-                                  @if($customfield->user == "Student")
+                                  @if($customfield->user == "student")
                                 <tr>
                                     <td style="width: 30%">{{$customfield->name}}</td>
                                     <td style="width: 30%">{{$customfield->type}}</td>
@@ -75,7 +75,7 @@
                               <tbody>
                                 
                                 @foreach ($customfields as $customfield)
-                                  @if($customfield->user == "Teacher")
+                                  @if($customfield->user == "teacher")
                                 <tr>
                                     <td style="width: 30%">{{$customfield->name}}</td>
                                     <td style="width: 30%">{{$customfield->type}}</td>

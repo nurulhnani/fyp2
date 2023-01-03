@@ -443,7 +443,6 @@ class AdminController extends Controller
         ->orderBy('count','DESC')
         ->paginate(5);
 
-        // dd($teacherlogin);
 
          //////////////////// TOP 5 STUDENT LOGIN //////////////////////
          $studentlogin = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')

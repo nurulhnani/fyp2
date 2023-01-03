@@ -32,12 +32,12 @@
                 </button>
                 </div>
                 <div class="modal-body text-center">
-                    @foreach($years as $year)
+                    {{-- @foreach($years as $year)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox[]" class="custom-control-input" id="{{$year->year}}" value="{{$year->year}}">
                             <label class="custom-control-label" for="{{$year->year}}">{{$year->year}}</label>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                 {{-- <h4 class="text-center"></h4> --}}
                 </div>
                 <div class="modal-footer">

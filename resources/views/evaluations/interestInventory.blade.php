@@ -321,7 +321,7 @@
                 </div> --}}
 
                 <div class="card-body">
-                    <p class="card-text text-center">Completion of evaluation: </p>
+                    <p class="card-text text-sm text-center">Completion of evaluation:</p>
                     <nav aria-label="...">
                         <ul class="justify-content-center mt-4" style="list-style-type: none; padding-left:30%;padding-right:30%;">
                             {{-- <li class="page-item disabled">

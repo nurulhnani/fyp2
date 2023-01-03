@@ -202,9 +202,9 @@
                     <div class="row pt-4 pb-2">
                         <div class="col-sm-6 text-center">
                             @if(in_array('Realistic',$category))
-                            <a href="#">
+                            {{-- <a href="#">
                                 <img id="output_image" src="{{asset('assets/img/interestResult/electrician.jpg')}}" width="130" height="190" class="resultimg">
-                            </a>
+                            </a> --}}
                             <a href="#">
                                 <img id="output_image" src="{{asset('assets/img/interestResult/carpenter.jpg')}}" width="130" height="190" class="resultimg">
                             </a>
