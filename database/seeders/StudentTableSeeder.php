@@ -76,6 +76,26 @@ class StudentTableSeeder extends Seeder
                 'image_path'=>'Nur Amirah.png',
                 'created_at' => now(),
                 'updated_at' => now()
+            ],
+            [
+                'status'=>'active',
+                'name' => 'Aisyah Sofea',
+                'mykid' => '000505111103',
+                'classlist_id' => '1',
+                'gender' => 'Female',
+                'citizenship' => 'Malaysian',
+                'address' => 'Mentakab Jaya',
+                'G1_name' => 'Ghana bin Sarom',
+                'G1_relation' => 'Father',
+                'G1_phonenum' => '018235435',
+                'G1_income' => '1700',
+                'G2_name' => 'Hajah binti Bilal',
+                'G2_relation' => 'Mother',
+                'G2_phonenum' => '0198236675',
+                'G2_income' => '1500',
+                'image_path'=> null,
+                'created_at' => now(),
+                'updated_at' => now()
             ]
 
 
