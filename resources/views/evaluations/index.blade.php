@@ -75,8 +75,13 @@
                     </td>
                     <td>
                       <span class="badge badge-dot mr-4">
+                        @if(!in_array($student->mykid,$student_person_ids))
                         <i class="bg-warning"></i>
                         <span class="status">pending</span>
+                        @else
+                        <i class="bg-success"></i>
+                        <span class="status">completed</span>
+                        @endif
                       </span>
                     </td>
 

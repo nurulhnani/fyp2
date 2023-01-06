@@ -19,4 +19,8 @@ class Merit extends Model
         'desc',
         'date',
     ];
+
+    public function student(){
+        return $this->belongsTo(Student::class, 'student_mykid', 'mykid');
+    }
 }

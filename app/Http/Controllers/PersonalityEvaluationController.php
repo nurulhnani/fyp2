@@ -24,7 +24,23 @@ class PersonalityEvaluationController extends Controller
         foreach ($interestresults as $interestresult) {
             $student_ids[] = $interestresult->student_id;
         }
-        return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids]);
+
+        /* Personality Evaluation Status */
+        $name = auth()->user()->name;
+        $teacher = Teacher::where('name', '=', $name)->first();
+
+        $student_person_ids = [];
+        foreach ($students as $student) {
+            if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)
+                ->where('teacher_id', '=', $teacher->id)
+                ->exists()) {
+                    $student_person_ids[] = $student->mykid;
+            } else {
+                continue;
+            }
+        }
+
+        return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids, 'student_person_ids' => $student_person_ids]);
     }
 
     public function viewPersonalityQuestion(Request $request)
@@ -43,8 +59,8 @@ class PersonalityEvaluationController extends Controller
         $id = $request->input('student_mykid');
         $name = auth()->user()->name;
         $student = Student::where('mykid', "=", $id)->first();
-        $teacher = Teacher::where('name',$name)->first();
-        
+        $teacher = Teacher::where('name', $name)->first();
+
         if ($request->has('scale')) {
             $questions = Personality_Question::where('type', '=', 's')->get();
 
@@ -113,7 +129,7 @@ class PersonalityEvaluationController extends Controller
                 if ($mark <= 0) {
                     $finalMark[$category] = 0;
                 } else {
-                    $finalMark[$category] = intval(round(($mark/6)*100));
+                    $finalMark[$category] = intval(round(($mark / 6) * 100));
                 }
             }
 
