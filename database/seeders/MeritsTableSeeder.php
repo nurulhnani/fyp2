@@ -27,18 +27,18 @@ class MeritsTableSeeder extends Seeder
                 'level' => 'School',
                 'achievement' => 'Participant',
                 'desc' => 'test',
-                'date' => Carbon::parse('2000-01-01'),
+                'date' => Carbon::parse('2023-01-01'),
                 'created_at' => now(),
                 'updated_at' => now()
             ], [
                 'type' => 'c',
                 'merit_point' => '10',
-                'student_mykid' => '000729141107',
+                'student_mykid' => '000505111103',
                 'merit_name' => 'Merentas Desa',
                 'level' => 'School',
                 'achievement' => 'Committee Member',
                 'desc' => 'test',
-                'date' => Carbon::parse('2000-01-01'),
+                'date' => Carbon::parse('2023-04-14'),
                 'created_at' => now(),
                 'updated_at' => now()
             ], [
@@ -49,18 +49,18 @@ class MeritsTableSeeder extends Seeder
                 'level' => 'High',
                 'achievement' => '-',
                 'desc' => 'test',
-                'date' => Carbon::parse('2000-01-01'),
+                'date' => Carbon::parse('2023-05-11'),
                 'created_at' => now(),
                 'updated_at' => now()
             ], [
                 'type' => 'b',
                 'merit_point' => '20',
-                'student_mykid' => '000729141107',
+                'student_mykid' => '000320011148',
                 'merit_name' => 'Donate',
                 'level' => 'Medium',
                 'achievement' => '-',
                 'desc' => 'test',
-                'date' => Carbon::parse('2000-01-01'),
+                'date' => Carbon::parse('2023-01-01'),
                 'created_at' => now(),
                 'updated_at' => now()
             ]
