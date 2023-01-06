@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 */
 
 Route::get('/', function () {
+	// return view('welcome');
     return redirect()->route('login');
 });
 
@@ -86,6 +87,10 @@ Route::middleware(['auth', 'user-access:student'])->group(function () {
 	// Route::get('/InterestInventoryResult/{id}',[App\Http\Controllers\StudentController::class, 'showResultforStudent'])->name('showResultforStudent');
 	Route::get('/dashboard/{id}',[App\Http\Controllers\StudentController::class, 'dashboard'])->name('studenthome');
 	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewstudentprofile');
+	Route::get('/studentProfile-export/{id}',[App\Http\Controllers\PDFController::class, 'showExportForm'])->name('studentProfile-export');
+	Route::post('/student-profile/{id}',[App\Http\Controllers\PDFController::class, 'showStudentProfile'])->name('showProfile');
+	Route::get('/generatePDF/{id}',[App\Http\Controllers\PDFController::class, 'generatePDF'])->name('generatePDF');
+	Route::get('/showPDF/{id}',[App\Http\Controllers\PDFController::class, 'showPDF'])->name('showPDF');
 });
 
 /*------------------------------------------

@@ -98,7 +98,19 @@ class UsersTableSeeder extends Seeder
                  'password' => Hash::make('secret'),
                  'created_at' => now(),
                  'updated_at' => now()
-            ],
+            ],[
+                'name'=>'Nur Amirah',
+                'image_path' => 'Nurul Amirah.png',
+                'nric_mykid'=>'000320011148',
+                'email'=>'nuramiramohamed20@gmail.com',
+                'type'=>2,
+                'first_login' => 0,
+                'logincount' => 0,
+                'email_verified_at' => now(),
+                 'password' => Hash::make('secret'),
+                 'created_at' => now(),
+                 'updated_at' => now()
+            ]
         ];
 
         foreach ($users as $key => $user) {

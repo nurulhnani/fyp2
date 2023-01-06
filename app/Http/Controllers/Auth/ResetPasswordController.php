@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Support\Facades\Auth;
 
 class ResetPasswordController extends Controller
 {
@@ -32,6 +33,10 @@ class ResetPasswordController extends Controller
     // protected $redirectTo = '/login';
     public function redirectTo()
     {
+        $userid = User::where('name','=',auth()->user()->name)->first()->id;
+        $user = User::find($userid);
+        $user->first_login = 1;
+        $user->update();
         Auth::logout();
         return route('login');
     }

@@ -168,6 +168,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{route('studentProfile-export',$studentid)}}">
+                                    {{ __('Export Profile') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('students.index') }}">
                                     {{ __('Request Update Profile') }}
                                 </a>

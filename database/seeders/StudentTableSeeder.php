@@ -56,6 +56,26 @@ class StudentTableSeeder extends Seeder
                 'image_path'=>'Mohd Hafiz bin Kamal.png',
                 'created_at' => now(),
                 'updated_at' => now()
+            ],
+            [
+                'status'=>'active',
+                'name' => 'Nur Amirah',
+                'mykid' => '000320011148',
+                'classlist_id' => '1',
+                'gender' => 'Female',
+                'citizenship' => 'Malaysian',
+                'address' => '316, Tangkak',
+                'G1_name' => 'Noor Mohamed',
+                'G1_relation' => 'Father',
+                'G1_phonenum' => '0177654423',
+                'G1_income' => '5000',
+                'G2_name' => 'Azinah',
+                'G2_relation' => 'Mother',
+                'G2_phonenum' => '0187765678',
+                'G2_income' => '3500',
+                'image_path'=>'Nur Amirah.png',
+                'created_at' => now(),
+                'updated_at' => now()
             ]
 
 
