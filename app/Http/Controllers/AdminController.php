@@ -106,6 +106,14 @@ class AdminController extends Controller
     	return response()->download($myFile, $newName);
     }
 
+    public function downloadteacherfile()
+    {
+    	$myFile = public_path("assets\download\steacherlist.xlsx");
+    	$newName = 'teacher_template.xlsx';
+
+    	return response()->download($myFile, $newName);
+    }
+
     public function chartjs(Request $request)
     {
         //////////////// STUDENT ACTIVE //////////////////

@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+
 class HomeController extends Controller
 {
     /**
@@ -52,5 +58,22 @@ class HomeController extends Controller
     {
         return view('teachers.home');
     }
-
+    public function resetPw($id){
+        $user = User::find($id);
+        return view('auth.resetStudent',compact('user'));
+    }
+    public function updatePw(Request $request, $id){
+        // dd($request->password != $request->password_confirmation);
+        $user = User::find($id);
+        if($request->password != $request->password_confirmation){
+            return redirect()->route('student-resetpassword',$user->id)->with('error','Password does not match');
+        }else{
+            $user->password = Hash::make($request->password);
+            $user->first_login = 1;
+            $user->update();
+            Auth::logout();
+            return redirect()->route('login')->with('success','Password successfully updated. Please login');
+        }    
+        
+    }
 }

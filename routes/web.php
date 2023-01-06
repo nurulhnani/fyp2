@@ -24,8 +24,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
-// Route::get('/logintest',[App\Http\Controllers\Auth\LoginController::class, 'login'])->name('logintest')->middleware('auth');
 Route::get('/changePassword', [App\Http\Controllers\HomeController::class, 'changePwFirstLogin'])->name('changePwFirstLogin');
+Route::get('/student-resetpassword/{id}',[App\Http\Controllers\HomeController::class, 'resetPw'])->name('student-resetpassword');
+Route::post('/student-updatepassword/{id}',[App\Http\Controllers\HomeController::class, 'updatePw'])->name('studentpassword.update');
 
 Auth::routes();
 
@@ -73,7 +74,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');
 	Route::put('/editassessment/{id}',[App\Http\Controllers\InterestInventoryController::class, 'editassessment'])->name('editassessment');
 	Route::delete('/deletequestion/{id}',[App\Http\Controllers\InterestInventoryController::class, 'deletequestion'])->name('deletequestion');
-	Route::get('download-file', [App\Http\Controllers\AdminController::class, 'downloadstudentfile'])->name('downloadstudentfile');
+	Route::get('download-student-file', [App\Http\Controllers\AdminController::class, 'downloadstudentfile'])->name('downloadstudentfile');
+	Route::get('download-teacher-file', [App\Http\Controllers\AdminController::class, 'downloadteacherfile'])->name('downloadteacherfile');
+
 });
 
 /*------------------------------------------

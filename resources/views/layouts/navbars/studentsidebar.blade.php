@@ -85,7 +85,12 @@
                 <li class="nav-item bg-gradient-transparent">
                     <a href="#" class="nav-link">
                         <div class="profile-image">
+                            @if(auth()->user()->image_path != null)
                             <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                            @else 
+                            <img class="rounded-circle" style="width: 100%;height: 100%;" src="{{asset('assets/img/theme/default.png')}}">
+                            @endif
+                            {{-- <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}"> --}}
                         </div>
                         <div class="text-wrapper">
                             <p class="profile-name text-wrap" style="font-size: 10pt">{{auth()->user()->name}}</p>

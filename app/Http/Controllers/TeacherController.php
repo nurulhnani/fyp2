@@ -119,6 +119,7 @@ class TeacherController extends Controller
         $user->name = $data['name'];
         $user->image_path = $newImage;
         $user->nric_mykid = $data['nric'];
+        $user->email = $data['email'];
         $user->type = 1;
         $user->email_verified_at = now();
         $user->password = Hash::make('secret');
@@ -215,6 +216,20 @@ class TeacherController extends Controller
             $teacher->additional_Info = $additional;
         }
         $teacher -> update();
+
+        $user = User::where('name','=',$request->input('name'))->first();
+        $user->name = $request->input('name');
+        if ($request->hasFile('imageT')) {
+            $user->image_path = $filename;
+        }
+        $user->nric_mykid =  $request->input('nric');
+        $user->email = $request->input('email');
+        $user->type = 1;
+        $user->email_verified_at = now();
+        $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->update();
 
         return redirect()->route('teachers.index')->with('success',"Successfully updated!");
     }

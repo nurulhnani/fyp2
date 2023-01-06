@@ -54,9 +54,13 @@ class LoginController extends Controller
       
         if(auth()->attempt(array('nric_mykid' => $input['email'], 'password' => $input['password'])))
         {
-            // dd(auth()->user()->first_login);
-            if(auth()->user()->first_login == null){
+            // dd(auth()->user()->type);
+            if(auth()->user()->first_login == null && auth()->user()->type == 'teacher'){
                 return redirect()->route('password.request');
+            }else if((auth()->user()->first_login == null) && (auth()->user()->type == 'student')){
+                // dd(auth()->user()->type);
+                // $user = User::find(auth()->user()->id);
+                return redirect()->route('student-resetpassword',auth()->user()->id);
             }else if (auth()->user()->type == 'admin') {
 
                 //store login count

@@ -521,8 +521,21 @@ class StudentController extends Controller
             $student->additional_Info = $additional;
         }
         $student->update();
-        // $student->update();
-        // dd($request);
+        
+        $user = User::where('name','=',$request->input('name'))->first();
+        $user->name = $request->input('name');
+        if ($request->hasFile('image')) {
+            $user->image_path = $filename;
+        }
+        // $user->image_path = $newImage;
+        $user->nric_mykid = $request->input('mykid');
+        $user->type = 2;
+        $user->email_verified_at = now();
+        $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->update();
+
         return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
 

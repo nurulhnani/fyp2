@@ -78,9 +78,9 @@
 
                     <td class="text-right">
                         @if(in_array($student->id,$studentids))
-                            <a class="btn btn-sm btn-primary" href="{{route('health.edit',$student->id)}}">Current Record</a>
+                            <a class="btn btn-sm btn-success" href="{{route('health.edit',$student->id)}}">Current Record</a>
                         @else
-                            <a class="btn btn-sm btn-success" href="/health/create/{{$student->id}}">ADD</a>
+                            <a class="btn btn-sm btn-primary" href="/health/create/{{$student->id}}">Add</a>
                         @endif
                     </td>
                   </tr>
