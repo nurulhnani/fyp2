@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             MeritsTableSeeder::class,
             Personality_Question_TableSeeder::class,
             InterestInventorySeeder::class,
-            LoginCountTableSeeder::class]);
+            LoginCountTableSeeder::class,
+            HealthTableSeeder::class]);
     }
 }

@@ -149,8 +149,9 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::get('classroom/plan/{class}', [App\Http\Controllers\ClassroomManagementController::class, 'plan'])->name('classrooms.plan');
 		Route::post('classroom/getAjax', [App\Http\Controllers\ClassroomManagementController::class, 'getAjax'])->name('classrooms.getAjax');
 
-
-
+		//Health Assessment
+		Route::resource('health', App\Http\Controllers\HealthController::class);
+		Route::get('/health/create/{id}',[App\Http\Controllers\HealthController::class, 'create']);
 });
 
 Auth::routes();

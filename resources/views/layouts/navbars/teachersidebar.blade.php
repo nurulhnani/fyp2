@@ -164,6 +164,11 @@
                         <i class="fa fa-table text-purple"></i> {{ __('Classroom Management') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('health.index') }}">
+                        <i class='fas fa-heartbeat text-purple'></i> {{ __('Health Assessment') }}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
