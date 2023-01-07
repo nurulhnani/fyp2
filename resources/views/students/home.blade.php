@@ -7,13 +7,11 @@
     
         <div class="row">
             <div class="col-sm-10">
-                <h3 class="mt-4 heading-small text-muted">WELCOME TO STUDENT DASHBOARD!</h3>
+                <h3 class="mt-4 heading-small text-white">WELCOME TO STUDENT DASHBOARD!</h3>
             </div>
             <div class="mt-4 col-sm-2 text-right">
-                <a href="#filterByYear" data-toggle="modal" class="btn btn-sm btn-primary">
-                    <span class="d-none d-md-block">Filter By Year</span>
-                    <span class="d-md-none"><i class="fa fa-plus"></i></span>
-                </a>
+                <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#filterByYear">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
+                </button>
             </div>
         </div>
 
@@ -22,7 +20,7 @@
         <div class="modal fade" id="filterByYear" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="#" method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
                     @csrf
                     @method('PUT')
                 <div class="modal-header">
@@ -32,16 +30,16 @@
                 </button>
                 </div>
                 <div class="modal-body text-center">
-                    {{-- @foreach($years as $year)
+                    @foreach($years as $year)
+                        <?php $newyear = (string)$year;?>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox[]" class="custom-control-input" id="{{$year->year}}" value="{{$year->year}}">
-                            <label class="custom-control-label" for="{{$year->year}}">{{$year->year}}</label>
+                            <input type="checkbox" class="custom-control-input" id="{{$newyear}}" name="year[]" value="{{$newyear}}">
+                            <label class="custom-control-label" for="{{$newyear}}">{{$newyear}}</label>
                         </div>
-                    @endforeach --}}
-                {{-- <h4 class="text-center"></h4> --}}
+                    @endforeach
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-secondary" >Reset</button>
                 <button type="submit" class="btn btn-primary">Confirm</button>
                 </div>
                 </form>
@@ -55,8 +53,19 @@
                     <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="card-category">Scores</h5>
-                                <h2 class="card-title mb-0">Big 5 Personality Traits</h2>
+
+                                @if($yearfilter != null)
+                                <?php 
+                                $newyear = ""; 
+                                $newyear = implode(",",$yearfilter);
+                                ?>
+                                <h5 class="card-category">{{$newyear}}</h5>
+                                @else
+                                <h5 class="card-category">All year</h5>
+                                @endif
+
+                                {{-- <h5 class="card-category">Scores</h5> --}}
+                                <h3 class="card-title mb-0">Big 5 Personality Traits</h3>
                             </div>
                             {{-- <div class="col text-right">
                                 <a tabindex="0" role="button" data-trigger="focus" class="btn btn-sm btn-primary" data-placement="left" data-color="primary" id="popover_cocu">See Details</a>
@@ -71,44 +80,97 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="skillbar-wrapper">
-                                        <div class="skillbar clearfix html5" data-percent="{{ $averageArr['Extraversion'] }}%">
+                                        <div class="skillbar clearfix html5" data-percent="{{ $averagePerso['Extraversion'] }}%">
                                             <h4 class="skillbar-title"><span>EXTROVERSION</span></h4>
                                             <div class="skillbar-bar"></div>
-                                            <div class="skill-bar-percent">{{ $averageArr['Extraversion'] }}%</div>
+                                            <div class="skill-bar-percent">{{ $averagePerso['Extraversion'] }}%</div>
                                         </div>
                                     </div>
                                     <div class="skillbar-wrapper">
-                                        <div class="skillbar clearfix css" data-percent="{{ $averageArr['Agreeableness'] }}%">
+                                        <div class="skillbar clearfix css" data-percent="{{ $averagePerso['Agreeableness'] }}%">
                                             <h4 class="skillbar-title"><span>AGREEABLENESS</span></h4>
                                             <div class="skillbar-bar"></div>
-                                            <div class="skill-bar-percent">{{ $averageArr['Agreeableness'] }}%</div>
+                                            <div class="skill-bar-percent">{{ $averagePerso['Agreeableness'] }}%</div>
                                         </div>
                                     </div>
                                     <div class="skillbar-wrapper">
-                                        <div class="skillbar clearfix javascript" data-percent="{{ $averageArr['Neuroticism'] }}%">
+                                        <div class="skillbar clearfix javascript" data-percent="{{ $averagePerso['Neuroticism'] }}%">
                                             <h4 class="skillbar-title"><span>NEUROTICISM</span></h4>
                                             <div class="skillbar-bar"></div>
-                                            <div class="skill-bar-percent">{{ $averageArr['Neuroticism'] }}%</div>
+                                            <div class="skill-bar-percent">{{ $averagePerso['Neuroticism'] }}%</div>
                                         </div>
                                     </div>
                                     <div class="skillbar-wrapper">
-                                        <div class="skillbar clearfix jquery" data-percent="{{ $averageArr['Conscientiousness'] }}%">
+                                        <div class="skillbar clearfix jquery" data-percent="{{ $averagePerso['Conscientiousness'] }}%">
                                             <h4 class="skillbar-title"><span>CONSCIENTIOUSNESS</span></h4>
                                             <div class="skillbar-bar"></div>
-                                            <div class="skill-bar-percent">{{ $averageArr['Conscientiousness'] }}%</div>
+                                            <div class="skill-bar-percent">{{ $averagePerso['Conscientiousness'] }}%</div>
                                         </div>
                                     </div>
                                     <div class="skillbar-wrapper">
-                                        <div class="skillbar clearfix php" data-percent="{{ $averageArr['Openness'] }}%">
+                                        <div class="skillbar clearfix php" data-percent="{{ $averagePerso['Openness'] }}%">
                                             <h4 class="skillbar-title"><span>OPENNESS</span></h4>
                                             <div class="skillbar-bar"></div>
-                                            <div class="skill-bar-percent">{{ $averageArr['Openness'] }}%</div>
+                                            <div class="skill-bar-percent">{{ $averagePerso['Openness'] }}%</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+                        <?php $arraycolor = ["'rgba(200, 0, 145, 0.8)'","'rgba(108, 2, 158, 1)'","'rgba(170, 96, 225, 1)'","'rgba(225, 96, 180, 1)'","'rgba(225, 96, 143, 1)'","'rgba(244, 144, 181, 1)'"];
+                        // dd($arraycolor[0]);
+                        ?>
+                        @if($filter == "no")
+                        <script>
+                            var marksCanvas = document.getElementById("marksChart");
+                            $arraycolor = ["'rgba(200, 0, 145, 0.8)'","'rgba(108, 2, 158, 1)'","'rgba(170, 96, 225, 1)'","'rgba(225, 96, 180, 1)'","'rgba(225, 96, 143, 1)'","'rgba(244, 144, 181, 1)'"];
+                            var marksData = {
+                                labels: [
+                                    'EXT',
+                                    'AGB',
+                                    'NTM',
+                                    'CSC',
+                                    'OPN'],
+                                datasets: [  
+                                    <?php 
+                                    $i = 0;
+                                    foreach($years as $index => $year){?>
+                                    {
+                                        label: <?php echo $year ?>,
+                                        backgroundColor: <?php echo $arraycolor[$i]?>,
+                                        data: 
+                                                [<?php
+                                                foreach ($averageArr[strval($year)] as $category => $mark1) {
+                                                    echo "'" . $mark1 . "', ";
+                                                } 
+                                                ?>],
+                                    },
+                                    <?php  $i++; } ?>
+                                ]
+                                
+                            };
+
+                            var options = {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                scale: {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        max: 100
+                                    }
+                                },
+                            };
+
+                            var radarChart = new Chart(marksCanvas, {
+                                type: 'radar',
+                                data: marksData,
+                                options: options,
+                            });
+                        </script>
+                        @else
                         <script>
                             var marksCanvas = document.getElementById("marksChart");
 
@@ -151,6 +213,7 @@
                                 options: options,
                             });
                         </script>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -184,31 +247,36 @@
                     <div class="card-header bg-white pb-1">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="card-category pt-0">Interest Inventory Evaluation</h5>
-                                <h3 class="card-category">Tendency</h3>
+                                @if($yearfilter != null)
+                                <?php 
+                                $newyear = ""; 
+                                $newyear = implode(",",$yearfilter);
+                                ?>
+                                <h5 class="card-category">{{$newyear}}</h5>
+                                @else
+                                <h5 class="card-category">All year</h5>
+                                @endif
+
+                                <h3 class="card-category">Interest Inventory Evaluation</h3>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="card-body">
                         @if($averageInterest != null)
                         <div class="pieadmin">
                             <canvas id="interest-chart" height="230"></canvas>
-                            <?php
-                                $interest = "";
-                                $i=0; 
-                                $total = 0;
-                            foreach($averageInterest as $avg){
-                                $total += $avg;
-                            }
-                            foreach($averageInterest as $avg){
-                                if($i==0){
-                                    $interest = round(($avg/$total)*100,0);                              
-                                }else{
-                                    $interest .= ", ".round(($avg/$total)*100,0);
-                                }
-                                $i++;
-                            }
+                            
+                            <?php 
+                                $interest = ""; 
+                                $interest = $averageInterest['Realistic'];
+                                $interest .= ",".$averageInterest['Investigative'];
+                                $interest .= ",".$averageInterest['Artistic'];
+                                $interest .= ",".$averageInterest['Social'];
+                                $interest .= ",".$averageInterest['Enterprising'];
+                                $interest .= ",".$averageInterest['Conventional'];
                             ?>
+                                      
                             <input type="hidden" id="0" value="{{$interest}}"> 
                             
                             <script>
@@ -264,42 +332,42 @@
                             
                         @if(in_array('Realistic',$category))
                         <div class="col-sm-12">
-                            <h2 class="card-category mt-4">Realistic</h2>
+                            <h2 class="card-category">Realistic</h2>
                             <p class="card-text">Realistic careers are those that involve working with your hands and often involve physical labor. Examples of a realistic work environment may include working as an electrician, carpenter, military service, or mechanic.</p>
                         </div>
                         @endif
         
                         @if(in_array('Investigative',$category))
                         <div class="col-sm-12">
-                            <h2 class="card-category mt-4">Investigative</h2>
+                            <h2 class="card-category">Investigative</h2>
                             <p class="card-text">Investigative careers are those that require knowledge and often involve research or science. Examples of an investigative work environment may include working as a journalist, doctor, or scientist.</p>
                         </div>
                         @endif
         
                         @if(in_array('Artistic',$category))
                         <div class="col-sm-12">
-                            <h2 class="card-category mt-4">Artistic</h2>
+                            <h2 class="card-category">Artistic</h2>
                             <p class="card-text">Artistic careers are those that allow you to express your creativity and often involve design or performance. Examples of an artistic work environment may include working as a musician, actor or artist.</p>
                         </div>
                         @endif
         
                         @if(in_array('Social',$category))
                         <div class="col-sm-12">
-                            <h2 class="card-category mt-4">Social</h2>
+                            <h2 class="card-category">Social</h2>
                             <p class="card-text">Social careers are those that involve working with people and often involve teaching or counseling. Examples of a social work environment may include working as english teachers, language teachers, nurse or counselors.</p>
                         </div>
                         @endif
         
                         @if(in_array('Enterprising',$category))
                         <div class="col-sm-12">
-                        <h2 class="card-category mt-4">Enterprising</h2>
+                        <h2 class="card-category">Enterprising</h2>
                         <p class="card-text">Enterprising careers are those that involve leadership and often involve sales or management. Examples of an enterprising work environment may include working as a business owner, manager or salesperson.</p>
                         </div>
                         @endif
         
                         @if(in_array('Conventional',$category))
                         <div class="col-sm-12">
-                            <h2 class="card-category mt-4">Conventional</h2>
+                            <h2 class="card-category">Conventional</h2>
                             <p class="card-text">Conventional careers are those that require organization and often involve clerical work or administration. Examples of conventional work environments may include working as an office administrator, bookkeeper or secretary.</p>
                         </div>
                         @endif 
@@ -331,11 +399,20 @@
                     <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="card-category">Co-curriculum Merits</h5>
-                                <h2 class="card-title mb-0">Performance</h2>
+                                @if($yearfilter != null)
+                                <?php 
+                                $newyear = ""; 
+                                $newyear = implode(",",$yearfilter);
+                                ?>
+                                <h5 class="card-category">{{$newyear}}</h5>
+                                @else
+                                <h5 class="card-category">All year</h5>
+                                @endif
+                                
+                                <h3 class="card-title mb-0">Co-curriculum Merits</h3>
                             </div>
                             <div class="col text-right">
-                                <a tabindex="0" role="button" data-trigger="focus" class="btn btn-sm btn-primary" data-placement="left" data-color="primary" id="popover_cocu">See Details</a>
+                                <a tabindex="0" role="button" data-trigger="focus" class="mt-0 btn btn-sm btn-primary" data-placement="left" data-color="primary" id="popover_cocu">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -433,7 +510,16 @@
                     <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="card-category">Behaviour Merits and Demerits</h5>
+                                @if($yearfilter != null)
+                                <?php 
+                                $newyear = ""; 
+                                $newyear = implode(",",$yearfilter);
+                                ?>
+                                <h5 class="card-category">{{$newyear}}</h5>
+                                @else
+                                <h5 class="card-category">All year</h5>
+                                @endif
+                                <h3 class="card-category">Behaviour Merits and Demerits</h3>
                             </div>
                             <div class="col text-right">
                                 <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
@@ -619,7 +705,7 @@
     {
         position: relative;
 
-        height: 270px;
+        height: 295px;
     }
     
     </style>

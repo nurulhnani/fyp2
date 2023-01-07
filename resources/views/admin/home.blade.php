@@ -4,14 +4,51 @@
     {{-- @include('layouts.headers.cards') --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-    <div class="header bg-gradient-primary pb-5 pt-md-7">
+    <div class="header bg-gradient-primary pb-5 pt-md-5">
         <div class="container-fluid mt--2">
             
-            <h3 class="text-white mb-3">{{ __('Welcome to Admin Dashboard!') }}</h3>
+            <div class="row mb-2">
+                <div class="col">
+                    <h3 class="mt-4 heading-small text-white">WELCOME TO ADMIN DASHBOARD!</h3>
+                </div>
+                
+            </div>
+
+             <!--Filter Modal -->
+        <div class="modal fade" id="filterByYear" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                    @csrf
+                    @method('PUT')
+                <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Filter Dashboard By Year</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body text-center">
+                    @foreach($years as $year)
+                        <?php $newyear = (string)$year;?>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="{{$newyear}}" name="year[]" value="{{$newyear}}">
+                            <label class="custom-control-label" for="{{$newyear}}">{{$newyear}}</label>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" >Reset</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
             <div class="header-body">
                 <!-- Card stats -->
                 <div class="row">
-                    <div class="col-xl-3 col-lg-6">
+                    <div class="col-xl-3">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body bg-admingreen pb-0">
                                 <div class="row">
@@ -26,13 +63,13 @@
                                         <h5 class="card-title text-uppercase text-muted mb-0">Active Students</h5>
                                     </div>
                                 </div>
-                                <?php $activestudent = App\Models\Student::where('status','=','active')->count(); ?>
+                                {{-- <?php $activestudent = App\Models\Student::where('status','=','active')->count(); ?> --}}
                                 <p id="student-card" class="h2 font-weight-bold text-center">{{$activestudent}}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-xl-3 col-lg-6">
+                    <div class="col-xl-3">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body pb-0">
                                 <div class="row">
@@ -52,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6">
+                    <div class="col-xl-3">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body bg-admingreen pb-0">
                                 <div class="row">
@@ -72,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6">
+                    <div class="col-xl-3">
                         <div class="card card-stats mb-4 mb-xl-0">
                             <div class="card-body pb-0">
                                 <div class="row">
@@ -98,7 +135,16 @@
         </div>
     </div>
 
-    <div class="container-fluid mt--4">
+    <div class="container-fluid mt-5">
+
+        <div class="row pb-3">
+            <div class="col">
+                <div class="float-right">
+                    <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#filterByYear">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card shadow">
@@ -692,17 +738,11 @@
                         </div>
                     </div>
                     <div class="card-body pt-2 pb-2">
-                        <?php $interestevaluated = App\Models\Interest_Inventory_Results::all()
-                                                    ->groupBy('student_id');
-                                                     
-                        $completion =  (Count($interestevaluated) / $activestudent)*100 ;
-                        $incomplete = 100 - $completion;
-                        ?>
 
                         <div class="pieadmin">
                             <p class="h3 font-weight-bold"
                                 style="width: 100%; height: 100%; position: absolute; top: 60%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                                {{round($completion,0)}}%<Br />
+                                {{round($interestcompletion,0)}}%<Br />
                             </p>
                             <canvas id="interest_eval" width="100" height="100"></canvas>
                         </div>
@@ -722,7 +762,7 @@
                                 labels: ['completed','incomplete'],
                                 datasets: [
                                   {
-                                    data: [{{round($completion,0)}}, {{round($incomplete,0)}}],
+                                    data: [{{round($interestcompletion,0)}}, {{round($interestincomplete,0)}}],
                                     backgroundColor: ['#f590e7','white'],
                                   }
                                 ],
@@ -762,22 +802,11 @@
                         </div>
                     </div>
                     <div class="card-body pt-2 pb-2">
-                        <?php 
-                            $personalityevaluated = App\Models\Personality_Evaluation::all()
-                            ->groupBy('student_mykid');
-                                                    
-                            $completion =  (Count($personalityevaluated) / $activestudent)*100 ;
-                            $incomplete = 100 - $completion;
-                        ?>
                         <div class="pieadmin">
                             <p class="h3 font-weight-bold text-default"
                                 style="width: 100%; height: 100%; position: absolute; top: 60%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                                {{round($completion,0)}}%<Br />
+                                {{round($persocompletion,0)}}%<Br />
                             </p>
-                            {{-- <p class=" h5 text-muted text-default"
-                                style="width: 100%; height: 40px; position: absolute; top: 65%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                                {{Count($interestevaluated)}} / {{Count($activestudent)}} students
-                            </p> --}}
                             <canvas id="personality_eval" width="100" height="100"></canvas>
                         </div> 
 
@@ -791,7 +820,6 @@
                           <script>
                             $(function(){
                                 //get the pie chart canvas
-                              //   var cData = JSON.parse(`<?php echo $interest_eval; ?>`);
                                 var ctx = $("#personality_eval");
                            
                                 //pie chart data
@@ -800,7 +828,7 @@
                                   datasets: [
                                     {
                                       // label: "Student",
-                                      data: [{{round($completion,2)}}, {{round($incomplete,2)}}],
+                                      data: [{{round($persocompletion,2)}}, {{round($persoincomplete,2)}}],
                                       backgroundColor: ['#f590e7','white'],
                                     }
                                   ],

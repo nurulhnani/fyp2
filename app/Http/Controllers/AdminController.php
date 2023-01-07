@@ -116,6 +116,13 @@ class AdminController extends Controller
 
     public function chartjs(Request $request)
     {
+        $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
+        $allyear = []; //get all year
+        foreach ($getYear as $record) {
+            if (!in_array($record->year, $allyear)) {
+                $allyear[] = $record->year;
+            }
+        }
         //////////////// STUDENT ACTIVE //////////////////
         $record1 = Student::leftJoin('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->select(DB::raw("COUNT(*) as count"), DB::raw('YEAR(students.updated_at) as year'))
@@ -127,6 +134,14 @@ class AdminController extends Controller
                     $intgrade[] = (int)$intg;
                 }
                 return $q->whereIn('class_name', $intgrade);
+            })
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(students.updated_at)'), $yearfilter);
+                // dd($yearfilter);
             })
             ->get();
 
@@ -151,10 +166,18 @@ class AdminController extends Controller
                 }
                 return $q->whereIn('class_name', $intgrade);
             })
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(students.updated_at)'), $yearfilter);
+                // dd($yearfilter);
+            })
             ->get();
 
         $year = []; //get all year
-        foreach ($record1 as $record) {
+        foreach ($getYear as $record) {
             if (!in_array($record->year, $year)) {
                 $year[] = $record->year;
             }
@@ -183,8 +206,12 @@ class AdminController extends Controller
         $record2 = Teacher::select(DB::raw("COUNT(*) as count"), DB::raw("YEAR(updated_at) as year"))
             ->where('status', '=', 'active')
             ->groupBy('year')
-            ->when($request->gender != null, function ($q) use ($request) {
-                return $q->where('gender', '=', $request->gender);
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
             })
             ->get();
 
@@ -212,12 +239,16 @@ class AdminController extends Controller
         $record3 = Teacher::select(DB::raw("COUNT(*) as count"), DB::raw("YEAR(updated_at) as year"))
             ->where('status', '=', 'inactive')
             ->groupBy('year')
-            ->when($request->gender != null, function ($q) use ($request) {
-                return $q->where('gender', '=', $request->gender);
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
             })
             ->get();
 
-        $teacher = [];
+        // $teacher = [];
         // dd($record3);
 
         // foreach($record3 as $row){
@@ -261,6 +292,14 @@ class AdminController extends Controller
                 }
                 return $q->whereIn('class_name', $intgrade);
             })
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(students.updated_at)'), $yearfilter);
+                // dd($yearfilter);
+            })
             ->groupBy('gender')
             // ->orderBy('day')
             ->get();
@@ -278,6 +317,14 @@ class AdminController extends Controller
         $record5 = Teacher::select(DB::raw("COUNT(*) as count"), DB::raw("gender as gender"))
             ->where('status', '=', 'active')
             ->groupBy('gender')
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
+                // dd($yearfilter);
+            })
             // ->orderBy('day')
             ->get();
 
@@ -289,37 +336,41 @@ class AdminController extends Controller
             $data5['data'][] = (int) $row->count;
         }
 
-        /////////////// INTEREST INVENTORY COMPLETION ///////////////////
-        $record6 = Interest_Inventory_Results::select(DB::raw("COUNT(*) as count"), DB::raw("student_id as student_id"))
-            // ->where('status', '=', 'active')
-            ->groupBy('student_id')
-            // ->orderBy('day')
-            ->get();
-
-        // dd($record6);
-        $data6 = [];
-
-        foreach ($record6 as $row) {
-            $data6['label'][] = ["completed", "incomplete"];
-            $data6['data'][] = (int) $row->count;
-        }
+        ///////////////active student count ///////////////
+        $activestudent = Student::where('status','=','active')->count(); 
 
         /////////////// PERSONALITY EVAL COMPLETION ///////////////////
-        $record11 = Personality_Evaluation::select(DB::raw("COUNT(*) as count"), DB::raw("student_mykid as student_mykid"))
-            // ->where('status', '=', 'active')
-            ->groupBy('student_mykid')
-            // ->orderBy('day')
-            ->get();
+        $personalityevaluated = Personality_Evaluation::select(DB::raw("student_mykid as student_mykid")) 
+                                ->when($request->year != null, function ($q) use ($request) {
+                                    $yearfilter = [];
+                                    foreach ($request->year as $filter) {
+                                        $yearfilter[] = $filter;
+                                    }
+                                    return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
+                                })                    
+                                ->groupBy('student_mykid')
+                                ->get();
+                                
+                                
+        $persocompletion =  (Count($personalityevaluated) / $activestudent)*100 ;
+        $persoincomplete = 100 - $persocompletion;
+        // dd($completion);
 
-        // dd($record6);
-        $data11 = [];
-
-        foreach ($record11 as $row) {
-            $data11['label'][] = ["completed", "incomplete"];
-            $data11['data'][] = (int) $row->count;
-        }
-
-        // $data6['data'] = count($record6);
+        /////////////// INTEREST INVENTORY COMPLETION ///////////////////
+        $interestevaluated = Interest_Inventory_Results::select(DB::raw("student_id as student_id"))                      
+                            ->when($request->year != null, function ($q) use ($request) {
+                                $yearfilter = [];
+                                foreach ($request->year as $filter) {
+                                    $yearfilter[] = $filter;
+                                }
+                                return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
+                            })
+                            ->groupBy('student_id')
+                            ->get();
+                                                     
+        $interestcompletion =  (Count($interestevaluated) / $activestudent)*100 ;
+        $interestincomplete = 100 - $interestcompletion;
+        // dd(Count($interestevaluated));
 
         ////////////////////////// COCU MERIT //////////////////////////
 
@@ -374,74 +425,175 @@ class AdminController extends Controller
         /////////////////////// MALE ACTIVE STUDENT ////////////////////////
         $malestudent = Student::where('status','=','active')
                         ->where('gender','=','Male')
+                        ->when($request->year != null, function ($q) use ($request) {
+                            $yearfilter = [];
+                            foreach ($request->year as $filter) {
+                                $yearfilter[] = $filter;
+                            }
+                            return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
+                        })
                         ->count();
 
         ////////////////////// FEMALE ACTIVE STUDENT //////////////////////
         $femalestudent = Student::where('status','=','active')
                         ->where('gender','=','Female')
+                        ->when($request->year != null, function ($q) use ($request) {
+                            $yearfilter = [];
+                            foreach ($request->year as $filter) {
+                                $yearfilter[] = $filter;
+                            }
+                            return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
+                            // dd($yearfilter);
+                        })
                         ->count();
 
         //////////////////// MALE ACTIVE TEACHER ////////////////////////
         $maleteacher = Teacher::where('status', '=', 'active')
                     ->where('gender', '=', 'Male')
+                    ->when($request->year != null, function ($q) use ($request) {
+                        $yearfilter = [];
+                        foreach ($request->year as $filter) {
+                            $yearfilter[] = $filter;
+                        }
+                        return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
+                        // dd($yearfilter);
+                    })
                     ->count();
 
         ///////////////////// FEMALE ACTIVE TEACHER////////////////////// 
         $femaleteacher = Teacher::where('status', '=', 'active')
                     ->where('gender', '=', 'Female')
+                    ->when($request->year != null, function ($q) use ($request) {
+                        $yearfilter = [];
+                        foreach ($request->year as $filter) {
+                            $yearfilter[] = $filter;
+                        }
+                        return $q->whereIn(DB::raw('YEAR(updated_at)'), $yearfilter);
+                        // dd($yearfilter);
+                    })
                     ->count();
 
         //////////////////// TEACHER LOGIN COUNT BY MONTH ///////////////////////
-        $record12 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+        if(isset($request->year)){
+            $record12 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
+            ->where('type','=','1')
+            ->groupBy('month')
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(login_count.created_at)'), $yearfilter);
+                // dd($yearfilter);
+            })
+            ->get();
+
+            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $count_teacherlogin = [];
+            foreach ($allmonts as $test) {
+
+                foreach ($record12 as $v) {
+                    if ($test == $v->month) {
+                        $count_teacherlogin[$test] = $v->count;
+                        break;
+                    } else {
+                        $count_teacherlogin[$test] = 0;
+                    }
+                }
+            }
+
+            foreach ($count_teacherlogin as $row) {
+                $data12['data'][] = (int)$row;
+            }
+            $data12['label'] = $allmonts;
+        }else{
+            $record12 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
             ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
             ->where('type','=','1')
             ->groupBy('month')
             ->get();
 
+            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $count_teacherlogin = [];
+            foreach ($allmonts as $test) {
 
-        $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
-        $count_teacherlogin = [];
-        foreach ($allmonts as $test) {
-
-            foreach ($record12 as $v) {
-                if ($test == $v->month) {
-                    $count_teacherlogin[$test] = $v->count;
-                    break;
-                } else {
-                    $count_teacherlogin[$test] = 0;
+                foreach ($record12 as $v) {
+                    if ($test == $v->month) {
+                        $count_teacherlogin[$test] = $v->count;
+                        break;
+                    } else {
+                        $count_teacherlogin[$test] = 0;
+                    }
                 }
             }
-        }
 
-        foreach ($count_teacherlogin as $row) {
-            $data12['data'][] = (int)$row;
+            foreach ($count_teacherlogin as $row) {
+                $data12['data'][] = (int)$row;
+            }
+            $data12['label'] = $allmonts;
         }
-        $data12['label'] = $allmonts;
 
         //////////////////// STUDENT LOGIN COUNT BY MONTH ///////////////////////
-        $record13 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+
+        if(isset($request->year)){
+            $record13 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
+            ->where('type','=','2')
+            ->groupBy('month')
+            ->when($request->year != null, function ($q) use ($request) {
+                $yearfilter = [];
+                foreach ($request->year as $filter) {
+                    $yearfilter[] = $filter;
+                }
+                return $q->whereIn(DB::raw('YEAR(login_count.created_at)'), $yearfilter);
+                // dd($yearfilter);
+            })
+            ->get();
+
+            $count_studentlogin = [];
+            foreach ($allmonts as $test) {
+
+                foreach ($record13 as $v) {
+                    if ($test == $v->month) {
+                        $count_studentlogin[$test] = $v->count;
+                        break;
+                    } else {
+                        $count_studentlogin[$test] = 0;
+                    }
+                }
+            }
+
+            foreach ($count_studentlogin as $row) {
+                $data13['data'][] = (int)$row;
+            }
+            $data13['label'] = $allmonts;
+        }else{
+            $record13 = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
             ->select(DB::raw("COUNT(*) as count"), DB::raw('MONTH(login_count.created_at) as month'))
             ->where('type','=','2')
             ->groupBy('month')
             ->get();
 
-        $count_studentlogin = [];
-        foreach ($allmonts as $test) {
+            $count_studentlogin = [];
+            foreach ($allmonts as $test) {
 
-            foreach ($record13 as $v) {
-                if ($test == $v->month) {
-                    $count_studentlogin[$test] = $v->count;
-                    break;
-                } else {
-                    $count_studentlogin[$test] = 0;
+                foreach ($record13 as $v) {
+                    if ($test == $v->month) {
+                        $count_studentlogin[$test] = $v->count;
+                        break;
+                    } else {
+                        $count_studentlogin[$test] = 0;
+                    }
                 }
             }
-        }
 
-        foreach ($count_studentlogin as $row) {
-            $data13['data'][] = (int)$row;
+            foreach ($count_studentlogin as $row) {
+                $data13['data'][] = (int)$row;
+            }
+            $data13['label'] = $allmonts;
         }
-        $data13['label'] = $allmonts;
+        
 
         //////////////////// TOP 5 TEACHER LOGIN //////////////////////
         $teacherlogin = LoginCount::leftJoin('users', 'users.id', '=', 'login_count.user_id')
@@ -460,6 +612,8 @@ class AdminController extends Controller
          ->orderBy('count','DESC')
          ->paginate(5);
 
+        
+
         ////// send data /////
         $data['chart_student'] = json_encode($data1);
         $data['chart_studentinactive'] = json_encode($data10);
@@ -467,8 +621,8 @@ class AdminController extends Controller
         $data['chart_teacherinactive'] = json_encode($data3);
         $data['student_gender'] = json_encode($data4);
         $data['teacher_gender'] = json_encode($data5);
-        $data['interest_eval'] = json_encode($data6);
-        $data['personality_eval'] = json_encode($data11);
+        // $data['interest_eval'] = json_encode($data6);
+        // $data['personality_eval'] = json_encode($data11);
         $data['student_cocumerit'] = json_encode($data7);
         $data['student_behaviourmerit'] = json_encode($data8);
         $data['student_behaviourdemerit'] = json_encode($data9);
@@ -480,6 +634,14 @@ class AdminController extends Controller
         $data['femaleteacher'] = $femaleteacher;
         $data['teacherlogin'] = $teacherlogin;
         $data['studentlogin'] = $studentlogin;
+        $data['years'] = $allyear;
+        $data['activestudent'] = $activestudent;
+        $data['personalityevaluated'] = $personalityevaluated;
+        $data['persocompletion'] = $persocompletion;
+        $data['persoincomplete'] = $persoincomplete;
+        $data['interestevaluated'] = $interestevaluated;
+        $data['interestcompletion'] = $interestcompletion;
+        $data['interestincomplete'] = $interestincomplete;
 
         return view('admin.home', $data);
     }
