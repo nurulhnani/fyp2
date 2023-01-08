@@ -7,7 +7,7 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
+        <div class="col-lg-12 col-7">
           <h6 class="h2 text-black d-inline-block mb-0">Evaluation Page</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -56,7 +56,6 @@
                     <th scope="col" class="sort" data-sort="budget">CLASS</th>
                     <th scope="col" class="sort" data-sort="status">STATUS</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -85,10 +84,11 @@
                       </span>
                     </td>
 
-                    <td class="text-center">
-                      <a href="{{ route('personalityResultHist', $student) }}" class="btn btn-secondary btn-sm">History</a>
+                    <!-- <td class="text-center">
+                      <a href="{{ route('personalityResultHist', $student) }}" class="btn btn-secondary btn-sm"><i class="fa fa-history" aria-hidden="true"></i>
+                      </a>
                       <a href="{{ route('personalityResultCurr', $student) }}" class="btn btn-primary btn-sm">Current Result</a>
-                    </td>
+                    </td> -->
 
                     <td class="text-right">
                       <div class="dropdown">
@@ -99,6 +99,10 @@
                           <!-- <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 's', 'student' => $student]) }}">Scale</a> -->
                           <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 'o', 'student' => $student]) }}">Open Ended</a>
                           <a class="dropdown-item" href="{{ route('personalityEval', ['question' => 'mcq', 'student' => $student]) }}">Multiple Choices</a>
+                          <div class="dropdown-divider"></div>
+                          <a href="{{ route('personalityResultCurr', $student) }}" class="dropdown-item">Current Result</a>
+                          <a href="{{ route('personalityResultHist', $student) }}" class="dropdown-item">History</a>
+
                         </div>
                       </div>
                     </td>

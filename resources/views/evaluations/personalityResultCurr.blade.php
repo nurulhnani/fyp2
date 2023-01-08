@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
+                <div class="col-lg-12 col-7">
                     <h6 class="h2 text-black d-inline-block mb-0">Evaluation Page</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -97,9 +97,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>This Big Five assessment measures your scores on five major dimensions of personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (sometimes abbreviated OCEAN). In this free report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
-                    <p class="pt-2"><strong>EXTRAVERSION</strong></p>
-                    <p>Extraversion describes a person’s inclination to seek stimulation from the outside world, especially in the form of attention from other people. Extraverts engage actively with others to earn friendship, admiration, power, status, excitement, and romance. Introverts, on the other hand, conserve their energy, and do not work as hard to earn these social rewards.</p>
+                    <p align="justify">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>. In this report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
+                    <!-- <p class="pt-2"><strong>EXTRAVERSION</strong></p> -->
+                    <!-- <p>Extraversion describes a person’s inclination to seek stimulation from the outside world, especially in the form of attention from other people. Extraverts engage actively with others to earn friendship, admiration, power, status, excitement, and romance. Introverts, on the other hand, conserve their energy, and do not work as hard to earn these social rewards.</p> -->
                     <div class="skillbar-wrapper">
                         <div class="skillbar clearfix html5" data-percent="{{ $averageArr['Extraversion'] }}%">
                             <h4 class="skillbar-title"><span>EXT</span></h4>
@@ -108,8 +108,8 @@
                         </div>
                     </div>
 
-                    <p class="pt-2"><strong>AGREEABLENESS</strong></p>
-                    <p>Agreeableness describes a person’s tendency to put others’ needs ahead of their own, and to cooperate rather than compete with others. People who are high in Agreeableness experience a great deal of empathy and tend to get pleasure out of serving and taking care of others. They are usually trusting and forgiving. People who are low in Agreeableness tend to experience less empathy and put their own concerns ahead of others.</p>
+                    <!-- <p class="pt-2"><strong>AGREEABLENESS</strong></p> -->
+                    <!-- <p>Agreeableness describes a person’s tendency to put others’ needs ahead of their own, and to cooperate rather than compete with others. People who are high in Agreeableness experience a great deal of empathy and tend to get pleasure out of serving and taking care of others. They are usually trusting and forgiving. People who are low in Agreeableness tend to experience less empathy and put their own concerns ahead of others.</p> -->
                     <div class="skillbar-wrapper">
                         <div class="skillbar clearfix css" data-percent="{{ $averageArr['Agreeableness'] }}%">
                             <h4 class="skillbar-title"><span>AGB</span></h4>
@@ -118,8 +118,8 @@
                         </div>
                     </div>
 
-                    <p class="pt-2"><strong>NEUROTICISM</strong></p>
-                    <p>Neuroticism describes a person’s tendency to experience negative emotions, including fear, sadness, anxiety, guilt, and shame. While everyone experiences these emotions from time to time, some people are more prone to them than others. High Neuroticism scorers are more likely to react to a situation with fear, anger, sadness, and the like. Low Neuroticism scorers are more likely to brush off their misfortune and move on.</p>
+                    <!-- <p class="pt-2"><strong>NEUROTICISM</strong></p> -->
+                    <!-- <p>Neuroticism describes a person’s tendency to experience negative emotions, including fear, sadness, anxiety, guilt, and shame. While everyone experiences these emotions from time to time, some people are more prone to them than others. High Neuroticism scorers are more likely to react to a situation with fear, anger, sadness, and the like. Low Neuroticism scorers are more likely to brush off their misfortune and move on.</p> -->
                     <div class="skillbar-wrapper">
                         <div class="skillbar clearfix javascript" data-percent="{{ $averageArr['Neuroticism'] }}%">
                             <h4 class="skillbar-title"><span>NTM</span></h4>
@@ -128,8 +128,8 @@
                         </div>
                     </div>
 
-                    <p class="pt-2"><strong>CONSCIENTIOUSNESS</strong></p>
-                    <p>Conscientiousness describes a person’s ability to exercise self-discipline and control in order to pursue their goals. High scorers are organized and determined, and are able to forego immediate gratification for the sake of long-term achievement. Low scorers are impulsive and easily sidetracked.</p>
+                    <!-- <p class="pt-2"><strong>CONSCIENTIOUSNESS</strong></p> -->
+                    <!-- <p>Conscientiousness describes a person’s ability to exercise self-discipline and control in order to pursue their goals. High scorers are organized and determined, and are able to forego immediate gratification for the sake of long-term achievement. Low scorers are impulsive and easily sidetracked.</p> -->
                     <div class="skillbar-wrapper">
                         <div class="skillbar clearfix jquery" data-percent="{{ $averageArr['Conscientiousness'] }}%">
                             <h4 class="skillbar-title"><span>CSC</span></h4>
@@ -138,8 +138,8 @@
                         </div>
                     </div>
 
-                    <p class="pt-2"><strong>OPENNESS</strong></p>
-                    <p>Openness describes a person’s tendency to think in abstract, complex ways. High scorers tend to be creative, adventurous, and intellectual. They enjoy playing with ideas and discovering novel experiences. Low scorers tend to be practical, conventional, and focused on the concrete. They tend to avoid the unknown and follow traditional ways.</p>
+                    <!-- <p class="pt-2"><strong>OPENNESS</strong></p> -->
+                    <!-- <p>Openness describes a person’s tendency to think in abstract, complex ways. High scorers tend to be creative, adventurous, and intellectual. They enjoy playing with ideas and discovering novel experiences. Low scorers tend to be practical, conventional, and focused on the concrete. They tend to avoid the unknown and follow traditional ways.</p> -->
                     <div class="skillbar-wrapper">
                         <div class="skillbar clearfix php" data-percent="{{ $averageArr['Openness'] }}%">
                             <h4 class="skillbar-title"><span>OPN</span></h4>
