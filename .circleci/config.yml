@@ -24,7 +24,6 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-      - run: sudo docker-php-ext-install bcmath && sudo docker-php-ext-enable bcmath
       
       - heroku/install
       - heroku/deploy-via-git:
