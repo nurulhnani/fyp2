@@ -107,8 +107,13 @@
                                     </div>
                             </div>
                         </div>
-                        <div class="text-right py-4">
-                            <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                        <div class="row">
+                            <div class="col text-left py-4">
+                                <a class="btn btn-secondary" href="{{ route('merits.main') }}">Cancel</a>
+                            </div>
+                            <div class="col text-right py-4">
+                                <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                            </div>
                         </div>
                         </form>
                     </div>

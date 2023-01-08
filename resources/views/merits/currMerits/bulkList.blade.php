@@ -51,7 +51,7 @@
                                     <div class="form-group col-md-4">
                                         <label for="inputCity">Level</label>
                                         <select id="inputState" class="form-control" name="level">
-                                            <option selected>Choose...</option>
+                                            <option value="" selected disabled hidden>Choose...</option>
                                             <option value="School">School</option>
                                             <option value="District">District</option>
                                             <option value="National">National</option>
@@ -137,13 +137,14 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                            <?php $index2++; ?>
+                                                <?php $index2++; ?>
                                                 @endforeach
                                                 @endif
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="text-right py-4">
+                                    <a class="btn btn-secondary" href="{{ route('behaMerits.bulk') }}">Cancel</a>
                                     <button type="submit" class="btn btn-primary ml-auto">Submit</button>
                                 </div>
                             </form>

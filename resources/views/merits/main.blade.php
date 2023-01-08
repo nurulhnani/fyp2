@@ -46,9 +46,7 @@
                         <div class="text-center">
                             <button type="submit" data-toggle="modal" data-target="#behaModal" class="btn btn-primary mt-4"><span class="btn-inner--icon"><i class="ni ni-single-02"></i></span> {{ __('Single Student') }}</button>
 
-                            <!-- <a href="{{ route('behaMerits.bulk') }}"><button class="btn btn-default mt-4">{{ __('Multiple Students') }}</button></a> -->
-                            <button class="btn btn-default mt-4">{{ __('Multiple Students') }}</button>
-
+                            <a href="{{ route('behaMerits.bulk') }}"><button class="btn btn-default mt-4">{{ __('Multiple Students') }}</button></a>
                         </div>
                 </div>
             </div>

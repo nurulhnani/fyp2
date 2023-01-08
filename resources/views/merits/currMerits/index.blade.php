@@ -34,22 +34,13 @@
             <div class="col-8">
               <h3 class="mb-0">Curriculum Transcript</h3>
             </div>
-
-            <!-- @if(session()->has('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ session('status') }}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            @endif -->
-
             <div class="col-4 text-right">
               <button type="submit" data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-primary">Add merit</button>
             </div>
           </div>
         </div>
         <!-- Table -->
+        @if($merits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -94,6 +85,9 @@
               </tr>
               @include('merits/currMerits.modal')
               @endforeach
+              @else
+              <h4 class="card-body"><i>No result found.</i></h4>
+              @endif
             </tbody>
           </table>
         </div>
@@ -103,6 +97,76 @@
   @include('layouts.footers.auth')
 </div>
 @endsection
+
+<!-- Add Merit Modal -->
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card bg-secondary border-0 mb-0">
+          <div class="card-header bg-transparent">
+            <div class="text-muted text-center mt-2 mb-3">Merit Details</div>
+          </div>
+          <div class="card-body px-lg-5 py-lg-4">
+            <form method="post" action="{{ route('merits.store') }}" autocomplete="off">
+              @csrf
+              <input type="hidden" name="type" value="c">
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Name</label>
+                  <input type="text" class="form-control" id="inputEmail4" value="{{ $student->name }}" readonly="true">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">NRIC/MyKid</label>
+                  <input type="text" class="form-control" id="inputPassword4" name="student_mykid" value="{{ $student->mykid }}" readonly="true">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Activity</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="inputAddress2">Description</label>
+                <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCity">Level</label>
+                  <select id="inputState" class="form-control" name="level">
+                    <option selected>Choose...</option>
+                    <option value="School">School</option>
+                    <option value="District">District</option>
+                    <option value="National">National</option>
+                    <option value="International">International</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="inputState">Achievement</label>
+                  <select id="inputState" class="form-control" name="achievement">
+                    <option selected>Choose...</option>
+                    <option value="Participant">Participant</option>
+                    <option value="Runner Ups">Runner Ups</option>
+                    <option value="Committee Member">Committee Member</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip">
+                </div>
+
+              </div>
+              <div class="modal-footer nopadding">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @push('js')
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>

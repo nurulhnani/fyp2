@@ -66,7 +66,7 @@ class MeritsTableSeeder extends Seeder
             ]
 
         ];
-        DB::table('merits')->insert($merits);
+        // DB::table('merits')->insert($merits);
         // $faker = Faker::create();
     	// foreach (range(1,10) as $index) {
         //     DB::table('merits')->insert([

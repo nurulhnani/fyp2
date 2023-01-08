@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('level');
             $table->integer('merit_point');
-            $table->string('achievement');
-            $table->string('desc');
+            $table->string('achievement')->nullable();
+            $table->string('desc')->nullable();
             $table->date('date');
             $table->string('student_mykid');
             $table->timestamps();

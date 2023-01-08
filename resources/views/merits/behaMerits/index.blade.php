@@ -35,11 +35,12 @@
               <h3 class="mb-0">Merit Records</h3>
             </div>
             <div class="col-4 text-right">
-              <button type="submit" data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-primary">Add merit</button>
+              <button type="submit" data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-success">Add merit</button>
             </div>
           </div>
         </div>
         <!-- Table -->
+        @if($merits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -53,7 +54,6 @@
             </thead>
             <tbody class="list">
               @foreach ($merits as $merit)
-              @if($merit->merit_point>0)
               <tr>
                 <th scope="row">
                   {{ $merit->merit_name }}
@@ -79,9 +79,11 @@
                   </div>
                 </td>
               </tr>
-              @endif
               @include('merits/behaMerits.modal')
               @endforeach
+              @else
+              <h4 class="card-body"><i>No result found.</i></h4>
+              @endif
             </tbody>
           </table>
         </div>
@@ -99,25 +101,26 @@
               <h3 class="mb-0">Demerit Records</h3>
             </div>
             <div class="col-4 text-right">
-              <button type="submit" data-toggle="modal" data-target="#add-demerit-modal" class="btn btn-sm btn-danger">Add demerit</button>
+              <button type="submit" data-toggle="modal" data-target="#add-demerit-modal" class="btn btn-sm btn-warning">Add demerit</button>
             </div>
           </div>
         </div>
         <!-- Table -->
+        @if($demerits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
                 <th scope="col" class="sort" data-sort="name">ACTIVITY</th>
                 <th scope="col" class="sort" data-sort="budget">CATEGORY</th>
-                <th scope="col">MERIT</th>
+                <th scope="col">DEMERIT</th>
                 <th scope="col" class="sort" data-sort="completion">DATE</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody class="list">
-              @foreach ($merits as $merit)
-              @if($merit->merit_point<=0) <tr>
+              @foreach ($demerits as $merit)
+              <tr>
                 <th scope="row">
                   {{ $merit->merit_name }}
                 </th>
@@ -141,19 +144,148 @@
                     </div>
                   </div>
                 </td>
-                </tr>
-                @endif
-                @include('merits/behaMerits.modal')
-                @endforeach
+              </tr>
+              @include('merits/behaMerits.modal')
+              @endforeach
+              @else
+              <h4 class="card-body"><i>No result found.</i></h4>
+              @endif
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <div class="float-right mt-3">
+        <a class="btn btn-secondary" href="{{ route('merits.main') }}">Finish Review</a>
+      </div>
+    </div>
+  </div>
   @include('layouts.footers.auth')
 </div>
 @endsection
+
+<!-- Add Merit Modal -->
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card bg-secondary border-0 mb-0">
+          <div class="card-header bg-transparent">
+            <div class="text-muted text-center mt-2 mb-3">Merit Details</div>
+          </div>
+          <div class="card-body px-lg-5 py-lg-4">
+            <form method="post" action="{{ route('behaMerits.store') }}" autocomplete="off">
+              @csrf
+              <input type="hidden" name="type" value="b">
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Name</label>
+                  <input type="text" class="form-control" id="inputEmail4" value="{{ $student->name }}" readonly="true">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">NRIC/MyKid</label>
+                  <input type="text" class="form-control" id="inputPassword4" name="student_mykid" value="{{ $student->mykid }}" readonly="true">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Event</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="inputAddress2">Description</label>
+                <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="inputCity">Level</label>
+                  <select id="inputState" class="form-control" name="level">
+                    <option value="" selected disabled hidden>Choose...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip">
+                </div>
+
+              </div>
+              <div class="modal-footer nopadding">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Demerit Modal -->
+<div class="modal fade" id="add-demerit-modal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card bg-secondary border-0 mb-0">
+          <div class="card-header bg-transparent">
+            <div class="text-muted text-center mt-2 mb-3">Merit Details</div>
+          </div>
+          <div class="card-body px-lg-5 py-lg-4">
+            <form method="post" action="{{ route('behaMerits.store') }}" autocomplete="off">
+              @csrf
+              <input type="hidden" name="type" value="b">
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4">Name</label>
+                  <input type="text" class="form-control" id="inputEmail4" value="{{ $student->name }}" readonly="true">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputPassword4">NRIC/MyKid</label>
+                  <input type="text" class="form-control" id="inputPassword4" name="student_mykid" value="{{ $student->mykid }}" readonly="true">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Event</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="inputAddress2">Description</label>
+                <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="inputCity">Level</label>
+                  <select id="inputState" class="form-control" name="level">
+                    <option value="" selected disabled hidden>Choose...</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip">
+                </div>
+
+              </div>
+              <div class="modal-footer nopadding">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button name="demerit" type="submit" class="btn btn-primary ml-auto">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @push('js')
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>

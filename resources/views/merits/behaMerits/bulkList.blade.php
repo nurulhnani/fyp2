@@ -43,26 +43,40 @@
                                     <label for="inputAddress">Activity</label>
                                     <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-sm-1">
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input name="meritCheck" value="merit" class="custom-control-input" id="customRadio1" type="radio">
+                                            <label class="custom-control-label" for="customRadio1">Merit</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input name="meritCheck" value="demerit" class="custom-control-input" id="customRadio2" type="radio">
+                                            <label class="custom-control-label" for="customRadio2">Demerit</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputAddress2">Description</label>
                                     <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
                                 </div>
                                 <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputCity">Level</label>
-                                    <select id="inputState" class="form-control" name="level">
-                                        <option selected>Choose...</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputZip">Date</label>
-                                    <input name="date" type="date" class="form-control" id="inputZip">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">Level</label>
+                                        <select id="inputState" class="form-control" name="level">
+                                        <option value="" selected disabled hidden>Choose...</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputZip">Date</label>
+                                        <input name="date" type="date" class="form-control" id="inputZip">
+                                    </div>
 
-                            </div>
+                                </div>
 
                                 <!-- Light table -->
                                 <label for="inputState">Student List</label>
@@ -127,13 +141,14 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                            <?php $index2++; ?>
+                                                <?php $index2++; ?>
                                                 @endforeach
                                                 @endif
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="text-right py-4">
+                                    <a class="btn btn-secondary" href="{{ route('behaMerits.bulk') }}">Cancel</a>
                                     <button type="submit" class="btn btn-primary ml-auto">Submit</button>
                                 </div>
                             </form>
