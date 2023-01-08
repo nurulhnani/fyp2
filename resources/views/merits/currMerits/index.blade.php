@@ -35,7 +35,7 @@
               <h3 class="mb-0">Curriculum Transcript</h3>
             </div>
             <div class="col-4 text-right">
-              <button type="submit" data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-primary">Add merit</button>
+              <button type="submit" data-toggle="modal" data-target="#add-modal" class="btn btn-sm btn-success">Add merit</button>
             </div>
           </div>
         </div>
@@ -91,6 +91,13 @@
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="float-right mt-3">
+        <a class="btn btn-secondary" href="{{ route('merits.main') }}">Finish Review</a>
       </div>
     </div>
   </div>
