@@ -18,8 +18,8 @@ class LoginCountTableSeeder extends Seeder
         $logins = [
             [
                 'user_id'=>'4',
-                'created_at'=> '2022-10-23 16:09:24',
-                'updated_at'=>'2022-10-23 16:09:24'
+                'created_at'=> '2021-10-23 16:09:24',
+                'updated_at'=>'2021-10-23 16:09:24'
             ],[
                 'user_id'=>'4',
                 'created_at'=> '2022-11-23 16:09:24',

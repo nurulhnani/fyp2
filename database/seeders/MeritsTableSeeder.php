@@ -67,20 +67,20 @@ class MeritsTableSeeder extends Seeder
 
         ];
         // DB::table('merits')->insert($merits);
-        // $faker = Faker::create();
-    	// foreach (range(1,10) as $index) {
-        //     DB::table('merits')->insert([
-        //         'type' => $faker->randomElement(['b', 'c']),
-        //         'merit_point' => $faker->numberBetween(-30, 30),
-        //         'student_mykid' => $faker->randomElement(['000729141107', '000505111103','MH12123']),
-        //         'merit_name' => $faker->name,
-        //         'level' => $faker->randomElement(['Medium', 'High', 'Low']),
-        //         'achievement' => '-',
-        //         'desc' => $faker->text,
-        //         'date' => now(),
-        //         'created_at' => now(),
-        //         'updated_at' => now()
-        //     ]);
-        // }
+        $faker = Faker::create();
+    	foreach (range(1,10) as $index) {
+            DB::table('merits')->insert([
+                'type' => $faker->randomElement(['b', 'c']),
+                'merit_point' => $faker->numberBetween(-30, 30),
+                'student_mykid' => $faker->randomElement(['000729141107', '000505111103','MH12123']),
+                'merit_name' => $faker->name,
+                'level' => $faker->randomElement(['Medium', 'High', 'Low']),
+                'achievement' => '-',
+                'desc' => $faker->text,
+                'date' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
     }
 }

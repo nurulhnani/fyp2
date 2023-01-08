@@ -7,16 +7,17 @@ use App\Models\Merit;
 use App\Models\Student;
 use App\Models\Classlist;
 use App\Models\AutoFields;
+use App\Models\LoginCount;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
+use App\Models\Profile_Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Personality_Evaluation;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interest_Inventory_Results;
-use App\Models\Personality_Evaluation;
-use App\Models\Profile_Request;
 
 class StudentController extends Controller
 {
@@ -145,22 +146,30 @@ class StudentController extends Controller
 
     public function dashboard(Request $request, $id)
     {
+        $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
+        $allyear = []; 
+        foreach ($getYear as $record) {
+            if (!in_array($record->year, $allyear)) {
+                $years[] = $record->year;
+            }
+        }
+        
         ////////////////// PERSONALITY EVAL ALL YEAR/////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
-            ->where('student_mykid', '=', $student_mykid)
-            ->groupBy('year')
-            ->get();
+        // $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
+        //     ->where('student_mykid', '=', $student_mykid)
+        //     ->groupBy('year')
+        //     ->get();
 
 
-        $years = []; //get all year
-        foreach ($getYear as $record) {
-            if (!in_array($record->year, $years)) {
-                $years[] = $record->year;
-            }
-        }
+        // $years = []; 
+        // foreach ($getYear as $record) {
+        //     if (!in_array($record->year, $years)) {
+        //         $years[] = $record->year;
+        //     }
+        // }
 
         if (isset($request->year)) {
             $yearfilter = [];
@@ -196,12 +205,12 @@ class StudentController extends Controller
                 ->get();
 
 
-            $years = []; //get all year
-            foreach ($getYear as $record) {
-                if (!in_array($record->year, $years)) {
-                    $years[] = $record->year;
-                }
-            }
+            // $years = []; //get all year
+            // foreach ($getYear as $record) {
+            //     if (!in_array($record->year, $years)) {
+            //         $years[] = $record->year;
+            //     }
+            // }
 
             $i = 0;
             foreach ($years as $year) {

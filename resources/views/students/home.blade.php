@@ -380,12 +380,27 @@
         <div class="row mt-3">     
             <div class="col-xl-12 mb-xl-0">
                 <div class="card bg-white">
+                    <div class="card-header bg-white pb-1">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                @if($yearfilter != null)
+                                <?php 
+                                $newyear = ""; 
+                                $newyear = implode(",",$yearfilter);
+                                ?>
+                                <h5 class="card-category">{{$newyear}}</h5>
+                                @else
+                                <h5 class="card-category">All year</h5>
+                                @endif
+
+                                <h3 class="card-category">Interest Inventory Evaluation</h3>
+                            </div>
+                            
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div style="height: 80pt">
-                            <div class="col">
-                                <h5 class="card-category pt-0">Interest Inventory Evaluation</h5>
-                                <h3 class="card-category">No result found</h3>
-                            </div>
+                        <h4 class="card-category">No result found</h4>
                         </div>
                     </div>
                 </div>

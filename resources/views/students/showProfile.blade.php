@@ -36,8 +36,8 @@
                                 <h3 class="mb-0">{{$student->name}}</h3>
                             </div>
                             <div class="col-sm-2 text-right">
-                                {{-- <a id="btn-print" class="btn btn-sm btn-primary" >Export Profile</a> --}}
-                                <a class="btn btn-sm btn-primary" href="{{ route('generatePDF',$student->id)}}">Export Profile</a>
+                                <a id="btn-print" class="btn btn-sm btn-primary" >Export Profile</a>
+                                {{-- <a class="btn btn-sm btn-primary" href="{{ route('generatePDF',$student->id)}}">Export Profile</a> --}}
                                 {{-- href="{{ route('generatePDF',$student->id) }} --}}
                             </div>
                             </div>
@@ -494,16 +494,161 @@
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
 @endpush --}}
 
+<style scoped lang="css">
+    .sub-heading{
+        text-align: center;
+        padding: 2px;
+        position: relative;
+        width: 70%;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    .page-break{
+        page-break-after: always;
+    }
+    
+    .result-heading {
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .summary {
+        padding: 30px;
+        border-radius: 20px;
+        border: 2px solid rgb(94, 94, 94);
+        width: 50%;
+        margin-bottom: 50px;
+    }
+    
+    .gd-score{
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .all-domain {
+        border-radius: 20px;
+        margin-bottom: 40px;
+        width: 80%
+    }
+    
+    .score{
+        text-align: center;
+        font-weight: bold;
+        font-size: 90px;
+        margin: 0px;
+        color: rgb(189, 189, 189);
+    }
+    
+    .gd{
+        color: rgb(56, 56, 56);
+    }
+    
+    .button-footer{
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .return-button{
+        margin: 10px;
+        background-color: #33b76e;
+        padding: 6px 12px;
+        border: #33b76e;
+        color: white;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    
+    .request-button{
+        margin: 10px;
+        background-color:#2e6da4;
+        padding: 6px 12px;
+        border: #2e6da4;
+        color: white;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    
+    .hBM{
+      font-style: italic;
+      font-size: 20px;
+      color: dimgrey;
+      text-align: center;
+    }
+    
+    .bm{
+      font-style: italic;
+      font-size: small;
+      color: dimgrey;
+      text-align: center;
+    }
+    @media print{
+        .button-footer{
+            display: none;
+        }
+        #sec-page{
+            margin-top: 2cm;
+        }
+        #no-show {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .summary {
+            padding: 20px 20px 50px 20px;
+            border-radius: 20px;
+            margin-bottom: 50px;
+            width: 90%;
+        }
+        .all-domain{
+            width: 100%;
+        }
+    }
+    @media (max-width: 1012px) {
+        .all-domain{
+            width: 100%;;
+        }
+        .score {
+            font-size: 40px;
+        }
+        .summary{
+            padding: 20px
+        }
+        .gd-score{
+            font-size: 30px;
+        }
+    }
+    @media (max-width: 450px) {
+        .all-domain{
+            width: 100%
+        }
+        .score {
+            font-size: 40px;
+        }
+        .summary{
+            padding: 20px
+        }
+        .gd-score{
+            font-size: 20px;
+        }
+    }
+    
+    </style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#btn-print').addEventListener('click', function () {
-            html2canvas(document.querySelector('#main-content')).then((canvas) => {
-			let base64image = canvas.toDataURL('image/png');
-			// console.log(base64image);
-			let pdf = new jsPDF();
-			pdf.addImage(base64image, 'PNG', 0, 0, 180, 500);
-			pdf.save('webtylepress-two.pdf');
-		    });
+            // html2canvas(document.querySelector('#main-content')).then((canvas) => {
+			// let base64image = canvas.toDataURL('image/png');
+			// let pdf = new jsPDF();
+			// pdf.addImage(base64image, 'PNG', 0, 0, 180, 500);
+			// pdf.save('webtylepress-two.pdf');
+		    // });
+            document.title='Profile.pdf';
+            window.print();
 	    });
     })
 </script>
