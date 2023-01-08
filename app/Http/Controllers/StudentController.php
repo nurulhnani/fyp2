@@ -188,6 +188,7 @@ class StudentController extends Controller
 
             // dd($averageArr);
         } else {
+            $averageArr = null;
             $categoryArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
             $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
                 ->where('student_mykid', '=', $student_mykid)
