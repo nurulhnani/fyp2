@@ -70,6 +70,7 @@
             <div class="card bg-secondary shadow">
 
                 <div class="card-body">
+                    @if(isset($req))
                     @if($req->status == 'Pending')
                     <div class="alert alert-default alert-dismissible fade show" role="alert">
                         <span class="alert-text">Your latest profile updates made at {{$req->created_at->toDateString()}} is still in pending for Admin approval</span>
@@ -91,6 +92,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    @endif
                     @endif
 
 

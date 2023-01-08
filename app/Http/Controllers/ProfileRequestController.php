@@ -25,7 +25,6 @@ class ProfileRequestController extends Controller
     public function storeApproval(Request $request, $id)
     {
         $profileReq = Profile_Request::findOrFail($id); //throw exception if not found
-        // $profile = Student::where('mykid', '=', $profileReq->student_mykid);
         $profile = Student::findOrFail($profileReq->student->id);
 
         if ($request->has('decline')) {
@@ -61,8 +60,12 @@ class ProfileRequestController extends Controller
         $profileReqArr['status'] = 'Pending';
         $profileReqArr['student_mykid'] = auth()->user()->nric_mykid;
 
-        Profile_Request::create($profileReqArr);
-        return redirect()->route('viewstudentprofile')->with('success', 'You have been successfully updated your profile! Please wait for the admin approval');
+        // dd($profileReqArr);
+        if(!empty(json_decode($profileReqArr['changes'], 1))){
+            Profile_Request::create($profileReqArr);
+            return redirect()->route('viewstudentprofile')->with('success', 'You have been successfully updated your profile! Please wait for the admin approval');
+        }
+        return redirect()->route('viewstudentprofile');
     }
 
     public function isSameAs($profile, $category)
