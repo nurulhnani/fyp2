@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //add this
+        Schema::defaultStringLength(191);
     }
 
     /**
