@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interest_Inventory_Results;
 use App\Models\Personality_Evaluation;
+use App\Models\Profile_Request;
 
 class StudentController extends Controller
 {
@@ -517,8 +518,16 @@ class StudentController extends Controller
         $studentname = auth()->user()->name;
         $studentid = Student::where('name', $studentname)->first()->id;
         $student = Student::find($studentid);
-        // dd($studentid);
-        return view('students.viewprofile')->with('student', $student, 'customfield', $customfield);
+        $req = Profile_Request::where('student_mykid', '=', auth()->user()->nric_mykid)->orderBy('created_at', 'desc')->first();
+
+        return view('students.viewprofile', compact('student', 'customfield', 'req'));
+    }
+
+   /* Student Route */
+    public function updateprofile()
+    {
+        $student = Student::where('mykid', '=', auth()->user()->nric_mykid)->first();
+        return view('students.updateProfile')->with('student', $student);
     }
 
     /**

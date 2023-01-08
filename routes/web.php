@@ -76,6 +76,10 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::delete('/deletequestion/{id}',[App\Http\Controllers\InterestInventoryController::class, 'deletequestion'])->name('deletequestion');
 	Route::get('download-student-file', [App\Http\Controllers\AdminController::class, 'downloadstudentfile'])->name('downloadstudentfile');
 	Route::get('download-teacher-file', [App\Http\Controllers\AdminController::class, 'downloadteacherfile'])->name('downloadteacherfile');
+	Route::get('/manageProfileRequest',[App\Http\Controllers\ProfileRequestController::class, 'index'])->name('manageProfileRequest');
+	Route::post('/manageProfileRequest/{id}',[App\Http\Controllers\ProfileRequestController::class, 'storeApproval'])->name('storeApproval');
+
+
 
 });
 
@@ -90,6 +94,8 @@ Route::middleware(['auth', 'user-access:student'])->group(function () {
 	// Route::get('/InterestInventoryResult/{id}',[App\Http\Controllers\StudentController::class, 'showResultforStudent'])->name('showResultforStudent');
 	Route::get('/dashboard/{id}',[App\Http\Controllers\StudentController::class, 'dashboard'])->name('studenthome');
 	Route::get('/studentprofile',[App\Http\Controllers\StudentController::class, 'viewprofile'])->name('viewstudentprofile');
+	Route::get('/studentprofile/edit',[App\Http\Controllers\StudentController::class, 'updateprofile'])->name('updatestudentprofile');
+	Route::post('/studentprofile/edit',[App\Http\Controllers\ProfileRequestController::class, 'storeRequest'])->name('storeRequest');
 	Route::get('/studentProfile-export/{id}',[App\Http\Controllers\PDFController::class, 'showExportForm'])->name('studentProfile-export');
 	Route::post('/student-profile/{id}',[App\Http\Controllers\PDFController::class, 'showStudentProfile'])->name('showProfile');
 	Route::get('/generatePDF/{id}',[App\Http\Controllers\PDFController::class, 'generatePDF'])->name('generatePDF');

@@ -177,11 +177,6 @@
                                     {{ __('Export Profile') }}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('students.index') }}">
-                                    {{ __('Request Update Profile') }}
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 {{-- <li class="nav-item">

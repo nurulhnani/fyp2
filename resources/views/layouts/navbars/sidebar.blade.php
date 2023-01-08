@@ -200,6 +200,11 @@
                                     {{ __('Custom Field Config') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('manageProfileRequest') }}">
+                                    {{ __('Profile Requests') }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 {{-- <li class="nav-item">
