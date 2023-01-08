@@ -14,7 +14,10 @@ jobs:
             - v1-dependencies-{{ checksum "composer.json" }}
       - run:
           name: "Install Dependencies"
-          command: composer install --ignore-platform-reqs
+          command: | 
+            composer install --ignore-platform-reqs
+            composer update --ignore-platform-reqs
+
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
