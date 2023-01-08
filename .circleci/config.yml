@@ -15,8 +15,9 @@ jobs:
       - run:
           name: "Install Dependencies"
           command: | 
+            sudo rm -rf vendor/
+            sudo rm composer.lock
             composer install --ignore-platform-reqs
-            composer update --ignore-platform-reqs
 
 
       - save_cache:
