@@ -15,21 +15,21 @@ class HealthTableSeeder extends Seeder
      */
     public function run()
     {
-        $healths = [
-            [
-                'student_id'=>'1',
-                'height'=>'138cm',
-                'weight'=>'38kg',
-                'health_history'=>'Asthma,Back Injuries',
-                'description'=>null,
-                'medication_allergies'=>null,
-                'medications_now_taking'=>null,
-                'chicken_pox'=>'Had, Immunized',
-                'measles'=>null,
-                'mumps'=>null,
-                'present_health'=>'Good'
-            ],
-        ];
-        DB::table('healths')->insert($healths);
+        // $healths = [
+        //     [
+        //         'student_id'=>'1',
+        //         'height'=>'138cm',
+        //         'weight'=>'38kg',
+        //         'health_history'=>'Asthma,Back Injuries',
+        //         'description'=>null,
+        //         'medication_allergies'=>null,
+        //         'medications_now_taking'=>null,
+        //         'chicken_pox'=>'Had, Immunized',
+        //         'measles'=>null,
+        //         'mumps'=>null,
+        //         'present_health'=>'Good'
+        //     ],
+        // ];
+        // DB::table('healths')->insert($healths);
     }
 }

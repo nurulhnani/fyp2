@@ -15,16 +15,16 @@ class SubjectDetailsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('subject_details')->insert(
-            [
-                'subject_id'=> '1',
-                'classlist_id'=> '1',
-                'teacher_id'=> '1'
-            ],[
-                'subject_id'=> '2',
-                'classlist_id'=> '2',
-                'teacher_id'=> '2'
-            ]
-        );
+        // DB::table('subject_details')->insert(
+        //     [
+        //         'subject_id'=> '1',
+        //         'classlist_id'=> '1',
+        //         'teacher_id'=> '1'
+        //     ],[
+        //         'subject_id'=> '2',
+        //         'classlist_id'=> '2',
+        //         'teacher_id'=> '2'
+        //     ]
+        // );
     }
 }
