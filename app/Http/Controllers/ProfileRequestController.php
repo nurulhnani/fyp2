@@ -12,6 +12,7 @@ class ProfileRequestController extends Controller
     public function index()
     {
         $requests = Profile_Request::orderBy('updated_at', 'desc')->get();
+        $student_array = null;
         foreach ($requests as $request) {
             foreach (json_decode($request->changes) as $category => $val) {
                 $student_array[$request->student_mykid][$category] = Student::where('mykid', '=', $request->student_mykid)
