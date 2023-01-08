@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('question');
             $table->string('type');
-            $table->json('ans_choices')->nullable();
+            $table->longText('ans_choices')->nullable();
         });
     }
 

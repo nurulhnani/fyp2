@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('profile_requests', function (Blueprint $table) {
             $table->id();
-            $table->json('changes');
+            $table->longText('changes');
             // $table->string('address')->nullable();
             // $table->string('G1_name')->nullable();
             // $table->string('G1_relation')->nullable();
