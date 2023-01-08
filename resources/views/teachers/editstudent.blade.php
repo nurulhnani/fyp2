@@ -264,8 +264,13 @@
                             @endif
 
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
+                        <div class="row py-3">
+                            <div class="col text-left">
+                                <a class="btn btn-secondary" href="{{ route('studentlist') }}">Back</a>
+                            </div>
+                            <div class="col text-right">
+                                <button type="submit" class="btn btn-success">{{ __('Update') }}</button>
+                            </div>
                         </div>
 
                     </div>

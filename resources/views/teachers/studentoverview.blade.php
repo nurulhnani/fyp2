@@ -505,14 +505,12 @@
 
                 {{-- Behavioural Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                    @if(isset($behaMerits))
                     <div class=row>
                         <div class="col">
                             <h5 class="h3 card-category">Behavioural Merit and Demerit Transcript</h5>
                         </div>
                     </div>
                     <h5 class="float-right"> Total Merits Accumulated: <?php echo $behaMerits->sum('merit_point'); ?></h5>
-
                     <!-- Card header -->
                     <div class="card mt-5">
                         <div class="card-header border-0">
@@ -534,28 +532,28 @@
                                 </thead>
                                 <tbody class="list">
                                     @foreach ($behaMerits as $merit)
-                                    @if($merit->merit_point>0)
-                                    <tr>
-                                        <th scope="row">
-                                            {{ $merit->merit_name }}
-                                        </th>
-                                        <td class="budget">
-                                            {{ $merit->level }}
-                                        </td>
-                                        <td>
-                                            {{ $merit->merit_point }}
-                                        </td>
-                                        <td>
-                                            {{ $merit->date }}
-                                        </td>
+                                    <th scope="row">
+                                        {{ $merit->merit_name }}
+                                    </th>
+                                    <td class="budget">
+                                        {{ $merit->level }}
+                                    </td>
+                                    <td>
+                                        {{ $merit->merit_point }}
+                                    </td>
+                                    <td>
+                                        {{ $merit->date }}
+                                    </td>
                                     </tr>
-                                    @endif
                                     @endforeach
+
                                 </tbody>
                             </table>
+                            @if(isset($behaLatestDate))
+                            <p class="btn-secondary h5 card-text text-right pt-3">Latest Record Updated at: {{ $behaLatestDate->created_at->toDateString() }}</p>
+                            @endif
                         </div>
                     </div>
-
                     <!-- Card header -->
                     <div class="card mt-5">
                         <div class="card-header border-0">
@@ -571,13 +569,12 @@
                                     <tr>
                                         <th scope="col" class="sort" data-sort="name">ACTIVITY</th>
                                         <th scope="col" class="sort" data-sort="budget">CATEGORY</th>
-                                        <th scope="col">MERIT</th>
+                                        <th scope="col">DEMERIT</th>
                                         <th scope="col" class="sort" data-sort="completion">DATE</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list">
-                                    @foreach ($behaMerits as $merit)
-                                    @if($merit->merit_point<=0)
+                                    @foreach ($behaDemerits as $merit)
                                     <tr>
                                         <th scope="row">
                                             {{ $merit->merit_name }}
@@ -592,24 +589,26 @@
                                             {{ $merit->date }}
                                         </td>
                                     </tr>
-                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
+                            @if(isset($behaLatestDate))
                             <p class="btn-secondary h5 card-text text-right pt-3">Latest Record Updated at: {{ $behaLatestDate->created_at->toDateString() }}</p>
-
+                            @endif
                         </div>
                     </div>
-                    @else
-                    <h4>No result found for {{$student->name}}.</h4>
-                    @endif
 
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col text-left py-4">
+            <a class="btn btn-secondary" href="{{ route('studentlist') }}">Back</a>
+        </div>
+    </div>
     @include('layouts.footers.auth')
+
 </div>
 
 <style>

@@ -127,28 +127,32 @@ class StudentController extends Controller
         }
 
         //Behavioural Merit 
-        if (Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->exists()) {
-            $behaMerits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->get();
+        $behaMerits = Merit::where('student_mykid', '=', $student->mykid)
+            ->where('type', '=', 'b')
+            ->where('merit_point', '>', 0)
+            ->get();
 
-            $behaLatestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->latest()->first();
-        } else {
-            $behaMerits = null;
-            $behaLatestDate = null;
-        }
+        $behaDemerits = Merit::where('student_mykid', '=', $student->mykid)
+            ->where('type', '=', 'b')
+            ->where('merit_point', '<', 0)
+            ->get();
 
-        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaLatestDate'));
+        $behaLatestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->latest()->first();
+
+
+        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaDemerits', 'behaLatestDate'));
     }
 
-    public function dashboard(Request $request,$id)
+    public function dashboard(Request $request, $id)
     {
         ////////////////// PERSONALITY EVAL ALL YEAR/////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
         $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
-                            ->where('student_mykid', '=', $student_mykid)
-                            ->groupBy('year')
-                            ->get();
+            ->where('student_mykid', '=', $student_mykid)
+            ->groupBy('year')
+            ->get();
 
 
         $years = []; //get all year
@@ -157,8 +161,8 @@ class StudentController extends Controller
                 $years[] = $record->year;
             }
         }
- 
-        if(isset($request->year)){
+
+        if (isset($request->year)) {
             $yearfilter = [];
             foreach ($request->year as $filter) {
                 $yearfilter[] = (string)$filter;
@@ -167,28 +171,28 @@ class StudentController extends Controller
             $categoryArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
             foreach ($categoryArray as $category) {
                 $averageScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)
-                                ->when($request->year != null, function ($q) use ($request) {
-                                    $yearfilter = [];
-                                    foreach ($request->year as $filter) {
-                                        $yearfilter[] = (string)$filter;
-                                    }
-                                    return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
-                                    // dd($yearfilter);
-                                })
-                                ->avg($category);
-                                
+                    ->when($request->year != null, function ($q) use ($request) {
+                        $yearfilter = [];
+                        foreach ($request->year as $filter) {
+                            $yearfilter[] = (string)$filter;
+                        }
+                        return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
+                        // dd($yearfilter);
+                    })
+                    ->avg($category);
+
                 $averageArr[$category] = intval(round($averageScore));
                 $averagePerso[$category] = intval(round($averageScore));
             }
             $filter = "yes";
-            
+
             // dd($averageArr);
-        }else{
+        } else {
             $categoryArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
             $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
-                            ->where('student_mykid', '=', $student_mykid)
-                            ->groupBy('year')
-                            ->get();
+                ->where('student_mykid', '=', $student_mykid)
+                ->groupBy('year')
+                ->get();
 
 
             $years = []; //get all year
@@ -199,22 +203,22 @@ class StudentController extends Controller
             }
 
             $i = 0;
-            foreach ($years as $year) { 
-                foreach($categoryArray as $category){
-                    $personalityrec[$year][$category] = Personality_Evaluation::where(DB::raw('YEAR(created_at)'),'=',$year)
-                    ->where('student_mykid', '=', $student_mykid)
-                    ->avg($category);
-                }          
+            foreach ($years as $year) {
+                foreach ($categoryArray as $category) {
+                    $personalityrec[$year][$category] = Personality_Evaluation::where(DB::raw('YEAR(created_at)'), '=', $year)
+                        ->where('student_mykid', '=', $student_mykid)
+                        ->avg($category);
+                }
             }
-            foreach ($years as $year) { 
-                foreach($categoryArray as $category){
+            foreach ($years as $year) {
+                foreach ($categoryArray as $category) {
                     $averageArr[$year][$category] = intval(round($personalityrec[$year][$category]));
-                }          
+                }
             }
             $data = [];
-            foreach($years as $year){
-                $data[] = "'[".implode(',',$averageArr[$year])."]'";
-            } 
+            foreach ($years as $year) {
+                $data[] = "'[" . implode(',', $averageArr[$year]) . "]'";
+            }
             $filter = "no";
             $yearfilter = null;
 
@@ -223,14 +227,14 @@ class StudentController extends Controller
                 $averageScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
                 $averagePerso[$category] = intval(round($averageScore));
             }
-        }  
-        
-         ////////////////////// INTEREST INVENTORY ///////////////////////////
-         $student = Student::find($id);
-         $categoryInterest = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising","Conventional");
-         if(Interest_Inventory_Results::where('student_id',$id)->exists()){
+        }
 
-            if(isset($request->year)){
+        ////////////////////// INTEREST INVENTORY ///////////////////////////
+        $student = Student::find($id);
+        $categoryInterest = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional");
+        if (Interest_Inventory_Results::where('student_id', $id)->exists()) {
+
+            if (isset($request->year)) {
                 $yearfilter = [];
                 foreach ($request->year as $filter) {
                     $yearfilter[] = (string)$filter;
@@ -238,55 +242,53 @@ class StudentController extends Controller
 
                 foreach ($categoryInterest as $category) {
                     $averageScore = Interest_Inventory_Results::where('student_id', '=', $id)
-                                    ->when($request->year != null, function ($q) use ($request) {
-                                        $yearfilter = [];
-                                        foreach ($request->year as $filter) {
-                                            $yearfilter[] = (string)$filter;
-                                        }
-                                        return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
-                                        // dd($yearfilter);
-                                    })
-                                    ->avg($category);
-                                    
+                        ->when($request->year != null, function ($q) use ($request) {
+                            $yearfilter = [];
+                            foreach ($request->year as $filter) {
+                                $yearfilter[] = (string)$filter;
+                            }
+                            return $q->whereIn(DB::raw('YEAR(created_at)'), $yearfilter);
+                            // dd($yearfilter);
+                        })
+                        ->avg($category);
+
                     $averageInterest[$category] = intval(round($averageScore));
                 }
                 $filter = "yes";
-
-            }else{
+            } else {
                 foreach ($categoryInterest as $category) {
-                    $averageScore = Interest_Inventory_Results::where('student_id',$id)->avg($category);
+                    $averageScore = Interest_Inventory_Results::where('student_id', $id)->avg($category);
                     $averageInterest[$category] = intval(round($averageScore));
                 }
-                $filter = "no";         
+                $filter = "no";
             }
-             
-         }else{
-             $averageInterest = "No result found";
+        } else {
+            $averageInterest = "No result found";
             //  $teacherids = null;
-         }
-        
+        }
+
         // dd($years);
         ////////////////////////// COCU MERIT BY MONTH //////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
 
-        if(isset($request->year)){
-            $record1 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->when($request->year != null, function ($q) use ($request) {
-                $yearfilter = [];
-                foreach ($request->year as $filter) {
-                    $yearfilter[] = (string)$filter;
-                }
-                return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
-                // dd($yearfilter);
-            })
-            ->get();
+        if (isset($request->year)) {
+            $record1 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'c')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->when($request->year != null, function ($q) use ($request) {
+                    $yearfilter = [];
+                    foreach ($request->year as $filter) {
+                        $yearfilter[] = (string)$filter;
+                    }
+                    return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
+                    // dd($yearfilter);
+                })
+                ->get();
 
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_cocumerit = [];
             foreach ($allmonts as $test) {
 
@@ -304,15 +306,14 @@ class StudentController extends Controller
                 $data1['data'][] = (int)$row;
             }
             $data1['label'] = $allmonts;
+        } else {
+            $record1 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'c')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->get();
 
-        }else{
-            $record1 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->get();
-
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_cocumerit = [];
             foreach ($allmonts as $test) {
 
@@ -331,37 +332,37 @@ class StudentController extends Controller
             }
             $data1['label'] = $allmonts;
         }
-        
+
 
         ///////////////////// COCU MERIT ///////////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        $record4 = Merit::where('student_mykid','=',$student_mykid)
+        $record4 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'c')
-            ->select(DB::raw("COUNT(*) as count"),DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(date) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(date) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
-        
+
         ///////////////////// BEHAVIOUR MERIT BY MONTH /////////////////////////
 
-        if(isset($request->year)){
-            $record2 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'b')
-            ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->when($request->year != null, function ($q) use ($request) {
-                $yearfilter = [];
-                foreach ($request->year as $filter) {
-                    $yearfilter[] = (string)$filter;
-                }
-                return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
-                // dd($yearfilter);
-            })
-            ->get();
+        if (isset($request->year)) {
+            $record2 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'b')
+                ->where('merit_point', '>', '0')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->when($request->year != null, function ($q) use ($request) {
+                    $yearfilter = [];
+                    foreach ($request->year as $filter) {
+                        $yearfilter[] = (string)$filter;
+                    }
+                    return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
+                    // dd($yearfilter);
+                })
+                ->get();
 
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_behavmerit = [];
             foreach ($allmonts as $test) {
 
@@ -379,15 +380,15 @@ class StudentController extends Controller
                 $data2['data'][] = (int)$row;
             }
             $data2['label'] = $allmonts;
-        }else{
-            $record2 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'b')
-            ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->get();
+        } else {
+            $record2 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'b')
+                ->where('merit_point', '>', '0')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->get();
 
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_behavmerit = [];
             foreach ($allmonts as $test) {
 
@@ -405,36 +406,36 @@ class StudentController extends Controller
                 $data2['data'][] = (int)$row;
             }
             $data2['label'] = $allmonts;
-        }      
+        }
 
         ////////////////////// BEHAVIOUR MERIT //////////////////////////
 
-        $record5 = Merit::where('student_mykid','=',$student_mykid)
+        $record5 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '>', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(date) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(date) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
 
         /////////////////// BEHAVIOUR DEMERIT BY MONTH ///////////////////////
 
-        if(isset($request->year)){
-            $record3 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'b')
-            ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->when($request->year != null, function ($q) use ($request) {
-                $yearfilter = [];
-                foreach ($request->year as $filter) {
-                    $yearfilter[] = (string)$filter;
-                }
-                return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
-                // dd($yearfilter);
-            })
-            ->get();
+        if (isset($request->year)) {
+            $record3 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'b')
+                ->where('merit_point', '<', '0')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->when($request->year != null, function ($q) use ($request) {
+                    $yearfilter = [];
+                    foreach ($request->year as $filter) {
+                        $yearfilter[] = (string)$filter;
+                    }
+                    return $q->whereIn(DB::raw('YEAR(date)'), $yearfilter);
+                    // dd($yearfilter);
+                })
+                ->get();
 
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_behavdemerit = [];
             foreach ($allmonts as $test) {
 
@@ -452,16 +453,15 @@ class StudentController extends Controller
                 $data3['data'][] = (int)$row;
             }
             $data3['label'] = $allmonts;
+        } else {
+            $record3 = Merit::where('student_mykid', '=', $student_mykid)
+                ->where('type', '=', 'b')
+                ->where('merit_point', '<', '0')
+                ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"), DB::raw("MONTH(date) as month"))
+                ->groupBy('month')
+                ->get();
 
-        }else{
-            $record3 = Merit::where('student_mykid','=',$student_mykid)
-            ->where('type', '=', 'b')
-            ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("SUM(merit_point) as merit_point"),DB::raw("MONTH(date) as month"))
-            ->groupBy('month')
-            ->get();
-
-            $allmonts = ['1','2','3','4','5','6','7','8','9','10','11','12']; // get all month
+            $allmonts = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']; // get all month
             $count_behavdemerit = [];
             foreach ($allmonts as $test) {
 
@@ -483,34 +483,34 @@ class StudentController extends Controller
 
         /////////////////////// BEHAVIOUR DEMERIT /////////////////////////////
 
-        $record6 = Merit::where('student_mykid','=',$student_mykid)
+        $record6 = Merit::where('student_mykid', '=', $student_mykid)
             ->where('type', '=', 'b')
             ->where('merit_point', '<', '0')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"),DB::raw("YEAR(date) as year"))
-            ->groupBy('year','merit_name','merit_point')
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("merit_name as merit_name"), DB::raw("merit_point as merit_point"), DB::raw("YEAR(date) as year"))
+            ->groupBy('year', 'merit_name', 'merit_point')
             ->get();
 
-       
+
 
 
         // send data
         $data['student_cocumerit'] = json_encode($data1);
         $data['student_behaviourmerit'] = json_encode($data2);
         $data['student_behaviourdemerit'] = json_encode($data3);
-        $data['cocu_records']= $record4;
-        $data['behavmerit_records']= $record5;
-        $data['behavdemerit_records']= $record6;
+        $data['cocu_records'] = $record4;
+        $data['behavmerit_records'] = $record5;
+        $data['behavdemerit_records'] = $record6;
         $data['student'] = $student;
-        $data['averageArr']=$averageArr;
+        $data['averageArr'] = $averageArr;
         $data['averagePerso'] = $averagePerso;
-        $data['averageInterest']=$averageInterest;
+        $data['averageInterest'] = $averageInterest;
         // dd($data);
         $data['yearfilter'] = $yearfilter;
         $data['years'] = $years;
         $data['filter'] = $filter;
- 
 
-        return view('students.home',$data);
+
+        return view('students.home', $data);
     }
     public function viewprofile()
     {
@@ -523,7 +523,7 @@ class StudentController extends Controller
         return view('students.viewprofile', compact('student', 'customfield', 'req'));
     }
 
-   /* Student Route */
+    /* Student Route */
     public function updateprofile()
     {
         $student = Student::where('mykid', '=', auth()->user()->nric_mykid)->first();
@@ -727,8 +727,8 @@ class StudentController extends Controller
             $student->additional_Info = $additional;
         }
         $student->update();
-        
-        $user = User::where('name','=',$request->input('name'))->first();
+
+        $user = User::where('name', '=', $request->input('name'))->first();
         $user->name = $request->input('name');
         if ($request->hasFile('image')) {
             $user->image_path = $filename;
