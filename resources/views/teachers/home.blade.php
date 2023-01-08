@@ -76,9 +76,6 @@
                             <h5 class="card-category">Student Merits and Demerits</h5>
                             <h3 class="mb-0">Performance</h3>
                         </div>
-                        <!-- <div class="col text-right">
-                            <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target=".bd-example-modal-sm">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
-                        </div> -->
                     </div>
                 </div>
                 <div class="card card-chart">
@@ -96,34 +93,34 @@
                             data: {
                                 labels: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"],
                                 datasets: [{
-                                        label: 'Curriculum Merit', // Name the series
-                                        data: <?php echo json_encode(array_values($currMeritsArr)); ?>, // Specify the data values array
+                                        label: 'Curriculum Merit', 
+                                        data: <?php echo json_encode(array_values($currMeritsArr)); ?>, 
                                         fill: false,
-                                        borderColor: '#2196f3', // Add custom color border (Line)
-                                        backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-                                        borderWidth: 1 // Specify bar border width
+                                        borderColor: '#2196f3', 
+                                        backgroundColor: '#2196f3', 
+                                        borderWidth: 1 
                                     },
                                     {
-                                        label: 'Behavioural Merit', // Name the series
-                                        data: <?php echo json_encode(array_values($behaMeritsArr)); ?>, // Specify the data values array
+                                        label: 'Behavioural Merit', 
+                                        data: <?php echo json_encode(array_values($behaMeritsArr)); ?>, 
                                         fill: false,
-                                        borderColor: '#4CAF50', // Add custom color border (Line)
-                                        backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
-                                        borderWidth: 1 // Specify bar border width
+                                        borderColor: '#4CAF50', 
+                                        backgroundColor: '#4CAF50', 
+                                        borderWidth: 1 
                                     },
                                     {
-                                        label: 'Behavioural Demerit', // Name the series
-                                        data: <?php echo json_encode(array_values($behaDemeritsArr)); ?>, // Specify the data values array
+                                        label: 'Behavioural Demerit', 
+                                        data: <?php echo json_encode(array_values($behaDemeritsArr)); ?>, 
                                         fill: false,
-                                        borderColor: '#4CAF50', // Add custom color border (Line)
-                                        backgroundColor: '#4CAF50', // Add custom color background (Points and Fill)
-                                        borderWidth: 1 // Specify bar border width
+                                        borderColor: '#4CAF50', 
+                                        backgroundColor: '#4CAF50', 
+                                        borderWidth: 1 
                                     }
                                 ]
                             },
                             options: {
-                                responsive: true, // Instruct chart js to respond nicely.
-                                maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                                responsive: true, 
+                                maintainAspectRatio: false, 
                                 legend: {
                                     display: true,
                                     position: 'bottom',
@@ -160,13 +157,9 @@
                         <div class="col">
                             <h3 class="mb-0">Performance By Class</h3>
                         </div>
-                        <!-- <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-light">Filter</a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="card card-chart">
-                    <!-- <canvas id="densityChart" width="600" height="200"></canvas> -->
                     <div class="card-body">
                         <canvas id="densityChart"></canvas>
                     </div>
@@ -182,7 +175,6 @@
                             data: <?php echo json_encode(array_values($classMeritsArr)); ?>,
                             backgroundColor: 'rgba(0, 99, 132, 0.6)',
                             borderColor: 'rgba(0, 99, 132, 1)',
-                            // yAxisID: "y-axis-density"
                         };
 
                         var gravityData = {
@@ -190,7 +182,6 @@
                             data: <?php echo json_encode(array_values($classDemeritsArr)); ?>,
                             backgroundColor: 'rgba(99, 132, 0, 0.6)',
                             borderColor: 'rgba(99, 132, 0, 1)',
-                            // yAxisID: "y-axis-gravity"
                         };
 
                         var planetData = {
@@ -209,18 +200,12 @@
                                 }],
                                 yAxes: [{
                                     ticks: {
-                                        // stepSize: 1
                                         beginAtZero: true
                                     },
                                     gridLines: {
                                         display: false
                                     }
                                 }]
-                                // yAxes: [{
-                                //     id: "y-axis-density"
-                                // }, {
-                                //     id: "y-axis-gravity"
-                                // }]
                             },
                             legend: {
                                 display: true,
@@ -246,9 +231,6 @@
                         <div class="col">
                             <h3 class="mb-0">Top Merit Contributers</h3>
                         </div>
-                        <!-- <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-secondary">See all</a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -329,9 +311,6 @@
                             <h5 class="card-category">Student Evaluation</h5>
                             <h3 class="mb-0">Personality Traits</h3>
                         </div>
-                        <!-- <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-light">Filter</a>
-                        </div> -->
                     </div>
                 </div>
                 <div class="card-body text-center">
