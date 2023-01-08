@@ -52,7 +52,7 @@ class BehaMeritController extends Controller
         Merit::create($newMerit);
 
         $student = Student::where('mykid', "=", $newMerit['student_mykid'])->first();
-        return redirect()->route('behaMerits.index', [$student]);
+        return redirect()->route('behaMerits.index', [$student])->with('success', 'Your merit records has successfully added');
     }
 
     public function update(Request $request, Merit $behaMerit)
@@ -80,7 +80,7 @@ class BehaMeritController extends Controller
         $behaMerit->update($updateMerit);
 
         $student = Student::where('mykid', "=", $behaMerit['student_mykid'])->first();
-        return redirect()->route('behaMerits.index', [$student]);
+        return redirect()->route('behaMerits.index', [$student])->with('success', 'Your merit records has successfully updated');
     }
 
     public function destroy(Merit $behaMerit)
@@ -88,7 +88,7 @@ class BehaMeritController extends Controller
         $behaMerit->delete();
 
         $student = Student::where('mykid', "=", $behaMerit['student_mykid'])->first();
-        return redirect()->route('behaMerits.index', [$student]);
+        return redirect()->route('behaMerits.index', [$student])->with('success', 'Your merit records has successfully deleted');
     }
 
     //Bulk 
@@ -141,7 +141,7 @@ class BehaMeritController extends Controller
 
             Merit::create($newMerit);
         }
-        return redirect()->route('behaMerits.bulk')->with('success', 'Your merit and demerit records has successfully added');
+        return redirect()->route('behaMerits.bulk')->with('success', 'Your merit records has successfully added');
 
     }
 

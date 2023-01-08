@@ -49,7 +49,7 @@ class CurrMeritController extends Controller
         Merit::create($newMerit);
 
         $student = Student::where('mykid', "=", $newMerit['student_mykid'])->first();
-        return redirect()->route('merits.index', [$student]);
+        return redirect()->route('merits.index', [$student])->with('success', 'Your merit record has successfully added');
     }
 
     public function update(Request $request, Merit $merit)
@@ -69,7 +69,7 @@ class CurrMeritController extends Controller
         $merit->update($updateMerit);
 
         $student = Student::where('mykid', "=", $merit['student_mykid'])->first();
-        return redirect()->route('merits.index', [$student]);
+        return redirect()->route('merits.index', [$student])->with('success', 'Your merit record has successfully updated');
     }
 
     public function destroy(Merit $merit)
@@ -77,7 +77,7 @@ class CurrMeritController extends Controller
         $merit->delete();
 
         $student = Student::where('mykid', "=", $merit['student_mykid'])->first();
-        return redirect()->route('merits.index', [$student]);
+        return redirect()->route('merits.index', [$student])->with('success', 'Your merit records has successfully deleted');
     }
 
     //Bulk 
@@ -122,8 +122,8 @@ class CurrMeritController extends Controller
     
             Merit::create($newMerit);
         }
-        $students = Student::all();
-        return view('merits/currMerits.bulk', ['students' => $students]);
+        return redirect()->route('merits.bulk')->with('success', 'Your merit records has successfully added');
+
     }
 
     public function autocompleteSearch(Request $request)

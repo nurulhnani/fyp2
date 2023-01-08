@@ -40,7 +40,6 @@
           </div>
         </div>
         <!-- Table -->
-        @if($merits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -85,23 +84,20 @@
               </tr>
               @include('merits/currMerits.modal')
               @endforeach
-              @else
-              <h4 class="card-body"><i>No result found.</i></h4>
-              @endif
             </tbody>
           </table>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="float-right mt-3">
-        <a class="btn btn-secondary" href="{{ route('merits.main') }}">Finish Review</a>
+      <div class="row">
+        <div class="col">
+          <div class="float-right mt-3">
+            <a class="btn btn-secondary" href="{{ route('merits.main') }}">Finish Review</a>
+          </div>
+        </div>
       </div>
+      @include('layouts.footers.auth')
     </div>
   </div>
-  @include('layouts.footers.auth')
 </div>
 @endsection
 

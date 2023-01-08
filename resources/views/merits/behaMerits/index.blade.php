@@ -40,7 +40,6 @@
           </div>
         </div>
         <!-- Table -->
-        @if($merits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -81,9 +80,6 @@
               </tr>
               @include('merits/behaMerits.modal')
               @endforeach
-              @else
-              <h4 class="card-body"><i>No result found.</i></h4>
-              @endif
             </tbody>
           </table>
         </div>
@@ -106,7 +102,6 @@
           </div>
         </div>
         <!-- Table -->
-        @if($demerits->count() > 0)
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -147,9 +142,6 @@
               </tr>
               @include('merits/behaMerits.modal')
               @endforeach
-              @else
-              <h4 class="card-body"><i>No result found.</i></h4>
-              @endif
             </tbody>
           </table>
         </div>
