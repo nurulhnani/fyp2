@@ -51,9 +51,15 @@
                     <div class="col-sm-1">
                         <h4>Class</h4>
                     </div>
+                    @if(isset($student->class->class_name))
                     <div class="col-sm-3">
                         <p class="text-default">{{$student->class->class_name}}</p>
                     </div>
+                    @else
+                    <div class="col-sm-3">
+                        <p class="text-default">Not Yet Assigned</p>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="row">

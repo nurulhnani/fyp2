@@ -69,9 +69,15 @@
                         </div>
                       </div>
                     </th>
+                    @if(isset($student->class->class_name))
                     <td class="budget">
                       {{ $student->class->class_name }}
                     </td>
+                    @else
+                    <td class="budget">
+                      Not Yet Assigned
+                    </td>
+                    @endif
                     <td>
                       <span class="badge badge-dot mr-4">
                         @if(!in_array($student->mykid,$student_person_ids))
@@ -150,9 +156,15 @@
                         </div>
                       </div>
                     </th>
+                    @if(isset($student->class->class_name))
                     <td class="budget">
                       {{ $student->class->class_name }}
                     </td>
+                    @else
+                    <td class="budget">
+                      Not Yet Assigned
+                    </td>
+                    @endif
                     <td>
                       @if(!in_array($student->id,$student_ids))
                       <span class="badge badge-dot mr-4">

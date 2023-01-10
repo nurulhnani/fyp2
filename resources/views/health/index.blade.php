@@ -58,9 +58,15 @@
                         </div>
                       </div>
                     </th>
+                    @if(isset($student->class->class_name))
                     <td class="budget">
                       {{ $student->class->class_name }}
                     </td>
+                    @else
+                    <td class="budget">
+                      Not Yet Assigned
+                    </td>
+                    @endif
                     <td>
                         @if(in_array($student->id,$studentids))
                         <span class="badge badge-dot mr-4">
