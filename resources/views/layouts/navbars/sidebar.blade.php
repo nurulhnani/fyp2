@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('admin.home') }}">
-            <img src="{{ asset('assets/img/userImage/mescore-dark.png')}}" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('assets/img/userImage/mescore-dark.PNG')}}" class="navbar-brand-img" alt="...">
         </a>
         
         <!-- User -->
