@@ -147,7 +147,7 @@ class PersonalityEvaluationController extends Controller
             foreach ($sheetNameArr as $sheetName) {
                 $import = new PersonalityKeywordsImport();
                 $import->onlySheets($sheetName);
-                $arrayAll[$index] = Excel::toArray($import, "big5.xlsx");
+                $arrayAll[$index] = Excel::toArray($import, public_path('assets\excels\big5.xlsx')); 
                 $index++;
             }
 
