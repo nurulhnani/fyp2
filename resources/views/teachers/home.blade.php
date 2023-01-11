@@ -2,10 +2,15 @@
 
 @section('content')
 
-<div class="header bg-gradient-primary pb-5 pt-md-7">
+<div class="header pb-5 pt-5 pt-lg-6 d-flex align-items-center" style="background-image: url('{{asset('assets/img/theme/mesco.jpg')}}'); background-size: cover; background-position: center top;">
+    <span class="mask bg-gradient-primary opacity-7"></span>
     <div class="container-fluid mt--2">
 
-        <h3 class="text-white mb-3">Welcome back {{auth()->user()->name}}!</h3>
+        <div class="row mb-2">
+            <div class="col">
+                <h3 class="mt-4 text-white">Welcome back {{auth()->user()->name}}!</h3>
+            </div>
+        </div>
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
@@ -93,34 +98,34 @@
                             data: {
                                 labels: ["January", "February", "March", "April", "May", "Jun", "July", "August", "September", "October", "November", "December"],
                                 datasets: [{
-                                        label: 'Curriculum Merit', 
-                                        data: <?php echo json_encode(array_values($currMeritsArr)); ?>, 
+                                        label: 'Curriculum Merit',
+                                        data: <?php echo json_encode(array_values($currMeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#2196f3', 
-                                        backgroundColor: '#2196f3', 
-                                        borderWidth: 1 
+                                        borderColor: '#2196f3',
+                                        backgroundColor: '#2196f3',
+                                        borderWidth: 1
                                     },
                                     {
-                                        label: 'Behavioural Merit', 
-                                        data: <?php echo json_encode(array_values($behaMeritsArr)); ?>, 
+                                        label: 'Behavioural Merit',
+                                        data: <?php echo json_encode(array_values($behaMeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#4CAF50', 
-                                        backgroundColor: '#4CAF50', 
-                                        borderWidth: 1 
+                                        borderColor: '#4CAF50',
+                                        backgroundColor: '#4CAF50',
+                                        borderWidth: 1
                                     },
                                     {
-                                        label: 'Behavioural Demerit', 
-                                        data: <?php echo json_encode(array_values($behaDemeritsArr)); ?>, 
+                                        label: 'Behavioural Demerit',
+                                        data: <?php echo json_encode(array_values($behaDemeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#4CAF50', 
-                                        backgroundColor: '#4CAF50', 
-                                        borderWidth: 1 
+                                        borderColor: '#4CAF50',
+                                        backgroundColor: '#4CAF50',
+                                        borderWidth: 1
                                     }
                                 ]
                             },
                             options: {
-                                responsive: true, 
-                                maintainAspectRatio: false, 
+                                responsive: true,
+                                maintainAspectRatio: false,
                                 legend: {
                                     display: true,
                                     position: 'bottom',
@@ -233,6 +238,7 @@
                         </div>
                     </div>
                 </div>
+                @if(count($topMeritArr)) > 0)
                 <div class="table-responsive">
                     <!-- Projects table -->
                     <table class="table align-items-center table-flush">
@@ -260,6 +266,9 @@
                         </tbody>
                     </table>
                 </div>
+                @else
+                <h4 class="card-body"><u>No result found</u></h4>
+                @endif
             </div>
 
             <div class="card shadow">
@@ -270,6 +279,7 @@
                         </div>
                     </div>
                 </div>
+                @if(count($topDemeritArr)) > 0)
                 <div class="table-responsive">
                     <!-- Projects table -->
                     <table class="table align-items-center table-flush">
@@ -297,6 +307,9 @@
                         </tbody>
                     </table>
                 </div>
+                @else
+                <h4 class="card-body"><u>No result found</u></h4>
+                @endif
             </div>
 
         </div>
@@ -314,6 +327,7 @@
                     </div>
                 </div>
                 <div class="card-body text-center">
+                    @if($Extraversion != null)
                     <div class="chart-area" style="width:130px; height:130px; display: inline-block">
                         <canvas id="chart1"></canvas>
                         <div class="donut-inner">
@@ -489,6 +503,9 @@
 
                     });
                 </script>
+                @else
+                <h4 class="card-body"><u>No result found</u></h4>
+                @endif
             </div>
         </div>
     </div>
