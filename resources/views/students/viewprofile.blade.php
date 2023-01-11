@@ -14,16 +14,44 @@
 </div>
 @endif
 
-<div class="container-fluid mt--2">
-    <h2 class="mt-4">My Profile</h2>
+<div class="header">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+            <h6 class="h2 text-black d-inline-block mb-0">My Profile</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="{{ route('studenthome',$student->id) }}"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    {{-- <div class="row">
+        <div class="col-lg-12 col-12">
+            <h6 class="h2 d-inline-block mb-4">My Profile</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{{ route('studenthome',$student->id) }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Export Profile</li>
+                </ol>
+            </nav> 
+        </div>
+    </div> --}}
 
     {{-- @forelse ($student as $student) --}}
-    <div class="row py-4">
+    <div class="row">
         <div class="col-xl-4 order-xl-1 mb-5 mb-xl-0">
             <div class="card card-profile shadow">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
-                        <div class="card-profile-image py-7 bg-secondary shadow">
+                        <div class="card-profile-image py-7">
                             <a href="#">
                                 <img id="output_image" src="{{asset('assets/img/userImage/'.$student->image_path)}}" class="rounded-circle">
                             </a>
@@ -36,7 +64,7 @@
                         <h5><span class="font-weight-light">Change profile picture</span></h5>
                     </div>
                     <div class="text-center">
-                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageS" name="imageS" value="{{$student->image_path}}" disabled>
+                        <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative" id="imageS" name="imageS" value="{{$student->image_path}}" disabled>
                         <script type='text/javascript'>
                             function preview_image(event) {
                                 var reader = new FileReader();

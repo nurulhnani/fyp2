@@ -3,22 +3,28 @@
 @section('content')
     @include('layouts.headers.cards')
     {{-- Header --}}
-    <div class="header bg-secondary pb-6">
-        <div class="container-fluid">
-          <div class="header-body">
-            <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
-                <h6 class="h2 text-dark d-inline-block mb-4">Manage Subject</h6>
-              </div>
-              <div class="col-lg-6 col-5 text-right mb-4">
-                <a href="#AddNewSubject" data-toggle="modal" class="btn btn-sm btn-neutral">Add New Subject</a>
-              </div>
+    <div class="header">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-8 col-8">
+              <h6 class="h2 text-black d-inline-block mb-0">Manage Subject</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Manage Subject</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-4 col-4 text-right">
+              <a href="#AddNewSubject" data-toggle="modal" class="btn btn-sm btn-neutral">Add New Subject</a>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt-3">
       <div class="row">
         @foreach($subjects as $subj)
         <div class="col-xl-3 col-lg-6 mb-3">
@@ -97,8 +103,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </form>
     </div>

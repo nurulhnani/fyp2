@@ -4,7 +4,31 @@
     {{-- Header --}}
     @include('layouts.headers.cards')
     <!-- Header -->
-   <div class="header bg-gradient-primary pb-6">
+
+    <div class="header pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center py-4">
+              <div class="col-lg-7 col-7">
+                <h6 class="h2 text-black d-inline-block mb-0">Add New Student</h6>
+                <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                  <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('students.index') }}">Manage Student</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add New Student</li>
+                  </ol>
+                </nav>
+              </div>
+              <div class="col-lg-5 col-5 text-right">
+                <a href="{{route('addStudentInBulk')}}" class="btn btn-sm btn-neutral">Add Students in Bulk</a>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+    </div>
+
+   {{-- <div class="header bg-gradient-primary pb-6">
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
@@ -24,17 +48,14 @@
         </div>
       </div>
     </div>
-   </div>
+   </div> --}}
 
 
     {{-- <div class="header bg-primary pb-6"> --}}
       <div class="container-fluid mt--9">
         <form method="POST" action="{{route('students.store')}}"  enctype="multipart/form-data">
             @csrf
-        <div class="header-body">
-            <div class="row py-3">
-                <h6 class="h2 text-white d-inline-block mb-0">Add New Student</h6>
-            </div>
+        <div class="header-body pt-5">
           <div class="row py-4">
             <div class="col-xl-4 order-xl-1 mb-5 mb-xl-0">
               

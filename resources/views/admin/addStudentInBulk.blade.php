@@ -4,7 +4,32 @@
     {{-- Header --}}
     @include('layouts.headers.cards')
     <!-- Header -->
-   <div class="header bg-gradient-primary pb-6">
+
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-12 col-12">
+              <h6 class="h2 text-black d-inline-block mb-0">Add Student In Bulk</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{{ route('teacher.home') }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{route('students.index')}}">Manage Student</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('students.create')}}">Add New Student</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add Student In Bulk</li>
+                </ol>
+              </nav> 
+            </div>
+            {{-- <div class="col-lg-5 col-5 text-right">
+              <a href="{{route('addStudentInBulk')}}" class="btn btn-sm btn-neutral">Add Students in Bulk</a>
+            </div> --}}
+          </div>
+         
+        </div>
+      </div>
+  </div>
+
+   {{-- <div class="header bg-gradient-primary pb-6">
     <div class="container-fluid">
       <div class="header-body">
         <div class="row align-items-center py-4">
@@ -22,7 +47,7 @@
         </div>
       </div>
     </div>
-   </div>
+   </div> --}}
 
 
 {{-- <div class="header bg-primary pb-6"> --}}

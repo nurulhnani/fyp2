@@ -15,20 +15,25 @@
     @endif
 
     {{-- Header --}}
-    <div class="header bg-gradient-primary pb-6">
-        <div class="container-fluid">
-          <div class="header-body">
-            <div class="row align-items-center py-4">
-              <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-4">Edit Class</h6>
-              </div>
-              {{-- <div class="col-lg-6 col-5 text-right mb-4">
-                <a href="{{route('students.create')}}" class="btn btn-sm btn-neutral">Add New Student</a>
-              </div> --}}
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-12 col-12">
+              <h6 class="h2 text-black d-inline-block mb-0">Edit Class</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('classes.index') }}">Manage Class</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit Class</li>
+                </ol>
+              </nav>
             </div>
           </div>
+         
         </div>
       </div>
+  </div>
 
     <div class="container-fluid mt--7 justify-content-center"> 
 

@@ -3,11 +3,30 @@
 @section('content')
     @include('layouts.headers.cards')
     
-    <div class="container-fluid mt--2">
-    
-        <h2 class="mt-4">Custom Field Configuration</h2>
+    <div class="header pb-3">
+      <div class="container-fluid">
+          <div class="header-body">
+              <div class="row align-items-center py-4">
+                  <div class="col-lg-12 col-12">
+                      <h6 class="h2 text-black d-inline-block mb-0">Custom Field Lists</h6>
+                      <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                          <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                              <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                              <li class="breadcrumb-item"><a href="{{ route('customfield') }}">Custom Field Configuration</i></a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Custom Field Lists</li>
+                          </ol>
+                      </nav>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
 
-        <div class="py-3">
+    <div class="container-fluid">
+    
+        {{-- <h2 class="mt-4">Custom Field Configuration</h2> --}}
+
+        {{-- <div class="py-3"> --}}
             <div class="justify-content-md-center">
                 <div class="card">
                     <div class="card-body">
@@ -107,7 +126,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        {{-- </div> --}}
 
         @include('layouts.footers.auth')
     </div>

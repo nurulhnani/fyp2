@@ -3,29 +3,27 @@
 @section('content')
     {{-- Header --}}
     @include('layouts.headers.cards')
-    <!-- Header -->
-   {{-- <div class="header bg-gradient-primary pb-6">
+
+<div class="header">
     <div class="container-fluid">
-      <div class="header-body">
+        <div class="header-body">
         <div class="row align-items-center py-4">
-          <div class="col-lg-12 col-12">
-            <h6 class="h2 text-white d-inline-block mb-4">Export Profile</h6>
+            <div class="col-lg-6 col-7">
+            <h6 class="h2 text-black d-inline-block mb-0">Export Profile</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="{{ route('studenthome',$student->id) }}"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Export Profile</li>
-              </ol>
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{{ route('studenthome',$student->id) }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Export Profile</li>
+                </ol>
             </nav> 
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-   </div> --}}
+</div>
 
-
-{{-- <div class="header bg-primary pb-6"> --}}
-<div class="container-fluid mt--2">
-    <div class="row align-items-center py-4">
+<div class="container-fluid">
+    {{-- <div class="row align-items-center py-4">
         <div class="col-lg-12 col-12">
           <h6 class="h2 d-inline-block mb-4">Export Profile</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
@@ -35,13 +33,13 @@
             </ol>
           </nav> 
         </div>
-      </div>
+      </div> --}}
 
-    <div class="justify-content-md-center">
+      <div class="justify-content-md-center">
         <div class="card col-md-auto">
+            {{-- <img class="card-img-top" style="width: 100%; height:10%" src="{{asset('assets/img/theme/students.png')}}" alt="Card image cap"> --}}
             <div class="card-body">
             <h3 class="card-title">My Profile</h3>
-            {{-- <p class="card-text">Select Year</p> --}}
             <form method="post" action="{{ route('showPDF',$student->id) }}" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @method('GET')
@@ -66,9 +64,12 @@
                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                 </div> --}}
             </form>
+            {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
             </div>
         </div>
     </div>
+
+
 
     @include('layouts.footers.auth')
 </div>

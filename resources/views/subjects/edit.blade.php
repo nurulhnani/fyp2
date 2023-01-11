@@ -3,7 +3,29 @@
 @section('content')
     @include('layouts.headers.cards')
     {{-- Header --}}
-    <div class="header bg-gradient-primary pb-6">
+    <div class="header pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-12 col-12">
+              <h6 class="h2 text-black d-inline-block mb-0">Edit Subject</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('subjects.index') }}">Manage Subject</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit Subject</li>
+                </ol>
+              </nav>
+            </div>
+            {{-- <div class="col-lg-4 col-4 text-right">
+              <a href="#AddNewSubject" data-toggle="modal" class="btn btn-sm btn-neutral">Add New Subject</a>
+            </div> --}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{-- <div class="header bg-gradient-primary pb-6">
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
@@ -13,9 +35,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--5">
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -56,7 +78,7 @@
                             <thead>
                               <tr>
                                 <th scope="col">Class Name</th>
-                                <th scope="col" style="width: 70%">Teacher Name</th>
+                                <th scope="col" style="width: 70%">Subject Teacher</th>
                                 <th style="width: 5%">
                                   <div class="col-lg-6 col-5 text-right">
                                     <a href="#AddNewClassToSubject{{$subject->id}}" data-toggle="modal" class="btn btn-sm btn-neutral">Add Class</a>
@@ -110,34 +132,6 @@
 
         </div>
 
-<!-- Add New Subject Modal -->
-<div class="modal fade" id="AddNewSubject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title font-weight-bold" id="exampleModalCenterTitle">ADD NEW SUBJECT</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="POST" action="{{route('subjects.store')}}">
-          @csrf
-        <div class="modal-body">
-            <div class="form-group row">
-                <label for="subject_name" class="col-form-label" style="padding-left: 10pt">Subject Name</label>
-                <div class="col-sm-8" style="padding-left: 18pt">
-                  <input type="text" class="form-control" id="subject_name" name="subject_name" style="width: 240pt">
-                </div>
-              </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Save changes</button>
-        </div>
-      </form>
-      </div>
-    </div>
-  </div>
 
   <!-- Add New Class to Subject Modal -->
 <div class="modal fade" id="AddNewClassToSubject{{$subject->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -183,8 +177,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </form>
     </div>

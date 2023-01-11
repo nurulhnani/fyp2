@@ -1,15 +1,33 @@
 @extends('layouts.studentapp')
 
 @section('content')
-    @include('layouts.headers.cards')
+    {{-- @include('layouts.headers.cards') --}}
+
+    <div class="header pb-8 pt-8 pt-lg-8 d-flex align-items-center" style="background-image: url('{{asset('assets/img/theme/mesco.jpg')}}'); background-size: cover; background-position: center top;">
+        <span class="mask bg-gradient-primary opacity-7"></span>
+        <div class="container-fluid mb-4">
+            
+            {{-- <div class="row">
+                <div class="col">
+                    <h3 class="text-white">Welcome back {{auth()->user()->name}}!</h3>
+                </div>
+            </div> --}}
+            
+        </div>
+    </div>
     
-    <div class="container-fluid mt--2">
+    <div class="container-fluid mt--9">
     
-        <div class="row">
-            <div class="col-sm-10">
-                <h3 class="mt-4 heading-small text-white">WELCOME TO STUDENT DASHBOARD!</h3>
+        {{-- <div class="row">
+            <div class="col">
+                <h3 class="mt-4 heading-small text-muted">WELCOME TO STUDENT DASHBOARD!</h3>
             </div>
-            <div class="mt-4 col-sm-2 text-right">
+        </div> --}}
+        <div class="row">
+            <div class="col-sm-9">
+                <h3 class="text-white">Welcome back {{auth()->user()->name}}!</h3>
+            </div>
+            <div class="col-sm-3 text-right">
                 <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#filterByYear">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
                 </button>
             </div>
@@ -519,185 +537,7 @@
                 
         </div>
 
-        <div class="row mt-3">
-            <div class="col-xl-12 mb-3 mb-xl-0">
-                <div class="card bg-white">
-                    <div class="card-header bg-white">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                @if($yearfilter != null)
-                                <?php 
-                                $newyear = ""; 
-                                $newyear = implode(",",$yearfilter);
-                                ?>
-                                <h5 class="card-category">{{$newyear}}</h5>
-                                @else
-                                <h5 class="card-category">All year</h5>
-                                @endif
-                                <h3 class="card-category">Behaviour Merits and Demerits</h3>
-                            </div>
-                            <div class="col text-right">
-                                <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-
-                                    <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                                        <input type="radio" class="d-none d-sm-none" name="options" checked>
-                                        <a tabindex="1" role="button" data-trigger="focus" class="d-none d-sm-block d-md-block d-lg-block d-xl-block text-white" data-placement="left" data-color="primary" id="popover_behamerit">Merit Details</a>
-                                        {{-- <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Merit Details</span> --}}
-                                        {{-- <span class="d-block d-sm-none">
-                                            <i class="tim-icons icon-single-02"></i>
-                                        </span> --}}
-                                    </label>
-                                    <label class="btn btn-sm btn-primary btn-simple" id="1">
-                                        <input type="radio" class="d-none d-sm-none" name="options1">
-                                        <a tabindex="2" role="button" data-trigger="focus" class="d-none d-sm-block d-md-block d-lg-block d-xl-block text-white" data-placement="left" data-color="primary" id="popover_behademerit">Demerit Details</a>
-                                        {{-- <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Demerit Details</span> --}}
-                                        {{-- <span class="d-block d-sm-none">
-                                            <i class="tim-icons icon-gift-2"></i>
-                                        </span> --}}
-                                    </label>
-    
-                                </div>
-                            </div>
-                            {{-- <div class="col text-right">
-                                <a tabindex="0" role="button" data-trigger="focus" class="btn btn-sm btn-primary" data-placement="left" data-color="primary" id="popover_cocu">See Details</a>
-                            </div> --}}
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="meritadmin">
-                            <canvas id="student_behaviourmerit" width="100" height="100"></canvas>
-                        </div>   
-                            <!-- javascript -->
-                            <script>
-                            $(function(){
-                                //get the pie chart canvas
-                                var cData = JSON.parse(`<?php echo $student_behaviourmerit; ?>`);
-                                var cData2 = JSON.parse(`<?php echo $student_behaviourdemerit; ?>`);
-                                var ctx = $("#student_behaviourmerit");
-                            
-                                //pie chart data
-                                var data = {
-                                    labels: ["January","February","March","April","May","June","July","August","September","October","November","December"],
-                                    datasets: [
-                                    {
-                                        label: "Merit",
-                                        data: cData.data,
-                                        borderColor : "#F2D1D1",
-                                        backgroundColor: '#F2D1D1',
-                                        fill: false,
-                                    },
-                                    {
-                                        label: "Demerit",
-                                        data: cData2.data,
-                                        borderColor : '#DAEAF1',
-                                        backgroundColor: '#DAEAF1',
-                                        fill: false
-                                    },
-                                    ],
-                                };
-                            
-                                //options
-                                var options = {
-                                    responsive: true,
-                                    legend: {
-                                    display: true,
-                                    position: 'bottom',
-                                    }
-                                };
-                            
-                                //create Pie Chart class object
-                                var chart1 = new Chart(ctx, {
-                                    type: "line",
-                                    data: data,
-                                    options: options,
-                                });
-                            
-                            });
-                            </script>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Behaviour merit popover --}}
-            <div id="behavmerit-popover" style="display: none;">
-                <table class="table align-items-center table-flush mb-0">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Year</th>
-                            <th>Merit Name</th>
-                            <th>Merit Point</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($behavmerit_records as $behavmerit_record)
-                        <tr>
-                            <td>
-                                {{$behavmerit_record->year}}
-                            </td>
-                            <td>
-                                {{$behavmerit_record->merit_name}}
-                            </td>
-                            <td class="text-center">
-                                {{$behavmerit_record->merit_point}}
-                            </td>
-                        </tr>
-                        @endforeach 
-                    </tbody>
-                </table>
-            </div>
-
-            {{-- Behaviour demerit popover --}}
-            <div id="behavdemerit-popover" style="display: none;">
-                <table class="table align-items-center table-flush mb-0">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Year</th>
-                            <th>Merit Name</th>
-                            <th>Demerit Point</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($behavdemerit_records as $behavdemerit_record)
-                        <tr>
-                            <td>
-                                {{$behavdemerit_record->year}}
-                            </td>
-                            <td>
-                                {{$behavdemerit_record->merit_name}}
-                            </td>
-                            <td class="text-center">
-                                {{abs($behavdemerit_record->merit_point)}}
-                            </td>
-                        </tr>
-                        @endforeach 
-                    </tbody>
-                </table>
-            </div>
-
-            <script>
-                $(function(){
-                // Enabling Popover Example 2 - JS (hidden content and title capturing)
-                    $("#popover_behamerit").popover({
-                        html : true, 
-                        content: function() {
-                        return $('#behavmerit-popover').html();
-                        },
-                    });
-
-                });
-                $(function(){
-
-                    $("#popover_behademerit").popover({
-                        html : true, 
-                        content: function() {
-                        return $('#behavdemerit-popover').html();
-                        },
-                    });
-                });
-            </script>
-
-        </div>
+        
 
         @include('layouts.footers.auth')
     </div>

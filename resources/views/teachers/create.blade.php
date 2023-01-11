@@ -10,31 +10,35 @@
     @endforeach
 @endif
 
-<div class="header bg-gradient-primary pb-6">
-<div class="container-fluid">
-    <div class="header-body">
-    <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-        <h6 class="h2 text-white d-inline-block mb-4">Add New Teacher</h6> 
+<div class="header pb-6">
+    <div class="container-fluid">
+      <div class="header-body">
+        <div class="row align-items-center py-4">
+          <div class="col-lg-7 col-7">
+            <h6 class="h2 text-black d-inline-block mb-0">Add New Teacher</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="{{ route('teachers.index') }}">Manage Teacher</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Teacher</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="col-lg-5 col-5 text-right">
+            <a href="{{route('addTeacherInBulk')}}" class="btn btn-sm btn-neutral">Add Teachers in Bulk</a>
+          </div>
         </div>
-        <div class="col-lg-6 col-5 text-right">
-        <a href="{{route('addTeacherInBulk')}}" class="btn btn-sm btn-neutral">Add Teachers In Bulk</a>
-        {{-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> --}}
-        </div>
-    </div>
+       
+      </div>
     </div>
 </div>
-</div>
-
 
     {{-- <div class="header bg-primary pb-6"> --}}
 <div class="container-fluid mt--9">
   <form method="POST" action="{{route('teachers.store')}}"  enctype="multipart/form-data">
     @csrf
-<div class="header-body">
-    <div class="row py-3">
-        <h6 class="h2 text-white d-inline-block mb-0">Add New Teacher</h6>
-    </div>
+<div class="header-body pt-5">
+    
   <div class="row py-4">
     <div class="col-xl-4 order-xl-1 mb-5 mb-xl-0">
       
@@ -43,7 +47,7 @@
                 <div class="col-lg-3 order-lg-2">
                     <div class="card-profile-image py-7">
                         <a href="#">
-                            <img id="output_image" src="{{asset('assets/img/userImage/default.png')}}" class="rounded-circle">
+                            <img id="output_image" src="{{asset('assets/img/userImage/defaultteacher.png')}}" class="rounded-circle">
                         </a>
                     </div>
                 </div>

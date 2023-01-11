@@ -18,11 +18,11 @@
               // $subteacher = App\Models\Teacher::where('id',$teacherclass->teacher_id)->first()->name;
               // $teacher = App\Models\Teacher::all();
             ?>
-              <h4 class="text-center">Confirm to delete {{$subjclass}} from {{$subject}}?</h4>
+              <h4 class="text-center">Confirm to delete class {{$subjclass}} from {{$subject}}?</h4>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i>Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Delete</button>
           </div>
         </form>
       </div>

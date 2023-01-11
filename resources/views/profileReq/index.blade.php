@@ -4,7 +4,7 @@
 @include('layouts.headers.cards')
 
 <!-- Header -->
-<div class="header pb-5">
+<div class="header pb-3">
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
@@ -22,7 +22,7 @@
     </div>
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--6">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <div class="card">

@@ -4,47 +4,16 @@
     {{-- @include('layouts.headers.cards') --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-    <div class="header bg-gradient-primary pb-5 pt-md-5">
+    <div class="header pb-5 pt-5 pt-lg-6 d-flex align-items-center" style="background-image: url('{{asset('assets/img/theme/mesco.jpg')}}'); background-size: cover; background-position: center top;">
+        <span class="mask bg-gradient-primary opacity-7"></span>
         <div class="container-fluid mt--2">
             
             <div class="row mb-2">
                 <div class="col">
-                    <h3 class="mt-4 heading-small text-white">WELCOME TO ADMIN DASHBOARD!</h3>
+                    <h3 class="mt-4 text-white">Welcome back {{auth()->user()->name}}!</h3>
                 </div>
-                
             </div>
-
-             <!--Filter Modal -->
-        <div class="modal fade" id="filterByYear" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-                    @csrf
-                    @method('PUT')
-                <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Filter Dashboard By Year</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body text-center">
-                    @foreach($years as $year)
-                        <?php $newyear = (string)$year;?>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="{{$newyear}}" name="year[]" value="{{$newyear}}">
-                            <label class="custom-control-label" for="{{$newyear}}">{{$newyear}}</label>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" >Reset</button>
-                <button type="submit" class="btn btn-primary">Confirm</button>
-                </div>
-                </form>
-            </div>
-            </div>
-        </div>
-
+            
             <div class="header-body">
                 <!-- Card stats -->
                 <div class="row">
@@ -135,13 +104,43 @@
         </div>
     </div>
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-4">
 
         <div class="row pb-3">
             <div class="col">
                 <div class="float-right">
                     <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#filterByYear">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
                     </button>
+                </div>
+                <!--Filter Modal -->
+                <div class="modal fade" id="filterByYear" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                                @csrf
+                                @method('PUT')
+                            <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Filter Dashboard By Year</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                @foreach($years as $year)
+                                    <?php $newyear = (string)$year;?>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="{{$newyear}}" name="year[]" value="{{$newyear}}">
+                                        <label class="custom-control-label" for="{{$newyear}}">{{$newyear}}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary" >Reset</button>
+                            <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
