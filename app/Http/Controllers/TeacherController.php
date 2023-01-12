@@ -54,6 +54,66 @@ class TeacherController extends Controller
         return view('teachers.viewprofile',compact('teacher','customfield','subject'));
     }
 
+    public function editProfile(Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+            'nric' =>'required',
+            'gender' =>'required',
+            'email' =>'required',
+            'position' =>'required',
+            'address' =>'required',
+            'phone_number' =>'required',
+        ]);
+
+        $teachername = auth()->user()->name;
+        $teacherid = Teacher::where('name',$teachername)->first()->id;
+
+        $teacher = Teacher::find($teacherid);
+        if($request->hasFile('imageT')){
+            $destination = "assets\img\userImage".$teacher->image_path;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('imageT');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $teacher->name.'.'.$extension;
+            $file->move(public_path('assets\img\userImage'),$filename);
+            $teacher->image_path = $filename;
+        }
+
+        $teacher->name = $request->input('name');
+        $teacher->nric = $request->input('nric');
+        $teacher->gender = $request->input('gender');
+        $teacher->position = $request->input('position');
+        $teacher->address = $request->input('address');
+        $teacher->email = $request->input('email');
+        $teacher->phone_number = $request->input('phone_number');
+        $teacher->updated_at = now();
+        
+        if($request->input('customfield') != null){
+            $additional=implode(",",$request->input('customfield'));
+            $teacher->additional_Info = $additional;
+        }
+        $teacher -> update();
+
+        $user = User::where('name','=',$request->input('name'))->first();
+        $user->name = $request->input('name');
+        if ($request->hasFile('imageT')) {
+            $user->image_path = $filename;
+        }
+        $user->nric_mykid =  $request->input('nric');
+        $user->email = $request->input('email');
+        $user->type = 1;
+        $user->email_verified_at = now();
+        $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->update();
+
+        return redirect()->route('viewprofile')->with('success',"Successfully updated!");
+    }
+
     public function studentlist()
     {
         $students = Student::all();

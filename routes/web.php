@@ -144,6 +144,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
 		//Teacher profile
 		Route::get('/teacherprofile',[App\Http\Controllers\TeacherController::class, 'viewprofile'])->name('viewprofile');
+		Route::post('/teacherprofile',[App\Http\Controllers\TeacherController::class, 'editprofile'])->name('editprofile');
 
 		//Student profile
 		Route::get('/studentlist',[App\Http\Controllers\TeacherController::class, 'studentlist'])->name('studentlist');

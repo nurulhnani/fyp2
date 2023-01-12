@@ -34,9 +34,8 @@
 </div>
 
 <div class="container-fluid mt--7">
-    <form action="{{ route('teachers.update',$teacher->id) }}" method="POST" enctype='multipart/form-data'>
+    <form action="{{ route('editprofile') }}" method="POST" enctype='multipart/form-data'>
         @csrf
-        @method('PUT')
         <div class="row py-4">
             <div class="col-xl-4 order-xl-1 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">
