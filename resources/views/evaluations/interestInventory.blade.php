@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    @if($student->class->class_name != null)
+                                    @if(isset($student->class->class_name))
                                     <input type="text" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}" disabled>
                                     <input type="hidden" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}">
                                     @else
