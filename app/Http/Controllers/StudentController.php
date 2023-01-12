@@ -598,7 +598,8 @@ class StudentController extends Controller
         $newImage = "";
         if ($request->hasFile('image')) {
             $newImage = $data['name'] . '.' . $request->image->extension();
-            $request->image->move(public_path('storage'), $newImage);
+            // $request->image->move(public_path('storage'), $newImage);
+            $request->file('image')->storeAs('public/',$newImage);
             $student->image_path = $newImage;
         }
 
@@ -703,14 +704,15 @@ class StudentController extends Controller
 
         $student = Student::find($id);
         if ($request->hasFile('imageS')) {
-            $destination = "assets\img\userImage" . $student->image_path;
+            $destination = "public\storage" . $student->image_path;
             if (File::exists($destination)) {
                 File::delete($destination);
             }
             $file = $request->file('imageS');
             $extension = $file->getClientOriginalExtension();
             $filename = $request->input('name') . '.' . $extension;
-            $file->move(public_path('storage'), $filename);
+            // $file->move(public_path('storage'), $filename);
+            $request->file('image')->storeAs('public/',$filename);
             $student->image_path = $filename;
         }
 
