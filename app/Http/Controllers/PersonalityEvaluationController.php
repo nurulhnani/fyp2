@@ -129,7 +129,7 @@ class PersonalityEvaluationController extends Controller
 
             foreach ($totalMarks as $category => $mark) {
                 if ($mark <= 0) {
-                    $finalMark[$category] = 0;
+                    $finalMark[$category] =  abs(intval(round(($mark / 12) * 100)));
                 } else {
                     $finalMark[$category] = intval(round(($mark / 6) * 100));
                 }
