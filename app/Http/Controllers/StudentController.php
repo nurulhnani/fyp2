@@ -710,19 +710,22 @@ class StudentController extends Controller
 
         $student = Student::find($id);
         if ($request->hasFile('imageS')) {
-            $destination = "public\storage" . $student->image_path;
-            if (File::exists($destination)) {
-                File::delete($destination);
-            }
-            $file = $request->file('imageS');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $request->input('name') . '.' . $extension;
-            // $file->move(public_path('storage'), $filename);
-            $request->file('imageS')->move('public/',$filename);
-            $student->image_path = $filename;
-        }
 
-        // dd($request);
+            $destination_path = 'public/images/userImages';
+            $image = $request->file('imageS');
+            $extension = $image->getClientOriginalExtension();
+            $image_name = $request->input('name') . '.' . $extension;
+            $request->file('imageS')->storeAs($destination_path,$image_name);
+            // $destination = "public\storage" . $student->image_path;
+            // if (File::exists($destination)) {
+            //     File::delete($destination);
+            // }
+            // $file = $request->file('imageS');
+            // $extension = $file->getClientOriginalExtension();
+            // $filename = $request->input('name') . '.' . $extension;
+            // $file->move(public_path('storage'), $filename);
+            $student->image_path = $image_name;
+        }
 
         $student->status = 'active';
         $student->name = $request->input('name');
@@ -749,7 +752,7 @@ class StudentController extends Controller
         $user = User::where('name', '=', $request->input('old_name'))->first();
         $user->name = $request->input('name');
         if ($request->hasFile('image')) {
-            $user->image_path = $filename;
+            $user->image_path = $image_name;
         }
         // $user->image_path = $newImage;
         $user->nric_mykid = $request->input('mykid');
