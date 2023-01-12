@@ -106,6 +106,7 @@
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
                                                         <input type="text" name="name" id="input-name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$student->name}}" required>
+                                                        <input type="hidden" name="old_name" id="input-name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$student->name}}">
                                                     </div>
                                                 </div>
                                             </div>

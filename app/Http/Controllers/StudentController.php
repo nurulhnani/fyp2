@@ -738,7 +738,7 @@ class StudentController extends Controller
         }
         $student->update();
 
-        $user = User::where('name', '=', $request->input('name'))->first();
+        $user = User::where('name', '=', $request->input('old_name'))->first();
         $user->name = $request->input('name');
         if ($request->hasFile('image')) {
             $user->image_path = $filename;
