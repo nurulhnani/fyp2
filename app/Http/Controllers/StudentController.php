@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Merit;
+use App\Models\Health;
 use App\Models\Student;
 use App\Models\Classlist;
 use App\Models\AutoFields;
@@ -78,7 +79,10 @@ class StudentController extends Controller
             $latestDate = null;
         }
 
-        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate'));
+        //Health
+        $record = Health::where('student_id','=',$student->id)->first();
+
+        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate','record'));
     }
 
     //for Teacher page
