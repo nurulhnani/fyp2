@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
-                <div class="col-lg-7 col-7">
+                <div class="col-lg-12 col-12">
                     <h6 class="h2 text-black d-inline-block mb-0">Evaluation Page</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -56,8 +56,13 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
+                                    @if($student->class->class_name != null)
                                     <input type="text" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}" disabled>
                                     <input type="hidden" class="form-control form-control-alternative" name="classname" value="{{$student->class->class_name}}">
+                                    @else
+                                    <input type="text" class="form-control form-control-alternative" name="classname" value="Not Yet Assigned" disabled>
+                                    <input type="hidden" class="form-control form-control-alternative" name="classname" value="">
+                                    @endif
                                 </div>
                             </div>
                         </div>

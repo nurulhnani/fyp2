@@ -19,7 +19,7 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
-                <div class="col-lg-6 col-7">
+                <div class="col-lg-12 col-12">
                     <h6 class="h2 text-black d-inline-block mb-0">Student Profile</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -44,7 +44,7 @@
                 <div class="card card-profile shadow">
                     <div class="row justify-content-center">
                         <div class="col-lg-3 order-lg-2">
-                            <div class="card-profile-image py-7 bg-secondary shadow">
+                            <div class="card-profile-image py-7">
                                 <a href="#">
                                     <img id="output_image" src="{{asset('assets/img/userImage/'.$student->image_path)}}" class="rounded-circle">
                                 </a>
