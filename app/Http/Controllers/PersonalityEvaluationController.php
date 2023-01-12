@@ -13,6 +13,7 @@ use DonatelloZa\RakePlus\RakePlus;
 
 
 use Illuminate\Http\Request;
+use PDO;
 
 class PersonalityEvaluationController extends Controller
 {
@@ -33,8 +34,9 @@ class PersonalityEvaluationController extends Controller
         foreach ($students as $student) {
             if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)
                 ->where('teacher_id', '=', $teacher->id)
-                ->exists()) {
-                    $student_person_ids[] = $student->mykid;
+                ->exists()
+            ) {
+                $student_person_ids[] = $student->mykid;
             } else {
                 continue;
             }
@@ -147,7 +149,8 @@ class PersonalityEvaluationController extends Controller
             foreach ($sheetNameArr as $sheetName) {
                 $import = new PersonalityKeywordsImport();
                 $import->onlySheets($sheetName);
-                $arrayAll[$index] = Excel::toArray($import, public_path('assets\excels\big5.xlsx')); 
+                // $arrayAll[$index] = Excel::toArray($import, public_path('assets\excels\big5.xlsx'));
+                $arrayAll[$index] = Excel::toArray($import, asset('assets/excels/big5.xlsx'));
                 $index++;
             }
 
@@ -175,38 +178,32 @@ class PersonalityEvaluationController extends Controller
                 $i++;
             }
 
+            //text classifications
             $indexNo = 0;
             foreach ($request->input('text') as $category => $text) {
-                $cat = $classifier[$indexNo]->categorize($text);
-                $resultArr[$indexNo] = 50;
-                $phrases = RakePlus::create($text)->get();
-                foreach ($catArr as $itr) {
-                    if (!isset($itr[$cat])) {
-                        continue;
-                    }
-                    $result = count(array_intersect($itr[$cat], $phrases));
-
-                    if (in_array(ucfirst($cat), $sheetNameArr)) {
-                        $resultArr[$indexNo] += ($result * 10);
-                    } else {
-                        $resultArr[$indexNo] -= ($result * 10);
-                        echo ucfirst($indexNo) . " = " . $cat . " ";
-                    }
-                }
+                $category_prediction[$indexNo] = $classifier[$indexNo]->categorize($text);
+                $category_probability[$indexNo] = $classifier[$indexNo]->probabilities($text);
                 $indexNo++;
             }
 
-            //if more than 100 and less than 0 
-
+            //text probability ratio -> percentage
             $input = [
-                'Extraversion' => $resultArr[0],
-                'Agreeableness' => $resultArr[1],
-                'Neuroticism' => $resultArr[2],
-                'Conscientiousness' => $resultArr[3],
-                'Openness' => $resultArr[4],
-                'teacher_id' => $teacher->id,
-                'student_mykid' => $id,
+                'Extraversion' => round(($category_probability[0]['extraversion']) / ($category_probability[0]['introversion']), 2) * 100,
+                'Agreeableness' => round(($category_probability[1]['agreeableness']) / ($category_probability[1]['competitiveness']), 2) * 100,
+                'Neuroticism' => round(($category_probability[2]['neuroticism']) / ($category_probability[2]['stable']), 2) * 100,
+                'Conscientiousness' => round(($category_probability[3]['conscientiousness']) / ($category_probability[3]['spontaneity']), 2) * 100,
+                'Openness' => round(($category_probability[4]['openness']) / ($category_probability[4]['consistency']), 2) * 100,
             ];
+
+            $indexNo = 0;
+            foreach($input as $row){
+                if($row >= 100){
+                    $input[$sheetNameArr[$indexNo]] = $row - 100;
+                }
+                $indexNo++;
+            }
+            $input['teacher_id'] = $teacher->id;
+            $input['student_mykid'] = $id;
         }
 
         Personality_Evaluation::create($input);
