@@ -715,7 +715,7 @@ class StudentController extends Controller
             $image = $request->file('imageS');
             $extension = $image->getClientOriginalExtension();
             $image_name = $request->input('name') . '.' . $extension;
-            $request->file('imageS')->storeAs($destination_path,$image_name);
+            $path = $request->file('imageS')->storeAs($destination_path,$image_name);
             // $destination = "public\storage" . $student->image_path;
             // if (File::exists($destination)) {
             //     File::delete($destination);
