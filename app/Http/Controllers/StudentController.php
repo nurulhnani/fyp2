@@ -717,8 +717,8 @@ class StudentController extends Controller
             $file = $request->file('imageS');
             $extension = $file->getClientOriginalExtension();
             $filename = $request->input('name') . '.' . $extension;
-            // $file->move(public_path('storage'), $filename);
-            $request->file('image')->storeAs('public/',$filename);
+            $file->move(public_path('storage/images'), $filename);
+            // $request->file('image')->storeAs('public/',$filename);
             $student->image_path = $filename;
         }
 
