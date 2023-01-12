@@ -48,7 +48,7 @@
                                         <div class="card-profile-image py-7">
                                             @if($student->image_path != null)
                                             <a href="#">
-                                                <img id="output_image" src="{{asset('storage/images/'.$student->image_path)}}" class="rounded-circle">
+                                                <img id="output_image" src="{{asset('storage/images/Mohd Hafiz bin Kamal.jpg')}}" class="rounded-circle">
                                             </a>
                                             @else 
                                             <img id="output_image" src="{{asset('assets/img/theme/default.png')}}" class="rounded-circle">
