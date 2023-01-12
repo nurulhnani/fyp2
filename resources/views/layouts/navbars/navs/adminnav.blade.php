@@ -36,7 +36,7 @@
                       <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
                   </div>
                   <a href="{{ route('admin.home') }}" class="dropdown-item">
-                      <i class="fa fa-home-02"></i>
+                      <i class="fa fa-home"></i>
                       <span>{{ __('Home') }}</span>
                   </a>
                   {{-- <a href="#" class="dropdown-item">
