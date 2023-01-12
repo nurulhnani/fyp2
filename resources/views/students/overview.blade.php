@@ -50,7 +50,8 @@
                 {{-- Interest Tab --}}
                 <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                     @if($averageArr == 'No result found')
-                    <p>No result found for this student. Please perform the evaluation to view the result</p>
+                    <h4>No result found for {{auth()->user()->name}}.</h4>
+                    <h4>Your interest inventory result is still in pending.</h4>
                     @else
                     <div class="row">
 
