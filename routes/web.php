@@ -23,7 +23,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::get('/changePassword', [App\Http\Controllers\HomeController::class, 'changePwFirstLogin'])->name('changePwFirstLogin');
 Route::get('/student-resetpassword/{id}',[App\Http\Controllers\HomeController::class, 'resetPw'])->name('student-resetpassword');
 Route::post('/student-updatepassword/{id}',[App\Http\Controllers\HomeController::class, 'updatePw'])->name('studentpassword.update');
