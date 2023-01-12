@@ -144,8 +144,10 @@ class StudentController extends Controller
 
         $behaLatestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->latest()->first();
 
+        //Health
+        $record = Health::where('student_id','=',$student->id)->first();
 
-        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaDemerits', 'behaLatestDate'));
+        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaDemerits', 'behaLatestDate','record'));
     }
 
     public function dashboard(Request $request, $id)
