@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,10 @@ Route::get('/', function () {
 });
 
 Route::get("/storage-link", function () {
-    $targetFolder = storage_path("app/public");
-    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
-    symlink($targetFolder, $linkFolder);
+    // $targetFolder = storage_path("app/public");
+    // $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    // symlink($targetFolder, $linkFolder);
+	Artisan::call('storage:link');
 });
 
 Auth::routes();
