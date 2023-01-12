@@ -238,7 +238,7 @@
                         </div>
                     </div>
                 </div>
-                @if(count($topMeritArr)) > 0)
+                @if(count($topMeritArr) > 0)
                 <div class="table-responsive">
                     <!-- Projects table -->
                     <table class="table align-items-center table-flush">
@@ -279,7 +279,7 @@
                         </div>
                     </div>
                 </div>
-                @if(count($topDemeritArr)) > 0)
+                @if(count($topDemeritArr) > 0)
                 <div class="table-responsive">
                     <!-- Projects table -->
                     <table class="table align-items-center table-flush">
@@ -595,7 +595,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="GET">
                     <div class="form-row">
                         <label style="font-size:14px" for="inputCity">Class</label>
                         <select id="inputState" class="form-control custom-select" name="class">

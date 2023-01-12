@@ -20,7 +20,6 @@ class TeacherDashboardController extends Controller
         /* Curriculum Merits */
         $currMerits = Merit::where('type', '=', 'c')
             ->join('students', 'students.mykid', '=', 'merits.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->select(DB::raw('MONTH(merits.date) as month'), DB::raw('SUM(merits.merit_point) as total'))
             ->groupBy('month')
 
@@ -30,7 +29,9 @@ class TeacherDashboardController extends Controller
                 return $q->whereRaw('year(`date`) = ?', array(date('Y')));
             })
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('students.classlist_id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('students.classlist_id = ?', $request->class);
             })
             ->pluck('total', 'month')->all();
 
@@ -44,7 +45,6 @@ class TeacherDashboardController extends Controller
 
         /* Behavioural Merits */
         $behaMerits = Merit::join('students', 'students.mykid', '=', 'merits.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->where('type', '=', 'b')
             ->where('merit_point', '>', 0)
             ->select(DB::raw('MONTH(merits.date) as month'), DB::raw('SUM(merits.merit_point) as total'))
@@ -56,7 +56,9 @@ class TeacherDashboardController extends Controller
                 return $q->whereRaw('year(`date`) = ?', array(date('Y')));
             })
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('students.classlist_id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('students.classlist_id = ?', $request->class);
             })
             ->pluck('total', 'month')->all();
 
@@ -70,7 +72,6 @@ class TeacherDashboardController extends Controller
 
         /* Behavioural Demerits */
         $behaDemerits = Merit::join('students', 'students.mykid', '=', 'merits.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->where('type', '=', 'b')
             ->where('merit_point', '<', 0)
             ->select(DB::raw('MONTH(merits.date) as month'), DB::raw('SUM(ABS(merits.merit_point)) as total'))
@@ -82,7 +83,9 @@ class TeacherDashboardController extends Controller
                 return $q->whereRaw('year(`date`) = ?', array(date('Y')));
             })
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('students.classlist_id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('students.classlist_id = ?', $request->class);
             })
             ->pluck('total', 'month')->all();
 
@@ -163,7 +166,6 @@ class TeacherDashboardController extends Controller
 
         /* Personality Traits */
         $Extraversion['Extrovert'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -174,13 +176,14 @@ class TeacherDashboardController extends Controller
                 }
             )
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })->avg('Extraversion') / 100) * 100;
 
         $Extraversion['Introvert'] = 100 - $Extraversion['Extrovert'];
 
         $Agreeableness['Agreeable'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -191,13 +194,14 @@ class TeacherDashboardController extends Controller
                 }
             )
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })->avg('Agreeableness') / 100) * 100;
 
         $Agreeableness['Competitive'] = 100 - $Agreeableness['Agreeable'];
 
         $Neuroticism['Neurotic'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -208,14 +212,15 @@ class TeacherDashboardController extends Controller
                 }
             )
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })->avg('Neuroticism') / 100) * 100;
 
 
         $Neuroticism['Stable'] = 100 - $Neuroticism['Neurotic'];
 
         $Conscientiousness['Conscious'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -226,13 +231,14 @@ class TeacherDashboardController extends Controller
                 }
             )
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })->avg('Conscientiousness') / 100) * 100;
 
         $Conscientiousness['Spontaneity'] = 100 - $Conscientiousness['Conscious'];
 
         $Openness['Open'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -243,7 +249,9 @@ class TeacherDashboardController extends Controller
                 }
             )
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })->avg('Openness') / 100) * 100;
 
         $Openness['Consistent'] = 100 - $Openness['Open'];
@@ -252,7 +260,6 @@ class TeacherDashboardController extends Controller
         $categoryArray = array("realistic", "investigative", "artistic", "social", "enterprising", "conventional");
         foreach ($categoryArray as $category) {
             $InterestResultArr[$category] = Interest_Inventory_Results::join('students', 'students.id', '=', 'interest_inventory_results.student_id')
-                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                 ->when(
                     $request->has('year'),
                     function ($q) use ($request) {
@@ -263,20 +270,23 @@ class TeacherDashboardController extends Controller
                     }
                 )
                 ->when($request->has('class'), function ($q) use ($request) {
-                    return $q->whereRaw('classlists.id = ?', $request->class);
+                    return $q
+                    ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                    ->whereRaw('classlists.id = ?', $request->class);
                 })->avg($category);
         }
 
         /* Top Contributers */
         $topMeritArr = Merit::join('students', 'students.mykid', '=', 'merits.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when($request->has('year'), function ($q) use ($request) {
                 return $q->whereRaw('year(`date`) = ?', $request->year);
             }, function ($q) {
                 return $q->whereRaw('year(`date`) = ?', array(date('Y')));
             })
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })
             ->where('merit_point', '>', 0)
             ->selectRaw("SUM(merit_point) as merit_point,student_mykid")
@@ -286,14 +296,15 @@ class TeacherDashboardController extends Controller
             ->get();
 
         $topDemeritArr = Merit::join('students', 'students.mykid', '=', 'merits.student_mykid')
-            ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->when($request->has('year'), function ($q) use ($request) {
                 return $q->whereRaw('year(`date`) = ?', $request->year);
             }, function ($q) {
                 return $q->whereRaw('year(`date`) = ?', array(date('Y')));
             })
             ->when($request->has('class'), function ($q) use ($request) {
-                return $q->whereRaw('classlists.id = ?', $request->class);
+                return $q
+                ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
+                ->whereRaw('classlists.id = ?', $request->class);
             })
             ->where('merit_point', '<', 0)
             ->selectRaw("SUM(ABS(merit_point)) as merit_point,student_mykid")
