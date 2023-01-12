@@ -598,7 +598,7 @@ class StudentController extends Controller
         $newImage = "";
         if ($request->hasFile('image')) {
             $newImage = $data['name'] . '.' . $request->image->extension();
-            $request->image->move(public_path('assets\img\userImage'), $newImage);
+            $request->image->move(public_path('storage'), $newImage);
             $student->image_path = $newImage;
         }
 
@@ -710,7 +710,7 @@ class StudentController extends Controller
             $file = $request->file('imageS');
             $extension = $file->getClientOriginalExtension();
             $filename = $request->input('name') . '.' . $extension;
-            $file->move(public_path('assets\img\userImage'), $filename);
+            $file->move(public_path('storage'), $filename);
             $student->image_path = $filename;
         }
 
