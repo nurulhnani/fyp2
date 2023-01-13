@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,15 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
 	// return view('welcome');
     return redirect()->route('login');
+});
+
+Route::get('/uploadimage', function () {
+    return view('upload');
+});
+
+Route::post('upload', function(Request $request){
+	$uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
+	dd($uploadedFileUrl);
 });
 
 Route::get("/storage-link", function () {
