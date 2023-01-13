@@ -713,11 +713,14 @@ class StudentController extends Controller
         $student = Student::find($id);
         if ($request->hasFile('imageS')) {
 
-            $destination_path = 'public/images/userImages';
-            $image = $request->file('imageS');
-            $extension = $image->getClientOriginalExtension();
-            $image_name = $request->input('name') . '.' . $extension;
-            $path = $request->file('imageS')->storeAs($destination_path,$image_name);
+            if(isset($student->image_path)){
+                $old_image = $student->image_path;
+                $token = explode('/', $old_image);
+                $token2 = explode('.', $token[sizeof($token)-1]);
+                Cloudinary::destroy('userImages/'.$token2[0]);
+            }
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
+            
             // $destination = "public\storage" . $student->image_path;
             // if (File::exists($destination)) {
             //     File::delete($destination);
@@ -726,7 +729,7 @@ class StudentController extends Controller
             // $extension = $file->getClientOriginalExtension();
             // $filename = $request->input('name') . '.' . $extension;
             // $file->move(public_path('storage'), $filename);
-            $student->image_path = $image_name;
+            $student->image_path = $uploadedFileUrl;
         }
 
         $student->status = 'active';
@@ -754,7 +757,7 @@ class StudentController extends Controller
         $user = User::where('name', '=', $request->input('old_name'))->first();
         $user->name = $request->input('name');
         if ($request->hasFile('image')) {
-            $user->image_path = $image_name;
+            $user->image_path = $uploadedFileUrl;
         }
         // $user->image_path = $newImage;
         $user->nric_mykid = $request->input('mykid');
