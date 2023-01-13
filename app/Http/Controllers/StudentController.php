@@ -719,7 +719,7 @@ class StudentController extends Controller
                 $token2 = explode('.', $token[sizeof($token)-1]);
                 Cloudinary::destroy('userImages/'.$token2[0]);
             }
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
             
             // $destination = "public\storage" . $student->image_path;
             // if (File::exists($destination)) {
