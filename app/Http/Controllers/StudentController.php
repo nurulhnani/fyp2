@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Personality_Evaluation;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interest_Inventory_Results;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class StudentController extends Controller
 {
@@ -603,10 +604,11 @@ class StudentController extends Controller
 
         $newImage = "";
         if ($request->hasFile('image')) {
-            $newImage = $data['name'] . '.' . $request->image->extension();
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
+	        // dd($uploadedFileUrl);
+            // $newImage = $data['name'] . '.' . $request->image->extension();
             // $request->image->move(public_path('storage'), $newImage);
-            $request->file('image')->storeAs('public/',$newImage);
-            $student->image_path = $newImage;
+            $student->image_path = $uploadedFileUrl;
         }
 
         if ($request->input('customfield') != null) {
