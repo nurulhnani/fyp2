@@ -30,7 +30,7 @@ Route::get('/uploadimage', function () {
 Route::post('upload', function(Request $request){
 	$uploadedFileUrl = Cloudinary::upload($request->file('file')->getRealPath())->getSecurePath();
 	dd($uploadedFileUrl);
-});
+})->name('upload');
 
 Route::get("/storage-link", function () {
     // $targetFolder = storage_path("app/public");
