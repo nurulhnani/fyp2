@@ -355,7 +355,7 @@
                         </div>
                     </div>
                     <!-- Chart -->
-                    <div class="chart-area" style="width:40%; height:40%; margin:0 auto"><canvas id="marksChart"></canvas></div>
+                    <div class="chart-area" style="width:30%; height:30%; margin:0 auto"><canvas id="marksChart"></canvas></div>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
                     <script>
                         var marksCanvas = document.getElementById("marksChart");
@@ -372,8 +372,8 @@
                                     label: "Big 5 Personality",
                                     backgroundColor: "rgba(200,0,0,0.2)",
                                     data: [<?php
-                                            foreach ($averagePersArr as $category => $mark) {
-                                                echo "'" . $mark . "', ";
+                                            foreach ($averagePersArr as $arr) {
+                                                echo "'" . $arr['category'] . "', ";
                                             } ?>],
                                 },
 
@@ -399,58 +399,52 @@
                             options: options,
                         });
                     </script>
+                    <!--End Chart-->
+                    <p class="card-text mt-2">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>. 
+                    Below is the table of general characteristics for both high and low scorer of each category.</p>
 
-                    <p>This Big Five assessment measures your scores on five major dimensions of personality: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (sometimes abbreviated OCEAN). In this free report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
-                    <p class="pt-2"><strong>EXTRAVERSION</strong></p>
-                    <p>Extraversion describes a person’s inclination to seek stimulation from the outside world, especially in the form of attention from other people. Extraverts engage actively with others to earn friendship, admiration, power, status, excitement, and romance. Introverts, on the other hand, conserve their energy, and do not work as hard to earn these social rewards.</p>
-                    <div class="skillbar-wrapper">
-                        <div class="skillbar clearfix html5" data-percent="{{ $averagePersArr['Extraversion'] }}%">
-                            <h4 class="skillbar-title"><span>EXT</span></h4>
-                            <div class="skillbar-bar"></div>
-                            <div class="skill-bar-percent">{{ $averagePersArr['Extraversion'] }}%</div>
-                        </div>
+                    <div class="table-responsive pt-2">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" class="text-center"></th>
+                                    <th scope="col" class="text-center">LOW SCORER</th>
+                                    <th scope="col" class="text-center" style="width: 20%;"></th>
+                                    <th scope="col" class="text-center">HIGH SCORER</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                @foreach ($averagePersArr as $average => $values)
+                                <tr>
+                                    <th scope="row">
+                                        <div class="px-1 py-1 text-center" style="background-color:powderblue; border-radius: 10px;"><strong>{{ $average }}</strong></div>
+                                    </th>
+                                    <!--Low Scorer-->
+                                    <td>
+                                        <ul>
+                                            @foreach ($values['low'] as $index => $val)
+                                            <li>{{ $val }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+
+                                    <td>
+                                        <input type="range" class="win10-thumb" disabled value="{{ $values['category'] }}" />
+                                    </td>
+
+                                    <!--High Scorer-->
+                                    <td>
+                                        <ul>
+                                            @foreach ($values['high'] as $index => $val)
+                                            <li>{{ $val }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-
-                    <p class="pt-2"><strong>AGREEABLENESS</strong></p>
-                    <p>Agreeableness describes a person’s tendency to put others’ needs ahead of their own, and to cooperate rather than compete with others. People who are high in Agreeableness experience a great deal of empathy and tend to get pleasure out of serving and taking care of others. They are usually trusting and forgiving. People who are low in Agreeableness tend to experience less empathy and put their own concerns ahead of others.</p>
-                    <div class="skillbar-wrapper">
-                        <div class="skillbar clearfix css" data-percent="{{ $averagePersArr['Agreeableness'] }}%">
-                            <h4 class="skillbar-title"><span>AGB</span></h4>
-                            <div class="skillbar-bar"></div>
-                            <div class="skill-bar-percent">{{ $averagePersArr['Agreeableness'] }}%</div>
-                        </div>
-                    </div>
-
-                    <p class="pt-2"><strong>NEUROTICISM</strong></p>
-                    <p>Neuroticism describes a person’s tendency to experience negative emotions, including fear, sadness, anxiety, guilt, and shame. While everyone experiences these emotions from time to time, some people are more prone to them than others. High Neuroticism scorers are more likely to react to a situation with fear, anger, sadness, and the like. Low Neuroticism scorers are more likely to brush off their misfortune and move on.</p>
-                    <div class="skillbar-wrapper">
-                        <div class="skillbar clearfix javascript" data-percent="{{ $averagePersArr['Neuroticism'] }}%">
-                            <h4 class="skillbar-title"><span>NTM</span></h4>
-                            <div class="skillbar-bar"></div>
-                            <div class="skill-bar-percent">{{ $averagePersArr['Neuroticism'] }}%</div>
-                        </div>
-                    </div>
-
-                    <p class="pt-2"><strong>CONSCIENTIOUSNESS</strong></p>
-                    <p>Conscientiousness describes a person’s ability to exercise self-discipline and control in order to pursue their goals. High scorers are organized and determined, and are able to forego immediate gratification for the sake of long-term achievement. Low scorers are impulsive and easily sidetracked.</p>
-                    <div class="skillbar-wrapper">
-                        <div class="skillbar clearfix jquery" data-percent="{{ $averagePersArr['Conscientiousness'] }}%">
-                            <h4 class="skillbar-title"><span>CSC</span></h4>
-                            <div class="skillbar-bar"></div>
-                            <div class="skill-bar-percent">{{ $averagePersArr['Conscientiousness'] }}%</div>
-                        </div>
-                    </div>
-
-                    <p class="pt-2"><strong>OPENNESS</strong></p>
-                    <p>Openness describes a person’s tendency to think in abstract, complex ways. High scorers tend to be creative, adventurous, and intellectual. They enjoy playing with ideas and discovering novel experiences. Low scorers tend to be practical, conventional, and focused on the concrete. They tend to avoid the unknown and follow traditional ways.</p>
-                    <div class="skillbar-wrapper">
-                        <div class="skillbar clearfix php" data-percent="{{ $averagePersArr['Openness'] }}%">
-                            <h4 class="skillbar-title"><span>OPN</span></h4>
-                            <div class="skillbar-bar"></div>
-                            <div class="skill-bar-percent">{{ $averagePersArr['Openness'] }}%</div>
-                        </div>
-                    </div>
-
                     @else
                     <h4>No result found for {{$student->name}}.</h4>
                     @endif
@@ -661,20 +655,18 @@
                     </div>
 
                     <?php
-                    if($record != null){
-                        if($record->health_history == null){
+                    if ($record != null) {
+                        if ($record->health_history == null) {
                             $health_explode = ["N/A"];
-                            
-                        }else{
+                        } else {
                             $health_history = $record->health_history;
-                            $health_explode = explode(',',$health_history);
+                            $health_explode = explode(',', $health_history);
                         }
-                    
-                    }else{
+                    } else {
                         $health_explode = ["N/A"];
                     }
-                        
-                        // dd($health_explode);
+
+                    // dd($health_explode);
                     ?>
 
                     <div class="row pt-3">
@@ -684,10 +676,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Back Injuries',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Back Injuries',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Heart Disease</h4>
@@ -695,10 +687,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Heart Disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Heart Disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Permanent defect from illness</h4>
@@ -706,10 +698,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Permanent defect from illness',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Permanent defect from illness',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -719,10 +711,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Fainting, dizziness',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Fainting, dizziness',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Stomach Ulcer</h4>
@@ -730,10 +722,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Stomach Ulcer',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Stomach Ulcer',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Asthma</h4>
@@ -741,10 +733,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Asthma',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Asthma',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -754,10 +746,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Allergies',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Allergies',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Rheumatic fever</h4>
@@ -765,10 +757,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Rheumatic fever',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Rheumatic fever',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Eye disease</h4>
@@ -776,10 +768,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Eye disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Eye disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -789,10 +781,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Tuberculosis',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Tuberculosis',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Hearing difficulty</h4>
@@ -800,10 +792,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hearing difficulty',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hearing difficulty',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Ear, nose, throat trouble-sinus</h4>
@@ -811,10 +803,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Ear, nose, throat trouble-sinus',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Ear, nose, throat trouble-sinus',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -824,10 +816,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hepatitis',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hepatitis',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Kidney disease</h4>
@@ -835,10 +827,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Kidney disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Kidney disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Nervous disorder</h4>
@@ -846,10 +838,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Nervous disorder',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Nervous disorder',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -859,10 +851,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Respiratory disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Respiratory disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Muscular disease</h4>
@@ -870,10 +862,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Muscular disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Muscular disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Mental illness</h4>
@@ -881,10 +873,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Mental illness',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Mental illness',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -894,10 +886,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('High Blood Pressure',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('High Blood Pressure',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Hernia</h4>
@@ -905,10 +897,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hernia',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Hernia',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Arthritis, joint disease</h4>
@@ -916,10 +908,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Arthritis, joint disease',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Arthritis, joint disease',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -929,10 +921,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Diabetes',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Diabetes',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Cancer</h4>
@@ -940,10 +932,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Cancer',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Cancer',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                         <div class="col-sm-3">
                             <h4>Headaches</h4>
@@ -951,10 +943,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Back Injuries" @if(in_array('Headaches',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Back Injuries" @if(in_array('Headaches',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -964,10 +956,10 @@
                         <div class="col-sm-1">
                             <div class="custom-toggle">
                                 <label class="custom-toggle">
-                                    <input type="checkbox" name="Medical treatment" @if(in_array('Medical treatment',$health_explode)) checked="checked"@endif>
+                                    <input type="checkbox" name="Medical treatment" @if(in_array('Medical treatment',$health_explode)) checked="checked" @endif>
                                     <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -979,7 +971,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <div class="input-group">
-                                <textarea class="form-control" aria-label="With textarea">@if($record != null) @if($record->description != null){{{$record->description}}} @else N/A @endif @else N/A @endif</textarea>
+                                    <textarea class="form-control" aria-label="With textarea">@if($record != null) @if($record->description != null){{{$record->description}}} @else N/A @endif @else N/A @endif</textarea>
                                 </div>
                             </div>
                         </div>
@@ -989,29 +981,29 @@
                             <h4>Medication Allergies</h4>
                         </div>
                         <div class="col-sm-4">
-                        @if($record != null)
+                            @if($record != null)
                             @if($record->medication_allergies != null)
                             <p class="text-default">{{$record->medication_allergies}}</p>
                             @else
                             <p class="text-default">N/A</p>
                             @endif
-                        @else
+                            @else
                             <p class="text-default">N/A</p>
-                        @endif
+                            @endif
                         </div>
                         <div class="col-sm-2">
                             <h4>Medications Now Taking</h4>
                         </div>
                         <div class="col-sm-4">
-                        @if($record != null)
+                            @if($record != null)
                             @if($record->medications_now_taking != null)
                             <p class="text-default">{{$record->medications_now_taking}}</p>
                             @else
                             <p class="text-default">N/A</p>
                             @endif
-                        @else
+                            @else
                             <p class="text-default">N/A</p>
-                        @endif
+                            @endif
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -1019,31 +1011,31 @@
                             <h4>Childhood Diseases:</h4>
                         </div>
                     </div>
-                    <?php 
-                    if($record != null){
-                        if($record->chicken_pox != null){
-                            $chickenpox = explode(',',$record->chicken_pox);
-                        }else{
+                    <?php
+                    if ($record != null) {
+                        if ($record->chicken_pox != null) {
+                            $chickenpox = explode(',', $record->chicken_pox);
+                        } else {
                             $chickenpox = "N/A";
                         }
 
-                        if($record->measles != null){
-                            $measles = explode(',',$record->chicken_pox);
-                        }else{
+                        if ($record->measles != null) {
+                            $measles = explode(',', $record->chicken_pox);
+                        } else {
                             $measles = ["N/A"];
                         }
-                        
-                        if($record->mumps != null){
-                            $mumps = explode(',',$record->mumps);
-                        }else{
+
+                        if ($record->mumps != null) {
+                            $mumps = explode(',', $record->mumps);
+                        } else {
                             $mumps = ["N/A"];
                         }
-                    }else{
+                    } else {
                         $chickenpox = ["N/A"];
                         $measles = ["N/A"];
                         $mumps = ["N/A"];
                     }
-                        
+
                     ?>
                     <div class="row pt-3">
                         <div class="col-sm-4">
@@ -1052,24 +1044,24 @@
                         <div class="col-sm-2 text-left">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="had_chickenpox" @if(in_array('Had',$chickenpox)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="had_chickenpox" @if(in_array('Had',$chickenpox)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Had">
+                                    <input type="text" class="form-control" value="Had">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_chickenpox" @if(in_array('Immunized',$chickenpox)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_chickenpox" @if(in_array('Immunized',$chickenpox)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Immunized">
+                                    <input type="text" class="form-control" value="Immunized">
                                 </div>
                             </div>
                         </div>
@@ -1081,24 +1073,24 @@
                         <div class="col-sm-2 text-left">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="had_measles" @if(in_array('Had',$measles)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="had_measles" @if(in_array('Had',$measles)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Had">
+                                    <input type="text" class="form-control" value="Had">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_measles" @if(in_array('Immunized',$measles)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_measles" @if(in_array('Immunized',$measles)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Immunized">
+                                    <input type="text" class="form-control" value="Immunized">
                                 </div>
                             </div>
                         </div>
@@ -1110,24 +1102,24 @@
                         <div class="col-sm-2 text-left">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="had_mumps" @if(in_array('Had',$mumps)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="had_mumps" @if(in_array('Had',$mumps)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Had">
+                                    <input type="text" class="form-control" value="Had">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_mumps" @if(in_array('Immunized',$mumps)) checked="checked"@endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="immunized_mumps" @if(in_array('Immunized',$mumps)) checked="checked" @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Immunized">
+                                    <input type="text" class="form-control" value="Immunized">
                                 </div>
                             </div>
                         </div>
@@ -1139,48 +1131,48 @@
                         <div class="col-sm-2 text-left">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="Excellent" @if($record != null) @if($record->present_health == "Excellent") checked="checked"@endif @endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="Excellent" @if($record !=null) @if($record->present_health == "Excellent") checked="checked"@endif @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Excellent">
+                                    <input type="text" class="form-control" value="Excellent">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="Good" @if($record != null) @if($record->present_health == "Good") checked="checked"@endif @endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="Good" @if($record !=null) @if($record->present_health == "Good") checked="checked"@endif @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Good">
+                                    <input type="text" class="form-control" value="Good">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="Fair" @if($record != null) @if($record->present_health == "Fair") checked="checked"@endif @endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="Fair" @if($record !=null) @if($record->present_health == "Fair") checked="checked"@endif @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Fair">
+                                    <input type="text" class="form-control" value="Fair">
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"> 
-                                    <input type="checkbox" aria-label="Checkbox for following text input" name="Poor" @if($record != null) @if($record->present_health == "Poor") checked="checked"@endif @endif>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="Poor" @if($record !=null) @if($record->present_health == "Poor") checked="checked"@endif @endif>
+                                        </div>
                                     </div>
-                                </div>
-                                <input type="text" class="form-control" value="Poor">
+                                    <input type="text" class="form-control" value="Poor">
                                 </div>
                             </div>
                         </div>
@@ -1335,8 +1327,122 @@
     .server .skillbar-bar {
         background: #d43227;
     }
-</style>
 
+    /* === range slider === */
+    input[type="range"] {
+        font-size: 1.5rem;
+        width: 12.5em;
+    }
+
+    input[type="range"] {
+        color: #ef233c;
+        --thumb-height: 1.125em;
+        --track-height: 0.125em;
+        --track-color: rgba(0, 0, 0, 0.2);
+        --brightness-hover: 180%;
+        --brightness-down: 80%;
+        --clip-edges: 0.125em;
+    }
+
+    input[type="range"].win10-thumb {
+        color: #2b2d42;
+
+        --thumb-height: 1.375em;
+        --thumb-width: 0.5em;
+        --clip-edges: 0.0125em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        html {
+            background-color: #000;
+        }
+
+        html::before {
+            background: radial-gradient(circle at center, #101112, #000);
+        }
+
+        input[type="range"] {
+            color: #f07167;
+            --track-color: rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="range"].win10-thumb {
+            color: #3a86ff;
+        }
+    }
+
+    input[type="range"] {
+        position: relative;
+        background: #fff0;
+        overflow: hidden;
+    }
+
+    input[type="range"]:active {
+        cursor: grabbing;
+    }
+
+    input[type="range"]:disabled {
+        filter: grayscale(1);
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    input[type="range"],
+    input[type="range"]::-webkit-slider-runnable-track,
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        transition: all ease 100ms;
+        height: var(--thumb-height);
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track,
+    input[type="range"]::-webkit-slider-thumb {
+        position: relative;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+        --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+        --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+        --clip-further: calc(100% + 1px);
+        --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax currentColor;
+
+        width: var(--thumb-width, var(--thumb-height));
+        background: linear-gradient(currentColor 0 0) scroll no-repeat left center / 50% calc(var(--track-height) + 1px);
+        background-color: currentColor;
+        box-shadow: var(--box-fill);
+        border-radius: var(--thumb-width, var(--thumb-height));
+
+        filter: brightness(100%);
+        clip-path: polygon(100% -1px,
+                var(--clip-edges) -1px,
+                0 var(--clip-top),
+                -100vmax var(--clip-top),
+                -100vmax var(--clip-bottom),
+                0 var(--clip-bottom),
+                var(--clip-edges) 100%,
+                var(--clip-further) var(--clip-further));
+    }
+
+    input[type="range"]:hover::-webkit-slider-thumb {
+        filter: brightness(var(--brightness-hover));
+        cursor: grab;
+    }
+
+    input[type="range"]:active::-webkit-slider-thumb {
+        filter: brightness(var(--brightness-down));
+        cursor: grabbing;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+        background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
+    }
+
+    input[type="range"]:disabled::-webkit-slider-thumb {
+        cursor: not-allowed;
+    }
+
+</style>
 @endsection
 
 @push('js')

@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class
 
     ],
 
@@ -217,6 +218,7 @@ return [
     ])->toArray(),
     'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     'Route'     => "Illuminate\Support\Facades\Route",
+    'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ],
 
 ];

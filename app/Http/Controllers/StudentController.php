@@ -60,11 +60,30 @@ class StudentController extends Controller
         }
 
         //Personality
+        $low[0] = array('Introvert', 'Quiet', 'Reserved', 'Passive');
+        $high[0] = array('Extrovert', 'Talkative', 'Affectionate', 'Active');
+
+        $low[1] = array('Suspicious', 'Critical', 'Ruthless', 'Irritable');
+        $high[1] = array('Trusting', 'Lenient', 'Soft-hearted', 'Good-natured');
+
+        $low[2] = array('Calm', 'Even-tempered', 'Comfortable', 'Unemotional');
+        $high[2] = array('Worried', 'Temperamental', 'Self-conscious', 'Emotional');
+
+        $low[3] = array('Negligent', 'Lazy', 'Disorganized', 'Late');
+        $high[3] = array('Conscientious', 'Hard-Working', 'Well-Organized', 'Punctual');
+
+        $low[4] = array('Down-to-earth', 'Uncreative', 'Conventional', 'Uncurious');
+        $high[4] = array('Imaginative', 'Creative', 'Original', 'Curious');
+
+        $index = 0;
         $categoryPersArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
         if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()) {
             foreach ($categoryPersArray as $category) {
                 $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
-                $averagePersArr[$category] = intval(round($averagePersScore));
+                $averagePersArr[$category]['category'] = intval(round($averagePersScore));
+                $averagePersArr[$category]['low'] = $low[$index];
+                $averagePersArr[$category]['high'] = $high[$index];
+                $index++;
             }
         } else {
             $averagePersArr = null;
@@ -81,9 +100,9 @@ class StudentController extends Controller
         }
 
         //Health
-        $record = Health::where('student_id','=',$student->id)->first();
+        $record = Health::where('student_id', '=', $student->id)->first();
 
-        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate','record'));
+        return view('students.overview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'record'));
     }
 
     //for Teacher page
@@ -112,11 +131,30 @@ class StudentController extends Controller
         }
 
         //Personality
+        $low[0] = array('Introvert', 'Quiet', 'Reserved', 'Passive');
+        $high[0] = array('Extrovert', 'Talkative', 'Affectionate', 'Active');
+
+        $low[1] = array('Suspicious', 'Critical', 'Ruthless', 'Irritable');
+        $high[1] = array('Trusting', 'Lenient', 'Soft-hearted', 'Good-natured');
+
+        $low[2] = array('Calm', 'Even-tempered', 'Comfortable', 'Unemotional');
+        $high[2] = array('Worried', 'Temperamental', 'Self-conscious', 'Emotional');
+
+        $low[3] = array('Negligent', 'Lazy', 'Disorganized', 'Late');
+        $high[3] = array('Conscientious', 'Hard-Working', 'Well-Organized', 'Punctual');
+
+        $low[4] = array('Down-to-earth', 'Uncreative', 'Conventional', 'Uncurious');
+        $high[4] = array('Imaginative', 'Creative', 'Original', 'Curious');
+
+        $index = 0;
         $categoryPersArray = array("Extraversion", "Agreeableness", "Neuroticism", "Conscientiousness", "Openness");
         if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)->exists()) {
             foreach ($categoryPersArray as $category) {
                 $averagePersScore = Personality_Evaluation::where('student_mykid', '=', $student->mykid)->avg($category);
-                $averagePersArr[$category] = intval(round($averagePersScore));
+                $averagePersArr[$category]['category'] = intval(round($averagePersScore));
+                $averagePersArr[$category]['low'] = $low[$index];
+                $averagePersArr[$category]['high'] = $high[$index];
+                $index++;
             }
         } else {
             $averagePersArr = null;
@@ -146,21 +184,21 @@ class StudentController extends Controller
         $behaLatestDate = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'b')->latest()->first();
 
         //Health
-        $record = Health::where('student_id','=',$student->id)->first();
+        $record = Health::where('student_id', '=', $student->id)->first();
 
-        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaDemerits', 'behaLatestDate','record'));
+        return view('teachers.studentoverview', compact('student', 'teacherids', 'averageArr', 'averagePersArr', 'merits', 'latestDate', 'behaMerits', 'behaDemerits', 'behaLatestDate', 'record'));
     }
 
     public function dashboard(Request $request, $id)
     {
         $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
-        $allyear = []; 
+        $allyear = [];
         foreach ($getYear as $record) {
             if (!in_array($record->year, $allyear)) {
                 $years[] = $record->year;
             }
         }
-        
+
         ////////////////// PERSONALITY EVAL ALL YEAR/////////////////////////
 
         $student = Student::find($id);
@@ -604,8 +642,8 @@ class StudentController extends Controller
 
         $newImage = "";
         if ($request->hasFile('image')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
-	        // dd($uploadedFileUrl);
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+            // dd($uploadedFileUrl);
             // $newImage = $data['name'] . '.' . $request->image->extension();
             // $request->image->move(public_path('storage'), $newImage);
             $student->image_path = $uploadedFileUrl;
@@ -713,14 +751,14 @@ class StudentController extends Controller
         $student = Student::find($id);
         if ($request->hasFile('imageS')) {
 
-            if(isset($student->image_path)){
+            if (isset($student->image_path)) {
                 $old_image = $student->image_path;
                 $token = explode('/', $old_image);
-                $token2 = explode('.', $token[sizeof($token)-1]);
-                Cloudinary::destroy('userImages/'.$token2[0]);
+                $token2 = explode('.', $token[sizeof($token) - 1]);
+                Cloudinary::destroy('userImages/' . $token2[0]);
             }
-            $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(),['folder'=>'userImage'])->getSecurePath();
-            
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+
             // $destination = "public\storage" . $student->image_path;
             // if (File::exists($destination)) {
             //     File::delete($destination);
