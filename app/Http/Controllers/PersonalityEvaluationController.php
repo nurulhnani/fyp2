@@ -146,11 +146,16 @@ class PersonalityEvaluationController extends Controller
             ];
         } else {
             $index = 0;
+            $contents = file_get_contents('https://res.cloudinary.com/hme0x9wjh/raw/upload/v1673668020/big5_nbk4fu.xlsx');
+            file_put_contents('temp.xlsx', $contents);
+            // Storage::disk('local')->put('test.xlsx', $contents);
+
             foreach ($sheetNameArr as $sheetName) {
                 $import = new PersonalityKeywordsImport();
                 $import->onlySheets($sheetName);
                 // $arrayAll[$index] = Excel::toArray($import, public_path('assets\excels\big5.xlsx'));
-                $arrayAll[$index] = Excel::toArray($import, asset('assets/excels/big5.xlsx'));
+                // $arrayAll[$index] = Excel::toArray($import, asset('assets/excels/big5.xlsx'));
+                $arrayAll[$index] = Excel::toArray($import, 'temp.xlsx');
                 $index++;
             }
 
@@ -196,8 +201,8 @@ class PersonalityEvaluationController extends Controller
             ];
 
             $indexNo = 0;
-            foreach($input as $row){
-                if($row >= 100){
+            foreach ($input as $row) {
+                if ($row >= 100) {
                     $input[$sheetNameArr[$indexNo]] = $row - 100;
                 }
                 $indexNo++;
@@ -211,7 +216,7 @@ class PersonalityEvaluationController extends Controller
         unset($input['student_mykid']);
 
         toastr()->success('Your personality evaluation has been submit successfully!', 'Congrats');
-        return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher]);
+        // return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher]);
     }
 
     public function showCurrResult(Student $student)

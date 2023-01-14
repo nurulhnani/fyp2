@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ClassroomManagementController extends Controller
 {
@@ -32,14 +33,19 @@ class ClassroomManagementController extends Controller
     public function getAjax(Request $request)
     {
         $class = Classlist::findOrFail($request->id);
-        $image = str_replace('data:image/png;base64,', '', $request->imgVal);
-        $image = str_replace(' ', '+', $image);
-        $imageName = $class->class_name.'.png';
-        File::put(public_path('assets\img\class'). '/' . $imageName, base64_decode($image));    
-        $class->class_plan = $imageName;
+        /* store in localhost */
+        // $image = str_replace('data:image/png;base64,', '', $request->imgVal);
+        // $image = str_replace(' ', '+', $image);
+        // File::put(public_path('assets\img\class'). '/' . $imageName, base64_decode($image));    
+
+        $imageName = $class->class_name . '.png';
+        $uploadedFileUrl = Cloudinary::upload($request->imgVal, ['folder' => 'classImage'])->getSecurePath();
+
+
+        $class->class_plan = $uploadedFileUrl;
         $class->save();
 
         $students = Student::where('classlist_id', $class->id)->get();
-        return view('classrooms.view', ['class' => $class, 'students' => $students]);
+        return view('classrooms.view', ['class' => $class, 'students' => $students, 'uploadedFileUrl' => $uploadedFileUrl]);
     }
 }
