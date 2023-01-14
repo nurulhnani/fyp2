@@ -70,10 +70,10 @@
                                                   ->count(); ?>
                                 <td id="name" class="text-center"><?php echo $totalStudent ?></td>
                                 <?php
-                                  $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first()->name;
+                                  $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first();
                                 ?>
                                 @if(isset($classteacher))
-                                  <td id="class">{{ $classteacher }}</td>
+                                  <td id="class">{{ $classteacher->name }}</td>
                                 @else 
                                   <td id="class">Not Assigned Yet</td>
                                 @endif                        

@@ -99,12 +99,21 @@ class ClassController extends Controller
         $class->class_name = $request->input('class_name');
         $class->update();
 
-        $teacherid = Teacher::where('classlist_id', $id)->first()->id;
-        $teacher = Teacher::find($teacherid);
-        $teacher->classlist_id = null;
-        $teacher->updated_at = now();
-        $teacher->update();
-
+        $teacherid = Teacher::where('classlist_id', $id)->first();
+        if(isset($teacherid)){
+            $teacher = Teacher::find($teacherid->id);
+            $teacher->classlist_id = null;
+            $teacher->updated_at = now();
+            $teacher->update();
+        }
+        // else{
+        //     $teachername = $request->input('classroom_teacher');
+        //     $teacherid = Teacher::where('name', $teachername)->first()->id;
+        //     $teacher = Teacher::find($teacherid);
+        //     $teacher->classlist_id = $class->id;
+        //     $teacher->update();
+        // }
+       
         $teachername = $request->input('classroom_teacher');
         $teacherid = Teacher::where('name', $teachername)->first()->id;
         $teacher = Teacher::find($teacherid);
@@ -133,7 +142,7 @@ class ClassController extends Controller
             $data = array();
             foreach ( $row_range as $row ) {
                 $data[] = [
-                    'mykid' => $sheet->getCell( 'C' . $row )->getValue(),
+                    'mykid' => $sheet->getCell( 'B' . $row )->getValue(),
                 ];
             }
 
@@ -144,9 +153,10 @@ class ClassController extends Controller
                 $students->updated_at = now();
                 $students->update();
             }
+            // dd($data);
         }
 
-        // dd($data);
+        
         return redirect()->route('classes.index')->with('success',"Successfully updated!");
     }
 

@@ -46,7 +46,7 @@
 
                     <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Class Name</label>
-                        <input class="form-control form-control-alternative" type="text" value="{{$class->class_name}}" id="class_name" name="class_name">
+                        <input class="form-control form-control-alternative" type="text" value="{{$class->class_name}}" id="class_name" name="class_name" required>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -72,12 +72,15 @@
                       </div>
                     <div class="form-group">
                         <label for="example-search-input" class="form-control-label">Classroom Teacher</label>
-                        {{-- <input class="form-control" type="search" value="Tell me your secret ..." id="example-search-input"> --}}
-                        <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher">
+                        <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher" required>
                         <?php
-                            $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first()->name;
+                            $classteacher = App\Models\Teacher::where('classlist_id',$class->id)->first();
                         ?>
-                            <option value="{{$classteacher}}" selected>{{$classteacher}}</option>
+                            @if(isset($classteacher))
+                            <option value="{{$classteacher->name}}" selected>{{$classteacher->name}}</option>
+                            @else
+                            <option value="" selected>Select Classroom Teacher</option>
+                            @endif
                             @foreach($teacher as $teacher)
                             <option value="{{$teacher->name}}">{{$teacher->name}}</option>
                             @endforeach
