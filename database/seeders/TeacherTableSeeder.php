@@ -27,7 +27,7 @@ class TeacherTableSeeder extends Seeder
                 'classlist_id' => null,
                 'address' =>'34, Jalan Bahagia, Selangor',
                 'phone_number' =>'0198872436',
-                'image_path' => 'Sabarina binti Kamal.png',
+                'image_path' => null,
             ],[
                 'status'=>'active',
                 'name'=>'Mohd Ridwan bin Daud',
@@ -38,7 +38,7 @@ class TeacherTableSeeder extends Seeder
                 'classlist_id' => null,
                 'address' =>'3, Jalan Sentosa, Selangor',
                 'phone_number' =>'0176523422',
-                'image_path' => 'Mohd Ridwan bin Daud.png',
+                'image_path' => null,
             ]
         ];
         

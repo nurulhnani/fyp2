@@ -33,7 +33,7 @@ class StudentTableSeeder extends Seeder
                 'G2_relation' => 'Mother',
                 'G2_phonenum' => '0198876675',
                 'G2_income' => '1500',
-                'image_path'=>'Mohd Hafiz bin Kamal.png',
+                'image_path'=> null,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -53,7 +53,7 @@ class StudentTableSeeder extends Seeder
                 'G2_relation' => 'Mother',
                 'G2_phonenum' => '0198876675',
                 'G2_income' => '1500',
-                'image_path'=>'Mohd Hafiz bin Kamal.png',
+                'image_path'=> null,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -73,7 +73,7 @@ class StudentTableSeeder extends Seeder
                 'G2_relation' => 'Mother',
                 'G2_phonenum' => '0187765678',
                 'G2_income' => '3500',
-                'image_path'=>'Nur Amirah.png',
+                'image_path'=> null,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
