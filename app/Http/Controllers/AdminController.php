@@ -100,7 +100,10 @@ class AdminController extends Controller
 
     public function downloadstudentfile()
     {
-    	$myFile = public_path("assets\download\studentlist.xlsx");
+        // $contents = file_get_contents('https://res.cloudinary.com/hme0x9wjh/raw/upload/v1673668020/big5_nbk4fu.xlsx');
+        // file_put_contents('temp.xlsx', $contents);
+
+    	$myFile = asset("assets/download/studentlist.xlsx");
     	$newName = 'student_template.xlsx';
 
     	return response()->download($myFile, $newName);
@@ -108,7 +111,7 @@ class AdminController extends Controller
 
     public function downloadteacherfile()
     {
-    	$myFile = public_path("assets\download\steacherlist.xlsx");
+    	$myFile = asset("assets/download/steacherlist.xlsx");
     	$newName = 'teacher_template.xlsx';
 
     	return response()->download($myFile, $newName);
