@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class TeacherController extends Controller
 {
@@ -59,27 +60,39 @@ class TeacherController extends Controller
         $request->validate([
             'name'=>'required',
             'nric' =>'required',
-            'gender' =>'required',
+            // 'gender' =>'required',
             'email' =>'required',
-            'position' =>'required',
-            'address' =>'required',
-            'phone_number' =>'required',
+            // 'position' =>'required',
+            // 'address' =>'required',
+            // 'phone_number' =>'required',
         ]);
 
         $teachername = auth()->user()->name;
-        $teacherid = Teacher::where('name',$teachername)->first()->id;
+        $teacherid = Teacher::where('name',$teachername)->first();
 
-        $teacher = Teacher::find($teacherid);
+        $teacher = Teacher::find($teacherid->id);
+
+        $userid = User::where('name','=',$request->input('name'))->first();
+        $user = User::find($userid->id);      
+
         if($request->hasFile('imageT')){
-            $destination = "assets\img\userImage".$teacher->image_path;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
-            $file = $request->file('imageT');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $teacher->name.'.'.$extension;
-            $file->move(public_path('assets\img\userImage'),$filename);
-            $teacher->image_path = $filename;
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageT')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+            // dd($uploadedFileUrl);
+            // $newImage = $data['name'] . '.' . $request->image->extension();
+            // $request->image->move(public_path('storage'), $newImage);
+            $teacher->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
+            $teacher->attachMedia($request->file('imageT'));
+
+            // $destination = "assets\img\userImage".$teacher->image_path;
+            // if(File::exists($destination)){
+            //     File::delete($destination);
+            // }
+            // $file = $request->file('imageT');
+            // $extension = $file->getClientOriginalExtension();
+            // $filename = $teacher->name.'.'.$extension;
+            // $file->move(public_path('assets\img\userImage'),$filename);
+            // $teacher->image_path = $filename;
         }
 
         $teacher->name = $request->input('name');
@@ -97,16 +110,16 @@ class TeacherController extends Controller
         }
         $teacher -> update();
 
-        $user = User::where('name','=',$request->input('name'))->first();
+        
+        // if ($request->hasFile('imageT')) {
+        //     $user->image_path = $uploadedFileUrl;
+        // }
         $user->name = $request->input('name');
-        if ($request->hasFile('imageT')) {
-            $user->image_path = $filename;
-        }
         $user->nric_mykid =  $request->input('nric');
         $user->email = $request->input('email');
         $user->type = 1;
         $user->email_verified_at = now();
-        $user->password = Hash::make('secret');
+        // $user->password = Hash::make('secret');
         $user->created_at = now();
         $user->updated_at = now();
         $user->update();
@@ -141,21 +154,32 @@ class TeacherController extends Controller
         $request->validate([
             'name'=>'required',
             'nric' =>'required',
-            'gender' =>'required',
+            // 'gender' =>'required',
             'email' =>'required',
-            'position' =>'required',
-            'address' =>'required',
+            // 'position' =>'required',
+            // 'address' =>'required',
             // 'subject_taught' =>'required',
             // 'class_name' =>'required',
-            'phone_number' =>'required',
-            'phone_number' =>'required',
-            'image' => 'required',
+            // 'phone_number' =>'required',
+            // 'phone_number' =>'required',
+            // 'image' => 'required',
         ]);
 
         $data = $request->input();
         $teacher = new Teacher();
-        $newImage = $data['name'].'.'.$request->image->extension();
-        $request->image->move(public_path('assets\img\userImage'),$newImage);
+        $user = new User;
+        // $newImage = $data['name'].'.'.$request->image->extension();
+        // $request->image->move(public_path('assets\img\userImage'),$newImage);
+
+        if($request->hasFile('image')){
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+            // dd($uploadedFileUrl);
+            // $newImage = $data['name'] . '.' . $request->image->extension();
+            // $request->image->move(public_path('storage'), $newImage);
+            $teacher->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
+            $teacher->attachMedia($request->file('image'));
+        }
 
         // insert into teacher table
         $teacher->status = "active";
@@ -168,16 +192,15 @@ class TeacherController extends Controller
         // $teacher->subject_taught = $data['subject_taught'];
         // $teacher->class_name = $data['class_name'];
         $teacher->phone_number = $data['phone_number'];   
-        $teacher->image_path = $newImage;
+        // $teacher->image_path = $newImage;
         if($request->input('customfield') != null) {
             $additional=implode(",",$request->input('customfield'));
             $teacher->additional_Info = $additional;
         }
         $teacher -> save();
 
-        $user = new User;
+        
         $user->name = $data['name'];
-        $user->image_path = $newImage;
         $user->nric_mykid = $data['nric'];
         $user->email = $data['email'];
         $user->type = 1;
@@ -248,16 +271,18 @@ class TeacherController extends Controller
         ]);
 
         $teacher = Teacher::find($id);
+        $user = User::where('name','=',$request->input('name'))->first();
+        $user->name = $request->input('name');
+
         if($request->hasFile('imageT')){
-            $destination = "assets\img\userImage".$teacher->image_path;
-            if(File::exists($destination)){
-                File::delete($destination);
-            }
-            $file = $request->file('imageT');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $teacher->name.'.'.$extension;
-            $file->move(public_path('assets\img\userImage'),$filename);
-            $teacher->image_path = $filename;
+
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageT')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+            // dd($uploadedFileUrl);
+            // $newImage = $data['name'] . '.' . $request->image->extension();
+            // $request->image->move(public_path('storage'), $newImage);
+            $teacher->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
+            $teacher->attachMedia($request->file('imageT'));
         }
 
         $teacher->name = $request->input('name');
@@ -275,18 +300,17 @@ class TeacherController extends Controller
             $additional=implode(",",$request->input('customfield'));
             $teacher->additional_Info = $additional;
         }
-        $teacher -> update();
+        $teacher->update();
 
-        $user = User::where('name','=',$request->input('name'))->first();
-        $user->name = $request->input('name');
-        if ($request->hasFile('imageT')) {
-            $user->image_path = $filename;
-        }
+        
+        // if ($request->hasFile('imageT')) {
+        //     $user->image_path = $uploadedFileUrl;
+        // }
         $user->nric_mykid =  $request->input('nric');
         $user->email = $request->input('email');
         $user->type = 1;
         $user->email_verified_at = now();
-        $user->password = Hash::make('secret');
+        // $user->password = Hash::make('secret');
         $user->created_at = now();
         $user->updated_at = now();
         $user->update();

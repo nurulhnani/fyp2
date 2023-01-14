@@ -623,6 +623,7 @@ class StudentController extends Controller
         $data = $request->input();
 
         $student = new Student;
+        $user = new User;
 
         $student->status = "active";
         $student->name = $data['name'];
@@ -647,6 +648,7 @@ class StudentController extends Controller
             // $newImage = $data['name'] . '.' . $request->image->extension();
             // $request->image->move(public_path('storage'), $newImage);
             $student->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
             $student->attachMedia($request->file('image'));
         }
 
@@ -657,11 +659,11 @@ class StudentController extends Controller
         // dd($string);
         $student->save();
 
-        $user = new User;
+       
         $user->name = $data['name'];
-        if ($request->hasFile('image')) {
-            $user->image_path = $newImage;
-        }
+        // if ($request->hasFile('image')) {
+        //     $user->image_path = $uploadedFileUrl;
+        // }
         $user->image_path = $newImage;
         $user->nric_mykid = $data['mykid'];
         $user->type = 2;
@@ -750,6 +752,9 @@ class StudentController extends Controller
         ]);
 
         $student = Student::find($id);
+        $userid = User::where('name', '=', $request->input('old_name'))->first();
+        $user = User::find($userid->id);
+
         if ($request->hasFile('imageS')) {
 
             if (isset($student->image_path)) {
@@ -773,6 +778,7 @@ class StudentController extends Controller
             // $filename = $request->input('name') . '.' . $extension;
             // $file->move(public_path('storage'), $filename);
             $student->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
         }
 
         $student->status = 'active';
@@ -797,16 +803,16 @@ class StudentController extends Controller
         }
         $student->update();
 
-        $user = User::where('name', '=', $request->input('old_name'))->first();
+        
         $user->name = $request->input('name');
-        if ($request->hasFile('image')) {
-            $user->image_path = $uploadedFileUrl;
-        }
+        // if ($request->hasFile('image')) {
+        //     $user->image_path = $uploadedFileUrl;
+        // }
         // $user->image_path = $newImage;
         $user->nric_mykid = $request->input('mykid');
         $user->type = 2;
         $user->email_verified_at = now();
-        $user->password = Hash::make('secret');
+        // $user->password = Hash::make('secret');
         $user->created_at = now();
         $user->updated_at = now();
         $user->update();
@@ -834,7 +840,10 @@ class StudentController extends Controller
             // 'G2_income' => 'required',
         ]);
 
-        $student = Student::find($id);
+        $student = Student::find($id);     
+        $user = User::where('name', '=', $request->input('old_name'))->first();
+        $user->name = $request->input('name');
+
         if ($request->hasFile('imageS')) {
 
             if (isset($student->image_path)) {
@@ -858,6 +867,7 @@ class StudentController extends Controller
             // $filename = $request->input('name') . '.' . $extension;
             // $file->move(public_path('assets\img\userImage'), $filename);
             $student->image_path = $uploadedFileUrl;
+            $user->image_path = $uploadedFileUrl;
         }
 
         // dd($request);
@@ -884,8 +894,20 @@ class StudentController extends Controller
         }
 
         $student->update();
-        // $student->update();
-        // dd($request);
+        
+
+        // if ($request->hasFile('imageS')) {
+        //     $user->image_path = $uploadedFileUrl;
+        // }
+        // $user->image_path = $newImage;
+        $user->nric_mykid = $request->input('mykid');
+        $user->type = 2;
+        $user->email_verified_at = now();
+        // $user->password = Hash::make('secret');
+        $user->created_at = now();
+        $user->updated_at = now();
+        $user->update();
+
         return redirect()->route('studentlist')->with('success', 'Student updated successfully');
     }
 

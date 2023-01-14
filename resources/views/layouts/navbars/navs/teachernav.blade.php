@@ -21,7 +21,7 @@
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
                             @if(auth()->user()->image_path != null)
-                            <img alt="Image placeholder" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                            <img alt="Image placeholder" src="{{auth()->user()->image_path}}">
                             @else 
                             <img alt="Image placeholder" src="{{asset('assets/img/theme/default.png')}}">
                             @endif

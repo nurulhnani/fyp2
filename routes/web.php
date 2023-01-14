@@ -170,6 +170,11 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 		Route::get('/student-overview/{id}', [App\Http\Controllers\StudentController::class,'overviewForTeacher'])->name('studentoverview');
 		Route::put('/updatestudent/{id}', [App\Http\Controllers\StudentController::class,'updatestudent'])->name('updatestudent');
 
+		//Export Student Profile
+		Route::get('/student-export',[App\Http\Controllers\PDFController::class, 'exportPage'])->name('exportPage');
+		Route::get('/showPDF',[App\Http\Controllers\PDFController::class, 'showStudentPDF'])->name('showStudentPDF');
+		// Route::get('/studentProfile-export/{id}',[App\Http\Controllers\PDFController::class, 'showExportForm'])->name('studentProfile-export');
+
 		//Classroom Management
 		Route::get('classroom', [App\Http\Controllers\ClassroomManagementController::class, 'index'])->name('classrooms.index');
 		Route::post('classroom/view', [App\Http\Controllers\ClassroomManagementController::class, 'view'])->name('classrooms.view');

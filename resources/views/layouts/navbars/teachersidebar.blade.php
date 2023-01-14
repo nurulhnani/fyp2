@@ -83,7 +83,7 @@
                     <a href="#" class="nav-link">
                         <div class="profile-image">
                             @if(auth()->user()->image_path != null)
-                            <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
+                            <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{auth()->user()->image_path}}">
                             @else 
                             <img class="rounded-circle" style="width: 100%;height: 100%;" src="{{asset('assets/img/theme/default.png')}}">
                             @endif
@@ -152,6 +152,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('evaluations.index') }}">
                                     {{ __('Student Evaluation') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('exportPage')}}">
+                                    {{ __('Export Student Profile') }}
                                 </a>
                             </li>
                         </ul>
