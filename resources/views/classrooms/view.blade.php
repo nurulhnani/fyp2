@@ -54,7 +54,8 @@
                         <div class="col-xl-8">
                             <!-- <div class="card shadow"> -->
                             @if(isset($class->class_plan))
-                            <img src="{{ asset('assets/img/class/'.$class->class_plan) }}" class="class-plan-img">
+                            <!-- <img src="{{ asset('assets/img/class/'.$class->class_plan) }}" class="class-plan-img"> -->
+                            <img src="{{ $class->class_plan }}" class="class-plan-img">
                             @else
                             <div class="card shadow text-center" style="width:100%; height: 100%;">
                                 <h5><i>No class plan created yet for this class</i></h5>
