@@ -754,13 +754,13 @@ class StudentController extends Controller
 
             if (isset($student->image_path)) {
                  //update image
-                 $newimage = $request->file('imageS');
-                 $student->updateMedia($newimage);
-                 $student->attachMedia($request->file('imageS'));
-                // $old_image = $student->image_path;
-                // $token = explode('/', $old_image);
-                // $token2 = explode('.', $token[sizeof($token) - 1]);
-                // Cloudinary::destroy('userImages/' . $token2[0]);
+                //  $newimage = $request->file('imageS');
+                //  $student->updateMedia($newimage);
+                //  $student->attachMedia($request->file('imageS'));
+                $old_image = $student->image_path;
+                $token = explode('/', $old_image);
+                $token2 = explode('.', $token[sizeof($token) - 1]);
+                Cloudinary::destroy('userImages/' . $token2[0]);
             }
             $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
 
