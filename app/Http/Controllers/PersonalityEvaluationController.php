@@ -216,7 +216,7 @@ class PersonalityEvaluationController extends Controller
         unset($input['student_mykid']);
 
         toastr()->success('Your personality evaluation has been submit successfully!', 'Congrats');
-        // return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher]);
+        return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher]);
     }
 
     public function showCurrResult(Student $student)
