@@ -327,7 +327,7 @@
                     </div>
                 </div>
                 <div class="card-body text-center">
-                    @if($Extraversion != null)
+                    @if($Extraversion['Extrovert'] != 0)
                     <div class="chart-area" style="width:130px; height:130px; display: inline-block">
                         <canvas id="chart1"></canvas>
                         <div class="donut-inner">
@@ -505,82 +505,88 @@
                 </script>
                 @else
                 <h4 class="card-body"><u>No result found</u></h4>
-                @endif
             </div>
+            @endif
         </div>
     </div>
+</div>
 
 
-    <div class="row mt-3">
-        <div class="col-xl-12 mb-5 mb-xl-0">
-            <div class="card shadow">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">Interest Inventory</h3>
-                        </div>
+<div class="row mt-3">
+    <div class="col-xl-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">Interest Inventory</h3>
                     </div>
                 </div>
-                <div class="card-body text-center">
-                    <canvas id="interest-chart" height="230"></canvas>
-                    <?php
-                    $interest = "";
-                    $i = 0;
-                    $total = 0;
-                    foreach ($InterestResultArr as $avg) {
-                        $total += $avg;
-                    }
-                    foreach ($InterestResultArr as $avg) {
-                        if ($total != 0) {
-                            if ($i == 0) {
-                                $interest = round(($avg / $total) * 100, 0);
-                            } else {
-                                $interest .= ", " . round(($avg / $total) * 100, 0);
-                            }
+            </div>
+            <div class="card-body text-center">
+                @if($InterestResultArr['realistic'] != null)
+                <canvas id="interest-chart" height="230"></canvas>
+                <?php
+                $interest = "";
+                $i = 0;
+                $total = 0;
+                foreach ($InterestResultArr as $avg) {
+                    $total += $avg;
+                }
+                foreach ($InterestResultArr as $avg) {
+                    if ($total != 0) {
+                        if ($i == 0) {
+                            $interest = round(($avg / $total) * 100, 0);
+                        } else {
+                            $interest .= ", " . round(($avg / $total) * 100, 0);
                         }
-                        $i++;
                     }
-                    ?>
-                    <input type="hidden" id="0" value="{{$interest}}">
-                </div>
+                    $i++;
+                }
+                ?>
+                <input type="hidden" id="0" value="{{$interest}}">
+            </div>
 
-                <script>
-                    $(function() {
-                        obj = document.getElementById('0').value.replace(" ", "").split(',');
-                        var ctx = $("#interest-chart");
+            <script>
+                $(function() {
+                    obj = document.getElementById('0').value.replace(" ", "").split(',');
+                    var ctx = $("#interest-chart");
 
-                        var data = {
-                            labels: ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"],
-                            datasets: [{
-                                indexAxis: 'y',
-                                data: obj,
-                                backgroundColor: ['#540375', '#BA94D1', '#863A6F', '#DEBACE', '#C060A1', '#D989B5'],
-                            }],
-                        };
+                    var data = {
+                        labels: ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"],
+                        datasets: [{
+                            indexAxis: 'y',
+                            data: obj,
+                            backgroundColor: ['#540375', '#BA94D1', '#863A6F', '#DEBACE', '#C060A1', '#D989B5'],
+                        }],
+                    };
 
-                        var options = {
-                            responsive: true,
-                            tooltips: {
-                                callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
-                                    }
+                    var options = {
+                        responsive: true,
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    return data.labels[tooltipItem.index] + ': ' + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
                                 }
                             }
-                        };
+                        }
+                    };
 
-                        var chart1 = new Chart(ctx, {
-                            type: "horizontalBar",
-                            data: data,
-                            options: options,
-                        });
-
+                    var chart1 = new Chart(ctx, {
+                        type: "horizontalBar",
+                        data: data,
+                        options: options,
                     });
-                </script>
-            </div>
+
+                });
+            </script>
+            @else
+            <h4 class="card-body"><u>No result found</u></h4>
         </div>
+        @endif
     </div>
-    @include('layouts.footers.auth')
+</div>
+</div>
+@include('layouts.footers.auth')
 </div>
 @endsection
 
