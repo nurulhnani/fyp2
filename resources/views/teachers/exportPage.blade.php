@@ -12,8 +12,8 @@
             <h6 class="h2 text-black d-inline-block mb-0">Export Profile</h6>
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                    <li class="breadcrumb-item"><a href="{{ route('studenthome',$student->id) }}"><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Export Profile</li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Export Student Profile</li>
                 </ol>
             </nav> 
             </div>
