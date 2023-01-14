@@ -647,6 +647,7 @@ class StudentController extends Controller
             // $newImage = $data['name'] . '.' . $request->image->extension();
             // $request->image->move(public_path('storage'), $newImage);
             $student->image_path = $uploadedFileUrl;
+            $student->attachMedia($request->file('image'));
         }
 
         if ($request->input('customfield') != null) {
@@ -755,7 +756,7 @@ class StudentController extends Controller
                  //update image
                  $newimage = $request->file('imageS');
                  $student->updateMedia($newimage);
-                 
+                 $student->attachMedia($request->file('imageS'));
                 // $old_image = $student->image_path;
                 // $token = explode('/', $old_image);
                 // $token2 = explode('.', $token[sizeof($token) - 1]);
