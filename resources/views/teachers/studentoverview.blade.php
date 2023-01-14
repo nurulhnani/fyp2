@@ -400,8 +400,8 @@
                         });
                     </script>
                     <!--End Chart-->
-                    <p class="card-text mt-2">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>. 
-                    Below is the table of general characteristics for both high and low scorer of each category.</p>
+                    <p class="card-text mt-2">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>.
+                        Below is the table of general characteristics for both high and low scorer of each category.</p>
 
                     <div class="table-responsive pt-2">
                         <table class="table align-items-center table-flush">
@@ -503,6 +503,9 @@
 
                 {{-- Behavioural Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                    @if(count($behaMerits) == 0 && count($behaDemerits) == 0)
+                    <h4>No result found for {{$student->name}}.</h4>
+                    @else
                     <div class=row>
                         <div class="col">
                             <h5 class="h3 card-category">Behavioural Merit and Demerit Transcript</h5>
@@ -595,7 +598,7 @@
                             @endif
                         </div>
                     </div>
-
+                    @endif
                 </div>
 
                 {{-- Health Tab --}}
@@ -1441,7 +1444,6 @@
     input[type="range"]:disabled::-webkit-slider-thumb {
         cursor: not-allowed;
     }
-
 </style>
 @endsection
 
