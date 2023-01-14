@@ -836,15 +836,28 @@ class StudentController extends Controller
 
         $student = Student::find($id);
         if ($request->hasFile('imageS')) {
-            $destination = "assets\img\userImage" . $student->image_path;
-            if (File::exists($destination)) {
-                File::delete($destination);
+
+            if (isset($student->image_path)) {
+                 //update image
+                //  $newimage = $request->file('imageS');
+                //  $student->updateMedia($newimage);
+                //  $student->attachMedia($request->file('imageS'));
+                $old_image = $student->image_path;
+                $token = explode('/', $old_image);
+                $token2 = explode('.', $token[sizeof($token) - 1]);
+                Cloudinary::destroy('userImages/' . $token2[0]);
             }
-            $file = $request->file('imageS');
-            $extension = $file->getClientOriginalExtension();
-            $filename = $request->input('name') . '.' . $extension;
-            $file->move(public_path('assets\img\userImage'), $filename);
-            $student->image_path = $filename;
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+
+            // $destination = "assets\img\userImage" . $student->image_path;
+            // if (File::exists($destination)) {
+            //     File::delete($destination);
+            // }
+            // $file = $request->file('imageS');
+            // $extension = $file->getClientOriginalExtension();
+            // $filename = $request->input('name') . '.' . $extension;
+            // $file->move(public_path('assets\img\userImage'), $filename);
+            $student->image_path = $uploadedFileUrl;
         }
 
         // dd($request);
