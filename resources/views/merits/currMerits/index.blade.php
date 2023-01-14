@@ -125,42 +125,68 @@
                   <input type="text" class="form-control" id="inputPassword4" name="student_mykid" value="{{ $student->mykid }}" readonly="true">
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputAddress">Activity</label>
+
+
+              <div class="form-row">
+                <div class="form-group col-md">
+                  <label for="inputState">Category</label>
+                  <select class="form-control" name="category" id="category-dd">
+                    <option selected disabled hidden>Choose...</option>
+                    <option value="Position">Position</option>
+                    <option value="Competition">Competition</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" id="activity-block" style="display:none">
+                <label for="inputAddress">Achievement</label>
+                <select id="activity-dd" class="form-control" name="achievement">
+                  <option selected disabled hidden>Choose...</option>
+                  <option value="Johan">Johan</option>
+                  <option value="Naib Johan">Naib Johan</option>
+                  <option value="Ketiga">Ketiga</option>
+                </select>
+              </div>
+
+              <div class="form-group" id="name-block" style="display:none">
+                <label for="labelName">Club/Society</label>
                 <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
               </div>
-              <div class="form-group">
+
+
+              <div class="form-group" id="desc-block" style="display:none">
                 <label for="inputAddress2">Description</label>
                 <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
               </div>
-              <div class="form-row">
+
+              <div class="form-row" id="others-block" style="display:none">
                 <div class="form-group col-md-6">
                   <label for="inputCity">Level</label>
-                  <select id="inputState" class="form-control" name="level">
-                    <option selected>Choose...</option>
+                  <select class="form-control" name="level" id="level-dd">
+                    <option selected disabled hidden>Choose...</option>
                     <option value="School">School</option>
                     <option value="District">District</option>
+                    <option value="State">State</option>
                     <option value="National">National</option>
                     <option value="International">International</option>
                   </select>
                 </div>
-                <div class="form-group col-md-3">
+                <!-- <div class="form-group col-md-4" style="display:none" id="achievement-block">
                   <label for="inputState">Achievement</label>
-                  <select id="inputState" class="form-control" name="achievement">
+                  <select class="form-control" name="achievement" id="achievement-dd">
                     <option selected>Choose...</option>
                     <option value="Participant">Participant</option>
                     <option value="Runner Ups">Runner Ups</option>
                     <option value="Committee Member">Committee Member</option>
                   </select>
-                </div>
-                <div class="form-group col-md-3">
+                </div> -->
+                <div class="form-group col-md-6">
                   <label for="inputZip">Date</label>
                   <input name="date" type="date" class="form-control" id="inputZip">
                 </div>
-
               </div>
               <div class="modal-footer nopadding">
-                <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary ml-auto">Submit</button>
               </div>
             </form>
@@ -182,3 +208,53 @@
     margin: 0 !important;
   }
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var level = $("#level-dd").html();
+    $('#category-dd').on('change', function() {
+      var category = this.value;
+
+      $("#activity-dd").html('');
+      $.ajax({
+        url: "{{url('api/fetch-activity')}}",
+        type: "POST",
+        data: {
+          category: category,
+          _token: '{{csrf_token()}}'
+        },
+        dataType: 'json',
+        success: function(result) {
+
+          if (category == 'Position') {
+            $('#activity-dd').html('<option value="">Select Achievement</option>');
+            $.each(result.positions, function(key, value) {
+              $("#activity-dd").append('<option value="' + key + '">' + value + '</option>');
+            });
+            $('#desc-block').hide();
+            $('#activity-block').show();
+            $("label[for='labelName']").text("Club/Society");
+            $('#name-block').show();
+            $('#others-block').show();
+            $('#level-dd').html('<option selected value="School">School</option>');
+
+          } else {
+            $('#activity-block').show();
+            $("label[for='labelName']").text("Activity");
+            $('#name-block').show();
+            $('#desc-block').show();
+            $('#others-block').show();
+            $('#level-dd').html(level);
+            $('#activity-dd').html('<option value="">Select Achievement</option>');
+            $.each(result.competitions, function(key, value) {
+              $("#activity-dd").append('<option value="' + value.achievement + '">' + value.achievement + '</option>');
+            });
+          }
+
+
+        }
+      });
+    });
+  });
+</script>

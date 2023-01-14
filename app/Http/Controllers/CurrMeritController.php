@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\MeritsImport;
 use App\Models\Merit;
+use App\Models\Merit_Points;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,16 +35,28 @@ class CurrMeritController extends Controller
 
     public function store(Request $request)
     {
+        // if ($newMerit['level'] == "International") {
+        //     $newMerit['merit_point'] = 50;
+        // } else if ($newMerit['level'] == "National") {
+        //     $newMerit['merit_point'] = 30;
+        // } else if ($newMerit['level'] == "District") {
+        //     $newMerit['merit_point'] = 20;
+        // } else {
+        //     $newMerit['merit_point'] = 10;
+        // }
+
         $newMerit = $request->all();
 
-        if ($newMerit['level'] == "International") {
-            $newMerit['merit_point'] = 50;
-        } else if ($newMerit['level'] == "National") {
-            $newMerit['merit_point'] = 30;
-        } else if ($newMerit['level'] == "District") {
-            $newMerit['merit_point'] = 20;
-        } else {
-            $newMerit['merit_point'] = 10;
+        if($request->category == 'Position'){
+            $meritRef = Merit_Points::where('id', $request->achievement)->first();
+            $newMerit['merit_point'] = $meritRef->merit_points;
+            $newMerit['achievement'] = $meritRef->achievement;
+        }
+        else{
+            $meritRef = Merit_Points::where('achievement', $request->achievement)
+            ->where('level', $request->level)
+            ->first();
+            $newMerit['merit_point'] = $meritRef->merit_points;
         }
 
         Merit::create($newMerit);
@@ -87,10 +100,11 @@ class CurrMeritController extends Controller
         return view('merits/currMerits.bulk', ['students' => $students]);
     }
 
-    public function checklistImport(Request $request){
+    public function checklistImport(Request $request)
+    {
         $studentLists = $request->input('checklist');
-        foreach ($studentLists as $studentList) { 
-        $students[] = Student::where('mykid', "=", $studentList)->first();
+        foreach ($studentLists as $studentList) {
+            $students[] = Student::where('mykid', "=", $studentList)->first();
         }
         return view('merits/currMerits.bulkList', ['studentLists' => $students]);
     }
@@ -106,7 +120,7 @@ class CurrMeritController extends Controller
     {
         $checklists = $request->input('checklist');
         // print json_encode($checklists);
-        foreach ($checklists as $checklist) {            
+        foreach ($checklists as $checklist) {
             $newMerit = $request->all();
             $newMerit['student_mykid'] = $checklist;
 
@@ -119,17 +133,23 @@ class CurrMeritController extends Controller
             } else {
                 $newMerit['merit_point'] = 10;
             }
-    
+
             Merit::create($newMerit);
         }
         return redirect()->route('merits.bulk')->with('success', 'Your merit records has successfully added');
-
     }
 
     public function autocompleteSearch(Request $request)
     {
-          $query = $request->get('query');
-          $filterResult = Student::where('name', 'LIKE', '%'. $query. '%')->get();
-          return response()->json($filterResult);
-    } 
+        $query = $request->get('query');
+        $filterResult = Student::where('name', 'LIKE', '%' . $query . '%')->get();
+        return response()->json($filterResult);
+    }
+
+    public function fetchActivity(Request $request)
+    {
+        $data['positions'] = Merit_Points::where('category', '=', $request->category)->pluck("achievement", "id")->toArray();
+        $data['competitions'] = Merit_Points::where('category', '=', 'Competition')->select('achievement')->groupBy('achievement')->get();
+        return response()->json($data);
+    }
 }

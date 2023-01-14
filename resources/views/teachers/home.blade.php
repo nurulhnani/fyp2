@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div class="card card-chart">
-                    <div class="card-body">
+                    <div class="card-body pt-5">
                         <canvas id="densityChart"></canvas>
                     </div>
 

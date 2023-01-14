@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('merits', function (Blueprint $table) {
+        Schema::create('merit_points', function (Blueprint $table) {
             $table->id();
-            $table->string('merit_name')->nullable();
-            $table->string('type');
+            $table->string('category');
             $table->string('level');
-            $table->integer('merit_point');
-            $table->string('achievement')->nullable();
-            $table->string('desc')->nullable();
-            $table->date('date');
-            $table->string('student_mykid');
+            $table->string('achievement');
+            $table->integer('merit_points');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('merits');
+        Schema::dropIfExists('merit_points');
     }
 };
