@@ -249,10 +249,10 @@ class PDFController extends Controller
 
             ////// Interest Inventory ///////
             $categoryArray = array("Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional");
-            if (Interest_Inventory_Results::where('student_id', $id)->exists()) {
+            if (Interest_Inventory_Results::where('student_id', $student->id)->exists()) {
 
                 foreach ($categoryArray as $category) {
-                    $averageScore = Interest_Inventory_Results::where('student_id', $id)
+                    $averageScore = Interest_Inventory_Results::where('student_id', $student->id)
                         ->when($request->year != null, function ($q) use ($request) {
                             return $q->where(DB::raw('YEAR(created_at)'), $request->year);
                         })
