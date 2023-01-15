@@ -190,10 +190,14 @@ class ClassController extends Controller
                         ->with('success','Class deleted successfully');
     }
 
-    public function removeStudent($id){
+    public function removeStudent(Classlist $class,$id){
         $student = Student::find($id);
         $student->classlist_id = null;
         $student->update();
-        return redirect()->back()->with('success','Successfully removed!');
+
+        $teacher = Teacher::all();
+        $students = Student::all();
+        // return view('classes.edit',compact('class','teacher','students'));
+        return redirect()->route('classes.edit',compact('class','teacher','students'))->with('success','Successfully removed!');
     }
 }
