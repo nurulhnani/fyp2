@@ -291,7 +291,7 @@
 
                     <div class="form-group dropzone dropzone-single" data-toggle="dropzone" data-dropzone-url="http://">
                         <div class="fallback">
-                            <form method="post" action="{{ route('file-import') }}" enctype="multipart/form-data" autocomplete="off">
+                            <form method="post" action="" enctype="multipart/form-data" autocomplete="off">
                                 @csrf
                                 <div class="custom-file">
                                     <label for="example-url-input" class="form-control-label">Upload Student List</label>
