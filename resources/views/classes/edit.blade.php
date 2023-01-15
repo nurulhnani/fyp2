@@ -159,7 +159,7 @@
                                         <td scope="row" style="width: 30%">{{ $student->mykid }}</td>  
                                         <td scope="row" style="width: 50%">{{ $student->name }}</td>                 
                                         <td class="text-right" style="width: 20%">
-                                          <a href="#removeStudent{{$class->id}}" data-toggle="modal">
+                                          <a href="#removeStudent{{$student->id}}" data-toggle="modal">
                                             <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
                                           </a>
                                           
