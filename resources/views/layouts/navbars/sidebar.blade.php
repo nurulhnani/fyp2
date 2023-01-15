@@ -196,6 +196,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('manageMerit') }}">
+                                    {{ __('Manage Merit Points') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('customfield') }}">
                                     {{ __('Custom Field Config') }}
                                 </a>

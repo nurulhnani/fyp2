@@ -89,6 +89,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::delete('/deleteField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'deleteField'])->name('deleteField');
 	Route::put('/editField/{id}',[App\Http\Controllers\AutoFieldsController::class, 'editField'])->name('editField');
 	Route::post('/storeclass',[App\Http\Controllers\SubjectController::class, 'storeclass'])->name('subjects.storeclass');
+	Route::get('/manageMerit',[App\Http\Controllers\MeritPointsController::class, 'index'])->name('manageMerit');
+	Route::resource('meritPoints', App\Http\Controllers\MeritPointsController::class, ['except' => ['index']]);
 	Route::get('/manageAssessment',[App\Http\Controllers\InterestInventoryController::class, 'index'])->name('manageAssessment');
 	Route::post('/addquestion',[App\Http\Controllers\InterestInventoryController::class, 'addquestion'])->name('addquestion');
 	Route::put('/editassessment/{id}',[App\Http\Controllers\InterestInventoryController::class, 'editassessment'])->name('editassessment');
@@ -136,6 +138,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
 		Route::get('meritdemerit/curriculum/{student}', ['as' => 'merits.index', 'uses' => 'App\Http\Controllers\CurrMeritController@index']);
 		Route::resource('merits', App\Http\Controllers\CurrMeritController::class, ['except' => ['index']]);
+		Route::post('api/fetch-activity', [App\Http\Controllers\CurrMeritController::class, 'fetchActivity']);
 		Route::get('meritdemerit/curriculum-bulk', [App\Http\Controllers\CurrMeritController::class, 'viewStudentList'])->name('merits.bulk');
 		Route::post('checklist-import', [App\Http\Controllers\CurrMeritController::class, 'checklistImport'])->name('checklist-import');
 		Route::post('file-import', [App\Http\Controllers\CurrMeritController::class, 'fileImport'])->name('file-import');

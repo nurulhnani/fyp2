@@ -107,54 +107,6 @@
             </div>
         </div>
 
-        <!--Add New Class Modal -->
-        <div class="modal fade" id="AddNewQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title font-weight-bold" id="exampleModalLabel">Add New Question</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{route('addquestion')}}" method="POST" id="AddNewQuestion">
-                        @csrf
-                        {{-- @method('PUT') --}}
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-name">{{ __('Question') }}</label>
-                                        <input type="text" name="question" id="question" class="form-control form-control-alternative" placeholder="{{ __('Question') }}" value="" autofocus>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="category" class="form-control-label">Category</label>
-                                        <select class="form-control form-control-alternative" name="category" id="category">
-                                            <option value="" selected>Select Category</option>
-                                            <option value="Realistic">Realistic</option>
-                                            <option value="Investigative">Investigative</option>
-                                            <option value="Artistic">Artistic</option>
-                                            <option value="Social">Social</option>
-                                            <option value="Enterprising">Enterprising</option>
-                                            <option value="Conventional">Conventional</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
     @include('layouts.footers.auth')
 </div>
