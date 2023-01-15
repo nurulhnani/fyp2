@@ -159,10 +159,13 @@
                                         <td scope="row" style="width: 30%">{{ $student->mykid }}</td>  
                                         <td scope="row" style="width: 50%">{{ $student->name }}</td>                 
                                         <td class="text-right" style="width: 20%">
-                                          <a href="#removeStudent{{$student->id}}" data-toggle="modal">
+                                          <div class="text-right">
+                                            <a href="#removeStudent{{$student->id}}" data-toggle="modal">
                                             <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
-                                          </a>
-                                          @include('classes.removestudentaction')
+                                            </a>
+                                            @include('classes.removestudentaction')
+                                          </div>
+                                          
                                             {{-- <div class="custom-control custom-checkbox nopadding">
                                                 <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->id }}" id="customCheck<?php echo $index ?>">
                                                 <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
