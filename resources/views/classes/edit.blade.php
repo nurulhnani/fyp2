@@ -162,6 +162,31 @@
                                           <a href="#removeStudent{{$student->id}}" data-toggle="modal">
                                             <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
                                           </a>
+
+                                          {{-- Remove student Modal --}}
+                                        <div class="modal fade" id="removeStudent{{$student->id}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="myModalLabel">Delete Class</h3>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="{{route('removeStudent',$student->id)}}">
+                                                  @csrf
+                                                  @method('post')
+                                                <div class="modal-body">
+                                                    <h4 class="text-center">Are you sure to remove {{$student->name}} from {{$class->name}}?</h4>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary">Delete</button>
+                                                </div>
+                                              </form>
+                                            </div>
+                                          </div>
+                                        </div>
                                           
                                             {{-- <div class="custom-control custom-checkbox nopadding">
                                                 <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->id }}" id="customCheck<?php echo $index ?>">
@@ -291,30 +316,7 @@
                     </div>
                 </form>
                 
-{{-- Remove student Modal --}}
-<div class="modal fade" id="removeStudent{{$student->id}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title" id="myModalLabel">Delete Class</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form method="POST" action="{{route('removeStudent',$student->id)}}">
-          @csrf
-          @method('post')
-        <div class="modal-body">
-            <h4 class="text-center">Are you sure to remove {{$student->name}} from {{$class->name}}?</h4>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Delete</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+
             
 
             </div>
