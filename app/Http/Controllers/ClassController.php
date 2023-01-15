@@ -190,7 +190,7 @@ class ClassController extends Controller
                         ->with('success','Class deleted successfully');
     }
 
-    public function removeStudent(Classlist $class,$id){
+    public function removeStudent($id){
         $student = Student::find($id);
         $student->classlist_id = null;
         $student->update();

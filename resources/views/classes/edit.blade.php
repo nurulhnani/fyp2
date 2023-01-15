@@ -173,7 +173,7 @@
                                                       <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form method="POST" action="{{route('removeStudent',$class->id,$student->id)}}">
+                                                <form method="POST" action="{{route('removeStudent',$student->id)}}">
                                                   @csrf
                                                   @method('post')
                                                 <div class="modal-body">
