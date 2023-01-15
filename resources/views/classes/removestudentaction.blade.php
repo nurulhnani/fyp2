@@ -10,9 +10,9 @@
           </div>
           <form method="POST" action="{{route('removeStudent',$student->id)}}">
             @csrf
-            @method('post')
+            @method('PUT')
           <div class="modal-body">
-              <h4 class="text-center">Are you sure to remove {{$student->name}} from {{$class->name}}?</h4>
+              <h4 class="text-center">Are you sure to remove {{$student->name}} from this class?</h4>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -21,4 +21,4 @@
         </form>
       </div>
     </div>
-  </div>
+</div>
