@@ -92,10 +92,53 @@
                         <i class="ni business_briefcase-24"></i>{{ __('Assign student to class') }}
                     </div>
 
+                    {{-- <div class="">
+                        <label><strong>Select Category :</strong></label><br/>
+                        <select class="selectpicker">
+                          <?php
+                              $student = App\Models\Student::all();
+                          ?>
+                          @foreach ($student as $student)
+                            @if($student->status == 'active')
+                            <option value="{{$student->name}}">{{$student->name}}</option>
+                            @endif
+                          @endforeach                        
+                        </select>
+                    </div> --}}
+                    <div class="form-group">
+                      <label for="selectstudent" class="form-control-label">Select student by name</label>
+                      {{-- <label for="selectstudent">Select student by name</label><br/> --}}
+                        <select class="form-control form-control-alternative selectstudent" name="studentInClass[]" id="selectstudent">
+                          <?php
+                              $student = App\Models\Student::all();
+                          ?>
+                          @foreach ($student as $student)
+                            @if($student->status == 'active')
+                            <option value="{{$student->id}}">{{$student->name}}</option>
+                            @endif
+                          @endforeach                        
+                        </select>
+                        <input type="hidden" name="classid" class="classid" value="{{$class->id}}">
+                    </div>
+                    <script>
+                      $('.selectstudent').select2({
+                        placeholder: 'Select student',
+                        multiple: true
+                      });
+
+                      var classid = $(".classid").val();
+                      console.log(classid);
+                      $.get("{{ url('getStudent') }}/" + classid, function(data) {
+                          $('.selectstudent').html(classid);
+                      });
+
+                      // var selected = $('.selectstudent').val();
+                      // console.log(selected);
+                    </script>
 
                     <div class="form-group">
-                        <label for="example-email-input" class="form-control-label">Select student by name</label>
-                        <input class="form-control form-control-alternative" placeholder="Search" type="search" id="searchStd" onkeyup="myFunction()">
+                        <label for="example-email-input" class="form-control-label">Current students in class</label>
+                        {{-- <input class="form-control form-control-alternative" placeholder="Search" type="search" id="searchStd" onkeyup="myFunction()"> --}}
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush" id="myTable">
                                 <thead class="thead-light">
@@ -111,15 +154,19 @@
                                         $student = App\Models\Student::all();
                                     ?>
                                     @foreach ($student as $student)
-                                    @if($student->status == 'active')
+                                    @if($student->status == 'active' && $student->classlist_id == $class->id)
                                       <tr>
                                         <td scope="row" style="width: 30%">{{ $student->mykid }}</td>  
                                         <td scope="row" style="width: 50%">{{ $student->name }}</td>                 
                                         <td class="text-right" style="width: 20%">
-                                            <div class="custom-control custom-checkbox nopadding">
+                                          <a href="#removeStudent{{$class->id}}" data-toggle="modal">
+                                            <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
+                                          </a>
+                                          
+                                            {{-- <div class="custom-control custom-checkbox nopadding">
                                                 <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->id }}" id="customCheck<?php echo $index ?>">
                                                 <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                         <style>
                                             .nopadding {
@@ -244,7 +291,30 @@
                     </div>
                 </form>
                 
-
+{{-- Remove student Modal --}}
+<div class="modal fade" id="removeStudent{{$student->id}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="myModalLabel">Delete Class</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="POST" action="{{route('removeStudent',$student->id)}}">
+          @csrf
+          @method('post')
+        <div class="modal-body">
+            <h4 class="text-center">Are you sure to remove {{$student->name}} from {{$class->name}}?</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
             
 
             </div>
@@ -252,9 +322,19 @@
                                     
         @include('layouts.footers.auth')
     </div>
+
+
 @endsection
 
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
 @endpush
+
+{{-- @push('page_script')
+<script>
+  $('.selectstudent').select2({
+    placeholder: 'Select an option'
+  });
+</script>
+@endpush --}}

@@ -94,6 +94,7 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->studentInClass);
         $class = Classlist::find($id);
         
         $class->class_name = $request->input('class_name');
@@ -121,8 +122,14 @@ class ClassController extends Controller
         $teacher->updated_at = now();
         $teacher->update();
 
-        $studentLists = $request->input('checklist');
+        $studentLists = $request->input('studentInClass');
         if(isset($studentLists)){
+            $oldstudents = Student::where('classlist_id','=',$id)->get();
+            foreach($oldstudents as $oldstudent){
+                $oldstudent->classlist_id = null;
+                $oldstudent->update();
+            }
+            // dd($oldstudent);
             foreach ($studentLists as $studentList) { 
                 $studentsid = Student::where('id', "=", $studentList)->first()->id;
                 $students = Student::find($studentsid);
@@ -160,6 +167,15 @@ class ClassController extends Controller
         return redirect()->route('classes.index')->with('success',"Successfully updated!");
     }
 
+    public function getStudent($id)
+    {
+        // $mk = Nilai::select('matakuliahs_id')->where('mahasiswas_id', $id)->get();
+        // $data = Matakuliah::whereNotIn('id', $mk)->where('nama_matakuliah', 'LIKE', '%' . request('q') . '%')->paginate(10);
+
+        $data = Student::where('classlist_id','=',$id)->get();
+        return response()->json($data);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -172,5 +188,12 @@ class ClassController extends Controller
        
         return redirect()->route('classes.index')
                         ->with('success','Class deleted successfully');
+    }
+
+    public function removeStudent($id){
+        $student = Student::find($id);
+        $student->classlist_id = null;
+        $student->update();
+        return redirect()->back()->with('success','Successfully removed!');
     }
 }
