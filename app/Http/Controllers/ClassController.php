@@ -198,6 +198,6 @@ class ClassController extends Controller
         $teacher = Teacher::all();
         $students = Student::all();
         // return view('classes.edit',compact('class','teacher','students'));
-        return redirect()->route('classes.edit',compact('class','teacher','students'))->with('success','Successfully removed!');
+        return redirect()->route('classes.index')->with('success','Successfully removed!');
     }
 }
