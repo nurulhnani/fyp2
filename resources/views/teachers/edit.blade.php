@@ -117,7 +117,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                                        <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$teacher->address}}" required autofocus>
+                                                        <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$teacher->address}}" autofocus>
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,7 +167,7 @@
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="phone_number">{{ __('Phone Number') }}</label>
-                                                        <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="{{$teacher->phone_number}}" required>
+                                                        <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="{{$teacher->phone_number}}" >
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>
@@ -228,7 +228,7 @@
                                                                     ?>
 
                                                                     <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                                                    <select class="form-control form-control-alternative" name="customfield[]" required>
+                                                                    <select class="form-control form-control-alternative" name="customfield[]" >
                                                                         <option selected disabled>{{$addinfo}}</option>
                                                                             @foreach($explode_notes as $explode_note)
                                                                                 <option value="{{$explode_note}}">{{$explode_note}}</option>
@@ -252,7 +252,7 @@
 
                                                                     <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                                                     <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
-                                                                    class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" required>
+                                                                    class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" >
                                                                     
                                                                     {{-- <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                                                     <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
