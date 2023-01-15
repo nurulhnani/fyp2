@@ -194,10 +194,6 @@ class ClassController extends Controller
         $student = Student::find($id);
         $student->classlist_id = null;
         $student->update();
-
-        $teacher = Teacher::all();
-        $students = Student::all();
-        // return view('classes.edit',compact('class','teacher','students'));
         return redirect()->route('classes.index')->with('success','Successfully removed!');
     }
 }
