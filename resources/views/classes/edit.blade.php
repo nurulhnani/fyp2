@@ -109,6 +109,7 @@
                       <label for="selectstudent" class="form-control-label">Select student by name</label>
                       {{-- <label for="selectstudent">Select student by name</label><br/> --}}
                         <select class="form-control form-control-alternative selectstudent" name="studentInClass[]" id="selectstudent">
+                          <option></option>
                           <?php
                               $student = App\Models\Student::all();
                           ?>
@@ -126,11 +127,11 @@
                         multiple: true
                       });
 
-                      var classid = $(".classid").val();
-                      console.log(classid);
-                      $.get("{{ url('getStudent') }}/" + classid, function(data) {
-                          $('.selectstudent').html(classid);
-                      });
+                      // var classid = $(".classid").val();
+                      // console.log(classid);
+                      // $.get("{{ url('getStudent') }}/" + classid, function(data) {
+                      //     $('.selectstudent').html(classid);
+                      // });
 
                       // var selected = $('.selectstudent').val();
                       // console.log(selected);
