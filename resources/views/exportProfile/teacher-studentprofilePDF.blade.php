@@ -59,10 +59,10 @@
                                 <div class="col text-center">
                                     @if($student->image_path != null)
                                     <a href="#">
-                                        <img id="output_image" src="{{$student->image_path}}" class="rounded-circle" width="150pt" height="140pt">
+                                        <img id="output_image" src="{{$student->image_path}}" class="rounded-circle" width="165pt" height="140pt">
                                     </a>
                                     @else 
-                                    <a><img id="output_image" src="{{asset('assets/img/theme/default.png')}}" class="rounded-circle" width="150pt" height="140pt"></a>
+                                    <a><img id="output_image" src="{{asset('assets/img/theme/default.png')}}" class="rounded-circle" width="165pt" height="140pt"></a>
                                     @endif
                                 </div>
                             </div>
