@@ -24,13 +24,13 @@ class AdminController extends Controller
         $status = "inactive";
         $updated_at = now();
         DB::update('update students set status=?, updated_at=? where id=?', [$status, $updated_at, $id]);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Student successfully archived!');
     }
     public function unarchiveStudent($id)
     {
         $status = "active";
         DB::update('update students set status=? where id=?', [$status, $id]);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Student successfully unarchived!');
     }
     public function archivedStudentList()
     {
@@ -45,13 +45,13 @@ class AdminController extends Controller
         $status = "inactive";
         $updated_at = now();
         DB::update('update teachers set status=?, updated_at=? where id=?', [$status, $updated_at, $id]);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Teacher successfully archived!');
     }
     public function unarchiveTeacher($id)
     {
         $status = "active";
         DB::update('update teachers set status=? where id=?', [$status, $id]);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Teacher successfully unarchived!');
     }
     public function archivedTeacherList()
     {

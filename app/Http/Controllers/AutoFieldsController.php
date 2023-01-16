@@ -25,7 +25,7 @@ class AutoFieldsController extends Controller
             ];
             AutoFields::create($data);
         }
-        return redirect()->route('customfield')->with('success',"Successfully added!");
+        return redirect()->route('customfield')->with('success',"Custom field successfully added!");
     }
 
     public function showfields(){
@@ -39,7 +39,7 @@ class AutoFieldsController extends Controller
         // dd($customfield);
 
         $customfield->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success',"Custom field successfully deleted!");
     }
 
     public function editField(Request $request,$id){
@@ -50,7 +50,7 @@ class AutoFieldsController extends Controller
         $customfield->dropdownNote = $request->input('description');
         $customfield->update();
 
-        return redirect()->route('customfield')->with('success',"Successfully updated!");
+        return redirect()->route('customfield')->with('success',"Custom field successfully updated!");
     }
     
 }

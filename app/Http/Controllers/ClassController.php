@@ -58,7 +58,7 @@ class ClassController extends Controller
         $teacher = Teacher::find($teacherid);
         $teacher->classlist_id = $class->id;
         $teacher->update();
-        return redirect()->route('classes.index')->with('success',"Successfully added!");
+        return redirect()->route('classes.index')->with('success',"Class successfully added!");
     }
 
     /**
@@ -164,7 +164,7 @@ class ClassController extends Controller
         }
 
         
-        return redirect()->route('classes.index')->with('success',"Successfully updated!");
+        return redirect()->route('classes.index')->with('success',"Class successfully updated!");
     }
 
     public function getStudent($id)
@@ -187,13 +187,13 @@ class ClassController extends Controller
         $class->delete();
        
         return redirect()->route('classes.index')
-                        ->with('success','Class deleted successfully');
+                        ->with('success','Class successfully deleted!');
     }
 
     public function removeStudent($id){
         $student = Student::find($id);
         $student->classlist_id = null;
         $student->update();
-        return redirect()->route('classes.index')->with('success','Successfully removed!');
+        return redirect()->route('classes.index')->with('success','Student successfully removed!');
     }
 }

@@ -107,7 +107,7 @@
                                 </tr>
                             </table>
                             <div class="py-3">
-                                <input type="submit" name="submit" id="submit" class="btn btn-success" value="Submit">
+                                <input type="submit" name="submit" id="submit" class="btn btn-success" value="Save">
                             </div>
                         </div>
                     </form>

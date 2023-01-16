@@ -160,7 +160,7 @@ class InterestInventoryController extends Controller
         $question->questions = $request->input('question');
         $question->category = $request->input('category');
         $question->save();
-        return redirect()->back();
+        return redirect()->back()->with('success',"Question successfully added!");
     }
 
     public function editassessment(Request $request,$id){
@@ -169,14 +169,14 @@ class InterestInventoryController extends Controller
         $question->category = $request->input('category');
         $question->update();
 
-        return redirect()->back();
+        return redirect()->back()->with('success',"Question successfully updated!");
     }
     public function deletequestion($id)
     {
         $question = Interest_Inventory::find($id);
         $question->delete();
        
-        return redirect()->back();
+        return redirect()->back()->with('success',"Question successfully deleted!");
     }
 
 }

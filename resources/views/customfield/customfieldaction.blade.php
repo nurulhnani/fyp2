@@ -16,7 +16,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Delete</button>
+            <button type="submit" class="btn btn-primary">Confirm</button>
           </div>
         </form>
       </div>
@@ -43,8 +43,8 @@
                         <label class="form-control-label" for="input-name">{{ __('User') }}</label>
                         <select class="form-control form-control-alternative" name="user" id="user" required> 
                                 <option value="{{$customfield->user}}" selected>{{$customfield->user}}</option>
-                                <option value="Student">Student</option>
-                                <option value="Teacher">Teacher</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
                         </select>
                     </div>
                 </div>

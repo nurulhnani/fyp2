@@ -13,7 +13,7 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-3">
-                        <div class="text-muted text-center mt-2 mb-3"><h3>{{ __('Sign in with') }}</h3></div>
+                        <div class="text-muted text-center mt-2 mb-3"><h3>{{ __('Log in with') }}</h3></div>
                         {{-- <h4 class="text-muted text-center">Sign in with</h4> --}}
                         {{-- <div class="text-muted text-center mt-2 mb-3"><small>{{ __('Sign in with') }}</small></div>
                         <div class="btn-wrapper text-center">
@@ -73,7 +73,7 @@
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
+                                <button type="submit" class="btn btn-primary my-4">{{ __('Login') }}</button>
                             </div>
                         </form>
                     </div>

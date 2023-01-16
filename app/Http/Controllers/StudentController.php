@@ -674,7 +674,7 @@ class StudentController extends Controller
         $user->save();
 
         // Student::create($request->all());
-        return redirect()->route('students.index')->with('success', 'Student created successfully.');
+        return redirect()->route('students.index')->with('success', 'Student successfully added!');
     }
 
     /**
@@ -817,7 +817,7 @@ class StudentController extends Controller
         $user->updated_at = now();
         $user->update();
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully');
+        return redirect()->route('students.index')->with('success', 'Student successfully updated!');
     }
 
     public function updatestudent(Request $request, $id)
@@ -942,6 +942,6 @@ class StudentController extends Controller
         );
 
         Excel::import(new StudentsImport, $request->file('file')->store('temp'));
-        return redirect()->route('students.index');
+        return redirect()->route('students.index')->with('success', 'All students have been successfully added!');
     }
 }

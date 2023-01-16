@@ -123,7 +123,7 @@
                           </div>
                         </div>
                         <div class="text-center">
-                          <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                          <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
                         </div>
                       </form>
                       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
     </form>
     </div>

@@ -210,7 +210,7 @@ class TeacherController extends Controller
         $user->updated_at = now();
         $user->save();
 
-        return redirect()->route('teachers.index')->with('success','Teacher created successfully.');
+        return redirect()->route('teachers.index')->with('success','Teacher successfully added!');
     }
 
     /**
@@ -315,7 +315,7 @@ class TeacherController extends Controller
         $user->updated_at = now();
         $user->update();
 
-        return redirect()->route('teachers.index')->with('success',"Successfully updated!");
+        return redirect()->route('teachers.index')->with('success', 'Teacher successfully updated!');
     }
 
     /**
@@ -348,6 +348,6 @@ class TeacherController extends Controller
             ]
         );
         Excel::import(new TeachersImport, $request->file('file')->store('temp'));
-        return redirect()->route('teachers.index');
+        return redirect()->route('teachers.index')->with('success','All teachers have been successfully added!');
     }
 }

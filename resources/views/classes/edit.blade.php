@@ -291,7 +291,7 @@
                     </div> --}}
                  
                     <div class="text-center py-2">
-                        <button type="submit" class="btn btn-success ml-auto">Submit</button>
+                        <button type="submit" class="btn btn-success ml-auto">Update</button>
                     </div>
                 </form>
                 

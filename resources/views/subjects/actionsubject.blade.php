@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="myModalLabel">Delete Class</h5>
+              <h5 class="modal-title" id="myModalLabel">Remove Class</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -18,11 +18,11 @@
               // $subteacher = App\Models\Teacher::where('id',$teacherclass->teacher_id)->first()->name;
               // $teacher = App\Models\Teacher::all();
             ?>
-              <h4 class="text-center">Confirm to delete class {{$subjclass}} from {{$subject}}?</h4>
+              <h4 class="text-center">Confirm to remove class {{$subjclass}} from {{$subject}}?</h4>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Delete</button>
+              <button type="submit" class="btn btn-primary">Confirm</button>
           </div>
         </form>
       </div>
