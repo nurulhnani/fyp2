@@ -84,7 +84,7 @@
                         <div class="profile-image">
                             @if(auth()->user()->image_path != null)
                             <img class="rounded-circle" style="width: 100%;height: 80%;" src="{{auth()->user()->image_path}}">
-                            @else 
+                            @else
                             <img class="rounded-circle" style="width: 100%;height: 100%;" src="{{asset('assets/img/theme/default.png')}}">
                             @endif
                         </div>
@@ -101,17 +101,20 @@
                         margin-right: 15px;
                         position: relative;
                     }
+
                     .dot-indicator {
                         width: 10px;
                         height: 10px;
                         border-radius: 100%;
                     }
+
                     .designation {
                         margin-bottom: 0;
                         font-weight: 400;
                         /* color: #fff; */
                         color: #000;
                     }
+
                     .profile-name {
                         margin-bottom: 5px;
                         font-weight: 500;
@@ -119,6 +122,7 @@
                         /* color: #fff; */
                         color: #000;
                     }
+
                     .text-wrap {
                         white-space: normal !important;
                     }
@@ -150,17 +154,17 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('evaluations.index') }}">
-                                    {{ __('Student Evaluation') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{route('exportPage')}}">
-                                    {{ __('Export Student Profile') }}
+                                    {{ __('Export Profile') }}
                                 </a>
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('evaluations.index') }}">
+                        <i class='fas fa-id-card text-purple'></i> {{ __('Student Evaluation') }}
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('health.index') }}">

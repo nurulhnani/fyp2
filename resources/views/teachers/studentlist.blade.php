@@ -72,11 +72,22 @@
                 @else
                 <td id="class_name">Not Yet Assigned</td>
                 @endif
-                <td style="width: 10%">
+                <!-- <td style="width: 10%">
                   <div class="col-lg-6 col-5 text-right mb-0">
                     <a href="{{route('studentoverview',$student->id)}}"><button class="btn btn-sm btn-secondary">Overview</button></a>
                     <a href="{{route('editstudent',$student->id)}}"><button class="btn btn-sm btn-primary pr-2"><i class="ni ni-single-02"></i>
                       </button></a>
+                  </div>
+                </td> -->
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="{{route('editstudent',$student->id)}}">Personal Details</a>
+                      <a class="dropdown-item" href="{{route('studentoverview',$student->id)}}">Student Overview</a>
+                    </div>
                   </div>
                 </td>
               </tr>
@@ -139,8 +150,8 @@
       </div>
     </div>
   </div>
+  @include('layouts.footers.auth')
 </div>
-@include('layouts.footers.auth')
 @endsection
 
 @push('js')

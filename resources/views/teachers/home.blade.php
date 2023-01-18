@@ -101,24 +101,24 @@
                                         label: 'Curriculum Merit',
                                         data: <?php echo json_encode(array_values($currMeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#2196f3',
-                                        backgroundColor: '#2196f3',
+                                        borderColor: 'rgba(0, 99, 132, 1)',
+                                        backgroundColor: 'rgba(0, 99, 132, 0.6)',
                                         borderWidth: 1
                                     },
                                     {
                                         label: 'Behavioural Merit',
                                         data: <?php echo json_encode(array_values($behaMeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#4CAF50',
-                                        backgroundColor: '#4CAF50',
+                                        borderColor: 'rgba(0, 99, 132, 1)',
+                                        backgroundColor: 'rgba(0, 99, 132, 0.6)',
                                         borderWidth: 1
                                     },
                                     {
                                         label: 'Behavioural Demerit',
                                         data: <?php echo json_encode(array_values($behaDemeritsArr)); ?>,
                                         fill: false,
-                                        borderColor: '#4CAF50',
-                                        backgroundColor: '#4CAF50',
+                                        borderColor: 'rgba(99, 132, 0, 1)',
+                                        backgroundColor: 'rgba(99, 132, 0, 0.6)',
                                         borderWidth: 1
                                     }
                                 ]
@@ -180,6 +180,7 @@
                             data: <?php echo json_encode(array_values($classMeritsArr)); ?>,
                             backgroundColor: 'rgba(0, 99, 132, 0.6)',
                             borderColor: 'rgba(0, 99, 132, 1)',
+                            borderWidth: 1,
                         };
 
                         var gravityData = {
@@ -187,6 +188,7 @@
                             data: <?php echo json_encode(array_values($classDemeritsArr)); ?>,
                             backgroundColor: 'rgba(99, 132, 0, 0.6)',
                             borderColor: 'rgba(99, 132, 0, 1)',
+                            borderWidth: 1,
                         };
 
                         var planetData = {
@@ -373,7 +375,7 @@
                             datasets: [{
                                 data: <?php echo json_encode(array_values($Extraversion)); ?>,
                                 backgroundColor: ['rgb(255, 99, 132)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(237,181,33)'
                                 ],
                                 hoverOffset: 4
                             }],
@@ -381,6 +383,13 @@
 
                         var options = {
                             responsive: true,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                                    }
+                                }
+                            }
                         };
 
                         var chart1 = new Chart(ctx, {
@@ -401,7 +410,7 @@
                             datasets: [{
                                 data: <?php echo json_encode(array_values($Agreeableness)); ?>,
                                 backgroundColor: ['rgb(255, 99, 132)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(237,181,33)'
                                 ],
                                 hoverOffset: 4
                             }],
@@ -409,6 +418,13 @@
 
                         var options = {
                             responsive: true,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                                    }
+                                }
+                            }
                         };
 
                         var chart1 = new Chart(ctx, {
@@ -429,7 +445,7 @@
                             datasets: [{
                                 data: <?php echo json_encode(array_values($Neuroticism)); ?>,
                                 backgroundColor: ['rgb(255, 99, 132)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(237,181,33)'
                                 ],
                                 hoverOffset: 4
                             }],
@@ -437,6 +453,13 @@
 
                         var options = {
                             responsive: true,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                                    }
+                                }
+                            }
                         };
 
                         var chart1 = new Chart(ctx, {
@@ -457,7 +480,7 @@
                             datasets: [{
                                 data: <?php echo json_encode(array_values($Conscientiousness)); ?>,
                                 backgroundColor: ['rgb(255, 99, 132)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(237,181,33)'
                                 ],
                                 hoverOffset: 4
                             }],
@@ -465,6 +488,13 @@
 
                         var options = {
                             responsive: true,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                                    }
+                                }
+                            }
                         };
 
                         var chart1 = new Chart(ctx, {
@@ -485,7 +515,7 @@
                             datasets: [{
                                 data: <?php echo json_encode(array_values($Openness)); ?>,
                                 backgroundColor: ['rgb(255, 99, 132)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(237,181,33)'
                                 ],
                                 hoverOffset: 4
                             }],
@@ -493,6 +523,13 @@
 
                         var options = {
                             responsive: true,
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + '%';
+                                    }
+                                }
+                            }
                         };
 
                         var chart1 = new Chart(ctx, {
@@ -556,7 +593,7 @@
                         datasets: [{
                             indexAxis: 'y',
                             data: obj,
-                            backgroundColor: ['#540375', '#BA94D1', '#863A6F', '#DEBACE', '#C060A1', '#D989B5'],
+                            backgroundColor: ['#EDB521', '#E0B517', '#E67D0D', '#E07C17', '#D76E36', '#AB4B17'],
                         }],
                     };
 
@@ -586,52 +623,12 @@
     </div>
 </div>
 </div>
+@include('teachers.filterModal')
 @include('layouts.footers.auth')
 </div>
 @endsection
 
-<!-- Filter Modal -->
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Filter</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="GET">
-                    <div class="form-row">
-                        <label style="font-size:14px" for="inputCity">Class</label>
-                        <select id="inputState" class="form-control custom-select" name="class">
-                            <option value="" selected disabled hidden>Choose...</option>
-                            @foreach ($classes as $class)
-                            <option value="<?php echo $class->id ?>">{{ $class->class_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-row pt-3">
-                        <label style="font-size:14px" for="inputState">Year</label>
-                        <select id="inputState" class="form-control custom-select" name="year">
-                            <option value="" selected disabled hidden>Choose...</option>
-                            @foreach ($years as $index => $year)
-                            <option value="<?php echo $year ?>">{{ $year }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <!-- <button type="submit" class="btn btn-sm btn-secondary float-right mt-3">School Overview</button> -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-            </form>
 
-        </div>
-    </div>
-</div>
-</div>
 
 @push('js')
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
