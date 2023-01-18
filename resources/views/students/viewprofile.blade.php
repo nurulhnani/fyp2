@@ -301,9 +301,9 @@
                         @endif
 
                     </div>
-                    {{-- <div class="text-center">
+                    <div class="text-center">
                         <a href="{{ route('updatestudentprofile') }}"><button class="btn btn-success mt-4">{{ __('Update') }}</button></a>
-                    </div> --}}
+                    </div> 
 
                 </div>
             </div>
