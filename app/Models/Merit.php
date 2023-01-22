@@ -11,6 +11,7 @@ class Merit extends Model
     public $table = 'merits';
     protected $fillable = [
         'type',
+        'category',
         'merit_name',
         'merit_point',
         'student_mykid',

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('merit_name')->nullable();
             $table->string('type');
+            $table->string('category')->nullable();
             $table->string('level');
             $table->integer('merit_point');
             $table->string('achievement')->nullable();

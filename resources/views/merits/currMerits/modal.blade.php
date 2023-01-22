@@ -21,14 +21,42 @@
                                     <input type="text" class="form-control" id="inputPassword4" name="student_mykid" value="{{ $student->mykid }}" readonly="true">
                                 </div>
                             </div>
+
+                            @if($merit->category == 'Competition')
+                            <input type="hidden" name="category" value="Competition" />
                             <div class="form-group">
-                                <label for="inputAddress">Activity</label>
+                                <label for="inputAddress">Activity/Competition</label>
                                 <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputCity">Achievement</label>
+                                <select id="inputState" class="form-control" name="achievement">
+                                    @foreach ($data['competitions'] as $meritPoint)
+                                    <option value="{{ $meritPoint->achievement }}" <?php if ($merit->achievement == $meritPoint->achievement) echo 'selected="selected"'; ?>>{{ $meritPoint->achievement }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress2">Description</label>
                                 <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5">{{ $merit->desc }}</textarea>
                             </div>
+                            @else
+                            <input type="hidden" name="category" value="Position" />
+                            <div class="form-group">
+                                <label for="inputAddress">Club/Society Name</label>
+                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputCity">Achievement</label>
+                                <select id="inputState" class="form-control" name="achievement">
+                                    @foreach ($data['positions'] as $id => $achievement)
+                                    <option value="{{ $id }}" <?php if ($merit->achievement == $achievement) echo 'selected="selected"'; ?>>{{ $achievement }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @endif
+
+
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">Level</label>
@@ -40,20 +68,10 @@
                                         <option value="International" <?php if ($level == "International") echo 'selected="selected"'; ?>>International</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <?php $achievement = $merit['achievement']; ?>
-                                    <label for="inputState">Achievement</label>
-                                    <select id="inputState" class="form-control" name="achievement">
-                                        <option value="Participant" <?php if ($achievement == "Participant") echo 'selected="selected"'; ?>>Participant</option>
-                                        <option value="Runner Ups" <?php if ($achievement == "Runner Ups") echo 'selected="selected"'; ?>>Runner Ups</option>
-                                        <option value="Committee Member" <?php if ($achievement == "Committee Member") echo 'selected="selected"'; ?>>Committee Member</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     <label for="inputZip">Date</label>
                                     <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>">
                                 </div>
-
                             </div>
                             <div class="modal-footer nopadding">
                                 <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>

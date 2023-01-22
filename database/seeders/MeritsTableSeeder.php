@@ -21,6 +21,7 @@ class MeritsTableSeeder extends Seeder
         $merits = [
             [
                 'type' => 'c',
+                'category' => 'Competition',
                 'merit_point' => '10',
                 'student_mykid' => '000729141107',
                 'merit_name' => 'Volunteering',
@@ -32,6 +33,7 @@ class MeritsTableSeeder extends Seeder
                 'updated_at' => now()
             ], [
                 'type' => 'c',
+                'category' => 'Competition',
                 'merit_point' => '10',
                 'student_mykid' => '000505111103',
                 'merit_name' => 'Merentas Desa',
@@ -43,22 +45,24 @@ class MeritsTableSeeder extends Seeder
                 'updated_at' => now()
             ], [
                 'type' => 'b',
+                'category' => null,
                 'merit_point' => '-10',
                 'student_mykid' => '000729141107',
                 'merit_name' => 'Vape',
                 'level' => 'High',
-                'achievement' => '-',
+                'achievement' => null,
                 'desc' => 'test',
                 'date' => Carbon::parse('2023-05-11'),
                 'created_at' => now(),
                 'updated_at' => now()
             ], [
                 'type' => 'b',
+                'category' => null,
                 'merit_point' => '20',
                 'student_mykid' => '000320011148',
                 'merit_name' => 'Donate',
                 'level' => 'Medium',
-                'achievement' => '-',
+                'achievement' => null,
                 'desc' => 'test',
                 'date' => Carbon::parse('2023-01-01'),
                 'created_at' => now(),

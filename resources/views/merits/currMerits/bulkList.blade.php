@@ -39,7 +39,7 @@
                             <form method="post" action="{{ route('bulkmerits.store') }}" autocomplete="off">
                                 @csrf
                                 <input type="hidden" name="type" value="c">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="inputAddress">Activity</label>
                                     <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
                                 </div>
@@ -71,7 +71,59 @@
                                         <label for="inputZip">Date</label>
                                         <input name="date" type="date" class="form-control" id="inputZip">
                                     </div>
+                                </div> -->
 
+                                <!--Choose category; position/competition-->
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        <label for="inputState">Category</label>
+                                        <select class="form-control" name="category" id="category-dd">
+                                            <option selected disabled hidden>Choose...</option>
+                                            <option value="Position">Position</option>
+                                            <option value="Competition">Competition</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!--If position -->
+                                <div class="form-group" id="nameEvent-block" style="display:none">
+                                    <label for="labelName">Club/Society</label>
+                                    <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+                                </div>
+
+                                <!--If competition-->
+                                <div class="form-group" id="achievement-block" style="display:none">
+                                    <label for="inputAddress">Achievement</label>
+                                    <select id="achievement-dd" class="form-control" name="achievement">
+                                        <option selected disabled hidden>Choose...</option>
+                                        <option value="Johan">Johan</option>
+                                        <option value="Naib Johan">Naib Johan</option>
+                                        <option value="Ketiga">Ketiga</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="desc-block" style="display:none">
+                                    <label for="inputAddress2">Description</label>
+                                    <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
+                                </div>
+
+                                <div class="form-row" id="level-block" style="display:none">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">Level</label>
+                                        <select class="form-control" name="level" id="level-dd">
+                                            <option selected disabled hidden>Choose...</option>
+                                            <option value="School">School</option>
+                                            <option value="District">District</option>
+                                            <option value="State">State</option>
+                                            <option value="National">National</option>
+                                            <option value="International">International</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="inputZip">Date</label>
+                                        <input name="date" type="date" class="form-control" id="inputZip">
+                                    </div>
                                 </div>
 
                                 <!-- Light table -->
@@ -189,3 +241,50 @@
         background-color: #f1f1f1;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var level = $("#level-dd").html();
+        $('#category-dd').on('change', function() {
+            var category = this.value;
+
+            $("#achievement-dd").html('');
+            $.ajax({
+                url: "{{url('api/fetch-activity')}}",
+                type: "POST",
+                data: {
+                    category: category,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+
+                    if (category == 'Position') {
+                        $("label[for='labelName']").text("Club/Society Name");
+                        $('#nameEvent-block').show();
+                        $('#achievement-dd').html('<option value="" selected disabled hidden>Select Achievement</option>');
+                        $.each(result.positions, function(key, value) {
+                            $("#achievement-dd").append('<option value="' + key + '">' + value + '</option>');
+                        });
+                        $('#achievement-block').show();
+                        $('#desc-block').hide();
+                        $('#level-block').show();
+
+                    } else {
+                        $("label[for='labelName']").text("Activity/Competition Name");
+                        $('#nameEvent-block').show();
+                        $('#achievement-dd').html('<option value="" selected disabled hidden>Select Achievement</option>');
+                        $.each(result.competitions, function(key, value) {
+                            $("#achievement-dd").append('<option value="' + value.achievement + '">' + value.achievement + '</option>');
+                        });
+                        $('#achievement-block').show();
+                        $('#desc-block').show();
+                        $('#level-dd').html(level);
+                        $('#level-block').show();
+                    }
+
+                }
+            });
+        });
+    });
+</script>

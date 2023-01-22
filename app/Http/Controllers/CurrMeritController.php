@@ -29,59 +29,71 @@ class CurrMeritController extends Controller
 
     public function index(Student $student)
     {
+        $data['positions'] = Merit_Points::where('category', '=', 'Position')->pluck("achievement", "id")->toArray();
+        $data['competitions'] = Merit_Points::where('category', '=', 'Competition')->select('achievement')->groupBy('achievement')->get();
         $merits = Merit::where('student_mykid', '=', $student->mykid)->where('type', '=', 'c')->get();
-        return view('merits/currMerits.index', ['merits' => $merits, 'student' => $student]);
+        return view('merits/currMerits.index', compact('merits', 'student', 'data'));
     }
 
     public function store(Request $request)
     {
-        // if ($newMerit['level'] == "International") {
-        //     $newMerit['merit_point'] = 50;
-        // } else if ($newMerit['level'] == "National") {
-        //     $newMerit['merit_point'] = 30;
-        // } else if ($newMerit['level'] == "District") {
-        //     $newMerit['merit_point'] = 20;
-        // } else {
-        //     $newMerit['merit_point'] = 10;
-        // }
 
         $newMerit = $request->all();
+        $student = Student::where('mykid', "=", $newMerit['student_mykid'])->first();
 
-        if($request->category == 'Position'){
-            $meritRef = Merit_Points::where('id', $request->achievement)->first();
-            $newMerit['merit_point'] = $meritRef->merit_points;
-            $newMerit['achievement'] = $meritRef->achievement;
-        }
-        else{
+        if ($request->category == 'Position') {
+            $meritRef = Merit_Points::where('id', $request->achievement)
+                ->where('level', $request->level)
+                ->first();
+
+            if (isset($meritRef)) {
+                $newMerit['merit_point'] = $meritRef->merit_points;
+                $newMerit['achievement'] = $meritRef->achievement;
+            } else {
+                return redirect()->route('merits.index', [$student])->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+            }
+        } else {
             $meritRef = Merit_Points::where('achievement', $request->achievement)
-            ->where('level', $request->level)
-            ->first();
-            $newMerit['merit_point'] = $meritRef->merit_points;
+                ->where('level', $request->level)
+                ->first();
+            if (isset($meritRef)) {
+                $newMerit['merit_point'] = $meritRef->merit_points;
+            } else {
+                return redirect()->route('merits.index', [$student])->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+            }
         }
 
         Merit::create($newMerit);
-
-        $student = Student::where('mykid', "=", $newMerit['student_mykid'])->first();
         return redirect()->route('merits.index', [$student])->with('success', 'Your merit record has successfully added');
     }
 
     public function update(Request $request, Merit $merit)
     {
         $updateMerit = $request->all();
-
-        if ($updateMerit['level'] == "International") {
-            $updateMerit['merit_point'] = 50;
-        } else if ($updateMerit['level'] == "National") {
-            $updateMerit['merit_point'] = 30;
-        } else if ($updateMerit['level'] == "District") {
-            $updateMerit['merit_point'] = 20;
-        } else {
-            $updateMerit['merit_point'] = 10;
-        }
-
-        $merit->update($updateMerit);
-
         $student = Student::where('mykid', "=", $merit['student_mykid'])->first();
+
+        if ($request->category == 'Position') {
+            $meritRef = Merit_Points::where('id', $request->achievement)
+                ->where('level', $request->level)
+                ->first();
+
+            if (isset($meritRef)) {
+                $updateMerit['merit_point'] = $meritRef->merit_points;
+                $updateMerit['achievement'] = $meritRef->achievement;
+            } else {
+                return redirect()->route('merits.index', [$student])->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+            }
+        } else {
+            $meritRef = Merit_Points::where('achievement', $request->achievement)
+                ->where('level', $request->level)
+                ->first();
+            if (isset($meritRef)) {
+                $updateMerit['merit_point'] = $meritRef->merit_points;
+            } else {
+                return redirect()->route('merits.index', [$student])->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+            }
+        }
+        $merit->update($updateMerit);
         return redirect()->route('merits.index', [$student])->with('success', 'Your merit record has successfully updated');
     }
 
@@ -119,21 +131,31 @@ class CurrMeritController extends Controller
     public function storeBulk(Request $request)
     {
         $checklists = $request->input('checklist');
-        // print json_encode($checklists);
         foreach ($checklists as $checklist) {
             $newMerit = $request->all();
             $newMerit['student_mykid'] = $checklist;
 
-            if ($newMerit['level'] == "International") {
-                $newMerit['merit_point'] = 50;
-            } else if ($newMerit['level'] == "National") {
-                $newMerit['merit_point'] = 30;
-            } else if ($newMerit['level'] == "District") {
-                $newMerit['merit_point'] = 20;
+            if ($request->category == 'Position') {
+                $meritRef = Merit_Points::where('id', $request->achievement)
+                    ->where('level', $request->level)
+                    ->first();
+    
+                if (isset($meritRef)) {
+                    $newMerit['merit_point'] = $meritRef->merit_points;
+                    $newMerit['achievement'] = $meritRef->achievement;
+                } else {
+                    return redirect()->route('merits.bulk')->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+                }
             } else {
-                $newMerit['merit_point'] = 10;
+                $meritRef = Merit_Points::where('achievement', $request->achievement)
+                    ->where('level', $request->level)
+                    ->first();
+                if (isset($meritRef)) {
+                    $newMerit['merit_point'] = $meritRef->merit_points;
+                } else {
+                    return redirect()->route('merits.bulk')->with('error', 'The merit point is still not set. Contact Administrator for the setup.');
+                }
             }
-
             Merit::create($newMerit);
         }
         return redirect()->route('merits.bulk')->with('success', 'Your merit records has successfully added');
