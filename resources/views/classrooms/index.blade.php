@@ -43,7 +43,7 @@
             @csrf
 
             <select class="form-control" name="select_class">
-              <option>Please select class</option>
+              <option selected disabled hidden>Please select class</option>
               @foreach ($classes as $class)
               <option value="{{ $class->id }}">{{ $class->class_name }}</option>
               @endforeach
