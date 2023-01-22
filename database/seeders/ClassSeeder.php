@@ -18,7 +18,7 @@ class ClassSeeder extends Seeder
         $classes = [
             [
                 'class_name'=>'1 Amanah',
-                'class_plan'=>'1 Amanah.png'
+                'class_plan'=> null
             ],[
                 'class_name'=>'2 Amanah',
                 'class_plan'=> null
