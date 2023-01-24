@@ -65,6 +65,9 @@
 
                         </div>
                         <div class="col-xl-4">
+                            @if(count($students) == 0)
+                            <h5><i>No students are assigned into this class</i></h5>
+                            @else
                             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
                             <div class="table-responsive">
@@ -94,6 +97,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @endif
 
                         </div>
                     </div>

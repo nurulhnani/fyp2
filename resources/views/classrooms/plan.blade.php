@@ -37,9 +37,32 @@
                         </div>
                         <div class="col-4">
                             <div class="float-right">
-                                <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-color="secondary" data-placement="top" data-content="This is a very beautiful popover, show some love.">
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#exampleModal">
                                     Tutorial
                                 </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">How To Create Class Plan</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <video autoplay muted loop>
+                                                    <source src="https://res.cloudinary.com/hme0x9wjh/video/upload/v1674580979/tutorial_ztjqb4.mp4" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
