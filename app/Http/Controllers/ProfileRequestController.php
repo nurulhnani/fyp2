@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Profile_Request;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ProfileRequestController extends Controller
 {
     /* Admin Route */
     public function index()
     {
-        $requests = Profile_Request::orderBy('updated_at', 'desc')->get();
+        $requests = Profile_Request::orderBy(DB::raw('case when status= "Pending" then 1 when status= "Approved" then 2 when status= "Declined" then 3 end'))
+        ->orderBy('created_at', 'desc')
+        ->get();
         $student_array = null;
         foreach ($requests as $request) {
             foreach (json_decode($request->changes) as $category => $val) {

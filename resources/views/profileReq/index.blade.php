@@ -37,6 +37,9 @@
                             <h3>List of Requests</h3>
                         </div>
                     </div>
+                    @if(count($requests) == 0)
+                    <h4>There is no profile request</h4>
+                    @else
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush" id="myTable">
                             <thead class="thead-light">
@@ -63,7 +66,7 @@
                                                             echo "<br>";
                                                         }
                                                         ?>
-                                        <div class="details" style="display:none">
+                                        <div id="details<?php echo $index ?>" style="display:none">
                                             </br><strong>Changes were Made:</strong></br>
                                             <?php
                                             foreach ($arr as $category => $value) {
@@ -72,7 +75,7 @@
                                             }
                                             ?>
                                         </div>
-                                        <a id="more" href="#" onclick="$('.details').slideToggle(function(){$('#more').html($('.details').is(':visible')?'See Less Details':'See More Details');});">See More Details</a>
+                                        <a id="more<?php echo $index ?>" href="#" onclick="$('#details<?php echo $index ?>').slideToggle(function(){$('#more<?php echo $index ?>').html($('#details<?php echo $index ?>').is(':visible')?'See Less Details':'See More Details');});">See More Details</a>
                                     </td>
                                     <td id="category">
                                         @if($req->status == 'Pending')
@@ -100,6 +103,8 @@
                         </table>
 
                     </div>
+                    @endif
+
 
                 </div>
 
