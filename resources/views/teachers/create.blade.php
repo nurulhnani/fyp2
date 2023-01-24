@@ -112,7 +112,7 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="" required>
+                                <input type="number" step="1" pattern="/d+" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="" required>
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
