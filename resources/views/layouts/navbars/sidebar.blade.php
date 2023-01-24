@@ -204,10 +204,11 @@
                                 <a class="nav-link" href="{{ route('customfield') }}">
                                     {{ __('Custom Field Config') }}
                                 </a>
-                            </li>
+                            </li>                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('manageProfileRequest') }}">
-                                    {{ __('Profile Requests') }}
+                                    <?php use App\Models\Profile_Request; ?>
+                                    {{ __('Profile Requests') }} <span class="mx-2 badge badge-primary">{{Profile_Request::where('status', '=', 'Pending')->count()}}</span>
                                 </a>
                             </li>
                         </ul>
