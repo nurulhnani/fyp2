@@ -91,7 +91,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                        <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$student->address}}" required>
+                                        <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$student->address}}">
                                     </div>
                                 </div>
                             </div>
@@ -119,11 +119,11 @@
                             <div class="row">
                                 <div class="col-sm-6"><span></span>
                                     <label class="form-control-label" for="citizenship">{{ __('Citizenship') }}</label>
-                                    <input type="text" name="citizenship" id="citizenship" class="form-control form-control-alternative" placeholder="{{ __('Citizenship') }}" value="{{$student->citizenship}}" required disabled>
+                                    <input type="text" name="citizenship" id="citizenship" class="form-control form-control-alternative" placeholder="{{ __('Citizenship') }}" value="{{$student->citizenship}}" disabled>
                                 </div>
                                 <div class="col-sm-6"><span></span>
                                     <label class="form-control-label" for="gender">{{ __('Gender') }}</label>
-                                    <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="{{ __('Gender') }}" value="{{$student->gender}}" required disabled>
+                                    <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="{{ __('Gender') }}" value="{{$student->gender}}" disabled>
                                 </div>
                             </div>
 
@@ -134,22 +134,22 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="G1_name">{{ __('Guardian 1 Name') }}</label>
-                                        <input type="text" name="G1_name" id="G1_name" class="form-control form-control-alternative" placeholder="" value="{{$student->G1_name}}" required>
+                                        <input type="text" name="G1_name" id="G1_name" class="form-control form-control-alternative" placeholder="" value="{{$student->G1_name}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm"><span></span>
                                     <label class="form-control-label" for="G1_relation">{{ __('Relation') }}</label>
-                                    <input type="text" name="G1_relation" id="G1_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G1_relation}}" required>
+                                    <input type="text" name="G1_relation" id="G1_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G1_relation}}">
                                 </div>
                                 <div class="col-sm"><span></span>
                                     <label class="form-control-label" for="G1_phonenum">{{ __('Phone number') }}</label>
-                                    <input type="text" name="G1_phonenum" id="G1_phonenum" class="form-control form-control-alternative" placeholder="{{ __('G1_phonenum') }}" value="{{$student->G1_phonenum}}" required>
+                                    <input type="text" name="G1_phonenum" id="G1_phonenum" class="form-control form-control-alternative" placeholder="{{ __('G1_phonenum') }}" value="{{$student->G1_phonenum}}">
                                 </div>
                                 <div class="col-sm"><span></span>
                                     <label class="form-control-label" for="G1_income">{{ __('Income') }}</label>
-                                    <input type="text" name="G1_income" id="G1_income" class="form-control form-control-alternative" placeholder="{{ __('G1_income') }}" value="{{$student->G1_income}}" required>
+                                    <input type="text" name="G1_income" id="G1_income" class="form-control form-control-alternative" placeholder="{{ __('G1_income') }}" value="{{$student->G1_income}}">
                                 </div>
                             </div>
 
@@ -160,7 +160,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="G2_name">{{ __('Guardian 2 Name') }}</label>
-                                        <input type="text" name="G2_name" id="G2_name" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_name}}" required>
+                                        <input type="text" name="G2_name" id="G2_name" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_name}}">
                                     </div>
                                 </div>
                             </div>
@@ -168,19 +168,19 @@
                                 <div class="col-sm"><span></span>
                                     <div class="form-group">
                                         <label class="form-control-label" for="G2_relation">{{ __('Relation') }}</label>
-                                        <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_relation}}" required>
+                                        <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_relation}}">
                                     </div>
                                 </div>
                                 <div class="col-sm"><span></span>
                                     <div class="form-group">
                                         <label class="form-control-label" for="G2_phonenum">{{ __('Phone number') }}</label>
-                                        <input type="text" name="G2_phonenum" id="G2_phonenum" class="form-control form-control-alternative" placeholder="{{ __('G2_phonenum') }}" value="{{$student->G2_phonenum}}" required>
+                                        <input type="text" name="G2_phonenum" id="G2_phonenum" class="form-control form-control-alternative" placeholder="{{ __('G2_phonenum') }}" value="{{$student->G2_phonenum}}">
                                     </div>
                                 </div>
                                 <div class="col-sm"><span></span>
                                     <div class="form-group">
                                         <label class="form-control-label" for="G2_income">{{ __('Income') }}</label>
-                                        <input type="text" name="G2_income" id="G2_income" class="form-control form-control-alternative" placeholder="{{$student->G2_income}}" value="{{$student->G2_income}}" required>
+                                        <input type="text" name="G2_income" id="G2_income" class="form-control form-control-alternative" placeholder="{{$student->G2_income}}" value="{{$student->G2_income}}">
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                         ?>
 
                                         <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                        <select class="form-control form-control-alternative" name="customfield[]" required>
+                                        <select class="form-control form-control-alternative" name="customfield[]">
                                             <option selected disabled>{{$addinfo}}</option>
                                             @foreach($explode_notes as $explode_note)
                                             <option value="{{$explode_note}}">{{$explode_note}}</option>
@@ -238,7 +238,7 @@
                                         @endif
 
                                         <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                        <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" required>
+                                        <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}">
                                     </div>
                                 </div>
                             </div>

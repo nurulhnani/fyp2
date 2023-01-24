@@ -78,6 +78,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::get('/archivedTeacherList', [App\Http\Controllers\AdminController::class, 'archivedTeacherList'])->name('archivedTeacherList');
 	Route::get('/addTeacherInBulk', [App\Http\Controllers\AdminController::class, 'addTeacherInBulk'])->name('addTeacherInBulk');
 	Route::resource('classes', App\Http\Controllers\ClassController::class);
+	Route::put('selectStudent/{id}', [ App\Http\Controllers\ClassController::class,'selectStudentClass'])->name('selectStudentClass');
+	Route::put('uploadStudent/{id}', [ App\Http\Controllers\ClassController::class,'uploadStudentListClass'])->name('uploadStudentListClass');
 	Route::put('removeStudent/{id}', [ App\Http\Controllers\ClassController::class,'removeStudent'])->name('removeStudent');
 	Route::resource('subjects', App\Http\Controllers\SubjectController::class);
 	Route::post('student-file-import', [App\Http\Controllers\StudentController::class, 'fileImport'])->name('student-file-import');

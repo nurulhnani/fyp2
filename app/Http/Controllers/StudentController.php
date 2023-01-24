@@ -604,7 +604,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[\p{L}\s-]+$/',
             'mykid' => 'required',
             // 'gender' =>'required',
             // 'class_id' =>'required',
@@ -713,7 +713,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[\p{L}\s-]+$/',
             'mykid' => 'required',
         ]);
 
@@ -772,7 +772,7 @@ class StudentController extends Controller
     public function updatestudent(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[\p{L}\s-]+$/',
             'mykid' => 'required',
         ]);
 
@@ -847,17 +847,20 @@ class StudentController extends Controller
      */
     public function fileImport(Request $request)
     {
-        $validator = Validator::make(
-            [
-                'file'      => $request->file,
-                'extension' => strtolower($request->file->getClientOriginalExtension()),
-            ],
-            [
-                'file'          => 'required',
-                'extension'      => 'required|in:csv,xlsx,xls',
-            ]
-        );
+        // $validator = Validator::make(
+        //     [
+        //         'file'      => $request->file,
+        //         'extension' => strtolower($request->file->getClientOriginalExtension()),
+        //     ],
+        //     [
+        //         'file'          => 'required',
+        //         'extension'      => 'required|in:csv,xlsx,xls',
+        //     ]
+        // );
 
+        $request->validate([
+            'file'=>'required|mimes:csv,xlsx,xls',
+        ]);
         Excel::import(new StudentsImport, $request->file('file')->store('temp'));
         return redirect()->route('students.index')->with('success', 'All students have been successfully added!');
     }

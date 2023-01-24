@@ -51,15 +51,15 @@ class TeacherController extends Controller
             }
             $subject = implode(",",$data);
         }
-
         return view('teachers.viewprofile',compact('teacher','customfield','subject'));
     }
 
     public function editProfile(Request $request)
     {
+        
         $request->validate([
-            'name'=>'required',
-            'nric' =>'required',
+            'name'=>'required|regex:/^[\p{L}\s-]+$/',
+            'nric' =>'required|numeric|digits:12',
             // 'gender' =>'required',
             'email' =>'required',
             // 'position' =>'required',
@@ -72,7 +72,7 @@ class TeacherController extends Controller
 
         $teacher = Teacher::find($teacherid->id);
 
-        $userid = User::where('name','=',$request->input('name'))->first();
+        $userid = User::where('name','=',$request->input('old_name'))->first();
         $user = User::find($userid->id);      
 
         if($request->hasFile('imageT')){
@@ -152,8 +152,8 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'nric' =>'required',
+            'name'=>'required|regex:/^[\p{L}\s-]+$/',
+            'nric' =>'required|numeric|digits:12',
             // 'gender' =>'required',
             'email' =>'required',
             // 'position' =>'required',
@@ -259,19 +259,19 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
-            'nric' =>'required',
-            'gender' =>'required',
+            'name'=>'required|regex:/^[\p{L}\s-]+$/',
+            'nric' =>'required|numeric|digits:12',
+            // 'gender' =>'required',
             'email' =>'required',
-            'position' =>'required',
-            'address' =>'required',
+            // 'position' =>'required',
+            // 'address' =>'required',
             // 'subject_taught' =>'required',
             // 'class_name' =>'required',
-            'phone_number' =>'required',
+            // 'phone_number' =>'required',
         ]);
 
         $teacher = Teacher::find($id);
-        $user = User::where('name','=',$request->input('name'))->first();
+        $user = User::where('name','=',$request->input('old_name'))->first();
         $user->name = $request->input('name');
 
         if($request->hasFile('imageT')){
@@ -337,16 +337,20 @@ class TeacherController extends Controller
     */
     public function fileImport(Request $request) 
     {
-        $validator = Validator::make(
-            [
-                'file'      => $request->file,
-                'extension' => strtolower($request->file->getClientOriginalExtension()),
-            ],
-            [
-                'file'          => 'required',
-                'extension'      => 'required|in:csv,xlsx,xls',
-            ]
-        );
+        // $validator = Validator::make(
+        //     [
+        //         'file'      => $request->file,
+        //         'extension' => strtolower($request->file->getClientOriginalExtension()),
+        //     ],
+        //     [
+        //         'file'          => 'required',
+        //         'extension'      => 'required|in:csv,xlsx,xls',
+        //     ]
+        // );
+        $request->validate([
+            'file'=>'required|mimes:csv,xlsx,xls',
+        ]);
+        
         Excel::import(new TeachersImport, $request->file('file')->store('temp'));
         return redirect()->route('teachers.index')->with('success','All teachers have been successfully added!');
     }

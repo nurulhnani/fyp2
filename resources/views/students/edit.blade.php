@@ -264,7 +264,7 @@
                                                                     ?>
 
                                                                     <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                                                    <select class="form-control form-control-alternative" name="customfield[]" required>
+                                                                    <select class="form-control form-control-alternative" name="customfield[]">
                                                                         <option selected disabled>{{$addinfo}}</option>
                                                                             @foreach($explode_notes as $explode_note)
                                                                                 <option value="{{$explode_note}}">{{$explode_note}}</option>

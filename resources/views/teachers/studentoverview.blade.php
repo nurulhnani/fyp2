@@ -229,9 +229,9 @@
                     <div class="row pt-4 pb-2">
                         <div class="col-sm-6 text-center">
                             @if(in_array('Realistic',$category))
-                            <a href="#">
+                            {{-- <a href="#">
                                 <img id="output_image" src="{{asset('assets/img/interestResult/electrician.jpg')}}" width="130" height="190" class="resultimg">
-                            </a>
+                            </a> --}}
                             <a href="#">
                                 <img id="output_image" src="{{asset('assets/img/interestResult/carpenter.jpg')}}" width="130" height="190" class="resultimg">
                             </a>
@@ -603,6 +603,9 @@
 
                 {{-- Health Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel" aria-labelledby="tabs-icons-text-5-tab">
+                    @if($record == null)
+                        <h4>No result found for {{$student->name}}.</h4>
+                    @else
                     <div class="row">
                         <div class="col">
                             <h3 class="heading text-muted">STUDENT INFORMATION</h3>
@@ -1180,6 +1183,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

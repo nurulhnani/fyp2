@@ -19,6 +19,7 @@
         "maatwebsite/excel": "^3.1",
         "niiknow/bayes": "^1.1",
         "phpoffice/phpspreadsheet": "^1.25",
+        "symfony/var-dumper": "^6.2",
         "yoeunes/toastr": "^2.0"
     },
     "require-dev": {

@@ -650,8 +650,8 @@
               <h4 class="text-center">Confirm to delete health record for {{$student->name}}?</h4>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i>Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Delete</button>
           </div>
         </form>
       </div>

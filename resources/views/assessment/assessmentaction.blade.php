@@ -12,9 +12,9 @@
           </button>
         </div>
         <div class="modal-body text-left">
-        <form action="{{ route('editassessment',$question->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+        {{-- <form action="{{ route('editassessment',$question->id) }}" method="POST"> --}}
+        {{-- @csrf --}}
+        {{-- @method('PUT') --}}
 
           <div class="row">
             <div class="col">

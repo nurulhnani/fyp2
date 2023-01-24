@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'=>'Sabarina binti Kamal',
                 'image_path' => null,
-                'nric_mykid'=>'890716-01-2236',
+                'nric_mykid'=>'890716012236',
                 'email'=>'sabarina@gmail.com',
                 'type'=>1,
                 'email_verified_at' => now(),
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
              [
                 'name'=>'Mohd Ridwan bin Daud',
                 'image_path' => null,
-                'nric_mykid'=>'890721-14-2231',
+                'nric_mykid'=>'890721142231',
                 'email'=>'ridwan@gmail.com',
                 'type'=>1,
                 'email_verified_at' => now(),

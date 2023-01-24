@@ -502,6 +502,9 @@
                 </div>
                 {{-- Health Tab --}}
                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                    @if($record == null)
+                        <h4>No result found for {{$student->name}}.</h4>
+                    @else
                     <div class="row">
                         <div class="col">
                             <h3 class="heading text-muted">STUDENT INFORMATION</h3>
@@ -1079,6 +1082,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

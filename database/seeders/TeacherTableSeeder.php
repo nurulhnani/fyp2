@@ -20,7 +20,7 @@ class TeacherTableSeeder extends Seeder
             [
                 'status'=>'active',
                 'name'=>'Sabarina binti Kamal',
-                'nric' =>'890716-01-2236',
+                'nric' =>'890716012236',
                 'gender' =>'Female',
                 'email' =>'sabarina@gmail.com',
                 'position' =>'Classroom teacher',
@@ -31,7 +31,7 @@ class TeacherTableSeeder extends Seeder
             ],[
                 'status'=>'active',
                 'name'=>'Mohd Ridwan bin Daud',
-                'nric' =>'890721-14-2231',
+                'nric' =>'890721142231',
                 'gender' =>'Male',
                 'email' =>'ridwan@gmail.com',
                 'position' =>'Classroom teacher',

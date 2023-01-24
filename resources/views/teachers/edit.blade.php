@@ -4,7 +4,7 @@
     @include('layouts.headers.cards')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger mt-2">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
@@ -110,6 +110,7 @@
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
                                                         <input type="text" name="name" id="name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$teacher->name}}" required autofocus>
+                                                        <input type="hidden" name="old_name" id="old_name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$teacher->name}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -126,7 +127,7 @@
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                                        <input type="number" step="1" pattern="/d+" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="{{$teacher->nric}}" required>
+                                                        <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="{{$teacher->nric}}" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>

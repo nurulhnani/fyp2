@@ -6,7 +6,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Classlist;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ClassController extends Controller
@@ -94,9 +94,8 @@ class ClassController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->studentInClass);
+
         $class = Classlist::find($id);
-        
         $class->class_name = $request->input('class_name');
         $class->update();
 
@@ -121,50 +120,53 @@ class ClassController extends Controller
         $teacher->classlist_id = $id;
         $teacher->updated_at = now();
         $teacher->update();
+        return redirect()->route('classes.index')->with('success',"Class successfully updated!");
+    }
 
+    public function selectStudentClass(Request $request,$id){
+        // var_dump($request->input('studentInClass'));
         $studentLists = $request->input('studentInClass');
-        if(isset($studentLists)){
-            $oldstudents = Student::where('classlist_id','=',$id)->get();
-            foreach($oldstudents as $oldstudent){
-                $oldstudent->classlist_id = null;
-                $oldstudent->update();
-            }
-            // dd($oldstudent);
-            foreach ($studentLists as $studentList) { 
-                $studentsid = Student::where('id', "=", $studentList)->first()->id;
-                $students = Student::find($studentsid);
-                $students->classlist_id = $id;
-                $students->updated_at = now();
-                $students->update();
-            }
+        foreach ($studentLists as $studentList) { 
+            $studentsid = Student::where('id', "=", $studentList)->first()->id;
+            $students = Student::find($studentsid);
+            $students->classlist_id = $id;
+            $students->updated_at = now();
+            $students->update();
         }
-        
-        if($request->hasFile('file')){
-            $filedata = $request->file('file');
-            $spreadsheet = IOFactory::load($filedata->getRealPath());
-            $sheet = $spreadsheet->getActiveSheet();
+        return redirect()->back()->with('success',"Student successfully added into the class!");
+    }
+
+    public function uploadStudentListClass(Request $request,$id){
+        if($request->hasFile('studentfile')){
+
+            $this->validate($request, [
+                'studentfile'  => 'required|mimes:csv,xls,xlsx'
+            ]);
+               
+            $filedata = $request->file('studentfile');
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filedata->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet(); 
             $row_limit    = $sheet->getHighestDataRow();
             $column_limit = $sheet->getHighestDataColumn();
             $row_range    = range( 1, $row_limit );
-            $data = array();
+            $datas = array();
             foreach ( $row_range as $row ) {
-                $data[] = [
+                $datas[] = [
                     'mykid' => $sheet->getCell( 'B' . $row )->getValue(),
                 ];
             }
+            // dd($data);
 
-            foreach($data as $data){
+            foreach($datas as $data){
                 $studentsid = Student::where('mykid', "=", $data)->first()->id;
                 $students = Student::find($studentsid);
                 $students->classlist_id = $id;
                 $students->updated_at = now();
                 $students->update();
             }
-            // dd($data);
+            return redirect()->back()->with('success',"Student successfully added into the class!");
         }
-
         
-        return redirect()->route('classes.index')->with('success',"Class successfully updated!");
     }
 
     public function getStudent($id)
@@ -194,6 +196,6 @@ class ClassController extends Controller
         $student = Student::find($id);
         $student->classlist_id = null;
         $student->update();
-        return redirect()->route('classes.index')->with('success','Student successfully removed!');
+        return redirect()->back()->with('success','Student successfully removed!');
     }
 }

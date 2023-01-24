@@ -4,7 +4,7 @@
 @include('layouts.headers.cards')
 
 @if ($errors->any())
-<div class="alert alert-danger">
+<div class="alert alert-danger mt-2">
     <strong>Whoops!</strong> There were some problems with your input.<br><br>
     <ul>
         @foreach ($errors->all() as $error)
@@ -104,6 +104,7 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
                                 <input type="text" name="name" id="name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$teacher->name}}" required autofocus>
+                                <input type="hidden" name="old_name" id="old_name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="{{$teacher->name}}">
                             </div>
                         </div>
                     </div>
@@ -111,7 +112,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$teacher->address}}" required autofocus>
+                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="{{ __('Address') }}" value="{{$teacher->address}}">
                             </div>
                         </div>
                     </div>
@@ -119,8 +120,8 @@
                     <div class="row">
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
-                                <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                <input type="number" step="1" pattern="/d+" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="{{$teacher->nric}}" required>
+                                <label class="form-control-label" for="class">{{ __('NRIC') }} <span class="pl-1" style="font-size: 9pt">(without -)</span> </label>
+                                <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="{{$teacher->nric}}" required>
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
@@ -134,13 +135,13 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="gender">{{ __('Gender') }}</label>
-                                <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="" value="{{$teacher->gender}}" required>
+                                <input type="text" name="gender" id="gender" class="form-control form-control-alternative" placeholder="" value="{{$teacher->gender}}">
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="position">{{ __('Position') }}</label>
-                                <input type="text" name="position" id="position" class="form-control form-control-alternative" placeholder="" value="{{$teacher->position}}" required>
+                                <input type="text" name="position" id="position" class="form-control form-control-alternative" placeholder="" value="{{$teacher->position}}">
                             </div>
                         </div>
                     </div>
@@ -148,7 +149,7 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="phone_number">{{ __('Phone Number') }}</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="{{$teacher->phone_number}}" required>
+                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="{{$teacher->phone_number}}">
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
@@ -209,7 +210,7 @@
                                 ?>
 
                                 <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                <select class="form-control form-control-alternative" name="customfield[]" required>
+                                <select class="form-control form-control-alternative" name="customfield[]">
                                     <option selected disabled>{{$addinfo}}</option>
                                     @foreach($explode_notes as $explode_note)
                                     <option value="{{$explode_note}}">{{$explode_note}}</option>
@@ -232,7 +233,7 @@
                                 @endif
 
                                 <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" required>
+                                <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}">
 
                                 {{-- <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                 <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" class="form-control form-control-alternative" placeholder="" value="{{$addinfo}}" required> --}}

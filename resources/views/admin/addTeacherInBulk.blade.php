@@ -5,6 +5,17 @@
 @include('layouts.headers.cards')
 <!-- Header -->
 
+@if ($errors->any())
+<div class="alert alert-danger mt-2">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
 <div class="header pb-6">
     <div class="container-fluid">
       <div class="header-body">
@@ -62,7 +73,7 @@
                                   <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="en">
                                   <label class="custom-file-label" for="customFileLang">Select file</label> -->
                               <div class="mb-3">
-                                  <input class="form-control" type="file" name="file" id="file">
+                                  <input class="form-control" type="file" name="file" id="file" required>
                               </div>
                           </div>
                   </div>

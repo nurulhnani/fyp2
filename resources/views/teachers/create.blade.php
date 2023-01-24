@@ -4,10 +4,15 @@
 {{-- Header --}}
 @include('layouts.headers.cards')
 <!-- Header -->
-@if ($errors->any()) 
-    @foreach ($errors->all() as $error)
-    {{ $error }}
-    @endforeach
+@if ($errors->any())
+<div class="alert alert-danger mt-2">
+    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 
 <div class="header pb-6">
@@ -58,7 +63,7 @@
                     <h5><span class="font-weight-light">Choose profile picture</span></h5>
                 </div>
                 <div class="text-center">
-                    <input accept="/*" type="file" onchange="preview_image(event)" class="form-control form-control-alternative" id="image" name="image" required>                 
+                    <input accept="/*" type="file" onchange="preview_image(event)" class="form-control form-control-alternative" id="image" name="image">                 
                     <script type='text/javascript'>
                         function preview_image(event) 
                         {
@@ -103,7 +108,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="" value="" required autofocus>
+                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="" value="">
                             </div>
                         </div>
                     </div>
@@ -112,7 +117,7 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                <input type="number" step="1" pattern="/d+" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="" required>
+                                <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="" required>
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
@@ -153,7 +158,7 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="position">{{ __('Phone Number') }}</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="" required>
+                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="">
                             </div>
                         </div>
                         {{-- <div class="col-sm-6"><span></span>
@@ -196,7 +201,7 @@
                                             ?>
 
                                             <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
-                                            <select class="form-control form-control-alternative" name="customfield[]" required>
+                                            <select class="form-control form-control-alternative" name="customfield[]">
                                                 <option selected disabled>Select {{ $customfield->name }}</option>
                                                     @foreach($explode_notes as $explode_note)
                                                         <option value="{{$explode_note}}">{{$explode_note}}</option>
@@ -214,7 +219,7 @@
 
                                             <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                             <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
-                                            class="form-control form-control-alternative" placeholder="" value="" required>
+                                            class="form-control form-control-alternative" placeholder="" value="">
                                             
                                             {{-- <label class="form-control-label" for="{{ $customfield->name }}">{{ $customfield->name }}</label>
                                             <input type="{{ $customfield->type }}" name="customfield[]" id="{{ $customfield->name }}" 
