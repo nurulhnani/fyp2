@@ -644,9 +644,6 @@ class StudentController extends Controller
         $newImage = "";
         if ($request->hasFile('image')) {
             $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
-            // dd($uploadedFileUrl);
-            // $newImage = $data['name'] . '.' . $request->image->extension();
-            // $request->image->move(public_path('storage'), $newImage);
             $student->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
             $student->attachMedia($request->file('image'));
@@ -661,9 +658,6 @@ class StudentController extends Controller
 
        
         $user->name = $data['name'];
-        // if ($request->hasFile('image')) {
-        //     $user->image_path = $uploadedFileUrl;
-        // }
         $user->image_path = $newImage;
         $user->nric_mykid = $data['mykid'];
         $user->type = 2;
@@ -673,7 +667,6 @@ class StudentController extends Controller
         $user->updated_at = now();
         $user->save();
 
-        // Student::create($request->all());
         return redirect()->route('students.index')->with('success', 'Student successfully added!');
     }
 
@@ -701,27 +694,12 @@ class StudentController extends Controller
     {
         $customfield = AutoFields::all();
         $student = Student::find($id);
-        // $classlist = $student->classlists;
-        // dd($classlist);
-        // dd($student);
-        // echo $student->class->class_name;
         return view('students.edit')->with('student', $student, 'customfield', $customfield);
-
-        // $result = Student::with('classlists')->get();
-        // return view('students.edit')->with('student',$result);
-
-        // $classes = Classlist::find($id);
-        // $student = Student::find($id);
-        // return view('students.edit')->with('student',$student,'classes',$classes);
     }
     public function editstudent($id)
     {
         $customfield = AutoFields::all();
         $student = Student::find($id);
-        // $classlist = $student->classlists;
-        // dd($classlist);
-        // dd($student);
-        // echo $student->class->class_name;
         return view('teachers.editstudent')->with('student', $student, 'customfield', $customfield);
     }
 
@@ -737,18 +715,6 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required',
             'mykid' => 'required',
-            // 'gender' => 'required',
-            // 'class' =>'required',
-            // 'citizenship' => 'required',
-            // 'address' => 'required',
-            // 'G1_name' => 'required',
-            // 'G1_relation' => 'required',
-            // 'G1_phonenum' => 'required',
-            // 'G1_income' => 'required',
-            // 'G2_name' => 'required',
-            // 'G2_relation' => 'required',
-            // 'G2_phonenum' => 'required',
-            // 'G2_income' => 'required',
         ]);
 
         $student = Student::find($id);
@@ -758,25 +724,12 @@ class StudentController extends Controller
         if ($request->hasFile('imageS')) {
 
             if (isset($student->image_path)) {
-                 //update image
-                //  $newimage = $request->file('imageS');
-                //  $student->updateMedia($newimage);
-                //  $student->attachMedia($request->file('imageS'));
                 $old_image = $student->image_path;
                 $token = explode('/', $old_image);
                 $token2 = explode('.', $token[sizeof($token) - 1]);
                 Cloudinary::destroy('userImages/' . $token2[0]);
             }
             $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
-
-            // $destination = "public\storage" . $student->image_path;
-            // if (File::exists($destination)) {
-            //     File::delete($destination);
-            // }
-            // $file = $request->file('imageS');
-            // $extension = $file->getClientOriginalExtension();
-            // $filename = $request->input('name') . '.' . $extension;
-            // $file->move(public_path('storage'), $filename);
             $student->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
         }
@@ -805,10 +758,6 @@ class StudentController extends Controller
 
         
         $user->name = $request->input('name');
-        // if ($request->hasFile('image')) {
-        //     $user->image_path = $uploadedFileUrl;
-        // }
-        // $user->image_path = $newImage;
         $user->nric_mykid = $request->input('mykid');
         $user->type = 2;
         $user->email_verified_at = now();
@@ -822,22 +771,9 @@ class StudentController extends Controller
 
     public function updatestudent(Request $request, $id)
     {
-        // dd($request);
         $request->validate([
             'name' => 'required',
             'mykid' => 'required',
-            // 'gender' => 'required',
-            // 'class' =>'required',
-            // 'citizenship' => 'required',
-            // 'address' => 'required',
-            // 'G1_name' => 'required',
-            // 'G1_relation' => 'required',
-            // 'G1_phonenum' => 'required',
-            // 'G1_income' => 'required',
-            // 'G2_name' => 'required',
-            // 'G2_relation' => 'required',
-            // 'G2_phonenum' => 'required',
-            // 'G2_income' => 'required',
         ]);
 
         $student = Student::find($id);     
@@ -847,25 +783,12 @@ class StudentController extends Controller
         if ($request->hasFile('imageS')) {
 
             if (isset($student->image_path)) {
-                 //update image
-                //  $newimage = $request->file('imageS');
-                //  $student->updateMedia($newimage);
-                //  $student->attachMedia($request->file('imageS'));
                 $old_image = $student->image_path;
                 $token = explode('/', $old_image);
                 $token2 = explode('.', $token[sizeof($token) - 1]);
                 Cloudinary::destroy('userImages/' . $token2[0]);
             }
             $uploadedFileUrl = Cloudinary::upload($request->file('imageS')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
-
-            // $destination = "assets\img\userImage" . $student->image_path;
-            // if (File::exists($destination)) {
-            //     File::delete($destination);
-            // }
-            // $file = $request->file('imageS');
-            // $extension = $file->getClientOriginalExtension();
-            // $filename = $request->input('name') . '.' . $extension;
-            // $file->move(public_path('assets\img\userImage'), $filename);
             $student->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
         }
@@ -894,21 +817,15 @@ class StudentController extends Controller
         }
 
         $student->update();
-        
-
-        // if ($request->hasFile('imageS')) {
-        //     $user->image_path = $uploadedFileUrl;
-        // }
-        // $user->image_path = $newImage;
+    
         $user->nric_mykid = $request->input('mykid');
         $user->type = 2;
         $user->email_verified_at = now();
-        // $user->password = Hash::make('secret');
         $user->created_at = now();
         $user->updated_at = now();
         $user->update();
 
-        return redirect()->route('studentlist')->with('success', 'Student updated successfully');
+        return redirect()->route('editstudent', ['id' => $id])->with('success', 'Student updated successfully');
     }
 
     /**

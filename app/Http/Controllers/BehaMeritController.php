@@ -110,8 +110,19 @@ class BehaMeritController extends Controller
 
     public function fileImport(Request $request)
     {
-        $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
-        return view('merits/behaMerits.bulkList', ['studentListArr' => $studentListArr]);
+        $arr = Excel::toArray(new MeritsImport, $request->file('file'));
+        $studentListArr = array_merge([], ...$arr);
+
+        $index = 0;
+        $nonStudentsArr = null;
+        foreach ($studentListArr as $arr) {
+            if (!Student::where('mykid', "=", $arr['mykid'])->first()){
+                unset($studentListArr[$index]);
+                $nonStudentsArr[$index] = $arr['name'];
+            }
+            $index++;
+        }
+        return view('merits/behaMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
     }
 
     public function storeBulk(Request $request)

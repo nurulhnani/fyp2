@@ -25,12 +25,12 @@
                             @if($merit->category == 'Competition')
                             <input type="hidden" name="category" value="Competition" />
                             <div class="form-group">
-                                <label for="inputAddress">Activity/Competition</label>
-                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                                <label class="required-field" for="inputAddress">Activity/Competition Name</label>
+                                <input name="merit_name" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="inputCity">Achievement</label>
-                                <select id="inputState" class="form-control" name="achievement">
+                                <label class="required-field" for="inputCity">Achievement</label>
+                                <select id="inputState" class="form-control" name="achievement" required>
                                     @foreach ($data['competitions'] as $meritPoint)
                                     <option value="{{ $meritPoint->achievement }}" <?php if ($merit->achievement == $meritPoint->achievement) echo 'selected="selected"'; ?>>{{ $meritPoint->achievement }}</option>
                                     @endforeach
@@ -43,12 +43,12 @@
                             @else
                             <input type="hidden" name="category" value="Position" />
                             <div class="form-group">
-                                <label for="inputAddress">Club/Society Name</label>
-                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                                <label class="required-field" for="inputAddress">Club/Society Name</label>
+                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="inputCity">Achievement</label>
-                                <select id="inputState" class="form-control" name="achievement">
+                                <label class="required-field" for="inputCity">Achievement</label>
+                                <select id="inputState" class="form-control" name="achievement" required>
                                     @foreach ($data['positions'] as $id => $achievement)
                                     <option value="{{ $id }}" <?php if ($merit->achievement == $achievement) echo 'selected="selected"'; ?>>{{ $achievement }}</option>
                                     @endforeach
@@ -59,9 +59,9 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputCity">Level</label>
+                                    <label class="required-field" for="inputCity">Level</label>
                                     <?php $level = $merit['level']; ?>
-                                    <select id="inputState" class="form-control" name="level">
+                                    <select id="inputState" class="form-control" name="level" required>
                                         <option value="School" <?php if ($level == "School") echo 'selected="selected"'; ?>>School</option>
                                         <option value="District" <?php if ($level == "District") echo 'selected="selected"'; ?>>District</option>
                                         <option value="National" <?php if ($level == "National") echo 'selected="selected"'; ?>>National</option>
@@ -69,8 +69,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputZip">Date</label>
-                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>">
+                                    <label class="required-field" for="inputZip">Date</label>
+                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>" required>
                                 </div>
                             </div>
                             <div class="modal-footer nopadding">

@@ -129,8 +129,8 @@
               <!--Choose category; position/competition-->
               <div class="form-row">
                 <div class="form-group col-md">
-                  <label for="inputState">Category</label>
-                  <select class="form-control" name="category" id="category-dd">
+                  <label class="required-field" for="inputState">Category</label>
+                  <select class="form-control" name="category" id="category-dd" required>
                     <option selected disabled hidden>Choose...</option>
                     <option value="Position">Position</option>
                     <option value="Competition">Competition</option>
@@ -140,14 +140,14 @@
 
               <!--If position -->
               <div class="form-group" id="nameEvent-block" style="display:none">
-                <label for="labelName">Club/Society</label>
-                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+                <label class="required-field" for="labelName">Club/Society</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="" required>
               </div>
 
               <!--If competition-->
               <div class="form-group" id="achievement-block" style="display:none">
-                <label for="inputAddress">Achievement</label>
-                <select id="achievement-dd" class="form-control" name="achievement">
+                <label class="required-field" for="inputAddress">Achievement</label>
+                <select id="achievement-dd" class="form-control" name="achievement" required>
                   <option selected disabled hidden>Choose...</option>
                   <option value="Johan">Johan</option>
                   <option value="Naib Johan">Naib Johan</option>
@@ -162,8 +162,8 @@
 
               <div class="form-row" id="level-block" style="display:none">
                 <div class="form-group col-md-6">
-                  <label for="inputCity">Level</label>
-                  <select class="form-control" name="level" id="level-dd">
+                  <label class="required-field" for="inputCity">Level</label>
+                  <select class="form-control" name="level" id="level-dd" required>
                     <option selected disabled hidden>Choose...</option>
                     <option value="School">School</option>
                     <option value="District">District</option>
@@ -174,8 +174,8 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="inputZip">Date</label>
-                  <input name="date" type="date" class="form-control" id="inputZip">
+                  <label class="required-field" for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip" required>
                 </div>
               </div>
 
@@ -200,6 +200,12 @@
   .nopadding {
     padding: 0 !important;
     margin: 0 !important;
+  }
+
+  .required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 2px
   }
 </style>
 

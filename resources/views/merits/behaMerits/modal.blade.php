@@ -22,8 +22,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress">Activity</label>
-                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                                <label class="required-field" for="inputAddress">Merit Event</label>
+                                <input name="merit_name" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress2">Description</label>
@@ -31,17 +31,17 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="inputCity">Level</label>
+                                    <label class="required-field" for="inputCity">Level</label>
                                     <?php $level = $merit['level']; ?>
-                                    <select id="inputState" class="form-control" name="level">
+                                    <select id="inputState" class="form-control" name="level" required>
                                         <option value="Low" <?php if ($level == "Low") echo 'selected="selected"'; ?>>Low</option>
                                         <option value="Medium" <?php if ($level == "Medium") echo 'selected="selected"'; ?>>Medium</option>
                                         <option value="High" <?php if ($level == "High") echo 'selected="selected"'; ?>>High</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputZip">Date</label>
-                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>">
+                                    <label class="required-field" for="inputZip">Date</label>
+                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>" required>
                                 </div>
 
                             </div>
@@ -56,6 +56,7 @@
         </div>
     </div>
 </div>
+
 <!-- Delete Merit Modal -->
 <div class="modal fade" id="delete-modal{{$merit->id}}" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
@@ -90,7 +91,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary border-0 mb-0">
                     <div class="card-header bg-transparent">
-                        <div class="text-muted text-center mt-2 mb-3">Merit Details</div>
+                        <div class="text-muted text-center mt-2 mb-3">Demerit Details</div>
                     </div>
                     <div class="card-body px-lg-5 py-lg-4">
                         <form method="post" action="{{ route('behaMerits.update', $merit->id) }}" autocomplete="off">
@@ -107,8 +108,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress">Activity</label>
-                                <input name="meritName" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}">
+                                <label class="required-field" for="inputAddress">Demerit Event</label>
+                                <input name="merit_name" type="text" class="form-control" id="inputAddress" value="{{ $merit->merit_name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress2">Description</label>
@@ -116,17 +117,17 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <label for="inputCity">Level</label>
+                                    <label class="required-field" for="inputCity">Level</label>
                                     <?php $level = $merit['level']; ?>
-                                    <select id="inputState" class="form-control" name="level">
+                                    <select id="inputState" class="form-control" name="level" required>
                                         <option value="Low" <?php if ($level == "Low") echo 'selected="selected"'; ?>>Low</option>
                                         <option value="Medium" <?php if ($level == "Medium") echo 'selected="selected"'; ?>>Medium</option>
                                         <option value="High" <?php if ($level == "High") echo 'selected="selected"'; ?>>High</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputZip">Date</label>
-                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>">
+                                    <label class="required-field" for="inputZip">Date</label>
+                                    <input name="date" type="date" class="form-control" id="inputZip" value="<?php echo strftime('%Y-%m-%d', strtotime($merit['date'])); ?>" required>
                                 </div>
 
                             </div>

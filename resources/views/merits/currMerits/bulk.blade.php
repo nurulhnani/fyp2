@@ -68,11 +68,11 @@
                                                 </td>
                                                 @if(isset($student->class->class_name))
                                                 <td class="budget">
-                                                {{ $student->class->class_name }}
+                                                    {{ $student->class->class_name }}
                                                 </td>
                                                 @else
                                                 <td class="budget">
-                                                Not Yet Assigned
+                                                    Not Yet Assigned
                                                 </td>
                                                 @endif
 
@@ -109,6 +109,7 @@
                                     <div class="custom-file">
                                         <div class="mb-3">
                                             <input class="form-control" type="file" name="file" id="file">
+                                            <h5 class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="{{asset("assets/download/meritlist.xlsx")}}" class="underline-on-hover"> Click here to download the Excel template</a></h5>
                                         </div>
                                     </div>
                             </div>
@@ -185,6 +186,10 @@
     #myTable tr:hover {
         /* Add a grey background color to the table header and on hover */
         background-color: #f1f1f1;
+    }
+
+    .underline-on-hover:hover {
+        text-decoration: underline;
     }
 </style>
 <script>

@@ -109,6 +109,7 @@
                                     <div class="custom-file">
                                         <div class="mb-3">
                                             <input class="form-control" type="file" name="file" id="file">
+                                            <h5 class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="{{asset("assets/download/meritlist.xlsx")}}" class="underline-on-hover"> Click here to download the Excel template</a></h5>
                                         </div>
                                     </div>
                             </div>

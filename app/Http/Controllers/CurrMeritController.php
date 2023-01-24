@@ -16,8 +16,14 @@ class CurrMeritController extends Controller
     {
         if ($request->filled('name')) {
             $student = Student::where('name', "=", $request->input('name'))->first();
+            if (!isset($student)) {
+                return redirect()->back()->with('error', 'Student not found');
+            }
         } else {
             $student = Student::where('mykid', "=", $request->input('id'))->first();
+            if (!isset($student)) {
+                return redirect()->back()->with('error', 'Student not found');
+            }
         }
 
         if ($request->has('behaForm')) {
@@ -124,8 +130,20 @@ class CurrMeritController extends Controller
 
     public function fileImport(Request $request)
     {
-        $studentListArr = Excel::toArray(new MeritsImport, $request->file('file'));
-        return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr]);
+        $arr = Excel::toArray(new MeritsImport, $request->file('file'));
+        $studentListArr = array_merge([], ...$arr);
+
+        $index = 0;
+        $nonStudentsArr = null;
+        foreach ($studentListArr as $arr) {
+            if (!Student::where('mykid', "=", $arr['mykid'])->first()) {
+                unset($studentListArr[$index]);
+                $nonStudentsArr[$index] = $arr['name'];
+            } 
+            $index++;
+        }
+
+        return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
     }
 
     public function storeBulk(Request $request)
@@ -139,7 +157,7 @@ class CurrMeritController extends Controller
                 $meritRef = Merit_Points::where('id', $request->achievement)
                     ->where('level', $request->level)
                     ->first();
-    
+
                 if (isset($meritRef)) {
                     $newMerit['merit_point'] = $meritRef->merit_points;
                     $newMerit['achievement'] = $meritRef->achievement;

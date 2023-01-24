@@ -184,8 +184,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputAddress">Event</label>
-                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+                <label class="required-field" for="inputAddress">Merit Event</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="" required>
               </div>
               <div class="form-group">
                 <label for="inputAddress2">Description</label>
@@ -193,8 +193,8 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-8">
-                  <label for="inputCity">Level</label>
-                  <select id="inputState" class="form-control" name="level">
+                  <label class="required-field" for="inputCity">Level</label>
+                  <select id="inputState" class="form-control" name="level" required>
                     <option value="" selected disabled hidden>Choose...</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -202,8 +202,8 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="inputZip">Date</label>
-                  <input name="date" type="date" class="form-control" id="inputZip">
+                  <label class="required-field" for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip" required>
                 </div>
 
               </div>
@@ -226,7 +226,7 @@
       <div class="modal-body p-0">
         <div class="card bg-secondary border-0 mb-0">
           <div class="card-header bg-transparent">
-            <div class="text-muted text-center mt-2 mb-3">Merit Details</div>
+            <div class="text-muted text-center mt-2 mb-3">Demerit Details</div>
           </div>
           <div class="card-body px-lg-5 py-lg-4">
             <form method="post" action="{{ route('behaMerits.store') }}" autocomplete="off">
@@ -244,8 +244,8 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputAddress">Event</label>
-                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+                <label class="required-field" for="inputAddress">Demerit Event</label>
+                <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="" required>
               </div>
               <div class="form-group">
                 <label for="inputAddress2">Description</label>
@@ -253,8 +253,8 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-8">
-                  <label for="inputCity">Level</label>
-                  <select id="inputState" class="form-control" name="level">
+                  <label class="required-field" for="inputCity">Level</label>
+                  <select id="inputState" class="form-control" name="level" required>
                     <option value="" selected disabled hidden>Choose...</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -262,8 +262,8 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="inputZip">Date</label>
-                  <input name="date" type="date" class="form-control" id="inputZip">
+                  <label class="required-field" for="inputZip">Date</label>
+                  <input name="date" type="date" class="form-control" id="inputZip" required>
                 </div>
 
               </div>
@@ -288,5 +288,11 @@
   .nopadding {
     padding: 0 !important;
     margin: 0 !important;
+  }
+
+  .required-field::after {
+    content: "*";
+    color: red;
+    margin-left: 2px
   }
 </style>

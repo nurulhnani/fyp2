@@ -21,6 +21,9 @@ class ClassroomManagementController extends Controller
     public function view(Request $request)
     {
         $class = Classlist::find($request->select_class);
+        if (!isset($class)) {
+            return redirect()->back()->with('error', 'Please select class from the dropdown');
+        }
         $students = Student::where('classlist_id', $class->id)->get();
         return view('classrooms.view', ['class' => $class, 'students' => $students]);
     }

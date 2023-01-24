@@ -64,26 +64,26 @@ class PersonalityEvaluationController extends Controller
         $teacher = Teacher::where('name', $name)->first();
 
         if ($request->has('scale')) {
-            $questions = Personality_Question::where('type', '=', 's')->get();
+            // $questions = Personality_Question::where('type', '=', 's')->get();
 
-            $index = 1;
-            $categoryArray[] = array();
+            // $index = 1;
+            // $categoryArray[] = array();
 
 
-            foreach ($questions as $question) {
-                $likertName = "likert" . $index;
-                $categoryName = "category" . $index;
-                $likertVal = intval($request->input($likertName));
-                $category = $request->input($categoryName);
+            // foreach ($questions as $question) {
+            //     $likertName = "likert" . $index;
+            //     $categoryName = "category" . $index;
+            //     $likertVal = intval($request->input($likertName));
+            //     $category = $request->input($categoryName);
 
-                $categoryArray[$index] = array($category => $likertVal);
-                $index++;
-            }
+            //     $categoryArray[$index] = array($category => $likertVal);
+            //     $index++;
+            // }
 
-            $arraysMerged = array_merge_recursive([], ...$categoryArray);
-            extract($arraysMerged);
+            // $arraysMerged = array_merge_recursive([], ...$categoryArray);
+            // extract($arraysMerged);
 
-            dd($arraysMerged);
+            // dd($arraysMerged);
 
             // //calculate marks
             // $categories = array($diligent, $punctual, $courteus, $leadership, $critical_thinking);
@@ -132,6 +132,12 @@ class PersonalityEvaluationController extends Controller
                     $finalMark[$category] =  abs(intval(round(($mark / 12) * 100)));
                 } else {
                     $finalMark[$category] = intval(round(($mark / 6) * 100));
+                }
+            }
+
+            foreach ($sheetNameArr as $category) {
+                if (!array_key_exists($category, $finalMark)) {
+                    $finalMark[$category] = 0;
                 }
             }
 
@@ -216,7 +222,7 @@ class PersonalityEvaluationController extends Controller
         unset($input['student_mykid']);
 
         // toastr()->success('Your personality evaluation has been submit successfully!', 'Congrats');
-        return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher])->with('success','Your personality evaluation has been submit successfully');
+        return view('evaluations.personalityResult', ['input' => $input, 'student' => $student, 'teacher' => $teacher])->with('success', 'Your personality evaluation has been submit successfully');
     }
 
     public function showCurrResult(Student $student)

@@ -36,48 +36,29 @@
                     <div class="card-body">
                         <div class="pl-lg-4">
 
+                            @if(isset($nonStudentsArr))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span class="alert-text">
+                                    Fail to identify student(s) named
+                                    <?php
+                                    foreach ($nonStudentsArr as $name) {
+                                        echo $name . ', ';
+                                    } ?>
+                                    Please check their mykid number in the Excel sheet.</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
                             <form method="post" action="{{ route('bulkmerits.store') }}" autocomplete="off">
                                 @csrf
                                 <input type="hidden" name="type" value="c">
-                                <!-- <div class="form-group">
-                                    <label for="inputAddress">Activity</label>
-                                    <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Description</label>
-                                    <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="5"></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="inputCity">Level</label>
-                                        <select id="inputState" class="form-control" name="level">
-                                            <option value="" selected disabled hidden>Choose...</option>
-                                            <option value="School">School</option>
-                                            <option value="District">District</option>
-                                            <option value="National">National</option>
-                                            <option value="International">International</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">Achievement</label>
-                                        <select id="inputState" class="form-control" name="achievement">
-                                            <option selected>Choose...</option>
-                                            <option value="Participant">Participant</option>
-                                            <option value="Runner Ups">Runner Ups</option>
-                                            <option value="Committee Member">Committee Member</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="inputZip">Date</label>
-                                        <input name="date" type="date" class="form-control" id="inputZip">
-                                    </div>
-                                </div> -->
 
                                 <!--Choose category; position/competition-->
                                 <div class="form-row">
                                     <div class="form-group col-md">
-                                        <label for="inputState">Category</label>
-                                        <select class="form-control" name="category" id="category-dd">
+                                        <label class="required-field" for="inputState">Category</label>
+                                        <select class="form-control" name="category" id="category-dd" required>
                                             <option selected disabled hidden>Choose...</option>
                                             <option value="Position">Position</option>
                                             <option value="Competition">Competition</option>
@@ -87,14 +68,14 @@
 
                                 <!--If position -->
                                 <div class="form-group" id="nameEvent-block" style="display:none">
-                                    <label for="labelName">Club/Society</label>
-                                    <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="">
+                                    <label class="required-field" for="labelName">Club/Society</label>
+                                    <input name="merit_name" type="text" class="form-control" id="inputAddress" placeholder="" required>
                                 </div>
 
                                 <!--If competition-->
                                 <div class="form-group" id="achievement-block" style="display:none">
-                                    <label for="inputAddress">Achievement</label>
-                                    <select id="achievement-dd" class="form-control" name="achievement">
+                                    <label class="required-field" for="inputAddress">Achievement</label>
+                                    <select id="achievement-dd" class="form-control" name="achievement" required>
                                         <option selected disabled hidden>Choose...</option>
                                         <option value="Johan">Johan</option>
                                         <option value="Naib Johan">Naib Johan</option>
@@ -109,8 +90,8 @@
 
                                 <div class="form-row" id="level-block" style="display:none">
                                     <div class="form-group col-md-6">
-                                        <label for="inputCity">Level</label>
-                                        <select class="form-control" name="level" id="level-dd">
+                                        <label class="required-field" for="inputCity">Level</label>
+                                        <select class="form-control" name="level" id="level-dd" required>
                                             <option selected disabled hidden>Choose...</option>
                                             <option value="School">School</option>
                                             <option value="District">District</option>
@@ -121,8 +102,8 @@
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="inputZip">Date</label>
-                                        <input name="date" type="date" class="form-control" id="inputZip">
+                                        <label class="required-field" for="inputZip">Date</label>
+                                        <input name="date" type="date" class="form-control" id="inputZip" required>
                                     </div>
                                 </div>
 
@@ -140,8 +121,7 @@
                                         <tbody class="list">
                                             @if(isset($studentListArr))
                                             <?php $index = 1; ?>
-                                            @foreach ($studentListArr as $studentArr)
-                                            @foreach ($studentArr as $student)
+                                            @foreach ($studentListArr as $student)
                                             <tr>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
@@ -163,7 +143,6 @@
                                             </tr>
                                             <tr>
                                                 <?php $index++; ?>
-                                                @endforeach
                                                 @endforeach
 
                                                 @else
@@ -211,6 +190,12 @@
 </div>
 @endsection
 <style>
+    .required-field::after {
+        content: "*";
+        color: red;
+        margin-left: 2px
+    }
+
     #myTable {
         border-collapse: collapse;
         /* Collapse borders */
