@@ -82,7 +82,7 @@ class TeacherController extends Controller
             // $request->image->move(public_path('storage'), $newImage);
             $teacher->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
-            $teacher->attachMedia($request->file('imageT'));
+            // $teacher->attachMedia($request->file('imageT'));
 
             // $destination = "assets\img\userImage".$teacher->image_path;
             // if(File::exists($destination)){
@@ -178,7 +178,7 @@ class TeacherController extends Controller
             // $request->image->move(public_path('storage'), $newImage);
             $teacher->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
-            $teacher->attachMedia($request->file('image'));
+            // $teacher->attachMedia($request->file('image'));
         }
 
         // insert into teacher table
@@ -285,7 +285,7 @@ class TeacherController extends Controller
             // $request->image->move(public_path('storage'), $newImage);
             $teacher->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
-            $teacher->attachMedia($request->file('imageT'));
+            // $teacher->attachMedia($request->file('imageT'));
         }
 
         $teacher->name = $request->input('name');

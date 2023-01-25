@@ -3,6 +3,17 @@
 @section('content')
     @include('layouts.headers.cards')
     
+    @if ($errors->any())
+        <div class="alert alert-danger mt-2">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="header pb-3">
         <div class="container-fluid">
             <div class="header-body">
@@ -88,11 +99,11 @@
                                         {{-- <div class="form-group"> --}}
                                             <select class="form-control form-control-alternative" name="type[]" id="type" onchange="onChange()" required> 
                                                 <option selected disabled>Select Answer Field Type</option>
-                                                    <option value="Text">Text</option>
-                                                    <option value="Date">Date</option>
-                                                    <option value="File">File</option>
-                                                    <option value="Number">Number</option>
-                                                    <option value="Dropdown">Dropdown</option>
+                                                    <option value="text">Text</option>
+                                                    <option value="date">Date</option>
+                                                    <option value="file">File</option>
+                                                    <option value="number">Number</option>
+                                                    <option value="dropdown">Dropdown</option>
                                             </select>
                                         {{-- </div> --}}
                                     </td>   
@@ -142,7 +153,7 @@
                 $(document).on('change','.typenew',function(){
                     // var button_id = $(this).attr("id");
                     $typenew = $('#type'+i).val();
-                    if($typenew == 'Dropdown'){
+                    if($typenew == 'dropdown'){
                         $(".autoUpdatenew").fadeIn('slow');
                     }else{
                         $(".autoUpdatenew").fadeOut('slow');
@@ -152,7 +163,7 @@
 
             function onChange(){
                 $type = $("#type").val();
-                if($type == 'Dropdown'){
+                if($type == 'dropdown'){
                     // var button_id = $(this).attr("id");
                     $(".autoUpdate").fadeIn('slow');
                 }else{

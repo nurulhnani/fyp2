@@ -191,13 +191,16 @@ class StudentController extends Controller
 
     public function dashboard(Request $request, $id)
     {
-        $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
-        $allyear = [];
-        foreach ($getYear as $record) {
-            if (!in_array($record->year, $allyear)) {
-                $years[] = $record->year;
-            }
-        }
+        // $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
+        $allyear = LoginCount::selectRaw('YEAR(created_at) AS year') //get all year
+                    ->pluck('year')
+                    ->unique();
+        // $allyear = [];
+        // foreach ($getYear as $record) {
+        //     if (!in_array($record->year, $allyear)) {
+        //         $years[] = $record->year;
+        //     }
+        // }
 
         ////////////////// PERSONALITY EVAL ALL YEAR/////////////////////////
 
@@ -258,20 +261,20 @@ class StudentController extends Controller
             // }
 
             $i = 0;
-            foreach ($years as $year) {
+            foreach ($allyear as $year) {
                 foreach ($categoryArray as $category) {
                     $personalityrec[$year][$category] = Personality_Evaluation::where(DB::raw('YEAR(created_at)'), '=', $year)
                         ->where('student_mykid', '=', $student_mykid)
                         ->avg($category);
                 }
             }
-            foreach ($years as $year) {
+            foreach ($allyear as $year) {
                 foreach ($categoryArray as $category) {
                     $averageArr[$year][$category] = intval(round($personalityrec[$year][$category]));
                 }
             }
             $data = [];
-            foreach ($years as $year) {
+            foreach ($allyear as $year) {
                 $data[] = "'[" . implode(',', $averageArr[$year]) . "]'";
             }
             $filter = "no";
@@ -561,7 +564,7 @@ class StudentController extends Controller
         $data['averageInterest'] = $averageInterest;
         // dd($data);
         $data['yearfilter'] = $yearfilter;
-        $data['years'] = $years;
+        $data['years'] = $allyear;
         $data['filter'] = $filter;
 
 
@@ -646,7 +649,7 @@ class StudentController extends Controller
             $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
             $student->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
-            $student->attachMedia($request->file('image'));
+            // $student->attachMedia($request->file('image'));
         }
 
         if ($request->input('customfield') != null) {
@@ -766,7 +769,7 @@ class StudentController extends Controller
         $user->updated_at = now();
         $user->update();
 
-        return redirect()->route('students.index')->with('success', 'Student successfully updated!');
+        return redirect()->back()->with('success', 'Student successfully updated!');
     }
 
     public function updatestudent(Request $request, $id)

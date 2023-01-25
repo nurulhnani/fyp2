@@ -82,6 +82,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 	Route::put('uploadStudent/{id}', [ App\Http\Controllers\ClassController::class,'uploadStudentListClass'])->name('uploadStudentListClass');
 	Route::put('removeStudent/{id}', [ App\Http\Controllers\ClassController::class,'removeStudent'])->name('removeStudent');
 	Route::resource('subjects', App\Http\Controllers\SubjectController::class);
+	Route::delete('/deleteSubject/{id}',[App\Http\Controllers\SubjectController::class, 'deleteSubject'])->name('deleteSubject');
 	Route::post('student-file-import', [App\Http\Controllers\StudentController::class, 'fileImport'])->name('student-file-import');
 	Route::post('teacher-file-import', [App\Http\Controllers\TeacherController::class, 'fileImport'])->name('teacher-file-import');
 	Route::get('/customfield',[App\Http\Controllers\AdminController::class, 'customfield'])->name('customfield');

@@ -144,4 +144,18 @@ class SubjectController extends Controller
        
         return redirect()->back()->with('success','Class successfully removed');
     }
+
+    public function deleteSubject($id){
+
+        $subjectdetails = Subject_details::where('subject_id','=',$id)->get();
+        if(isset($subjectdetails)){
+            foreach($subjectdetails as $subjectdetail){
+                $thedetails = Subject_details::find($subjectdetail->id);
+                $thedetails->delete();
+            }
+        }
+        $subject = Subject::find($id);
+        $subject->delete();
+        return redirect()->back()->with('success',"Subject successfully deleted!");
+    }
 }

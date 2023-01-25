@@ -119,13 +119,17 @@ class AdminController extends Controller
 
     public function chartjs(Request $request)
     {
-        $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
-        $allyear = []; //get all year
-        foreach ($getYear as $record) {
-            if (!in_array($record->year, $allyear)) {
-                $allyear[] = $record->year;
-            }
-        }
+        $allyear = LoginCount::selectRaw('YEAR(created_at) AS year') //get all year
+            ->pluck('year')
+            ->unique();
+
+        // $getYear = LoginCount::select(DB::raw('YEAR(created_at) as year'))->groupBy('year')->get();
+        // $allyear = []; 
+        // foreach ($getYear as $record) {
+        //     if (!in_array($record->year, $allyear)) {
+        //         $allyear[] = $record->year;
+        //     }
+        // }
         //////////////// STUDENT ACTIVE //////////////////
         $record1 = Student::leftJoin('classlists', 'classlists.id', '=', 'students.classlist_id')
             ->select(DB::raw("COUNT(*) as count"), DB::raw('YEAR(students.updated_at) as year'))
@@ -179,15 +183,15 @@ class AdminController extends Controller
             })
             ->get();
 
-        $year = []; //get all year
-        foreach ($getYear as $record) {
-            if (!in_array($record->year, $year)) {
-                $year[] = $record->year;
-            }
-        }
+        // $year = []; 
+        // foreach ($allyear as $record) {
+        //     if (!in_array($record->year, $year)) {
+        //         $year[] = $record->year;
+        //     }
+        // }
 
         $countstudent_inactive = [];
-        foreach ($year as $test) {
+        foreach ($allyear as $test) {
 
             foreach ($record10 as $v) {
                 if ($test == $v->year) {
@@ -202,7 +206,7 @@ class AdminController extends Controller
         foreach ($countstudent_inactive as $row) {
             $data10['data'][] = (int)$row;
         }
-        $data10['label'] = $year;
+        $data10['label'] = $allyear;
 
         ////////////////// TEACHER ACTIVE ////////////////
 

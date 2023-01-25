@@ -9,6 +9,9 @@ class AutoFieldsController extends Controller
 {
     public function addMorePost(Request $request){
 
+        $request->validate([
+            'user'=>'required',
+        ]);
         $input = $request->all();
         $name = $request->input('name');
         // dd(count($name));

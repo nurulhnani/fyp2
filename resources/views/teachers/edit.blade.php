@@ -127,13 +127,13 @@
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                                        <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="{{$teacher->nric}}" required>
+                                                        <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="{{ __('NRIC') }}" value="{{$teacher->nric}}" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="email">{{ __('Email') }}</label>
-                                                        <input type="email" name="email" id="email" class="form-control form-control-alternative" placeholder="" value="{{$teacher->email}}" required>
+                                                        <input type="email" name="email" id="email" class="form-control form-control-alternative" placeholder="{{ __('Email') }}" value="{{$teacher->email}}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,7 +168,7 @@
                                                 <div class="col-sm-6"><span></span>
                                                     <div class="form-group">
                                                         <label class="form-control-label" for="phone_number">{{ __('Phone Number') }}</label>
-                                                        <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="{{$teacher->phone_number}}" >
+                                                        <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="{{ __('Phone Number') }}" value="{{$teacher->phone_number}}" >
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6"><span></span>

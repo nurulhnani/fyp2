@@ -186,6 +186,15 @@ class ClassController extends Controller
      */
     public function destroy(Classlist $class)
     {
+        $students = Student::where('classlist_id','=',$class->id)->get();
+        if(isset($students)){
+            foreach($students as $student){
+                $thestudent = Student::find($student->id);
+                $thestudent->classlist_id = null;
+                $thestudent->update();
+            }
+        }
+        // dd($students);
         $class->delete();
        
         return redirect()->route('classes.index')

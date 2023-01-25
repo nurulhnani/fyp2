@@ -169,7 +169,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="class_name" class="form-control-label">Class Name</label>
-                  <input type="text" class="form-control form-control-alternative" name="class_name" id="class_name" placeholder="Enter Class Name" value="">
+                  <input type="text" class="form-control form-control-alternative" name="class_name" id="class_name" placeholder="Enter Class Name" value="" required>
                 </div>
               </div>
               {{-- <div class="w-100"></div>
@@ -191,7 +191,7 @@
               <div class="col">
               <div class="form-group">
                 <label for="classroom_teacher" class="form-control-label" >Classroom Teacher</label>
-                    <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher">
+                    <select class="form-control form-control-alternative" name="classroom_teacher" id="classroom_teacher" required>
                         <option value="" selected>Search by Teacher Name</option>
                         @foreach($teacher as $teacher)
                         @if($teacher->classlist_id == null)

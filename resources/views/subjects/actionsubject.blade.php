@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="myModalLabel">Remove Class</h5>
+              <h3 class="modal-title" id="myModalLabel">Remove Class</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

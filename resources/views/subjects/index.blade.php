@@ -29,7 +29,41 @@
         @foreach($subjects as $subj)
         <div class="col-xl-3 col-lg-6 mb-3">
             <div class="card card-stats mb-4 mb-xl-0 form-control-alternative text-center">
-                <div class="card-body">
+              <div class="float-right">
+                <div class="dropdown float-right mt-1">
+                  <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#deleteModal{{$subj->id}}" data-toggle="modal">Delete Subject</a>
+                  </div>
+                  {{-- Delete Class Subject --}}
+                  <div class="modal fade" id="deleteModal{{$subj->id}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h3 class="modal-title" id="myModalLabel">Delete Subject</h3>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <form method="POST" action="{{route('deleteSubject',$subj->id)}}">
+                            @csrf
+                          @method('delete')
+                          <div class="modal-body">
+                              <h4 class="text-center">Are you sure to delete {{$subj->subject_name}}?</h4>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">Confirm</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="card-body pt-0">
                     <div class="row py-2">
                       <div class="col">
                         <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
