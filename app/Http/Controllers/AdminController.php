@@ -132,7 +132,7 @@ class AdminController extends Controller
         // }
         //////////////// STUDENT ACTIVE //////////////////
         $record1 = Student::leftJoin('classlists', 'classlists.id', '=', 'students.classlist_id')
-            ->select(DB::raw("COUNT(*) as count"), DB::raw('YEAR(students.updated_at) as year'))
+            ->select(DB::raw("COUNT(*) as count"), DB::raw("YEAR(students.updated_at) as year"))
             ->where('status', '=', 'active')
             ->groupBy('year')
             ->when($request->grade != null, function ($q) use ($request) {

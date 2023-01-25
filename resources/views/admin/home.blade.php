@@ -116,9 +116,8 @@
                 <div class="modal fade" id="filterByYear" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="GET">
+                               
                             <div class="modal-header">
                             <h3 class="modal-title" id="exampleModalLabel">Filter Dashboard By Year</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
