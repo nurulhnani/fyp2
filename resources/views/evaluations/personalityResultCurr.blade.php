@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p align="justify">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>. In this report, you'll see a description of each of these five factors of personality, as well as a graph of your score on that measure.</p>
+                    <p align="justify">This Big Five assessment measures student's scores on five major dimensions of personality: <strong>Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism</strong>. A description of each of these five factors of personality is displayed in Student Overview.</p>
                     <!-- <p class="pt-2"><strong>EXTRAVERSION</strong></p> -->
                     <!-- <p>Extraversion describes a person’s inclination to seek stimulation from the outside world, especially in the form of attention from other people. Extraverts engage actively with others to earn friendship, admiration, power, status, excitement, and romance. Introverts, on the other hand, conserve their energy, and do not work as hard to earn these social rewards.</p> -->
                     <div class="skillbar-wrapper">

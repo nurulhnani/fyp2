@@ -66,6 +66,7 @@
                                                             echo "<br>";
                                                         }
                                                         ?>
+                                        @if($req->status != 'Approved')
                                         <div id="details<?php echo $index ?>" style="display:none">
                                             </br><strong>Changes were Made:</strong></br>
                                             <?php
@@ -76,6 +77,8 @@
                                             ?>
                                         </div>
                                         <a id="more<?php echo $index ?>" href="#" onclick="$('#details<?php echo $index ?>').slideToggle(function(){$('#more<?php echo $index ?>').html($('#details<?php echo $index ?>').is(':visible')?'See Less Details':'See More Details');});">See More Details</a>
+                                        @endif
+
                                     </td>
                                     <td id="category">
                                         @if($req->status == 'Pending')

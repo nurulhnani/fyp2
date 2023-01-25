@@ -104,7 +104,7 @@ class BehaMeritController extends Controller
         foreach ($studentLists as $studentList) {
             $students[] = Student::where('mykid', "=", $studentList)->first();
         }
-        return view('merits/behaMerits.bulkList', ['studentLists' => $students]);
+        return view('merits/behaMerits.bulkList', ['studentListArr' => $students]);
     }
 
 

@@ -124,7 +124,7 @@ class CurrMeritController extends Controller
         foreach ($studentLists as $studentList) {
             $students[] = Student::where('mykid', "=", $studentList)->first();
         }
-        return view('merits/currMerits.bulkList', ['studentLists' => $students]);
+        return view('merits/currMerits.bulkList', ['studentListArr' => $students]);
     }
 
 
