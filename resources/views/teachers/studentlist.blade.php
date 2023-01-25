@@ -17,7 +17,7 @@
               {{-- <li class="breadcrumb-item active" aria-current="page">Interest Inventory</li> --}}
             </ol>
           </nav>
-          <form class="navbar-search navbar-search-white form-inline mb-4" id="navbar-search-main">
+          <!-- <form class="navbar-search navbar-search-white form-inline mb-4" id="navbar-search-main">
             <div class="form-group mb-0">
               <div class="input-group input-group-alternative input-group-merge">
                 <div class="input-group-prepend">
@@ -26,22 +26,12 @@
                 <input class="form-control" placeholder="Search" type="search" id="searchStd" onkeyup="myFunction()">
               </div>
             </div>
-          </form>
+          </form> -->
 
         </div>
-        {{-- <div class="col-lg-6 col-5 text-right">
-              <a href="{{route('students.create')}}" class="btn btn-sm btn-neutral">
-        <span class="d-none d-md-block">Add New Student</span>
-        <span class="d-md-none"><i class="fa fa-plus"></i></span>
-        </a>
-        <a href="{{route('archivedStudentList')}}" class="btn btn-sm btn-neutral">
-          <span class="d-none d-md-block">Archived student list</span>
-          <span class="d-md-none"><i class="fa fa-eye-slash"></i></span>
-        </a>
-      </div> --}}
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <div class="container-fluid mt--6">
@@ -51,7 +41,30 @@
         <div class="card-header border-0">
           <h3 class="mb-0">List of Students</h3>
         </div>
-        <div class="table-responsive">
+
+        <form action="{{url('/studentlist/search')}}" method="post" role="search">
+          @csrf
+          <div class="row py-3 mx-3" style="position:absolute;right:0;top:0;">
+            <div class="col md-6">
+              <select class="form-control" name="class" id="class-dd" required>
+                <option selected disabled hidden>Choose Class...</option>
+                @foreach ($classes as $class)
+                <option value="{{$class->id}}">{{$class->class_name}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col md-6">
+              <div class="input-group">
+                <input name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+        <div class="table-responsive pt-3">
           <table class="table align-items-center table-flush" id="myTable">
             <thead class="thead-light">
               <tr>
@@ -72,13 +85,6 @@
                 @else
                 <td id="class_name">Not Yet Assigned</td>
                 @endif
-                <!-- <td style="width: 10%">
-                  <div class="col-lg-6 col-5 text-right mb-0">
-                    <a href="{{route('studentoverview',$student->id)}}"><button class="btn btn-sm btn-secondary">Overview</button></a>
-                    <a href="{{route('editstudent',$student->id)}}"><button class="btn btn-sm btn-primary pr-2"><i class="ni ni-single-02"></i>
-                      </button></a>
-                  </div>
-                </td> -->
                 <td class="text-right">
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,61 +97,15 @@
                   </div>
                 </td>
               </tr>
-
-              <script>
-                function myFunction() {
-                  // Declare variables
-                  var input, filter, table, tr, td, i, txtValue;
-                  input = document.getElementById("searchStd");
-                  filter = input.value.toUpperCase();
-                  table = document.getElementById("myTable");
-                  tr = table.getElementsByTagName("tr");
-
-                  // Loop through all table rows, and hide those who don't match the search query
-                  for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                      txtValue = td.textContent || td.innerText;
-                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                      } else {
-                        tr[i].style.display = "none";
-                      }
-                    }
-                  }
-                }
-              </script>
-
-              <script>
-                function searchFilter() {
-                  var input, filter, table, tr, td, i;
-                  input = document.getElementById("filterByClass");
-                  filter = input.value.toUpperCase();
-                  table = document.getElementById("myTable");
-                  tr = table.getElementsByTagName("tr");
-                  for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[1];
-                    if (td) {
-                      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                      } else {
-                        tr[i].style.display = "none";
-                      }
-                    }
-                  }
-                }
-
-                function resetTable() {
-                  var input = document.getElementById("filterByClass");
-                  input.value = '';
-                  searchFilter();
-                }
-              </script>
-
               @endif
               @endforeach
             </tbody>
           </table>
+          <div class="d-flex">
+            <div class="mx-auto">
+              {{ $students->links() }}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -136,10 +136,13 @@ class CurrMeritController extends Controller
         $index = 0;
         $nonStudentsArr = null;
         foreach ($studentListArr as $arr) {
-            if (!Student::where('mykid', "=", $arr['mykid'])->first()) {
+            $student = Student::where('mykid', "=", $arr['mykid'])->first();
+            if (!isset($student)) {
                 unset($studentListArr[$index]);
                 $nonStudentsArr[$index] = $arr['name'];
-            } 
+            } else {
+                $studentListArr[$index] = $student;
+            }
             $index++;
         }
 

@@ -158,6 +158,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
 		//Student Evaluation
 		Route::get('studentlist-evaluation', [App\Http\Controllers\PersonalityEvaluationController::class, 'index'])->name('evaluations.index');
+		Route::post('/studentlist-evaluation/search', [App\Http\Controllers\PersonalityEvaluationController::class, 'search']);
 		Route::get('studentlist-evaluation/personality/{question}/{student?}', [App\Http\Controllers\PersonalityEvaluationController::class, 'viewPersonalityQuestion'])->name('personalityEval');
 		Route::post('result', [App\Http\Controllers\PersonalityEvaluationController::class, 'store'])->name('personality.store');
 		Route::get('studentlist-evaluation/personality-result/current/{student}', [App\Http\Controllers\PersonalityEvaluationController::class, 'showCurrResult'])->name('personalityResultCurr');
@@ -173,6 +174,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
 		//Student profile
 		Route::get('/studentlist',[App\Http\Controllers\TeacherController::class, 'studentlist'])->name('studentlist');
+		Route::post('/studentlist/search', [App\Http\Controllers\TeacherController::class, 'search']);
 		Route::get('/editstudent/{id}', [App\Http\Controllers\StudentController::class,'editstudent'])->name('editstudent');
 		Route::get('/student-overview/{id}', [App\Http\Controllers\StudentController::class,'overviewForTeacher'])->name('studentoverview');
 		Route::put('/updatestudent/{id}', [App\Http\Controllers\StudentController::class,'updatestudent'])->name('updatestudent');

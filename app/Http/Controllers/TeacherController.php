@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Models\Classlist;
 use App\Models\Teacher;
 use App\Models\AutoFields;
 use Illuminate\Http\Request;
@@ -127,10 +128,35 @@ class TeacherController extends Controller
         return redirect()->route('viewprofile')->with('success',"Successfully updated!");
     }
 
-    public function studentlist()
+    public function studentlist(Request $request)
     {
-        $students = Student::all();
-        return view('teachers.studentlist',compact('students'));
+        // $students = Student::all();
+        // return view('teachers.studentlist',compact('students'));
+        $students = Student::paginate(10);
+        $classes = Classlist::all();
+        return view('teachers.studentlist', compact('students','classes'));
+    }
+
+    public function search(Request $request)
+    {
+        $classes = Classlist::all();
+        $search = $request->get('search');
+        if ($search != '') {
+            $students = Student::where('name', 'like', '%' . $search . '%')
+            ->when($request->has('class'), function ($q) use ($request) {
+                return $q->where('classlist_id', $request->class);
+            })
+            ->paginate(10);
+            $students->appends(array('search' => $request->input('search'),));
+            if (count($students) > 0) {
+                return view('teachers.studentlist', compact('students', 'classes'));
+            }
+            return back()->with('error', 'No results Found');
+        }
+        else{
+            $students = Student::where('classlist_id', $request->class)->paginate(10);
+            return view('teachers.studentlist', compact('students', 'classes'));
+        }
     }
 
     /**

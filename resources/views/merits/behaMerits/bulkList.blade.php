@@ -38,12 +38,12 @@
                             @if(isset($nonStudentsArr))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <span class="alert-text">
-                                    Fail to identify student(s) named
+                                    Failed to identify student(s) named
                                     <?php
                                     foreach ($nonStudentsArr as $name) {
                                         echo $name . ', ';
                                     } ?>
-                                    Please check their mykid number in the Excel sheet.</span>
+                                    please check their mykid number in the Excel sheet.</span>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -103,24 +103,23 @@
                                             </tr>
                                         </thead>
                                         <tbody class="list">
-                                            @if(isset($studentListArr))
                                             <?php $index = 1; ?>
                                             @foreach ($studentListArr as $student)
                                             <tr>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
                                                         <div class="media-body">
-                                                            <span class="name mb-0 text-sm">{{ $student['name']}}</span>
+                                                            <span class="name mb-0 text-sm">{{ $student->name }}</span>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="budget">
-                                                    {{ $student['mykid'] }}
+                                                    {{ $student->mykid }}
                                                 </td>
 
                                                 <td class="text-right">
                                                     <div class="custom-control custom-checkbox nopadding">
-                                                        <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student['mykid'] }}" id="customCheck<?php echo $index ?>" checked>
+                                                        <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->mykid }}" id="customCheck<?php echo $index ?>" checked>
                                                         <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
                                                     </div>
                                                 </td>
@@ -128,33 +127,6 @@
                                             <tr>
                                                 <?php $index++; ?>
                                                 @endforeach
-
-                                                @else
-                                                <?php $index2 = 1; ?>
-                                                @foreach ($studentLists as $studentList)
-                                            <tr>
-                                                <td scope="row">
-                                                    <div class="media align-items-center">
-                                                        <div class="media-body">
-                                                            <span class="name mb-0 text-sm">{{ $studentList['name']}}</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="budget">
-                                                    {{ $studentList['mykid'] }}
-                                                </td>
-
-                                                <td class="text-right">
-                                                    <div class="custom-control custom-checkbox nopadding">
-                                                        <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $studentList['mykid'] }}" id="customCheck<?php echo $index2 ?>" checked>
-                                                        <label class="custom-control-label" for="customCheck<?php echo $index2 ?>"></label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <?php $index2++; ?>
-                                                @endforeach
-                                                @endif
                                         </tbody>
                                     </table>
                                 </div>

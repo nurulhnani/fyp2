@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PersonalityKeywordsImport;
+use App\Models\Classlist;
 use App\Models\Interest_Inventory_Results;
 use DonatelloZa\RakePlus\RakePlus;
 
@@ -19,7 +20,8 @@ class PersonalityEvaluationController extends Controller
 {
     public function index()
     {
-        $students = Student::all();
+        $students = Student::paginate(10);
+        $classes = Classlist::all();
         $interestresults = Interest_Inventory_Results::all();
         $student_ids = [];
         foreach ($interestresults as $interestresult) {
@@ -42,7 +44,60 @@ class PersonalityEvaluationController extends Controller
             }
         }
 
-        return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids, 'student_person_ids' => $student_person_ids]);
+        return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids, 'student_person_ids' => $student_person_ids, 'classes' => $classes]);
+    }
+
+    public function search(Request $request)
+    {
+        $classes = Classlist::all();
+        $interestresults = Interest_Inventory_Results::all();
+        $student_ids = [];
+        foreach ($interestresults as $interestresult) {
+            $student_ids[] = $interestresult->student_id;
+        }
+
+        $name = auth()->user()->name;
+        $teacher = Teacher::where('name', '=', $name)->first();
+        $student_person_ids = [];
+
+
+        $search = $request->get('search');
+        if ($search != '') {
+            $students = Student::where('name', 'like', '%' . $search . '%')
+            ->when($request->has('class'), function ($q) use ($request) {
+                return $q->where('classlist_id', $request->class);
+            })
+            ->paginate(10);
+            $students->appends(array('search' => $request->input('search'),));
+            if (count($students) > 0) {
+                foreach ($students as $student) {
+                    if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)
+                        ->where('teacher_id', '=', $teacher->id)
+                        ->exists()
+                    ) {
+                        $student_person_ids[] = $student->mykid;
+                    } else {
+                        continue;
+                    }
+                }
+                return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids, 'student_person_ids' => $student_person_ids, 'classes' => $classes]);
+            }
+            return back()->with('error', 'No results Found');
+        }
+        else{
+            $students = Student::where('classlist_id', $request->class)->paginate(10);
+            foreach ($students as $student) {
+                if (Personality_Evaluation::where('student_mykid', '=', $student->mykid)
+                    ->where('teacher_id', '=', $teacher->id)
+                    ->exists()
+                ) {
+                    $student_person_ids[] = $student->mykid;
+                } else {
+                    continue;
+                }
+            }
+            return view('evaluations.index', ['students' => $students, 'student_ids' => $student_ids, 'student_person_ids' => $student_person_ids, 'classes' => $classes]);
+        }
     }
 
     public function viewPersonalityQuestion(Request $request)

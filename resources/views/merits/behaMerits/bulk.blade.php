@@ -46,7 +46,7 @@
                                 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 
                                 <!-- Light table -->
-                                <div class="table-responsive">
+                                <div class="table-responsive" style="height: 300px;">
                                     <table id="myTable" class="table align-items-center table-flush">
                                         <thead class="thead-light">
                                             <tr>

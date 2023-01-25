@@ -47,8 +47,30 @@
             <div class="card-header border-0">
               <h3 class="mb-0">Personality Assessment</h3>
             </div>
+
+            <form action="{{url('/studentlist-evaluation/search')}}" method="post" role="search">
+              @csrf
+              <div class="row py-3 mx-3" style="position:absolute;right:0;top:0;">
+                <div class="col md-6">
+                  <select class="form-control" name="class" id="class-dd" required>
+                    <option selected disabled hidden>Choose Class...</option>
+                    @foreach ($classes as $class)
+                    <option value="{{$class->id}}">{{$class->class_name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col md-6">
+                  <div class="input-group">
+                    <input name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
             <!-- Light table -->
-            <div class="table-responsive">
+            <div class="table-responsive pt-3">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
@@ -118,6 +140,11 @@
 
                 </tbody>
               </table>
+              <div class="d-flex">
+                <div class="mx-auto">
+                  {{ $students->links() }}
+                </div>
+              </div>
             </div>
             <!-- Card footer -->
             <div class="card-footer py-4">
@@ -133,8 +160,30 @@
             <div class="card-header border-0">
               <h3 class="mb-0">Interest Inventory</h3>
             </div>
+
+            <form action="{{url('/studentlist-evaluation/search')}}" method="post" role="search">
+              @csrf
+              <div class="row py-3 mx-3" style="position:absolute;right:0;top:0;">
+                <div class="col md-6">
+                  <select class="form-control" name="class" id="class-dd" required>
+                    <option selected disabled hidden>Choose Class...</option>
+                    @foreach ($classes as $class)
+                    <option value="{{$class->id}}">{{$class->class_name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col md-6">
+                  <div class="input-group">
+                    <input name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
             <!-- Light table -->
-            <div class="table-responsive">
+            <div class="table-responsive pt-3">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
@@ -195,6 +244,11 @@
                     @endforeach
                 </tbody>
               </table>
+              <div class="d-flex">
+                <div class="mx-auto">
+                  {{ $students->links() }}
+                </div>
+              </div>
             </div>
             <!-- Card footer -->
             <div class="card-footer py-4">
