@@ -40,7 +40,7 @@
                             <h5><span class="font-weight-light">Change profile picture</span></h5>
                         </div>
                         <div class="text-center">
-                            <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageS" name="imageS" value="{{$student->image_path}}">
+                            <input accept="/*" type="file" style="height: 1%" onchange="preview_image(event)" class="form-control form-control-alternative bg-secondary" id="imageT" name="imageT" value="{{$student->image_path}}">
                             <script type='text/javascript'>
                                 function preview_image(event) {
                                     var reader = new FileReader();
@@ -53,7 +53,6 @@
                             </script>
                         </div>
                     </div>
-
 
                     <div class="card-body pt-0 pt-md-1 text-center">
                         <h4 class="text-black d-inline-block mb-0">{{$student->name}}</h4>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile_Request;
 use App\Models\Student;
+use App\Notifications\NewProfileRequestNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
 class ProfileRequestController extends Controller
@@ -59,14 +61,29 @@ class ProfileRequestController extends Controller
 
         unset($profileReq['_token']);
         unset($profileReq['_method']);
+        unset($profileReq['imageT']);
 
         $profileReqArr['changes'] = json_encode($profileReq);
         $profileReqArr['status'] = 'Pending';
         $profileReqArr['student_mykid'] = auth()->user()->nric_mykid;
 
-        // dd($profileReqArr);
+        if($request->hasFile('imageT')){
+            $student = Student::where('mykid',auth()->user()->nric_mykid)->first();
+            $uploadedFileUrl = Cloudinary::upload($request->file('imageT')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
+            $student->image_path = $uploadedFileUrl;
+            $student -> update();
+        }
+
         if(!empty(json_decode($profileReqArr['changes'], 1))){
             Profile_Request::create($profileReqArr);
+
+            // $profile = Profile_Request::create($profileReqArr);
+            /* Notifications */
+            // $notification = Profile_Request::first();
+            #store notification info into notifications table 
+            // $notification->notify(new NewProfileRequestNotification($profile));
+            // dd('user registered successfully, Notification send to Admin');
+
             return redirect()->route('viewstudentprofile')->with('success', 'You have been successfully updated your profile! Please wait for the admin approval');
         }
         return redirect()->route('viewstudentprofile');
