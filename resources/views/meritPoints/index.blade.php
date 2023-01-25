@@ -62,9 +62,14 @@
                                     <td>{{ $merits->achievement }}</td>
                                     <td id="category">{{ $merits->merit_points }}</td>
                                     <td style="width: 10%">
-                                        <div class="col-lg-6 col-5 text-right mb-0">
-                                            <a href="#edit{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button></a>
-                                            <a href="#delete{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button></a>
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="#edit{{$merits->id}}" data-toggle="modal">Edit Achievement</a>
+                                                <a class="dropdown-item" href="#delete{{$merits->id}}" data-toggle="modal">Delete Achievement</a>
+                                            </div>
                                             @include('meritPoints.modal')
                                         </div>
                                     </td>
@@ -99,9 +104,14 @@
                                     <td class="grayColumn">{{ $merits->achievement }}</td>
                                     <td class="grayColumn" id="category">{{ $merits->merit_points }}</td>
                                     <td class="grayColumn" style="width: 10%">
-                                        <div class="col-lg-6 col-5 text-right mb-0">
-                                            <a href="#edit{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button></a>
-                                            <a href="#delete{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button></a>
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="#edit{{$merits->id}}" data-toggle="modal">Edit Achievement</a>
+                                                <a class="dropdown-item" href="#delete{{$merits->id}}" data-toggle="modal">Delete Achievement</a>
+                                            </div>
                                             @include('meritPoints.modal')
                                         </div>
                                     </td>
@@ -115,9 +125,14 @@
                                     <td>{{ $merits->achievement }}</td>
                                     <td id="category">{{ $merits->merit_points }}</td>
                                     <td style="width: 10%">
-                                        <div class="col-lg-6 col-5 text-right mb-0">
-                                            <a href="#edit{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button></a>
-                                            <a href="#delete{{$merits->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button></a>
+                                        <div class="dropdown">
+                                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="#edit{{$merits->id}}" data-toggle="modal">Edit Achievement</a>
+                                                <a class="dropdown-item" href="#delete{{$merits->id}}" data-toggle="modal">Delete Achievement</a>
+                                            </div>
                                             @include('meritPoints.modal')
                                         </div>
                                     </td>
@@ -210,5 +225,40 @@
 <style>
     .grayColumn {
         background-color: #F8F6F6;
+    }
+
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        /* Collapse borders */
+        width: 100%;
+        /* Full-width */
+        border: 1px solid #ddd;
+        /* Add a grey border */
+        font-size: 18px;
+        /* Increase font-size */
+    }
+
+    #myTable th,
+    #myTable td {
+        text-align: left;
+        /* Left-align text */
+        padding: 12px;
+        /* Add padding */
+    }
+
+    #myTable tr {
+        /* Add a bottom border to all table rows */
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myTable tr.header,
+    #myTable tr:hover {
+        /* Add a grey background color to the table header and on hover */
+        background-color: #f1f1f1;
     }
 </style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classlist;
 use App\Models\Health;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -17,11 +18,40 @@ class HealthController extends Controller
     {
         $students = Student::all()->paginate(10);
         $records = Health::all();
+        $classes = Classlist::all();
         $studentids = [];
         foreach($records as $record){
             $studentids[] = $record->student_id;
         }
-        return view('health.index',compact('students','records','studentids'));
+        return view('health.index',compact('students','records','studentids', 'classes'));
+    }
+
+    public function search(Request $request)
+    {
+        $records = Health::all();
+        $classes = Classlist::all();
+        $studentids = [];
+        foreach($records as $record){
+            $studentids[] = $record->student_id;
+        }        
+        
+        $search = $request->get('search');
+        if ($search != '') {
+            $students = Student::where('name', 'like', '%' . $search . '%')
+            ->when($request->has('class'), function ($q) use ($request) {
+                return $q->where('classlist_id', $request->class);
+            })
+            ->paginate(10);
+            $students->appends(array('search' => $request->input('search'),));
+            if (count($students) > 0) {
+                return view('health.index',compact('students','records','studentids', 'classes'));
+            }
+            return back()->with('error', 'No results Found');
+        }
+        else{
+            $students = Student::where('classlist_id', $request->class)->paginate(10);
+            return view('health.index',compact('students','records','studentids', 'classes'));
+        }
     }
 
     /**

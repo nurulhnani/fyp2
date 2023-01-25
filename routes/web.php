@@ -192,6 +192,7 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
 
 		//Health Assessment
 		Route::resource('health', App\Http\Controllers\HealthController::class);
+		Route::post('/health/search', [App\Http\Controllers\HealthController::class, 'search']);
 		Route::get('/health/create/{id}',[App\Http\Controllers\HealthController::class, 'create']);
 });
 
