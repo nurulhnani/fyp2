@@ -65,8 +65,8 @@
             @csrf
             @method('delete')
           <div class="modal-body">
-              <h4 class="text-center">Are you sure to delete this question?</h4>
-              <h4 class="text-center" style="font-style:italic; color:brown">{{$question->questions}}</h4>
+              <h4 class="text-wrap text-center">Are you sure to delete this question?</h4>
+              <h4 class="text-wrap text-center" style="font-style:italic; color:brown">{{$question->questions}}</h4>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

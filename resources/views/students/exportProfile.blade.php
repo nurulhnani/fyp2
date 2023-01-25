@@ -43,12 +43,12 @@
             <form method="post" action="{{ route('showPDF',$student->id) }}" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @method('GET')
-                <div class="row mb-4">
+                <div class="row mb-4 mt-5">
                     <div class="col-sm-3">
                         {{-- <h5 class="mt-3">Select Year of Studies</h5> --}}
                         <label class="form-control-label mt-2" for="year">{{ __('Select Year of Studies') }}</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-9">
                         <select type="text" name="year" id="year" class="form-control form-control-alternative" required> 
                             <option value="" selected>Select Year</option>
                             @foreach ($years as $year)
@@ -56,9 +56,14 @@
                             @endforeach
                         </select>
                     </div> 
-                    <div class="col-sm-5 text-right">
+                    {{-- <div class="col-sm-5 text-right">
                         <button type="submit" class="btn btn-primary">{{ __('View Profile') }}</button>
-                    </div>                 
+                    </div>                  --}}
+                </div>
+                <div class="row mb-4 mt-5">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-primary">{{ __('View Profile') }}</button>
+                    </div>
                 </div>
                 {{-- <div class="text-center">
                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

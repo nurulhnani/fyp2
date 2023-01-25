@@ -237,11 +237,14 @@ class TeacherController extends Controller
         $data = [];
         if($subject_taughts != null){
             foreach ( $subject_taughts as $subject_taught ) {
+                
                 $subjectname = Subject::where('id',$subject_taught->subject_id)->first()->subject_name;
                 $subjectgrade = Subject::where('id',$subject_taught->subject_id)->first()->grade;
-                $data[] = 
-                    $subjectname.' '.$subjectgrade
-                ;
+                $subdesc = $subjectname.' '.$subjectgrade;
+                if(!in_array($subdesc, $data)){
+                    $data[] = $subdesc;
+                }
+                
             }
             $subject = implode(",",$data);
         }

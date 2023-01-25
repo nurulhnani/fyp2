@@ -20,7 +20,7 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-12 col-12">
-              <h6 class="h2 text-black d-inline-block mb-0"> Class</h6>
+              <h6 class="h2 text-black d-inline-block mb-0">Edit Class</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="{{ route('admin.home') }}"><i class="fas fa-home"></i></a></li>
@@ -37,7 +37,7 @@
 
     <div class="container-fluid mt--7 justify-content-center"> 
 
-        <div class="card bg-secondary shadow">
+        <div class="card bg-white shadow">
             <div class="card-body">
 
                 <form method="POST" action="{{route('classes.update',$class->id)}}" >
@@ -146,11 +146,6 @@
                                           </a>
                                           @include('classes.removestudentaction')
                                         </div>
-                                        
-                                          {{-- <div class="custom-control custom-checkbox nopadding">
-                                              <input type="checkbox" class="custom-control-input" name="checklist[]" value="{{ $student->id }}" id="customCheck<?php echo $index ?>">
-                                              <label class="custom-control-label" for="customCheck<?php echo $index ?>"></label>
-                                          </div> --}}
                                       </td>
                                       <style>
                                           .nopadding {

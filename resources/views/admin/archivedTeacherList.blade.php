@@ -69,38 +69,17 @@
                                 <td id="name">{{ $teacher->name }}</td>
                                 <td id="class">{{ $teacher->email }}</td>
                                 <td style="width: 10%">
-                                  <div class="col-lg-6 col-5 text-right mb-0">
-                                    <a href="{{route('teachers.edit',$teacher->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
-                                    <a href="#unarchiveTeacher{{$teacher->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Unarchive</button></a>
-                                    @include('admin.actionArchiveTeacher')
-                                  </div>
-                                </td>
-                                {{-- <td> --}}
-                                    {{-- <a href="#" class="btn btn-sm btn-primary">View Profile</a>
-                                    <a href="#" class="btn btn-sm btn-primary">Archive Profile</a> --}}
-                                    {{-- <div class="col"> --}}
-                                        {{-- <ul class="nav nav-pills justify-content-end">
-                                            <li class="nav-item mr-2 mr-md-0">
-                                                <a href="{{route('teachers.edit',$teacher->id)}}" class="nav-link py-1 px-2 active">
-                                                    <span class="d-none d-md-block">View</span>
-                                                    <span class="d-md-none"><i class="fa fa-user"></i></span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item mr-2 mr-md-0">
-                                                <a href="#unarchiveModal{{$teacher->id}}" class="nav-link py-1 px-2 active" data-toggle="modal">
-                                                    <span class="d-none d-md-block">Archive</span>
-                                                    <span class="d-md-none"><i class="fa fa-eye-slash"></i></span>
-                                                </a>
-                                            </li> --}}
-                                            {{-- <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='' data-prefix="$" data-suffix="k">
-                                                <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                                    <span class="d-none d-md-block">Week</span>
-                                                    <span class="d-md-none">W</span>
-                                                </a>
-                                            </li> --}}
-                                        {{-- </ul>
+                                  <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                      <a class="dropdown-item" href="{{route('teachers.edit',$teacher->id)}}">Edit Teacher Profile</a>
+                                      <a class="dropdown-item" href="#unarchiveTeacher{{$teacher->id}}" data-toggle="modal">Unarchive Teacher Profile</a>
                                     </div>
-                                </td> --}}
+                                    @include('admin.actionArchiveTeacher')
+                                  </div>  
+                                </td>         
                               </tr>
         
                               <script>

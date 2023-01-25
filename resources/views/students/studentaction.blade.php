@@ -6,13 +6,13 @@
             @csrf
             @method('PUT')
         <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Archive student</h3>
+          <h3 class="modal-title" id="exampleModalLabel">Archive Student Profile</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <h4 class="text-center">Are you sure to archive {{$student->name}}?</h4>
+          <h4 class="text-wrap text-center">Are you sure to archive {{$student->name}}'s profile?</h4>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

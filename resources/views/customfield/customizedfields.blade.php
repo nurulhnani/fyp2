@@ -79,8 +79,8 @@
 
 
                         {{-- <hr class="my-3" /> --}}
-                        <h4 class="heading-small text-muted text-center text-white bg-gradient-primary ">{{ __('Teacher') }}</h4>
-                        <div class="table-responsive">
+                        <h4 class="heading-small text-muted text-center text-white bg-gradient-primary mt-5">{{ __('Teacher') }}</h4>
+                        <div class="table-responsive mb-5">
                             <table class="table align-items-center table-flush">
                               <thead class="bg-secondary">
                                 <tr>

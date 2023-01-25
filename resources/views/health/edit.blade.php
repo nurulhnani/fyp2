@@ -623,8 +623,8 @@
 
             <div class="row mb-5">
                 <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-success">{{ __('Update') }}</button>
-                    <a href="#deleteModal{{$student->id}}" data-toggle="modal"><button class="btn btn-primary">Delete</button></a>
+                    <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                    <a href="#deleteModal{{$student->id}}" data-toggle="modal"><button class="btn btn-default">Delete</button></a>
                 </div> 
             </div> 
             </form>

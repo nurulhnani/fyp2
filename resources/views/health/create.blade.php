@@ -622,7 +622,7 @@
 
             <div class="row mb-5">
                 <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-success">{{ __('Confirm') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Confirm') }}</button>
                 </div> 
             </div> 
             </form>

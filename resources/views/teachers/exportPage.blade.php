@@ -39,15 +39,15 @@
         <div class="card col-md-auto">
             {{-- <img class="card-img-top" style="width: 100%; height:10%" src="{{asset('assets/img/theme/students.png')}}" alt="Card image cap"> --}}
             <div class="card-body">
-            <h3 class="card-title">My Profile</h3>
+            <h3 class="card-title">Export Student Profile</h3>
             <form method="post" action="{{ route('showStudentPDF') }}" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @method('GET')
-                <div class="row mb-4">
+                <div class="row mb-4 mt-4">
                     <div class="col-sm-3">
                         <label class="form-control-label mt-2" for="name">{{ __('Student name') }}</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-9">
                         <input type="text" name="name" class="form-control form-control-alternative">
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         {{-- <h5 class="mt-3">Select Year of Studies</h5> --}}
                         <label class="form-control-label mt-2" for="year">{{ __('Select Year of Studies') }}</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-9">
                         <select type="text" name="year" id="year" class="form-control form-control-alternative" required> 
                             <option value="" selected>Select Year</option>
                             @foreach ($years as $year)
@@ -64,9 +64,12 @@
                             @endforeach
                         </select>
                     </div> 
-                    <div class="col-sm-5 text-right">
+                                   
+                </div>
+                <div class="row mb-4 mt-5">
+                    <div class="col text-center">
                         <button type="submit" class="btn btn-primary">{{ __('View Profile') }}</button>
-                    </div>                 
+                    </div>
                 </div>
                 {{-- <div class="text-center">
                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

@@ -83,11 +83,28 @@
                     </td>
 
                     <td class="text-right">
-                        @if(in_array($student->id,$studentids))
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          @if(in_array($student->id,$studentids))
+                              <a class="dropdown-item" href="{{route('health.edit',$student->id)}}">View/Edit Current Record</a>
+                          @else
+                              <a class="dropdown-item" href="/health/create/{{$student->id}}">Add Health Record</a>
+                          @endif
+
+                          {{-- <a class="dropdown-item" href="{{route('students.edit',$student->id)}}">Edit Student Profile</a>
+                          <a class="dropdown-item" href="#archiveModal{{$student->id}}" data-toggle="modal">Archive Student Profile</a> --}}
+                        </div>
+                        {{-- @include('students.studentaction') --}}
+                      </div>
+
+                        {{-- @if(in_array($student->id,$studentids))
                             <a class="btn btn-sm btn-success" href="{{route('health.edit',$student->id)}}">Current Record</a>
                         @else
                             <a class="btn btn-sm btn-primary" href="/health/create/{{$student->id}}">Add</a>
-                        @endif
+                        @endif --}}
                     </td>
                   </tr>
                   <tr>

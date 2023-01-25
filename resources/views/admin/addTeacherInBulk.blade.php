@@ -80,7 +80,7 @@
               </div>
                 <p class="card-text">Please make sure the file is in the correct format (EXCEL file only). <a href="{{asset("assets/download/steacherlist.xlsx")}}" class="text-right badge badge-primary"> Click here for example</a></p>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                    <button type="submit" class="btn btn-primary mt-4">{{ __('Save') }}</button>
                 </div>
             </form>
             {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}

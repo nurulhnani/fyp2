@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\Interest_Inventory_Results;
 use App\Models\LoginCount;
+use App\Models\Teacher;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -75,29 +77,43 @@ class LoginController extends Controller
 
             }else if (auth()->user()->type == 'teacher') {
                 
-                //store login count
-                $userid = auth()->user()->id;
-                $login = new LoginCount;
-                $login->user_id = $userid;
-                $login->created_at = now();
-                $login->updated_at = now();
-                $login->save();
+                $teacher = Teacher::where('name','=',auth()->user()->name)->first();
+                if($teacher->status == 'active'){
+                    //store login count
+                    $userid = auth()->user()->id;
+                    $login = new LoginCount;
+                    $login->user_id = $userid;
+                    $login->created_at = now();
+                    $login->updated_at = now();
+                    $login->save();
 
-                return redirect()->route('teacher.home');
+                    return redirect()->route('teacher.home');
+                }else{
+                    Auth::logout();
+                    return redirect()->route('login')->with('error','You are no longer allowed to log into the system');
+                }
+                
 
             }else{
 
-                //store login count
-                $userid = auth()->user()->id;
-                $login = new LoginCount;
-                $login->user_id = $userid;
-                $login->created_at = now();
-                $login->updated_at = now();
-                $login->save();
-                
-                $studentname = auth()->user()->name;
-                $studentid = Student::where('name',$studentname)->first()->id;
-                return redirect()->route('studenthome',$studentid);
+                $student = Student::where('name','=',auth()->user()->name)->first();
+                if($student->status == 'active'){
+                    //store login count
+                    $userid = auth()->user()->id;
+                    $login = new LoginCount;
+                    $login->user_id = $userid;
+                    $login->created_at = now();
+                    $login->updated_at = now();
+                    $login->save();
+                    
+                    $studentname = auth()->user()->name;
+                    $studentid = Student::where('name',$studentname)->first()->id;
+                    return redirect()->route('studenthome',$studentid);
+                }else{
+                    Auth::logout();
+                    return redirect()->route('login')->with('error','You are no longer allowed to log into the system');
+                }
+                               
             }
         }else{
             return redirect()->route('login')

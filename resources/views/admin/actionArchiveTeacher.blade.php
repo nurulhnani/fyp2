@@ -1,4 +1,4 @@
-<!--Archive Modal -->
+<!--Unarchive Modal -->
 <div class="modal fade" id="unarchiveTeacher{{$teacher->id}}" tabindex="-1" role="dialog" aria-labelledby="archiveModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -6,13 +6,13 @@
             @csrf
             @method('PUT')
         <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Archive teacher</h3>
+          <h3 class="modal-title" id="exampleModalLabel">Unarchive Teacher Profile</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <h4 class="text-center">Are you sure to unarchive {{$teacher->name}}?</h4>
+          <h4 class="text-center">Are you sure to unarchive {{$teacher->name}}'s profile?</h4>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -31,7 +31,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <p>No result found for this student. Please perform the evaluation to view the result</p>
+                    <h4>No result found for {{$student->name}}. Please perform the evaluation to view the result.</h4>
                 </div>
             </div>
         </div>

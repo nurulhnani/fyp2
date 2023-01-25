@@ -100,7 +100,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
-                                <input type="text" name="name" id="name" class="form-control form-control-alternative" placeholder="" value="" required autofocus>
+                                <input type="text" name="name" id="name" class="form-control form-control-alternative" placeholder="Name" value="" required autofocus>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="" value="">
+                                <input type="text" name="address" id="address" class="form-control form-control-alternative" placeholder="Address" value="">
                             </div>
                         </div>
                     </div>
@@ -117,13 +117,13 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="class">{{ __('NRIC') }}</label>
-                                <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="" value="" required>
+                                <input type="text" name="nric" id="nric" class="form-control form-control-alternative" placeholder="NRIC" value="" required>
                             </div>
                         </div>
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="email">{{ __('Email') }}</label>
-                                <input type="email" name="email" id="email" class="form-control form-control-alternative" placeholder="" value="" required>
+                                <input type="email" name="email" id="email" class="form-control form-control-alternative" placeholder="Email" value="" required>
                             </div>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                         <div class="col-sm-6"><span></span>
                             <div class="form-group">
                                 <label class="form-control-label" for="position">{{ __('Phone Number') }}</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="" value="">
+                                <input type="text" name="phone_number" id="phone_number" class="form-control form-control-alternative" placeholder="Phone Number" value="">
                             </div>
                         </div>
                         {{-- <div class="col-sm-6"><span></span>
@@ -234,7 +234,7 @@
                     @endif
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                      <button type="submit" class="btn btn-primary mt-4">{{ __('Save') }}</button>
                     </div>
                 </div>                       
           </div>

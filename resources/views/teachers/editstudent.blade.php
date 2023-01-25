@@ -274,7 +274,7 @@
                                 <a class="btn btn-secondary" href="{{ route('studentlist') }}">Back</a>
                             </div>
                             <div class="col text-right">
-                                <button type="submit" class="btn btn-success">{{ __('Update') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                             </div>
                         </div>
 

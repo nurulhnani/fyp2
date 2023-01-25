@@ -79,9 +79,14 @@
                                   <td id="class_name">Not Yet Assigned</td>
                                 @endif
                                 <td style="width: 10%">
-                                  <div class="col-lg-6 col-5 text-right mb-0">
-                                    <a href="{{route('students.edit',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
-                                    <a href="#archiveModal{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Archive</button></a>
+                                  <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                      <a class="dropdown-item" href="{{route('students.edit',$student->id)}}">Edit Student Profile</a>
+                                      <a class="dropdown-item" href="#archiveModal{{$student->id}}" data-toggle="modal">Archive Student Profile</a>
+                                    </div>
                                     @include('students.studentaction')
                                   </div>
                                 </td>

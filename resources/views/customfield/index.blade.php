@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-body">
                     {{-- <h3 class="card-title">Upload Student List</h3> --}}
-                    <p class="card-text">This section is for admin to manage additional input field for the user profile. You can choose whether for student profile or teacher profile</p>
+                    <p class="card-text">You can add any custom fields you need to idenitfy your students and teachers profile and manage them from this page.</p>
                     <hr class="my-3" />
                     <form method="POST" action="{{route('addmore')}}" name="add_type" id="add_type">
                         @csrf
@@ -96,7 +96,7 @@
                                             </select>
                                         {{-- </div> --}}
                                     </td>   
-                                    <td><button type="button" name="add" id="add" id="add" class="btn btn-primary" onclick="addOnclick()">Add More</button></td>
+                                    <td><button type="button" name="add" id="add" id="add" class="btn btn-default" onclick="addOnclick()">Add More</button></td>
                                 </tr>
                                 <tr class="autoUpdate" style="display: none">
                                     <td><p>Please add option of answers.</p></td>
@@ -107,7 +107,7 @@
                                 </tr>
                             </table>
                             <div class="py-3">
-                                <input type="submit" name="submit" id="submit" class="btn btn-success" value="Save">
+                                <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Save">
                             </div>
                         </div>
                     </form>

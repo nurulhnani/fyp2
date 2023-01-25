@@ -56,16 +56,60 @@
                                     <th scope="row">{{ $question->questions }}</th>
                                     <td id="category">{{ $question->category }}</td>
                                     <td style="width: 10%">
-                                      <div class="col-lg-6 col-5 text-right mb-0">
+                                      <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                          <a class="dropdown-item" href="#editQuestion{{$question->id}}" data-toggle="modal">Edit Question</a>
+                                          <a class="dropdown-item" href="#deleteQuestion{{$question->id}}" data-toggle="modal">Delete Question</a>
+                                        </div>
+                                        @include('assessment.assessmentaction')
+                                      </div>
+
+                                      {{-- <div class="col-lg-6 col-5 text-right mb-0">
                                         <a href="#editQuestion{{$question->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button></a>
                                         <a href="#deleteQuestion{{$question->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button></a>
                                         @include('assessment.assessmentaction')
-                                        {{-- <a href="#archiveModal{{$student->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Archive</button></a>
-                                        @include('students.studentaction') --}}
-                                      </div>
+                                      </div> --}}
                                     </td>
                                   </tr>
                               @endforeach
+                              <style>
+                                .nopadding {
+                                    padding: 0 !important;
+                                    margin: 0 !important;
+                                }
+                                #myTable {
+                                    border-collapse: collapse;
+                                    /* Collapse borders */
+                                    width: 100%;
+                                    /* Full-width */
+                                    border: 1px solid #ddd;
+                                    /* Add a grey border */
+                                    font-size: 18px;
+                                    /* Increase font-size */
+                                }
+
+                                #myTable th,
+                                #myTable td {
+                                    text-align: left;
+                                    /* Left-align text */
+                                    padding: 12px;
+                                    /* Add padding */
+                                }
+
+                                #myTable tr {
+                                    /* Add a bottom border to all table rows */
+                                    border-bottom: 1px solid #ddd;
+                                }
+
+                                #myTable tr.header,
+                                #myTable tr:hover {
+                                    /* Add a grey background color to the table header and on hover */
+                                    background-color: #f1f1f1;
+                                }
+                            </style>
                             </tbody>
                         </table>
                         

@@ -175,33 +175,20 @@
                       @else
                       <span class="badge badge-dot mr-4">
                         <i class="bg-success"></i>
-                        <span class="status">completed/ongoing</span>
+                        <span class="status">completed</span>
                       </span>
                       @endif
                     </td>
-
-                    {{-- <td>
-                      <div class="d-flex align-items-center">
-                        <span class="completion mr-2">60%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                          </div>
+                    <td class="text-right">
+                      <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                          <a href="/studentlist-evaluation/interestresult/{{$student->id}}" class="dropdown-item">Current Result</a>
+                          <a href="{{route('interestInventory',$student->id)}}" class="dropdown-item">Perform Evaluation</a>
                         </div>
                       </div>
-                    </td> --}}
-
-
-                    <td class="text-right">
-                      {{-- <div class="dropdown"> --}}
-                      {{-- <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a> --}}
-                      {{-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"> --}}
-                      <a class="btn btn-sm btn-primary" href="/studentlist-evaluation/interestresult/{{$student->id}}">Current Result</a>
-                      <a class="btn btn-sm btn-success" href="{{route('interestInventory',$student->id)}}">GO</a>
-                      {{-- </div> --}}
-                      {{-- </div> --}}
                     </td>
                   </tr>
                   <tr>

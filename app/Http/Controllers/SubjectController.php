@@ -59,7 +59,7 @@ class SubjectController extends Controller
         $subject->subject_name = $request->input('subject_name');
         $subject->grade = $request->input('grade');
         $subject->save();
-        return redirect()->route('subjects.index')->with('success',"Subject successfully added!");
+        return redirect()->back()->with('success',"Subject successfully added!");
     }
 
     public function storeclass(Request $request){
@@ -73,7 +73,7 @@ class SubjectController extends Controller
         $subjectdetail->classlist_id = $request->input('class_name');
         $subjectdetail->teacher_id = $request->input('teacher_name');
         $subjectdetail->save();
-        return redirect()->route('subjects.index')->with('success',"Subject successfully added!");
+        return redirect()->back()->with('success',"Class successfully added!");
     }
 
     /**
@@ -128,7 +128,7 @@ class SubjectController extends Controller
             }    
         }
 
-        return redirect()->route('subjects.index')->with('success',"Subject successfully updated!");
+        return redirect()->back()->with('success',"Subject successfully updated!");
     }
 
     /**
@@ -142,7 +142,6 @@ class SubjectController extends Controller
         $subject_details = Subject_details::find($id);
         $subject_details->delete();
        
-        return redirect()->route('subjects.index')
-                        ->with('success','Class successfully removed');
+        return redirect()->back()->with('success','Class successfully removed');
     }
 }

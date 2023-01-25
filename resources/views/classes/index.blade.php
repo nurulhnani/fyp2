@@ -78,24 +78,17 @@
                                   <td id="class">Not Assigned Yet</td>
                                 @endif                        
                                 <td style="width: 10%">
-                                  <div class="col-lg-6 col-5 text-right mb-0">
-                                    <a href="#viewClass{{$class->id}}" data-toggle="modal">
-                                      <button class="btn btn-sm btn-primary"><i class="fa fa-address-book"></i></button>
-                                      {{-- <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
-                                      <span class="d-md-none"><i class="fa fa-address-book"></i></span> --}}
+                                  <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
                                     </a>
-                                    <a href="{{route('classes.edit',$class->id)}}">
-                                      <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
-                                      {{-- <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
-                                      <span class="d-md-none"><i class="fa fa-address-book"></i></span> --}}
-                                    </a>
-                                    <a href="#delete{{$class->id}}" data-toggle="modal">
-                                      <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
-                                      {{-- <span class="d-none d-md-block"><i class="fa fa-address-book"></i></span>
-                                      <span class="d-md-none"><i class="fa fa-address-book"></i></span> --}}
-                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                      <a class="dropdown-item" href="#viewClass{{$class->id}}" data-toggle="modal">Students In Class</a>
+                                      <a class="dropdown-item" href="{{route('classes.edit',$class->id)}}">Edit Class Details/Assign Student Into Class</a>
+                                      <a class="dropdown-item" href="#delete{{$class->id}}" data-toggle="modal">Delete Class</a>
+                                    </div>
                                     @include('classes.classaction')
-                                  </div>
+                                  </div>            
                                 </td>
                               </tr>
         

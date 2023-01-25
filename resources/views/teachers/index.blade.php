@@ -68,11 +68,16 @@
                               <td id="name">{{ $teacher->name }}</td>
                               <td id="class">{{ $teacher->email }}</td>
                               <td style="width: 10%">
-                                <div class="col-lg-6 col-5 text-right mb-0">
-                                  <a href="{{route('teachers.edit',$teacher->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
-                                  <a href="#archiveModal{{$teacher->id}}" data-toggle="modal"><button class="btn btn-sm btn-primary">Archive</button></a>
+                                <div class="dropdown">
+                                  <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </a>
+                                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                    <a class="dropdown-item" href="{{route('teachers.edit',$teacher->id)}}">Edit Teacher Profile</a>
+                                    <a class="dropdown-item" href="#archiveModal{{$teacher->id}}" data-toggle="modal">Archive Teacher Profile</a>
+                                  </div>
                                   @include('teachers.teacheraction')
-                                </div>
+                                </div> 
                               </td>
                             </tr>
       

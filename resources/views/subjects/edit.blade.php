@@ -41,11 +41,15 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <div class="card-header border-0">
+                    {{-- <div class="card-header border-0">
                         <h3 class="mb-0">{{$subject->subject_name}} Details</h3>
-                      </div>
+                      </div> --}}         
 
                       <div class="card-body">
+                        <div class="h5 text-muted text-uppercase mb-4">
+                          <i class="ni business_briefcase-24"></i>{{$subject->subject_name}} Details
+                        </div>
+
                       <form method="POST" action="{{route('subjects.update',$subject->id)}}">
                         @csrf 
                         @method('PUT')
@@ -72,10 +76,20 @@
                             </div>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="table">
-                          <table class="table align-items-center table-flush">
-                            <thead>
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary mt-4">{{ __('Update') }}</button>
+                        </div>
+                      </form>
+
+                      <hr class="my-4" />
+                      <div class="h5 text-muted text-uppercase mb-4">
+                        <i class="ni business_briefcase-24"></i>Assign Subject Teacher
+                      </div>
+
+                        <div class="form-group">
+                          <div class="table-responsive">
+                          <table class="table align-items-center table-flush" id="myTable">
+                            <thead class="thead-light">
                               <tr>
                                 <th scope="col">Class Name</th>
                                 <th scope="col" style="width: 70%">Subject Teacher</th>
@@ -86,7 +100,7 @@
                                 </th>
                               </tr>
                             </thead>
-                            <tbody>           
+                            <tbody class="list">           
                               <?php $teacherclasses = App\Models\Subject_details::where('subject_id',$subject->id)->get();?>
                                 @foreach($teacherclasses as $teacherclass)
                                   {{-- @if($student->classlist_id == $class->id) --}}
@@ -117,15 +131,47 @@
                                       </td>
                                     </tr>
                                   {{-- @endif --}}
-                                @endforeach          
+                                @endforeach    
+                                <style>
+                                  .nopadding {
+                                      padding: 0 !important;
+                                      margin: 0 !important;
+                                  }
+                                  #myTable {
+                                      border-collapse: collapse;
+                                      /* Collapse borders */
+                                      width: 100%;
+                                      /* Full-width */
+                                      border: 1px solid #ddd;
+                                      /* Add a grey border */
+                                      font-size: 18px;
+                                      /* Increase font-size */
+                                  }
+
+                                  #myTable th,
+                                  #myTable td {
+                                      text-align: left;
+                                      /* Left-align text */
+                                      padding: 12px;
+                                      /* Add padding */
+                                  }
+
+                                  #myTable tr {
+                                      /* Add a bottom border to all table rows */
+                                      border-bottom: 1px solid #ddd;
+                                  }
+
+                                  #myTable tr.header,
+                                  #myTable tr:hover {
+                                      /* Add a grey background color to the table header and on hover */
+                                      background-color: #f1f1f1;
+                                  }
+                              </style>      
                             </tbody>
                           </table>
                           </div>
                         </div>
-                        <div class="text-center">
-                          <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
-                        </div>
-                      </form>
+                        
                       </div>
                 </div>
             </div> 
