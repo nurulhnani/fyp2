@@ -61,7 +61,7 @@
                 </div>
                 <div class="col md-6">
                   <div class="input-group">
-                    <input name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <input id="input-name" name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                     <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-search"></i>
                     </button>
                   </div>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="col md-6">
                   <div class="input-group">
-                    <input name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <input id="input-name-2" name="search" type="text" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                     <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-search"></i>
                     </button>
                   </div>
@@ -262,6 +262,32 @@
   </div>
   @include('layouts.footers.auth')
 </div>
+<!-- autocomplete -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+  var route = "{{ url('autocomplete-search') }}";
+  $('#input-name').typeahead({
+    source: function(query, process) {
+      return $.get(route, {
+        query: query
+      }, function(data) {
+        return process(data);
+      });
+    }
+  });
+
+  var route = "{{ url('autocomplete-search') }}";
+  $('#input-name-2').typeahead({
+    source: function(query, process) {
+      return $.get(route, {
+        query: query
+      }, function(data) {
+        return process(data);
+      });
+    }
+  });
+</script>
 @endsection
 
 @push('js')
