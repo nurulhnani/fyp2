@@ -622,34 +622,82 @@ class AdminController extends Controller
         
 
         ////// send data /////
-        $data['chart_student'] = json_encode($data1);
-        $data['chart_studentinactive'] = json_encode($data10);
-        $data['chart_teacher'] = json_encode($data2);
-        $data['chart_teacherinactive'] = json_encode($data3);
-        $data['student_gender'] = json_encode($data4);
-        $data['teacher_gender'] = json_encode($data5);
-        // $data['interest_eval'] = json_encode($data6);
-        // $data['personality_eval'] = json_encode($data11);
-        $data['student_cocumerit'] = json_encode($data7);
-        $data['student_behaviourmerit'] = json_encode($data8);
-        $data['student_behaviourdemerit'] = json_encode($data9);
-        $data['teacher_login_counts'] = json_encode($data12);
-        $data['student_login_counts'] = json_encode($data13);
-        $data['malestudent'] = $malestudent;
-        $data['femalestudent'] = $femalestudent;
-        $data['maleteacher'] = $maleteacher;
-        $data['femaleteacher'] = $femaleteacher;
-        $data['teacherlogin'] = $teacherlogin;
-        $data['studentlogin'] = $studentlogin;
-        $data['years'] = $allyear;
-        $data['activestudent'] = $activestudent;
-        $data['personalityevaluated'] = $personalityevaluated;
-        $data['persocompletion'] = $persocompletion;
-        $data['persoincomplete'] = $persoincomplete;
-        $data['interestevaluated'] = $interestevaluated;
-        $data['interestcompletion'] = $interestcompletion;
-        $data['interestincomplete'] = $interestincomplete;
+        // $data['chart_student'] = json_encode($data1);
+        // $data['chart_studentinactive'] = json_encode($data10);
+        // $data['chart_teacher'] = json_encode($data2);
+        // $data['chart_teacherinactive'] = json_encode($data3);
+        // $data['student_gender'] = json_encode($data4);
+        // $data['teacher_gender'] = json_encode($data5);
+        // $data['student_cocumerit'] = json_encode($data7);
+        // $data['student_behaviourmerit'] = json_encode($data8);
+        // $data['student_behaviourdemerit'] = json_encode($data9);
+        // $data['teacher_login_counts'] = json_encode($data12);
+        // $data['student_login_counts'] = json_encode($data13);
+        // $data['malestudent'] = $malestudent;
+        // $data['femalestudent'] = $femalestudent;
+        // $data['maleteacher'] = $maleteacher;
+        // $data['femaleteacher'] = $femaleteacher;
+        // $data['teacherlogin'] = $teacherlogin;
+        // $data['studentlogin'] = $studentlogin;
+        // $data['years'] = $allyear;
+        // $data['activestudent'] = $activestudent;
+        // $data['personalityevaluated'] = $personalityevaluated;
+        // $data['persocompletion'] = $persocompletion;
+        // $data['persoincomplete'] = $persoincomplete;
+        // $data['interestevaluated'] = $interestevaluated;
+        // $data['interestcompletion'] = $interestcompletion;
+        // $data['interestincomplete'] = $interestincomplete;
 
-        return view('admin.home', $data);
+        $chart_student = json_encode($data1);
+        $chart_studentinactive = json_encode($data10);
+        $chart_teacher = json_encode($data2);
+        $chart_teacherinactive = json_encode($data3);
+        $student_gender = json_encode($data4);
+        $teacher_gender = json_encode($data5);
+        $student_cocumerit = json_encode($data7);
+        $student_behaviourmerit = json_encode($data8);
+        $student_behaviourdemerit = json_encode($data9);
+        $teacher_login_counts = json_encode($data12);
+        $student_login_counts = json_encode($data13);
+        $malestudent = $malestudent;
+        $femalestudent = $femalestudent;
+        $maleteacher = $maleteacher;
+        $femaleteacher = $femaleteacher;
+        $teacherlogin = $teacherlogin;
+        $studentlogin = $studentlogin;
+        $years = $allyear;
+        $activestudent = $activestudent;
+        $personalityevaluated = $personalityevaluated;
+        $persocompletion = $persocompletion;
+        $persoincomplete = $persoincomplete;
+        $interestevaluated = $interestevaluated;
+        $interestcompletion = $interestcompletion;
+        $interestincomplete = $interestincomplete;
+
+        // return view('admin.home', $data);
+        return view('admin.home', compact(
+            'chart_student',
+            'chart_studentinactive',
+            'chart_teacher',
+            'chart_teacherinactive',
+            'student_gender',
+            'teacher_gender',
+            'teacher_login_counts',
+            'student_login_counts',
+            'malestudent',
+            'femalestudent',
+            'maleteacher',
+            'femaleteacher',
+            'teacherlogin',
+            'studentlogin',
+            'years',
+            'activestudent',
+            'personalityevaluated',
+            'persocompletion',
+            'persoincomplete',
+            'interestevaluated',
+            'interestcompletion',
+            'interestincomplete'
+        ));
     }
 }
