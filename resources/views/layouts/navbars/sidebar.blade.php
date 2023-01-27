@@ -15,7 +15,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                        <img alt="Image placeholder" src="{{asset('assets/img/userImage/'.auth()->user()->image_path)}}">
                         </span>
                     </div>
                 </a>
@@ -54,8 +54,8 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                        <a href="{{ route('admin.home') }}">
+                            <img src="{{ asset('assets/img/userImage/mescore-dark.PNG')}}">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
