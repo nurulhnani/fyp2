@@ -195,29 +195,11 @@ class StudentController extends Controller
         $allyear = LoginCount::selectRaw('YEAR(created_at) AS year') //get all year
                     ->pluck('year')
                     ->unique();
-        // $allyear = [];
-        // foreach ($getYear as $record) {
-        //     if (!in_array($record->year, $allyear)) {
-        //         $years[] = $record->year;
-        //     }
-        // }
 
         ////////////////// PERSONALITY EVAL ALL YEAR/////////////////////////
 
         $student = Student::find($id);
         $student_mykid = $student->mykid;
-        // $getYear = Personality_Evaluation::select(DB::raw('YEAR(created_at) as year'))
-        //     ->where('student_mykid', '=', $student_mykid)
-        //     ->groupBy('year')
-        //     ->get();
-
-
-        // $years = []; 
-        // foreach ($getYear as $record) {
-        //     if (!in_array($record->year, $years)) {
-        //         $years[] = $record->year;
-        //     }
-        // }
 
         if (isset($request->year)) {
             $yearfilter = [];
@@ -608,20 +590,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|regex:/^[\p{L}\s-]+$/',
-            'mykid' => 'required',
-            // 'gender' =>'required',
-            // 'class_id' =>'required',
-            // 'citizenship' =>'required',
-            // 'address' =>'required',
-            // 'G1_name' =>'required',
-            // 'G1_relation' =>'required',
-            // 'G1_phonenum' =>'required',
-            // 'G1_income' =>'required',
-            // 'G2_name' =>'required',
-            // 'G2_relation' =>'required',
-            // 'G2_phonenum' =>'required',
-            // 'G2_income' =>'required',
-            // 'image' => 'required',
+            'mykid' => 'required'
         ]);
         $data = $request->input();
 

@@ -180,31 +180,17 @@ class TeacherController extends Controller
         $request->validate([
             'name'=>'required|regex:/^[\p{L}\s-]+$/',
             'nric' =>'required|numeric|digits:12',
-            // 'gender' =>'required',
-            'email' =>'required',
-            // 'position' =>'required',
-            // 'address' =>'required',
-            // 'subject_taught' =>'required',
-            // 'class_name' =>'required',
-            // 'phone_number' =>'required',
-            // 'phone_number' =>'required',
-            // 'image' => 'required',
+            'email' =>'required'
         ]);
 
         $data = $request->input();
         $teacher = new Teacher();
         $user = new User;
-        // $newImage = $data['name'].'.'.$request->image->extension();
-        // $request->image->move(public_path('assets\img\userImage'),$newImage);
 
         if($request->hasFile('image')){
             $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), ['folder' => 'userImage'])->getSecurePath();
-            // dd($uploadedFileUrl);
-            // $newImage = $data['name'] . '.' . $request->image->extension();
-            // $request->image->move(public_path('storage'), $newImage);
             $teacher->image_path = $uploadedFileUrl;
             $user->image_path = $uploadedFileUrl;
-            // $teacher->attachMedia($request->file('image'));
         }
 
         // insert into teacher table
