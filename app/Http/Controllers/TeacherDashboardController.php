@@ -165,7 +165,7 @@ class TeacherDashboardController extends Controller
         }
 
         /* Personality Traits */
-        $Extraversion['Extrovert'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
+        $Extraversion['Extrovert'] = round((Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -179,11 +179,11 @@ class TeacherDashboardController extends Controller
                 return $q
                     ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                     ->whereRaw('classlists.id = ?', $request->class);
-            })->avg('Extraversion') / 100) * 100;
+            })->avg('Extraversion') / 100) * 100);
 
         $Extraversion['Introvert'] = 100 - $Extraversion['Extrovert'];
 
-        $Agreeableness['Agreeable'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
+        $Agreeableness['Agreeable'] = round((Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -197,11 +197,11 @@ class TeacherDashboardController extends Controller
                 return $q
                     ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                     ->whereRaw('classlists.id = ?', $request->class);
-            })->avg('Agreeableness') / 100) * 100;
+            })->avg('Agreeableness') / 100) * 100);
 
         $Agreeableness['Competitive'] = 100 - $Agreeableness['Agreeable'];
 
-        $Neuroticism['Neurotic'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
+        $Neuroticism['Neurotic'] = round((Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -215,12 +215,12 @@ class TeacherDashboardController extends Controller
                 return $q
                     ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                     ->whereRaw('classlists.id = ?', $request->class);
-            })->avg('Neuroticism') / 100) * 100;
+            })->avg('Neuroticism') / 100) * 100);
 
 
         $Neuroticism['Stable'] = 100 - $Neuroticism['Neurotic'];
 
-        $Conscientiousness['Conscious'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
+        $Conscientiousness['Conscious'] = round((Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -234,11 +234,11 @@ class TeacherDashboardController extends Controller
                 return $q
                     ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                     ->whereRaw('classlists.id = ?', $request->class);
-            })->avg('Conscientiousness') / 100) * 100;
+            })->avg('Conscientiousness') / 100) * 100);
 
         $Conscientiousness['Spontaneity'] = 100 - $Conscientiousness['Conscious'];
 
-        $Openness['Open'] = (Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
+        $Openness['Open'] = round((Personality_Evaluation::join('students', 'students.mykid', '=', 'personality_evaluations.student_mykid')
             ->when(
                 $request->has('year'),
                 function ($q) use ($request) {
@@ -252,7 +252,7 @@ class TeacherDashboardController extends Controller
                 return $q
                     ->join('classlists', 'classlists.id', '=', 'students.classlist_id')
                     ->whereRaw('classlists.id = ?', $request->class);
-            })->avg('Openness') / 100) * 100;
+            })->avg('Openness') / 100) * 100);
 
         $Openness['Consistent'] = 100 - $Openness['Open'];
 
