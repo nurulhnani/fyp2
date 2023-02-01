@@ -185,16 +185,6 @@
                                                 //options
                                                 var options = {
                                                     responsive: true,
-                                                    // scales: {
-                                                    //     xAxes: [{
-                                                    //         ticks: {
-                                                    //         beginAtZero: true
-                                                    //         }
-                                                    //     }],
-                                                    //     yAxes: [{
-                                                    //     stacked: true
-                                                    //     }]
-                                                    // }
                                                     tooltips: {
                                                         callbacks: {
                                                             label: function(tooltipItem, data) {

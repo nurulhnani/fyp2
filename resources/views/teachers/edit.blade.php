@@ -234,8 +234,6 @@
                                                                             @foreach($explode_notes as $explode_note)
                                                                                 <option value="{{$explode_note}}">{{$explode_note}}</option>
                                                                             @endforeach
-                                                                            {{-- <option value="date">Date</option>
-                                                                            <option value="file">File</option> --}}
                                                                     </select>
                                                                 </div>
                                                             </div>

@@ -698,12 +698,6 @@ td, th {
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#btn-print').addEventListener('click', function () {
-            // html2canvas(document.querySelector('#main-content')).then((canvas) => {
-			// let base64image = canvas.toDataURL('image/png');
-			// let pdf = new jsPDF();
-			// pdf.addImage(base64image, 'PNG', 0, 0, 180, 500);
-			// pdf.save('webtylepress-two.pdf');
-		    // });
             document.title='Profile.pdf';
             window.print();
 	    });

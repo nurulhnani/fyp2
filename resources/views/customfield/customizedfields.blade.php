@@ -60,7 +60,18 @@
                                         @endif
                                     </td>
                                     <td style="width: 10%">
-                                        <div class="col-lg-6 col-5 text-right mb-0">
+                                      <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                          <a class="dropdown-item" href="#editFields{{$customfield->id}}" data-toggle="modal">Edit Field</a>
+                                          <a class="dropdown-item" href="#deleteFields{{$customfield->id}}" data-toggle="modal">Delete Field</a>
+                                        </div>
+                                        @include('customfield.customfieldaction')
+                                      </div> 
+
+                                        {{-- <div class="col-lg-6 col-5 text-right mb-0">
                                             <a href="#editFields{{$customfield->id}}" data-toggle="modal">
                                               <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
                                             </a>
@@ -68,7 +79,7 @@
                                               <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
                                             </a>
                                             @include('customfield.customfieldaction')
-                                          </div>
+                                          </div> --}}
                                     </td>
                                 </tr> 
                                   @endif    
@@ -106,7 +117,18 @@
                                         @endif
                                     </td>
                                     <td style="width: 10%">
-                                        <div class="col-lg-6 col-5 text-right mb-0">
+                                      <div class="dropdown">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                          <a class="dropdown-item" href="#editFields{{$customfield->id}}" data-toggle="modal">Edit Field</a>
+                                          <a class="dropdown-item" href="#deleteFields{{$customfield->id}}" data-toggle="modal">Delete Field</a>
+                                        </div>
+                                        @include('customfield.customfieldaction')
+                                      </div> 
+
+                                        {{-- <div class="col-lg-6 col-5 text-right mb-0">
                                             <a href="#editFields{{$customfield->id}}" data-toggle="modal">
                                               <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>
                                             </a>
@@ -114,7 +136,7 @@
                                               <button class="btn btn-sm btn-primary"><i class="fa fa-trash"></i></button>
                                             </a>
                                             @include('customfield.customfieldaction')
-                                          </div>
+                                          </div> --}}
                                     </td>
                                 </tr> 
                                   @endif    

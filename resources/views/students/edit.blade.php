@@ -217,7 +217,6 @@
                                                         <option value="Aunty">Aunty</option>
                                                         <option value="Grandmother">Grandmother</option>
                                                     </select>
-                                                    {{-- <input type="text" name="G2_relation" id="G2_relation" class="form-control form-control-alternative" placeholder="" value="{{$student->G2_relation}}" required> --}}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm"><span></span>
@@ -235,7 +234,6 @@
                                             </div>
 
                                             <?php
-                                                // $additional=implode(",",$request->input('customfield'));
                                                 $additionalInfo = $student->additional_Info;
                                                 $explode_info = explode(',',$student->additional_Info);
                                                 $student = "student"; 
