@@ -64,7 +64,7 @@
                         </tr>
                     </table>
                     <div class="float-right pt-5" style="margin-top: 10px">
-                        <a class="btn btn-secondary" href="{{ route('personalityResultCurr', $student) }}">Student Accumulative Result</a>
+                        <a class="btn btn-secondary" href="{{ route('personalityResultCurr', $student) }}">Student Cumulative Result</a>
                         <a class="btn btn-primary" href="{{ route('evaluations.index') }}">Finish Review</a>
                     </div>
                 </div>

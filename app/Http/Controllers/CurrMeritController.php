@@ -8,6 +8,7 @@ use App\Models\Merit_Points;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class CurrMeritController extends Controller
 {
@@ -130,23 +131,30 @@ class CurrMeritController extends Controller
 
     public function fileImport(Request $request)
     {
-        $arr = Excel::toArray(new MeritsImport, $request->file('file'));
-        $studentListArr = array_merge([], ...$arr);
+        if ($request->hasFile('file')) {
+            $extension = File::extension($request->file->getClientOriginalName());
+            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
+                $arr = Excel::toArray(new MeritsImport, $request->file('file'));
+                $studentListArr = array_merge([], ...$arr);
 
-        $index = 0;
-        $nonStudentsArr = null;
-        foreach ($studentListArr as $arr) {
-            $student = Student::where('mykid', "=", $arr['mykid'])->first();
-            if (!isset($student)) {
-                unset($studentListArr[$index]);
-                $nonStudentsArr[$index] = $arr['name'];
+                $index = 0;
+                $nonStudentsArr = null;
+                foreach ($studentListArr as $arr) {
+                    $student = Student::where('mykid', "=", $arr['mykid'])->first();
+                    if (!isset($student)) {
+                        unset($studentListArr[$index]);
+                        $nonStudentsArr[$index] = $arr['name'];
+                    } else {
+                        $studentListArr[$index] = $student;
+                    }
+                    $index++;
+                }
+
+                return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
             } else {
-                $studentListArr[$index] = $student;
+                return redirect()->route('merits.bulk')->with('error', 'Incorrect file format');
             }
-            $index++;
         }
-
-        return view('merits/currMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
     }
 
     public function storeBulk(Request $request)

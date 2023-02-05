@@ -89,7 +89,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-right">
-                                                <a href="{{route('editstudent',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
+                                                <a href="{{route('studentoverview',$student->id)}}"><button class="btn btn-sm btn-primary">View</button></a>
                                             </td>
                                         </tr>
 

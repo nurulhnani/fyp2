@@ -7,6 +7,7 @@ use App\Models\Merit;
 use App\Models\Student;
 use App\Imports\MeritsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 class BehaMeritController extends Controller
 {
@@ -14,14 +15,14 @@ class BehaMeritController extends Controller
     public function index(Student $student)
     {
         $merits = Merit::where('student_mykid', '=', $student->mykid)
-        ->where('type', '=', 'b')
-        ->where('merit_point','>', 0)
-        ->get();
+            ->where('type', '=', 'b')
+            ->where('merit_point', '>', 0)
+            ->get();
 
         $demerits = Merit::where('student_mykid', '=', $student->mykid)
-        ->where('type', '=', 'b')
-        ->where('merit_point','<', 0)
-        ->get();
+            ->where('type', '=', 'b')
+            ->where('merit_point', '<', 0)
+            ->get();
 
         return view('merits/behaMerits.index', compact('merits', 'demerits', 'student'));
     }
@@ -110,22 +111,30 @@ class BehaMeritController extends Controller
 
     public function fileImport(Request $request)
     {
-        $arr = Excel::toArray(new MeritsImport, $request->file('file'));
-        $studentListArr = array_merge([], ...$arr);
 
-        $index = 0;
-        $nonStudentsArr = null;
-        foreach ($studentListArr as $arr) {
-            $student = Student::where('mykid', "=", $arr['mykid'])->first();
-            if (!isset($student)) {
-                unset($studentListArr[$index]);
-                $nonStudentsArr[$index] = $arr['name'];
+        if ($request->hasFile('file')) {
+            $extension = File::extension($request->file->getClientOriginalName());
+            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
+                $arr = Excel::toArray(new MeritsImport, $request->file('file'));
+                $studentListArr = array_merge([], ...$arr);
+
+                $index = 0;
+                $nonStudentsArr = null;
+                foreach ($studentListArr as $arr) {
+                    $student = Student::where('mykid', "=", $arr['mykid'])->first();
+                    if (!isset($student)) {
+                        unset($studentListArr[$index]);
+                        $nonStudentsArr[$index] = $arr['name'];
+                    } else {
+                        $studentListArr[$index] = $student;
+                    }
+                    $index++;
+                }
+                return view('merits/behaMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
             } else {
-                $studentListArr[$index] = $student;
+                return redirect()->route('behaMerits.bulk')->with('error', 'Incorrect file format');
             }
-            $index++;
         }
-        return view('merits/behaMerits.bulkList', ['studentListArr' => $studentListArr, 'nonStudentsArr' => $nonStudentsArr]);
     }
 
     public function storeBulk(Request $request)
@@ -156,7 +165,6 @@ class BehaMeritController extends Controller
             Merit::create($newMerit);
         }
         return redirect()->route('behaMerits.bulk')->with('success', 'Your merit records has successfully added');
-
     }
 
     public function autocompleteSearch(Request $request)
